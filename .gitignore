@@ -1,0 +1,12 @@
+/.idea
+/vendor
+/node_modules
+/public/storage
+Homestead.yaml
+Homestead.json
+.env.*.php
+.env.php
+.env
+/public/uploads
+/storage
+/bootstrap/cache
