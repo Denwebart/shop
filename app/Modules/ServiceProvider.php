@@ -1,0 +1,27 @@
+<?php
+/**
+ * @author     It Hill (it-hill.com@yandex.ua)
+ * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+ */
+
+namespace App\Modules;
+
+class ServiceProvider extends  \Illuminate\Support\ServiceProvider
+{
+	public function boot()
+	{
+		$modules = config("module.modules");
+		while (list(,$module) = each($modules)) {
+			if(file_exists(__DIR__.'/'.$module.'/routes.php')) {
+				include __DIR__.'/'.$module.'/routes.php';
+			}
+			if(is_dir(__DIR__.'/'.$module.'/Views')) {
+				$this->loadViewsFrom(__DIR__.'/'.$module.'/Views', $module);
+			}
+		}
+	}
+	
+	public function register(){
+
+	}
+}
