@@ -8,7 +8,7 @@
 
     <link rel="shortcut icon" href="{{ asset('backend/images/favicon.ico') }}">
 
-    <title>Административная панель магазина</title>
+    <title>{{ $title or 'Административная панель' }}</title>
 
     <!--Morris Chart CSS -->
     <link rel="stylesheet" href="{{ asset('backend/plugins/morris/morris.css') }}">
@@ -44,7 +44,10 @@
 
         <!-- LOGO -->
         <div class="topbar-left">
-            <a href="index.html" class="logo"><span>Admin<span>to</span></span><i class="zmdi zmdi-layers"></i></a>
+            <a href="{{ route('admin.main') }}" class="logo">
+                <span>Admin<span>to</span></span>
+                <i class="zmdi zmdi-layers"></i>
+            </a>
         </div>
 
         <!-- Button mobile view to collapse sidebar menu -->
@@ -59,7 +62,7 @@
                         </button>
                     </li>
                     <li>
-                        <h4 class="page-title">Административная панель</h4>
+                        <h4 class="page-title">{{ $title or 'Административная панель' }}</h4>
                     </li>
                 </ul>
 
@@ -104,12 +107,10 @@
             <!-- User -->
             <div class="user-box">
                 <div class="user-img">
-                    <img src="{{ asset('backend/images/users/avatar-1.jpg') }}" alt="user-img" title="Mat Helme" class="img-circle img-thumbnail img-responsive">
+                    <img src="{{ Auth::user()->getAvatarUrl() }}" alt="{{ Auth::user()->login }}" title="{{ Auth::user()->login }}" class="img-circle img-thumbnail img-responsive">
                     <div class="user-status online"><i class="fa fa-circle"></i></div>
                 </div>
-                <h5>
-                    <a href="#">Mat Helme</a>
-                </h5>
+                <h5>{{ Auth::user()->login }}</h5>
                 <ul class="list-inline">
                     <li>
                         <a href="#" >
@@ -130,9 +131,9 @@
             <div id="sidebar-menu">
                 <ul>
                     <li>
-                        <a href="index.html" class="waves-effect active">
+                        <a href="{{ route('admin.main') }}" class="waves-effect active">
                             <i class="zmdi zmdi-view-dashboard"></i>
-                            <span> Главная </span>
+                            <span>Главная</span>
                         </a>
                     </li>
                     <li>

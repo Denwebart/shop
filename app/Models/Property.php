@@ -2,7 +2,16 @@
 /**
  * @author     It Hill (it-hill.com@yandex.ua)
  * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+ * 
+ * App\Models\Property
+ *
+ * @property integer $id
+ * @property string $title
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Property whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Property whereTitle($value)
+ * @mixin \Eloquent
  */
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
