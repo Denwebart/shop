@@ -8,5 +8,3 @@ Homestead.json
 .env.php
 .env
 /public/uploads
-/storage
-/bootstrap/cache
