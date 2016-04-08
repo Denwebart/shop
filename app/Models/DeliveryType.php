@@ -30,7 +30,6 @@ class DeliveryType extends Model
 	 * @var array
 	 */
 	protected $fillable = [
-		'id',
 		'title',
 		'description',
 	];

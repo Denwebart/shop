@@ -32,7 +32,6 @@ class OrderProduct extends Model
 	 * @var array
 	 */
 	protected $fillable = [
-		'id',
 		'order_id',
 		'product_id',
 		'price',

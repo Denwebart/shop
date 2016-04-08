@@ -34,7 +34,6 @@ class ProductImage extends Model
 	 * @var array
 	 */
 	protected $fillable = [
-		'id',
 		'product_id',
 		'image',
 		'image_alt',

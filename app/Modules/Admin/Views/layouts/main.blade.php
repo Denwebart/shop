@@ -187,6 +187,12 @@
                             <span>Пользователи</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('admin.settings.index') }}" class="waves-effect">
+                            <i class="fa fa-cogs"></i>
+                            <span>Настройки</span>
+                        </a>
+                    </li>
                 </ul>
                 <div class="clearfix"></div>
             </div>

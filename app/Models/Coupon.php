@@ -40,7 +40,6 @@ class Coupon extends Model
 	 * @var array
 	 */
 	protected $fillable = [
-		'id',
 		'code',
 		'description',
 		'value',

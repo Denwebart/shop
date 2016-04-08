@@ -54,25 +54,25 @@ class Page extends Model
 	/**
 	 * Тип страницы (значение поля type)
 	 */
-	const TYPE_PAGE = 1;
+	const TYPE_PAGE        = 1;
 	const TYPE_SYSTEM_PAGE = 2;
-	const TYPE_CATALOG = 3;
+	const TYPE_CATALOG     = 3;
 
 	public static $types = [
-		self::TYPE_PAGE => 'Страница',
+		self::TYPE_PAGE        => 'Страница',
 		self::TYPE_SYSTEM_PAGE => 'Системная страница',
-		self::TYPE_CATALOG => 'Каталог',
+		self::TYPE_CATALOG     => 'Каталог',
 	];
 
 	/**
 	 * Статус публикации (значение поля is_published)
 	 */
 	const UNPUBLISHED = 0;
-	const PUBLISHED = 1;
+	const PUBLISHED   = 1;
 
 	public static $is_published = [
 		self::UNPUBLISHED => 'Не опубликована',
-		self::PUBLISHED => 'Опубликована',
+		self::PUBLISHED   => 'Опубликована',
 	];
 
 	/**

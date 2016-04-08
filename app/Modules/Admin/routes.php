@@ -8,5 +8,8 @@ Route::group(['module' => 'Admin', 'prefix' => 'admin', 'middleware' => 'web', '
 	
 	Route::get('/', ['as' => 'admin.index', 'uses' => 'AdminController@index']);
 	Route::resource('pages', 'PagesController');
+	Route::resource('settings', 'SettingsController', ['except' => [
+		'create', 'store', 'destroy', 'show'
+	]]);
 
 });

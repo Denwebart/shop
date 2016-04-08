@@ -34,11 +34,11 @@ class RequestedCall extends Model
 {
 	protected $table = 'requested_calls';
 	
-	const STATUS_PHONED = 1;
+	const STATUS_PHONED     = 1;
 	const STATUS_NOT_PHONED = 2;
 	
 	public static $statuses = [
-		self::STATUS_PHONED => 'дозвонились',
+		self::STATUS_PHONED     => 'дозвонились',
 		self::STATUS_NOT_PHONED => 'не дозвонились',
 	];
 

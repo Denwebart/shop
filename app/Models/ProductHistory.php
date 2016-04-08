@@ -34,7 +34,6 @@ class ProductHistory extends Model
 	 * @var array
 	 */
 	protected $fillable = [
-		'id',
 		'product_id',
 		'price',
 		'date_start',

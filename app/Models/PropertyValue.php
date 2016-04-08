@@ -24,7 +24,6 @@ class PropertyValue extends Model
 	 * @var array
 	 */
 	protected $fillable = [
-		'id',
 		'property_id',
 		'value',
 	];
