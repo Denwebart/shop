@@ -190,6 +190,9 @@ a:focus {
 .m-t-5 {
   margin-top: 5px !important;
 }
+.m-t-8 {
+    margin-top: 8px !important;
+}
 .m-t-0 {
   margin-top: 0px !important;
 }
@@ -408,8 +411,12 @@ a:focus {
   display: block;
 }
 /* Switchery demo */
-.switchery-demo .switchery {
-  margin-bottom: 10px;
+.switchery-demo {
+    display: inline-block;
+    width: 100%;
+}
+.switchery-demo label {
+    cursor: pointer;
 }
 /* =============
    Bootstrap-custom
@@ -586,7 +593,7 @@ a:focus {
 }
 /* Form components */
 textarea.form-control {
-  min-height: 90px;
+  min-height: 50px;
 }
 .form-control {
   background-color: #FFFFFF;
@@ -625,6 +632,10 @@ textarea.form-control {
   font-size: 12px;
   line-height: 1.5;
   border-radius: 3px;
+}
+.form-horizontal .control-label {
+    padding-top: 0;
+    margin-top: -3px;
 }
 .form-horizontal .form-group {
   margin-left: -10px;
@@ -719,6 +730,9 @@ textarea.form-control {
   background-color: #3b3e47;
 }
 /* Pagination/ Pager */
+.pagination {
+    margin: 0;
+}
 .pagination > li:first-child > a,
 .pagination > li:first-child > span {
   border-bottom-left-radius: 3px;

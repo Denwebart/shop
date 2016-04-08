@@ -13,6 +13,8 @@
     <!--Morris Chart CSS -->
     <link rel="stylesheet" href="{{ asset('backend/plugins/morris/morris.css') }}">
 
+    @stack('styles')
+
     <!-- App css -->
     <link href="{{ asset('backend/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('backend/css/core.css') }}" rel="stylesheet" type="text/css" />
@@ -44,7 +46,7 @@
 
         <!-- LOGO -->
         <div class="topbar-left">
-            <a href="{{ route('admin.main') }}" class="logo">
+            <a href="{{ route('admin.index') }}" class="logo">
                 <span>Admin<span>to</span></span>
                 <i class="zmdi zmdi-layers"></i>
             </a>
@@ -131,7 +133,7 @@
             <div id="sidebar-menu">
                 <ul>
                     <li>
-                        <a href="{{ route('admin.main') }}" class="waves-effect active">
+                        <a href="{{ route('admin.index') }}" class="waves-effect active">
                             <i class="zmdi zmdi-view-dashboard"></i>
                             <span>Главная</span>
                         </a>
@@ -174,7 +176,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="pages.html" class="waves-effect">
+                        <a href="{{ route('admin.pages.index') }}" class="waves-effect">
                             <i class="fa fa-file"></i>
                             <span>Страницы</span>
                         </a>
@@ -329,6 +331,8 @@
 
 <!-- Dashboard init -->
 <script src="{{ asset('backend/pages/jquery.dashboard.js') }}"></script>
+
+@stack('scripts')
 
 <!-- App js -->
 <script src="{{ asset('backend/js/jquery.core.js') }}"></script>

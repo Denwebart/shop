@@ -52,6 +52,30 @@ class Page extends Model
 	protected $table = 'pages';
 
 	/**
+	 * Тип страницы (значение поля type)
+	 */
+	const TYPE_PAGE = 1;
+	const TYPE_SYSTEM_PAGE = 2;
+	const TYPE_CATALOG = 3;
+
+	public static $types = [
+		self::TYPE_PAGE => 'Страница',
+		self::TYPE_SYSTEM_PAGE => 'Системная страница',
+		self::TYPE_CATALOG => 'Каталог',
+	];
+
+	/**
+	 * Статус публикации (значение поля is_published)
+	 */
+	const UNPUBLISHED = 0;
+	const PUBLISHED = 1;
+
+	public static $is_published = [
+		self::UNPUBLISHED => 'Не опубликована',
+		self::PUBLISHED => 'Опубликована',
+	];
+
+	/**
 	 * The attributes that are mass assignable.
 	 *
 	 * @var array
@@ -75,4 +99,21 @@ class Page extends Model
 		'meta_desc',
 		'meta_key',
 	];
+
+	public function parent()
+	{
+		return $this->belongsTo('App\Models\Page', 'parent_id');
+	}
+
+	public function children()
+	{
+		return $this->hasMany('App\Models\Page', 'parent_id');
+	}
+
+	public function publishedChildren()
+	{
+		return $this->hasMany('App\Models\Page', 'parent_id')
+			->whereIsPublished(1)
+			->where('published_at', '<', date('Y-m-d H:i:s'));
+	}
 }

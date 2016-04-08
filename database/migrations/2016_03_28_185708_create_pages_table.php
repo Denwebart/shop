@@ -15,7 +15,7 @@ class CreatePagesTable extends Migration
 		Schema::create('pages', function (Blueprint $table) {
 			$table->increments('id');
 			$table->string('alias', 500);
-			$table->integer('parent_id');
+			$table->integer('parent_id')->default(0);
 			$table->integer('user_id');
 			$table->tinyInteger('type')->default(1);
 			$table->boolean('is_published')->default(1);

@@ -278,7 +278,7 @@ View::share('title', $title);
                         <a href="#">
                             <div class="inbox-item bg-muted">
                                 <div class="inbox-item-img">
-                                    <img src="backend/images/users/avatar-1.jpg" class="img-circle" alt="">
+                                    <img src="../../../../../public/backend/images/users/avatar-1.jpg" class="img-circle" alt="">
                                 </div>
                                 <p class="inbox-item-author">{{ $call->name }}</p>
                                 <p class="inbox-item-text">
