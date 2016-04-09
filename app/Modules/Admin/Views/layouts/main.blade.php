@@ -45,7 +45,7 @@
     <div class="topbar">
 
         <!-- LOGO -->
-        <div class="topbar-left">
+        <div class="topbar-left hidden-xs">
             <a href="{{ route('admin.index') }}" class="logo">
                 <span>Admin<span>to</span></span>
                 <i class="zmdi zmdi-layers"></i>
@@ -63,7 +63,7 @@
                             <i class="zmdi zmdi-menu"></i>
                         </button>
                     </li>
-                    <li>
+                    <li class="hidden-xs">
                         <h4 class="page-title">{{ $title or 'Административная панель' }}</h4>
                     </li>
                 </ul>
@@ -213,6 +213,12 @@
         <!-- Start content -->
         <div class="content">
             <div class="container">
+
+                <div class="row visible-xs">
+                    <div class="col-md-12">
+                        <h4 class="page-title m-b-15">{{ $title or 'Административная панель' }}</h4>
+                    </div>
+                </div>
 
                 @yield('content')
 

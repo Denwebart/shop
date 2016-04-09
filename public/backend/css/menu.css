@@ -633,3 +633,34 @@ input.app-search-input::-moz-placeholder {
 input.app-search-input:-ms-input-placeholder {
   color: rgba(255, 255, 255, 0.7);
 }
+
+@media (max-width: 767px) {
+    .navbar-default {
+        height: 53px;
+        padding: 0px 10px;
+    }
+    .navbar-default .navbar-left {
+        padding-left: 0;
+    }
+    .navbar-default .navbar-left li {
+        padding: 0;
+    }
+    .topbar .topbar-left .logo {
+        line-height: 50px;
+    }
+    .button-menu-mobile {
+        line-height: 48px;
+    }
+    .notification-box ul li a {
+        line-height: 50px;
+    }
+    .notification-box .noti-dot {
+        top: -35px;
+    }
+    #wrapper.enlarged .topbar .topbar-left .logo i {
+        line-height: 70px;
+    }
+    .side-menu {
+        top: 53px;
+    }
+}

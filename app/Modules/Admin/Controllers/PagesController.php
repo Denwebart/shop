@@ -11,6 +11,8 @@ namespace App\Modules\Admin\Controllers;
 use App\Models\Page;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\URL;
 
 class PagesController extends Controller
 {
@@ -35,7 +37,9 @@ class PagesController extends Controller
      */
     public function create()
     {
-	    return view('admin::pages.create');
+	    $page = new Page();
+
+	    return view('admin::pages.create', compact('page'));
     }
 
     /**
@@ -46,7 +50,8 @@ class PagesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+	    var_dump('создание страницы');
+        dd(Input::all());
     }
 
     /**
@@ -57,7 +62,7 @@ class PagesController extends Controller
      */
     public function show($id)
     {
-        //
+        dd('просмотр страницы с id ' . $id);
     }
 
     /**
@@ -68,7 +73,9 @@ class PagesController extends Controller
      */
     public function edit($id)
     {
-	    return view('admin::pages.edit');
+	    $page = Page::findOrFail($id);
+
+	    return view('admin::pages.edit', compact('page'));
     }
 
     /**
@@ -80,7 +87,8 @@ class PagesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+	    var_dump('редактирование страницы с id '. $id);
+	    dd(Input::all());
     }
 
     /**
@@ -91,6 +99,6 @@ class PagesController extends Controller
      */
     public function destroy($id)
     {
-        //
+	    dd('удаление страницы с id ' . $id);
     }
 }

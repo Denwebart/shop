@@ -51,6 +51,8 @@ class Page extends Model
 {
 	protected $table = 'pages';
 
+	protected $imagePath = 'uploads/pages/';
+
 	/**
 	 * Тип страницы (значение поля type)
 	 */
@@ -116,4 +118,56 @@ class Page extends Model
 			->whereIsPublished(1)
 			->where('published_at', '<', date('Y-m-d H:i:s'));
 	}
+
+	/**
+	 * @return mixed
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function getTitle()
+	{
+		return $this->menu_title ? $this->menu_title : $this->title;
+	}
+
+	/**
+	 * Get image path
+	 *
+	 * @return mixed
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function getImagePath()
+	{
+		return $this->image ? asset($this->imagePath . $this->id . '/' . $this->image) : '';
+	}
+
+	/**
+	 * Get categories array
+	 *
+	 * @param bool $withChildren
+	 * @return array List of categories (id => title)
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public static function getCategory($withChildren = true)
+	{
+		$pages = Page::select('id', 'parent_id', 'alias', 'title', 'menu_title', 'is_container', 'type')
+			->whereIsContainer(1)
+			->whereParentId(0)
+			->where('type', '!=', self::TYPE_SYSTEM_PAGE)
+			->get();
+		
+		$array = [];
+		foreach ($pages as $page) {
+			$array[$page->id] = $page->getTitle();
+			
+			if($withChildren) {
+				foreach($page->children()->whereIsContainer(1)->get() as $child) {
+					$array[$child->id] = ' --- ' . $child->getTitle();
+				}
+			}
+		}
+		return $array;
+	}
+	
 }

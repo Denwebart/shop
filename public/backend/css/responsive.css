@@ -37,6 +37,9 @@ File: Responsive
     display: block !important;
     line-height: 75px !important;
   }
+  .page-title {
+    line-height: 1em;
+  }
   .content-page .content {
     margin-top: 95px;
   }
@@ -54,6 +57,7 @@ File: Responsive
   .navbar-nav li {
     display: inline-block;
     line-height: 1px;
+      float: left;
   }
   .navbar-nav.navbar-right {
     float: right;
