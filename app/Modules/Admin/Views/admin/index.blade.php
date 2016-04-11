@@ -276,9 +276,9 @@ View::share('title', $title);
                 <div class="inbox-widget nicescroll" style="height: 315px;">
                     @forelse($calls as $call)
                         <a href="#">
-                            <div class="inbox-item bg-muted">
+                            <div class="inbox-item @if(is_null($call->status)) bg-muted @endif">
                                 <div class="inbox-item-img">
-                                    <img src="../../../../../public/backend/images/users/avatar-1.jpg" class="img-circle" alt="">
+                                    <img src="{{ asset('backend/images/users/avatar-1.jpg') }}" class="img-circle" alt="">
                                 </div>
                                 <p class="inbox-item-author">{{ $call->name }}</p>
                                 <p class="inbox-item-text">

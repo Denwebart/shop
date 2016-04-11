@@ -146,7 +146,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:void(0);" class="waves-effect">
+                        <a href="{{ route('admin.requestedcalls.index') }}" class="waves-effect @if(Request::is('admin/requestedcalls*')) active @endif">
                             <i class="fa fa-phone"></i>
                             <span>Звонки</span>
                             <span class="label label-info pull-right">7</span>
