@@ -44,6 +44,19 @@ class User extends Authenticatable
 
 	protected $imagePath = 'uploads/users/';
 
+	/**
+	 * Роль пользователя (значение поля role)
+	 */
+	const ROLE_ADMIN   = 1;
+	const ROLE_MANAGER = 2;
+	const ROLE_USER    = 3;
+
+	public static $roles = [
+		self::ROLE_ADMIN   => 'Администратор',
+		self::ROLE_MANAGER => 'Менеджер',
+		self::ROLE_USER    => 'Пользователь',
+	];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -79,6 +92,15 @@ class User extends Authenticatable
 		return $this->avatar
 			? url($this->imagePath . $this->id . '/' . $this->avatar)
 			: url('images/default-avatar.jpg');
+	}
+
+	/**
+	 * 
+	 * @return bool
+	 */
+	public function isAdmin()
+	{
+		return $this->role == self::ROLE_ADMIN ? true : false;
 	}
 
 }

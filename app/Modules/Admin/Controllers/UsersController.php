@@ -21,7 +21,8 @@ class UsersController extends Controller
 	 */
 	public function index()
 	{
-		$users = User::paginate(10);
+		$users = User::select('id', 'login', 'email', 'role', 'firstname', 'lastname', 'avatar', 'is_active', 'created_at')
+			->paginate(10);
 
 		return view('admin::users.index', compact('users'));
 	}
