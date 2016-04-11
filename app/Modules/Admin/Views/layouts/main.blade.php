@@ -133,7 +133,7 @@
             <div id="sidebar-menu">
                 <ul>
                     <li>
-                        <a href="{{ route('admin.index') }}" class="waves-effect active">
+                        <a href="{{ route('admin.index') }}" class="waves-effect @if(Route::is('admin.index')) active @endif">
                             <i class="zmdi zmdi-view-dashboard"></i>
                             <span>Главная</span>
                         </a>
@@ -176,19 +176,19 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('admin.pages.index') }}" class="waves-effect">
+                        <a href="{{ route('admin.pages.index') }}" class="waves-effect @if(Request::is('admin/pages*')) active @endif">
                             <i class="fa fa-file"></i>
                             <span>Страницы</span>
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:void(0);" class="waves-effect">
+                        <a href="{{ route('admin.users.index') }}" class="waves-effect @if(Request::is('admin/users*')) active @endif">
                             <i class="fa fa-users"></i>
                             <span>Пользователи</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('admin.settings.index') }}" class="waves-effect">
+                        <a href="{{ route('admin.settings.index') }}" class="waves-effect @if(Request::is('admin/settings*')) active @endif">
                             <i class="fa fa-cogs"></i>
                             <span>Настройки</span>
                         </a>

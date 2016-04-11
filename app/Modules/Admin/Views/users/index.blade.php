@@ -4,7 +4,7 @@
  * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
  */
 
-$title = 'Страницы';
+$title = 'Пользователи';
 View::share('title', $title);
 ?>
 
@@ -20,8 +20,8 @@ View::share('title', $title);
             </ul>
         </div>
         <div class="col-sm-4">
-            <a href="{{ route('admin.pages.create') }}" class="btn btn-success btn-bordred w-md waves-effect waves-light pull-right">
-                Создать страницу
+            <a href="{{ route('admin.users.create') }}" class="btn btn-success btn-bordred w-md waves-effect waves-light pull-right">
+                Создать пользователя
             </a>
         </div>
     </div>
@@ -29,7 +29,7 @@ View::share('title', $title);
     <div class="row">
         <div class="col-sm-4">
             <div class="count-container">
-                @include('parts.count', ['models' => $pages])
+                @include('parts.count', ['models' => $users])
             </div>
         </div>
         <div class="col-sm-8">
@@ -48,18 +48,18 @@ View::share('title', $title);
         <div class="col-lg-12">
             <div class="card-box">
                 <div id="table-container" class="table-responsive m-b-20">
-                    @include('admin::pages.table')
+                    @include('admin::users.table')
                 </div>
 
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="count-container m-t-8">
-                            @include('parts.count', ['models' => $pages])
+                            @include('parts.count', ['models' => $users])
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="pagination-container pull-right">
-                            @include('parts.pagination', ['models' => $pages])
+                            @include('parts.pagination', ['models' => $users])
                         </div>
                     </div>
                 </div>
