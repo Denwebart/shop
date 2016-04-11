@@ -9,6 +9,8 @@ Route::group(['module' => 'Admin', 'prefix' => 'admin', 'middleware' => 'web', '
 	Route::get('/', ['as' => 'admin.index', 'uses' => 'AdminController@index']);
 	Route::resource('products', 'ProductsController');
 	Route::resource('pages', 'PagesController');
+	Route::resource('requestedcalls', 'RequestedCallsController', ['except' => ['create', 'store', 'destroy', 'show']]);
+	Route::resource('letters', 'LettersController', ['except' => ['create', 'store', 'update']]);
 	Route::resource('users', 'UsersController');
 	Route::resource('settings', 'SettingsController', ['except' => [
 		'create', 'store', 'destroy', 'show'
