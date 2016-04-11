@@ -75,26 +75,29 @@ class Date
 	 */
 	public static function getRelative($date)
 	{
-		$timestamp = strtotime($date);
-		$delta = (time() - $timestamp);
-		if ($delta < 0) {
-			return '0 сек.';
-		}
-		if ($delta < 60) {
-			$result = round($delta, 0) . ' сек. назад';
-		} elseif ($delta < 120) {
-			$result = '1 мин. назад';
-		} elseif ($delta < (45 * 60)) {
-			$result = round(($delta / 60), 0) . ' мин. назад';
-		} elseif ($delta < (24 * 60 * 60)) {
-			$result = 'сегодня в ' . date('H:i', $timestamp);
-		} else {
-			$date = date('Y', $timestamp) != date('Y') ? ' ' . date('Y', $timestamp) : '';
-			$result = date('j', $timestamp) . ' ' . self::$months[date('n', $timestamp)]
-				. $date
-				. ' в ' . date('H:i', strtotime($date));
-		}
+		if(!is_null($date)) {
+			$timestamp = strtotime($date);
+			$delta = (time() - $timestamp);
+			if ($delta < 0) {
+				return '0 сек.';
+			}
+			if ($delta < 60) {
+				$result = round($delta, 0) . ' сек. назад';
+			} elseif ($delta < 120) {
+				$result = '1 мин. назад';
+			} elseif ($delta < (45 * 60)) {
+				$result = round(($delta / 60), 0) . ' мин. назад';
+			} elseif ($delta < (24 * 60 * 60)) {
+				$result = 'сегодня в ' . date('H:i', $timestamp);
+			} else {
+				$date = date('Y', $timestamp) != date('Y') ? ' ' . date('Y', $timestamp) : '';
+				$result = date('j', $timestamp) . ' ' . self::$months[date('n', $timestamp)]
+					. $date
+					. ' в ' . date('H:i', strtotime($date));
+			}
 
-		return $result;
+			return $result;
+		}
+		else return '-';
 	}
 }

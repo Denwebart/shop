@@ -4,7 +4,7 @@
  * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
  */
 
-$title = 'Редактирование звонка';
+$title = 'Редактирование страницы "' . $page->getTitle() . '"';
 View::share('title', $title);
 ?>
 
@@ -16,7 +16,7 @@ View::share('title', $title);
         <div class="col-sm-6 col-md-6 col-xs-12 hidden-xs">
             <ul class="breadcrumb m-b-10">
                 <li><a href="{{ route('admin.index') }}">Главная</a></li>
-                <li><a href="{{ route('admin.calls.index') }}">Звонки</a></li>
+                <li><a href="{{ route('admin.pages.index') }}">Страницы</a></li>
                 <li>{{ $title }}</li>
             </ul>
         </div>
@@ -41,10 +41,10 @@ View::share('title', $title);
     <div class="row">
         <div class="col-lg-12">
             <div class="card-box">
-                <form method="POST" class="form-horizontal" role="form" action="{{ route('admin.requestedcalls.update', ['id' => $requestedcalls->id]) }}" id="main-form">
+                <form method="POST" class="form-horizontal" role="form" action="{{ route('admin.pages.update', ['id' => $page->id]) }}" id="main-form">
                     <input type="hidden" name="_method" value="PUT">
 
-                    @include('admin::requestedcalls.form')
+                    @include('admin::pages.form')
                 </form>
             </div>
         </div><!-- end col -->

@@ -37,7 +37,7 @@
                 <td>{{ \App\Helpers\Date::getRelative($requestedcall->updated_at) }}</td>
                 <td>{{ $requestedcall->user_id }}</td>
                 <td>
-                    <a href="{{ route('admin.requestedcalls.edit', ['id' => $requestedcall->id]) }}" title="Редактировать" data-toggle="tooltip" class="m-r-15">
+                    <a href="{{ route('admin.calls.edit', ['id' => $requestedcall->id]) }}" title="Редактировать" data-toggle="tooltip" class="m-r-15">
                         <i class="fa fa-pencil fa-lg"></i>
                     </a>
                 </td>
