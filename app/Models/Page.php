@@ -161,24 +161,31 @@ class Page extends Model
 	/**
 	 * Get categories array
 	 *
-	 * @param bool $withChildren
+	 * @param bool $pageType
 	 * @return array List of categories (id => title)
+	 *
 	 * @author     It Hill (it-hill.com@yandex.ua)
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
-	public static function getCategory($withChildren = true)
+	public static function getCategory($pageType = false)
 	{
-		$pages = Page::select('id', 'parent_id', 'alias', 'title', 'menu_title', 'is_container', 'type')
-			->whereIsContainer(1)
+		$query = new Page();
+		$query = $query->select('id', 'parent_id', 'alias', 'title', 'menu_title', 'is_container', 'type');
+		$query = $query->whereIsContainer(1)
 			->whereParentId(0)
-			->where('type', '!=', self::TYPE_SYSTEM_PAGE)
-			->get();
+			->where('type', '!=', self::TYPE_SYSTEM_PAGE);
+
+		if($pageType) {
+			$query = $query->where('type', '=', $pageType);
+		}
+
+		$pages = $query->get();
 		
 		$array = [];
 		foreach ($pages as $page) {
 			$array[$page->id] = $page->getTitle();
-			
-			if($withChildren) {
+
+			if(count($page->children)) {
 				foreach($page->children()->whereIsContainer(1)->get() as $child) {
 					$array[$child->id] = ' --- ' . $child->getTitle();
 				}

@@ -4,7 +4,7 @@
  * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
  */
 
-$title = 'Редактирование товара "' . $product->getTitle() . '"';
+$title = 'Редактирование товара "' . $product->title . '"';
 View::share('title', $title);
 ?>
 

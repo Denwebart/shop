@@ -27,6 +27,7 @@ class FillPagesTable extends Migration
 				    'alias' => 'katalog',
 				    'user_id' => '1',
 				    'type' => '3',
+				    'is_container' => 1,
 				    'title' => 'Каталог товаров',
 				    'menu_title' => 'Каталог',
 				    'created_at' => \Carbon\Carbon::now(),
