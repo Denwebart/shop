@@ -102,16 +102,31 @@ class Page extends Model
 		'meta_key',
 	];
 
+	/**
+	 * Родительская страница
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
 	public function parent()
 	{
 		return $this->belongsTo('App\Models\Page', 'parent_id');
 	}
 
+	/**
+	 * Все дочерние страницы
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
 	public function children()
 	{
 		return $this->hasMany('App\Models\Page', 'parent_id');
 	}
-
+	
+	/**
+	 * Опубликованные дочерние страницы
+	 * 
+	 * @return mixed
+	 */
 	public function publishedChildren()
 	{
 		return $this->hasMany('App\Models\Page', 'parent_id')
@@ -120,6 +135,8 @@ class Page extends Model
 	}
 
 	/**
+	 * Get page title (menu_title or title)
+	 * 
 	 * @return mixed
 	 * @author     It Hill (it-hill.com@yandex.ua)
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)

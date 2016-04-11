@@ -170,7 +170,7 @@
                     <hr>
 
                     <li>
-                        <a href="javascript:void(0);" class="waves-effect">
+                        <a href="{{ route('admin.products.index') }}" class="waves-effect">
                             <i class="fa fa-shopping-bag"></i>
                             <span>Товары</span>
                         </a>

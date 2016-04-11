@@ -51,6 +51,19 @@ class Product extends Model
 {
 	protected $table = 'products';
 
+	protected $imagePath = 'uploads/products/';
+
+	/**
+	 * Статус публикации (значение поля is_published)
+	 */
+	const UNPUBLISHED = 0;
+	const PUBLISHED   = 1;
+
+	public static $is_published = [
+		self::UNPUBLISHED => 'Не опубликован',
+		self::PUBLISHED   => 'Опубликован',
+	];
+
 	/**
 	 * The attributes that are mass assignable.
 	 *
@@ -72,4 +85,26 @@ class Product extends Model
 		'meta_desc',
 		'meta_key',
 	];
+
+	/**
+	 * Категория
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function category()
+	{
+		return $this->belongsTo('App\Models\Page', 'category_id');
+	}
+
+	/**
+	 * Get image path
+	 *
+	 * @return mixed
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function getImagePath()
+	{
+		return $this->image ? asset($this->imagePath . $this->id . '/' . $this->image) : '';
+	}
 }
