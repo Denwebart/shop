@@ -53,9 +53,9 @@ class Order extends Model
 
 	public static $statusesClass = [
 		self::STATUS_NONE       => '',
-		self::STATUS_IN_PROCESS => 'label-info',
-		self::STATUS_CANCELED   => 'label-danger',
-		self::STATUS_CLOSED     => 'label-success',
+		self::STATUS_IN_PROCESS => 'info',
+		self::STATUS_CANCELED   => 'danger',
+		self::STATUS_CLOSED     => 'success',
 	];
 
 	/**
@@ -94,5 +94,31 @@ class Order extends Model
 	public function customer()
 	{
 		return $this->belongsTo('App\Models\Customer', 'customer_id');
+	}
+
+	/**
+	 * Товары (OrderProduct)
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function orderProducts()
+	{
+		return $this->hasMany('App\Models\OrderProduct', 'order_id');
+	}
+
+	/**
+	 * Товары (Product)
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+	 */
+	public function products()
+	{
+		return $this->belongsToMany('App\Models\Product', 'orders_products');
+	}
+
+	public function groupedProducts()
+	{
+		return $this->belongsToMany('App\Models\Product', 'orders_products')
+			->groupBy('order_id')->select(\DB::raw('*, count(*) as quantity'));
 	}
 }
