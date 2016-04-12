@@ -28,6 +28,7 @@
 
 namespace App\Models;
 
+use App\Helpers\Str;
 use Illuminate\Database\Eloquent\Model;
 
 class RequestedCall extends Model
@@ -55,5 +56,12 @@ class RequestedCall extends Model
 		'property_value_id',
 	];
 
+	/**
+	 * @return mixed
+	 */
+	public function getPhone()
+	{
+		return Str::phoneFormat($this->phone);
+	}
 
 }

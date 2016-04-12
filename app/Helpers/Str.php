@@ -25,4 +25,29 @@ class Str
 			return strip_tags($html);
 		}
 	}
+
+	/**
+	 * Формат номера телефона
+	 *
+	 * @param $phone
+	 * @return string
+	 */
+	public static function phoneFormat($phone)
+	{
+		$number = preg_replace("/[^0-9]/", "", $phone);
+		if($number) {
+			$phone = substr_replace($number, '-', -2, -2);
+			$phone = substr_replace($phone, '-', -5, -5);
+			$phone = substr_replace($phone, ') ', -9, -9);
+			$phone = substr_replace($phone, ' (', -14, -14);
+
+			if($number[0] == 3 || $number[0] == 7) {
+				$phone = substr_replace($phone, '+', 0, 0);
+			}
+		} else {
+			$phone = '-';
+		}
+
+		return $phone;
+	}
 }

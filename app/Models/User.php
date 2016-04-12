@@ -12,6 +12,8 @@
  * @property boolean $role
  * @property string $firstname
  * @property string $lastname
+ * @property string $description
+ * @property string $phone
  * @property string $avatar
  * @property boolean $is_active
  * @property string $activation_code
@@ -25,6 +27,8 @@
  * @method static \Illuminate\Database\Query\Builder|\App\Models\User whereRole($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\User whereFirstname($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\User whereLastname($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\User whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\User wherePhone($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\User whereAvatar($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\User whereIsActive($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\User whereActivationCode($value)
@@ -36,6 +40,7 @@
 
 namespace App\Models;
 
+use App\Helpers\Str;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -75,6 +80,8 @@ class User extends Authenticatable
 	    'role',
 	    'firstname',
 	    'lastname',
+	    'description',
+	    'phone',
 	    'avatar',
     ];
 
@@ -113,4 +120,11 @@ class User extends Authenticatable
 		return $this->firstname . ' ' . $this->lastname;
 	}
 
+	/**
+	 * @return mixed
+	 */
+	public function getPhone()
+	{
+		return Str::phoneFormat($this->phone);
+	}
 }

@@ -23,14 +23,15 @@
             <tr @if(!$order->status) class="bg-muted" @endif>
                 <td>{{ $order->id }}</td>
                 <td>{{ $order->customer->username }}</td>
-                <td>{{ $order->customer->phone }}</td>
+                <td>{{ $order->customer->getPhone() }}</td>
                 <td>
                     <ul class="products-list">
                         @foreach($order->groupedProducts as $product)
                             <li>
                                 <img src="{{ $product->getImagePath() }}" alt="{{ $product->image_alt }}" width="50">
                                 {{ $product->title }}
-                                ({{ $product->quantity }})
+                                ({{ $product->vendor_code }})
+                                x {{ $product->quantity }}
                             </li>
                         @endforeach
                     </ul>

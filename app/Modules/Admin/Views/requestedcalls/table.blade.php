@@ -24,7 +24,7 @@
             <tr @if(is_null($requestedcall->status)) class="bg-muted" @endif>
                 <td>{{ $requestedcall->id }}</td>
                 <td>{{ $requestedcall->name }}</td>
-                <td>{{ $requestedcall->phone }}</td>
+                <td>{{ $requestedcall->getPhone() }}</td>
                 <td>
                     @if(!is_null($requestedcall->status))
                         <span class="label @if($requestedcall->status == \App\Models\RequestedCall::STATUS_PHONED) label-success @else label-danger @endif pull-right">

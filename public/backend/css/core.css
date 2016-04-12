@@ -336,6 +336,13 @@ a:focus {
 .table .customer .name {
   margin-right: 15px;
 }
+/* products of the order */
+.products-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
 /* Card Box */
 .card-box {
   padding: 20px;

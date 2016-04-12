@@ -30,7 +30,7 @@
 
                         <p class="text-muted font-13"><strong>Имя и фамилия :</strong><span class="m-l-15">{{ $user->getFullName() }}</span></p>
 
-                        <p class="text-muted font-13"><strong>Телефон :</strong><span class="m-l-15">{{ $user->phone or '---' }}</span></p>
+                        <p class="text-muted font-13"><strong>Телефон :</strong><span class="m-l-15">{{ $user->getPhone() }}</span></p>
 
                         <p class="text-muted font-13"><strong>Email :</strong> <span class="m-l-15">{{ $user->email }}</span></p>
 

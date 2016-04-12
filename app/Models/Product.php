@@ -107,4 +107,5 @@ class Product extends Model
 	{
 		return $this->image ? asset($this->imagePath . $this->id . '/' . $this->image) : '';
 	}
+	
 }

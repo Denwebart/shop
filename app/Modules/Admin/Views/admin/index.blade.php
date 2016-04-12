@@ -161,7 +161,7 @@ View::share('title', $title);
                                 <tr @if(!$order->status) class="bg-muted" @endif>
                                     <td>{{ $order->id }}</td>
                                     <td>{{ $order->customer->username }}</td>
-                                    <td>{{ $order->customer->phone }}</td>
+                                    <td>{{ $order->customer->getPhone() }}</td>
                                     <td>{{ $order->total_price }} руб.</td>
                                     <td>{{ date('j.m.Y в H:i', strtotime($order->created_at)) }}</td>
                                     <td>
@@ -206,7 +206,7 @@ View::share('title', $title);
                                 </div>
                                 <p class="inbox-item-author">{{ $call->name }}</p>
                                 <p class="inbox-item-text">
-                                    <span class="phone">{{ $call->phone }}</span>
+                                    <span class="phone">{{ $call->getPhone() }}</span>
                                     @if(!is_null($call->status))
                                         <span class="label @if($call->status == \App\Models\RequestedCall::STATUS_PHONED) label-success @else label-danger @endif pull-right">
                                             {{ \App\Models\RequestedCall::$statuses[$call->status] }}

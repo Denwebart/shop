@@ -18,6 +18,7 @@
 
 namespace App\Models;
 
+use App\Helpers\Str;
 use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model
@@ -36,4 +37,12 @@ class Customer extends Model
 		'username',
 		'phone',
 	];
+
+	/**
+	 * @return string
+	 */
+	public function getPhone()
+	{
+		return Str::phoneFormat($this->phone);
+	}
 }
