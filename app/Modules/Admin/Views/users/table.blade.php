@@ -11,19 +11,18 @@
             <div class="text-center card-box">
                 <div class="dropdown pull-right">
                     <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false">
-                        <i class="zmdi zmdi-more-vert"></i>
+                        <i class="fa fa-cog"></i>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Редактировать</a></li>
+                        <li><a href="{{ route('admin.users.edit', ['id' => $user->id]) }}">Редактировать</a></li>
                         <li><a href="#">Удалить</a></li>
-                        <li><a href="#">Заблокировать</a></li>
                     </ul>
                 </div>
                 <div>
                     <img src="{{ $user->getAvatarUrl() }}" class="img-circle thumb-xl img-thumbnail m-b-10" alt="{{ $user->login }}">
 
                     <p class="text-muted font-13 m-b-30">
-                        Hi I'm Johnathn Deo,has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type.
+                        {{ $user->description or 'Расскажите немного о себе' }}
                     </p>
 
                     <div class="text-left">
@@ -31,14 +30,14 @@
 
                         <p class="text-muted font-13"><strong>Имя и фамилия :</strong><span class="m-l-15">{{ $user->getFullName() }}</span></p>
 
+                        <p class="text-muted font-13"><strong>Телефон :</strong><span class="m-l-15">{{ $user->phone or '---' }}</span></p>
+
                         <p class="text-muted font-13"><strong>Email :</strong> <span class="m-l-15">{{ $user->email }}</span></p>
 
-                        <p class="text-muted font-13"><strong>Права :</strong> <span class="m-l-15">{{ $user->role }}</span></p>
+                        <p class="text-muted font-13"><strong>Права :</strong> <span class="label label-{{ \App\Models\User::$rolesClass[$user->role] }} m-l-15">{{ \App\Models\User::$roles[$user->role] }}</span></p>
 
-                        <p class="text-muted font-13"><strong>Дата регистрации :</strong> <span class="m-l-15">{{ $user->created_at }}</span></p>
+                        <p class="text-muted font-13"><strong>Дата регистрации :</strong> <span class="m-l-15">{{ \App\Helpers\Date::getRelative($user->created_at) }}</span></p>
                     </div>
-
-                    <button type="button" class="btn btn-custom btn-rounded waves-effect waves-light">Отправить сообщение</button>
                 </div>
 
             </div>
