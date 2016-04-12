@@ -9,6 +9,7 @@
 namespace App\Modules\Admin\Controllers;
 
 use App\Http\Requests;
+use App\Models\Order;
 use App\Models\RequestedCall;
 use Illuminate\Http\Request;
 
@@ -21,8 +22,12 @@ class AdminController extends Controller
 	 */
 	public function index()
 	{
+		$orders = Order::select(['id', 'customer_id', 'total_price', 'status', 'created_at', 'paid_at'])
+			->with('customer')
+			->get();
+
 		$calls = RequestedCall::select(['id', 'name', 'phone', 'status', 'created_at'])->get();
 
-		return view('admin::admin.index', compact('calls'));
+		return view('admin::admin.index', compact('calls', 'orders'));
 	}
 }

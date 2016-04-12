@@ -37,6 +37,41 @@ class Order extends Model
 	protected $table = 'orders';
 
 	/**
+	 * Статус заказа (значение поля status)
+	 */
+	const STATUS_NONE       = 0;
+	const STATUS_IN_PROCESS = 1;
+	const STATUS_CANCELED   = 2;
+	const STATUS_CLOSED     = 3;
+
+	public static $statuses = [
+		self::STATUS_NONE       => '-',
+		self::STATUS_IN_PROCESS => 'В процессе',
+		self::STATUS_CANCELED   => 'Отменен',
+		self::STATUS_CLOSED     => 'Завершен',
+	];
+
+	public static $statusesClass = [
+		self::STATUS_NONE       => '',
+		self::STATUS_IN_PROCESS => 'label-info',
+		self::STATUS_CANCELED   => 'label-danger',
+		self::STATUS_CLOSED     => 'label-success',
+	];
+
+	/**
+	 * Способ оплаты (значение поля payment_type)
+	 */
+	const PAYMENT_TYPE_1 = 1;
+	const PAYMENT_TYPE_2 = 2;
+	const PAYMENT_TYPE_3 = 3;
+
+	public static $paymentTypes = [
+		self::PAYMENT_TYPE_1 => 'Способ 1',
+		self::PAYMENT_TYPE_2 => 'Способ 2',
+		self::PAYMENT_TYPE_3 => 'Способ 3',
+	];
+
+	/**
 	 * The attributes that are mass assignable.
 	 *
 	 * @var array
@@ -50,4 +85,14 @@ class Order extends Model
 		'closed_at',
 		'payment_type',
 	];
+
+	/**
+	 * Покупатель
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function customer()
+	{
+		return $this->belongsTo('App\Models\Customer', 'customer_id');
+	}
 }

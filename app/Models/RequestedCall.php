@@ -34,6 +34,9 @@ class RequestedCall extends Model
 {
 	protected $table = 'requested_calls';
 	
+	/**
+	 * Статус заказанного звонка (значение поля status)
+	 */
 	const STATUS_PHONED     = 1;
 	const STATUS_NOT_PHONED = 2;
 	

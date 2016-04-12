@@ -146,112 +146,36 @@ View::share('title', $title);
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
-                        <tr>
-                            <th>№</th>
-                            <th>Покупатель</th>
-                            <th></th>
-                            <th>Сумма</th>
-                            <th>Дата заказа</th>
-                            <th>Статус</th>
-                            <th></th>
-                        </tr>
+                            <tr>
+                                <th>ID</th>
+                                <th>Покупатель</th>
+                                <th></th>
+                                <th>Сумма</th>
+                                <th>Дата заказа</th>
+                                <th>Статус</th>
+                                <th></th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr class="bg-muted">
-                            <td>1</td>
-                            <td>Иван Петрович</td>
-                            <td>+38 050 777 77 77</td>
-                            <td>5 000 руб.</td>
-                            <td>26.04.2016</td>
-                            <td></td>
-                            <td>
-                                <a href="#">
-                                    <i class="fa fa-eye fa-lg"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr class="bg-muted">
-                            <td>2</td>
-                            <td>Ирина</td>
-                            <td>+38 063 633 63 63</td>
-                            <td>10 000 руб.</td>
-                            <td>26.04.2016</td>
-                            <td></td>
-                            <td>
-                                <a href="#">
-                                    <i class="fa fa-eye fa-lg"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Анна</td>
-                            <td>+38 050 050 50 50</td>
-                            <td>158 000 руб.</td>
-                            <td>10.05.2016</td>
-                            <td><span class="label label-info">В процессе</span></td>
-                            <td>
-                                <a href="#">
-                                    <i class="fa fa-eye fa-lg"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Валентина Петровна Ивановавава</td>
-                            <td>+38 050 777 77 77</td>
-                            <td>10 000 руб.</td>
-                            <td>31.05.2016</td>
-                            <td><span class="label label-info">В процессе</span>
-                            </td>
-                            <td>
-                                <a href="#">
-                                    <i class="fa fa-eye fa-lg"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>Татьяна</td>
-                            <td>+38 050 777 77 77</td>
-                            <td>22 000 руб.</td>
-                            <td>31.05.2016</td>
-                            <td><span class="label label-danger">Отменен</span></td>
-                            <td>
-                                <a href="#">
-                                    <i class="fa fa-eye fa-lg"></i>
-                                </a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>6</td>
-                            <td>Иван Петрович</td>
-                            <td>+38 050 777 77 77</td>
-                            <td>13 000 руб.</td>
-                            <td>31.05.2016</td>
-                            <td><span class="label label-success">Завершен</span></td>
-                            <td>
-                                <a href="#">
-                                    <i class="fa fa-eye fa-lg"></i>
-                                </a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>7</td>
-                            <td>Иван Петрович</td>
-                            <td>+38 050 777 77 77</td>
-                            <td>16 000 руб.</td>
-                            <td>31.05.2016</td>
-                            <td><span class="label label-success">Завершен</span></td>
-                            <td>
-                                <a href="#">
-                                    <i class="fa fa-eye fa-lg"></i>
-                                </a>
-                            </td>
-                        </tr>
-
+                            @forelse($orders as $order)
+                                <tr @if(!$order->status) class="bg-muted" @endif>
+                                    <td>{{ $order->id }}</td>
+                                    <td>{{ $order->customer->username }}</td>
+                                    <td>{{ $order->customer->phone }}</td>
+                                    <td>{{ $order->total_price }} руб.</td>
+                                    <td>{{ date('j.m.Y в H:i', strtotime($order->created_at)) }}</td>
+                                    <td>
+                                        <span class="label {{ \App\Models\Order::$statusesClass[$order->status] }}">
+                                            {{ \App\Models\Order::$statuses[$order->status] }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a href="#">
+                                            <i class="fa fa-eye fa-lg"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
