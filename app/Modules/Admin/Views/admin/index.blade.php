@@ -134,13 +134,13 @@ View::share('title', $title);
         <div class="col-lg-8">
             <div class="card-box">
                 <div class="pull-right">
-                    <a href="orders.html" class="card-drop">
+                    <a href="{{ route('admin.orders.index') }}" class="card-drop">
                         <i class="fa fa-angle-double-right"></i>
                     </a>
                 </div>
 
                 <h4 class="header-title m-t-0 m-b-30">
-                    <a href="orders.html">Последние заказы</a>
+                    <a href="{{ route('admin.orders.index') }}">Последние заказы</a>
                 </h4>
 
                 <div class="table-responsive">
@@ -170,7 +170,7 @@ View::share('title', $title);
                                         </span>
                                     </td>
                                     <td>
-                                        <a href="#">
+                                        <a href="{{ route('admin.orders.show', ['id' => $order->id]) }}"  title="Просмотреть" data-toggle="tooltip">
                                             <i class="fa fa-eye fa-lg"></i>
                                         </a>
                                     </td>
@@ -186,13 +186,13 @@ View::share('title', $title);
             <div class="card-box">
 
                 <div class="pull-right">
-                    <a href="#" class="card-drop">
+                    <a href="{{ route('admin.calls.index') }}" class="card-drop">
                         <i class="fa fa-angle-double-right"></i>
                     </a>
                 </div>
 
                 <h4 class="header-title m-t-0 m-b-30">
-                    <a href="#">
+                    <a href="{{ route('admin.calls.index') }}">
                         Заказанные звонки
                     </a>
                 </h4>

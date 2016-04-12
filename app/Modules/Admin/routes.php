@@ -7,6 +7,7 @@
 Route::group(['module' => 'Admin', 'prefix' => 'admin', 'middleware' => 'web', 'namespace' => 'App\Modules\Admin\Controllers'], function () {
 	
 	Route::get('/', ['as' => 'admin.index', 'uses' => 'AdminController@index']);
+	Route::resource('orders', 'OrdersController');
 	Route::resource('products', 'ProductsController');
 	Route::resource('pages', 'PagesController');
 	Route::resource('calls', 'RequestedCallsController', ['except' => ['create', 'store', 'destroy', 'show']]);

@@ -139,14 +139,14 @@
                         </a>
                     </li>
                     <li>
-                        <a href="orders.html" class="waves-effect">
+                        <a href="{{ route('admin.orders.index') }}" class="waves-effect @if(Request::is('admin/orders*')) active @endif">
                             <i class="fa fa-shopping-cart"></i>
                             <span>Заказы</span>
                             <span class="label label-success pull-right">7</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('admin.calls.index') }}" class="waves-effect @if(Request::is('admin/requestedcalls*')) active @endif">
+                        <a href="{{ route('admin.calls.index') }}" class="waves-effect @if(Request::is('admin/calls*')) active @endif">
                             <i class="fa fa-phone"></i>
                             <span>Звонки</span>
                             <span class="label label-info pull-right">7</span>
