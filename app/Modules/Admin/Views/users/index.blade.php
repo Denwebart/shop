@@ -46,23 +46,8 @@ View::share('title', $title);
 
     <div class="row">
         <div class="col-lg-12">
-            <div class="card-box">
-                <div id="table-container" class="table-responsive m-b-20">
-                    @include('admin::users.table')
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="count-container m-t-8">
-                            @include('parts.count', ['models' => $users])
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="pagination-container pull-right">
-                            @include('parts.pagination', ['models' => $users])
-                        </div>
-                    </div>
-                </div>
+            <div id="table-container">
+                @include('admin::users.table')
             </div>
         </div><!-- end col -->
     </div>

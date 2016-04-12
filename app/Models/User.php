@@ -56,6 +56,12 @@ class User extends Authenticatable
 		self::ROLE_MANAGER => 'Менеджер',
 		self::ROLE_USER    => 'Пользователь',
 	];
+	
+	public static $rolesClass = [
+		self::ROLE_ADMIN   => 'success',
+		self::ROLE_MANAGER => 'info',
+		self::ROLE_USER    => 'primary',
+	];
 
     /**
      * The attributes that are mass assignable.
@@ -101,6 +107,10 @@ class User extends Authenticatable
 	public function isAdmin()
 	{
 		return $this->role == self::ROLE_ADMIN ? true : false;
+	}
+
+	public function getFullName() {
+		return $this->firstname . ' ' . $this->lastname;
 	}
 
 }
