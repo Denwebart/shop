@@ -119,6 +119,7 @@ class Order extends Model
 	public function groupedProducts()
 	{
 		return $this->belongsToMany('App\Models\Product', 'orders_products')
-			->groupBy('order_id')->select(\DB::raw('*, count(*) as quantity'));
+			->select(\DB::raw('*, count(*) as quantity, products.id as id'))
+			->groupBy('orders_products.product_id', 'orders_products.order_id');
 	}
 }
