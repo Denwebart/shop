@@ -18,6 +18,7 @@
 
 namespace App\Models;
 
+use App\Helpers\Str;
 use Illuminate\Database\Eloquent\Model;
 
 class OrderProduct extends Model
@@ -36,4 +37,12 @@ class OrderProduct extends Model
 		'product_id',
 		'price',
 	];
+
+	/**
+	 * @return mixed
+	 */
+	public function getPrice()
+	{
+		return Str::priceFormat($this->price);
+	}
 }

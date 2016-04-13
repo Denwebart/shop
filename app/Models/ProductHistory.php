@@ -20,6 +20,7 @@
 
 namespace App\Models;
 
+use App\Helpers\Str;
 use Illuminate\Database\Eloquent\Model;
 
 class ProductHistory extends Model
@@ -39,4 +40,12 @@ class ProductHistory extends Model
 		'date_start',
 		'date_end',
 	];
+
+	/**
+	 * @return mixed
+	 */
+	public function getPrice()
+	{
+		return Str::priceFormat($this->price);
+	}
 }

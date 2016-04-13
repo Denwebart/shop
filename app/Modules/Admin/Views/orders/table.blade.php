@@ -36,7 +36,7 @@
                         @endforeach
                     </ul>
                 </td>
-                <td>{{ $order->total_price }} руб.</td>
+                <td>{{ $order->getTotalPrice() }}</td>
                 <td>{{ date('j.m.Y в H:i', strtotime($order->created_at)) }}</td>
                 <td>
                     <span class="label @if($order->status) label-{{ \App\Models\Order::$statusesClass[$order->status] }} @endif">

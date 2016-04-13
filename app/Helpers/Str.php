@@ -50,4 +50,17 @@ class Str
 
 		return $phone;
 	}
+
+	/**
+	 * Формат цены
+	 *
+	 * @param $price
+	 * @return string
+	 */
+	public static function priceFormat($price)
+	{
+		$afterPoint = 0;
+		$currency = ' руб.';
+		return number_format($price, $afterPoint, '.', ' ') . $currency;
+	}
 }

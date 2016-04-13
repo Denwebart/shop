@@ -30,6 +30,7 @@
 
 namespace App\Models;
 
+use App\Helpers\Str;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
@@ -121,5 +122,13 @@ class Order extends Model
 		return $this->belongsToMany('App\Models\Product', 'orders_products')
 			->select(\DB::raw('*, count(*) as quantity, products.id as id'))
 			->groupBy('orders_products.product_id', 'orders_products.order_id');
+	}
+	
+	/**
+	 * @return mixed
+	 */
+	public function getTotalPrice()
+	{
+		return Str::priceFormat($this->total_price);
 	}
 }

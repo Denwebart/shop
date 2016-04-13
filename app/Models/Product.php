@@ -45,6 +45,7 @@
 
 namespace App\Models;
 
+use App\Helpers\Str;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
@@ -108,4 +109,11 @@ class Product extends Model
 		return $this->image ? asset($this->imagePath . $this->id . '/' . $this->image) : '';
 	}
 	
+	/**
+	 * @return mixed
+	 */
+	public function getPrice()
+	{
+		return Str::priceFormat($this->price);
+	}
 }
