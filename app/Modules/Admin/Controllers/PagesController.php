@@ -14,7 +14,6 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Validation\Validator;
 
@@ -56,37 +55,27 @@ class PagesController extends Controller
      */
     public function store(Request $request)
     {
-	    $data = Input::all();
-	    $image = Input::file('image');
-
-	    $data['user_id'] = Auth::user()->id;
-
-	    if($data['is_published']) {
-		    $data['published_at'] = Carbon::now();
-	    }
-
-	    if($data['parent_id']) {
-		    $parent = Page::findOrFail($data['parent_id']);
-		    if($parent->type == Page::TYPE_CATALOG && $data['is_container']) {
-			    $data['type'] = Page::TYPE_CATALOG;
-		    }
-	    }
+	    $page = new Page();
+	    $data = $page->setData($request->except('image'));
 
 	    $validator = \Validator::make($data, Page::rules());
 
 	    if ($validator->fails())
 	    {
-		    return redirect(route('admin.pages.create', ['back_url' => urlencode(Input::get('backUrl'))]))
+		    return redirect(route('admin.pages.create', ['back_url' => urlencode($request->get('backUrl'))]))
 			    ->withErrors($validator->errors())
 			    ->withInput()
-			    ->with('errorMessage', 'Исправьте ошибки валидации.');
+			    ->with('errorMessage', 'Страница не сохранена. Исправьте ошибки валидации.');
 	    } else {
-		    $page = Page::create($data);
+		    $page->create($data);
 
-		    if(Input::get('returnBack')) {
-			    return redirect(Input::get('backUrl'))->with('successMessage', 'Страница создана!');
+		    $page->setImage($request);
+		    $page->save();
+
+		    if($request->get('returnBack')) {
+			    return redirect($request->get('backUrl'))->with('successMessage', 'Страница создана!');
 		    } else {
-			    return redirect(route('admin.pages.edit', ['id' => $page->id, 'back_url' => urlencode(Input::get('backUrl'))]))->with('successMessage', 'Страница создана!');
+			    return redirect(route('admin.pages.edit', ['id' => $page->id, 'back_url' => urlencode($request->get('backUrl'))]))->with('successMessage', 'Страница создана!');
 		    }
 	    }
     }
@@ -127,31 +116,7 @@ class PagesController extends Controller
     public function update(Request $request, $id)
     {
 	    $page = Page::findOrFail($id);
-
-	    $data = Input::all();
-	    $image = Input::file('image');
-
-	    if ($data['is_published'] && is_null($page->published_at))
-	    {
-		    $data['published_at'] = Carbon::now();
-	    }
-	    elseif (!$data['is_published'])
-	    {
-		    $data['published_at'] = null;
-	    }
-
-	    if($page->type != Page::TYPE_SYSTEM_PAGE) {
-		    if($data['parent_id']) {
-			    $parent = Page::findOrFail($data['parent_id']);
-			    if($parent->type == Page::TYPE_CATALOG && $data['is_container']) {
-				    $data['type'] = Page::TYPE_CATALOG;
-			    } else {
-				    $data['type'] = Page::TYPE_PAGE;
-			    }
-		    } else {
-			    $data['type'] = Page::TYPE_PAGE;
-		    }
-	    }
+	    $data = $page->setData($request->except('image'));
 
 	    $rules = Page::rules($page->id);
 	    $messages = [];
@@ -164,18 +129,19 @@ class PagesController extends Controller
 
 	    if ($validator->fails())
 	    {
-		    return redirect(route('admin.pages.edit', ['id' => $page->id, 'back_url' => urlencode(Input::get('backUrl'))]))
+		    return redirect(route('admin.pages.edit', ['id' => $page->id, 'back_url' => urlencode($request->get('backUrl'))]))
 			    ->withErrors($validator->errors())
 			    ->withInput()
-			    ->with('errorMessage', 'Исправьте ошибки валидации.');
+			    ->with('errorMessage', 'Страница не сохранена. Исправьте ошибки валидации.');
 	    } else {
 		    $page->fill($data);
+		    $page->setImage($request);
 		    $page->save();
 
-		    if(Input::get('returnBack')) {
-			    return redirect(Input::get('backUrl'))->with('successMessage', 'Страница сохранена!');
+		    if($request->get('returnBack')) {
+			    return redirect($request->get('backUrl'))->with('successMessage', 'Страница сохранена!');
 		    } else {
-			    return redirect(route('admin.pages.edit', ['id' => $page->id, 'back_url' => urlencode(Input::get('backUrl'))]))->with('successMessage', 'Страница сохранена!');
+			    return redirect(route('admin.pages.edit', ['id' => $page->id, 'back_url' => urlencode($request->get('backUrl'))]))->with('successMessage', 'Страница сохранена!');
 		    }
 	    }
     }

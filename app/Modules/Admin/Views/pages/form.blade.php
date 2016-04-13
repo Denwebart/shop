@@ -9,6 +9,7 @@
 
 {!! Form::hidden('backUrl', $backUrl) !!}
 {!! Form::hidden('returnBack', 1, ['id' => 'returnBack']) !!}
+{!! Form::hidden('deleteImage', 0, ['id' => 'deleteImage']) !!}
 
 <div class="row">
     <div class="col-lg-6 col-sm-12 col-xs-12 m-b-15">
@@ -250,7 +251,7 @@
     <script type="text/javascript">
 
         // Image Uploader
-        $('.dropify').dropify({
+        var drEvent = $('.dropify').dropify({
             messages: {
                 'default': 'Кликните или перетащите файл.',
                 'replace': 'Кликните или перетащите файл для замены.',
@@ -260,6 +261,10 @@
             error: {
                 'fileSize': 'Размер файла слишком большой (максимум 1Мб).'
             }
+        });
+
+        drEvent.on('dropify.afterClear', function(event, element){
+            $('#deleteImage').val(1);
         });
 
         // WYSIWYG

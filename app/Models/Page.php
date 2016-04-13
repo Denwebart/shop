@@ -47,12 +47,15 @@ namespace App\Models;
 
 use App\Helpers\Translit;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Intervention\Image\Facades\Image;
 
 class Page extends Model
 {
 	protected $table = 'pages';
 
-	protected $imagePath = 'uploads/pages/';
+	protected $imagePath = '/uploads/pages/';
 
 	/**
 	 * Тип страницы (значение поля type)
@@ -143,6 +146,15 @@ class Page extends Model
 		}
 		return $rules;
 	}
+
+//	public function rules()
+//	{
+//		return [
+//			'name'        => 'required',
+//			'sku'         => 'required|unique:products,sku,' . $this->get('id'),
+//			'image'       => 'required|mimes:png'
+//		];
+//	}
 
 
 	public static function boot()
@@ -255,4 +267,114 @@ class Page extends Model
 		return $array;
 	}
 	
+	/**
+	 * Заполнение данных при создании и редактировании
+	 * 
+	 * @param $data
+	 * @return mixed
+	 */
+	public function setData($data)
+	{
+		if ($data['is_published'] && is_null($this->published_at)) {
+			$data['published_at'] = Carbon::now();
+		} elseif (!$data['is_published']) {
+			$data['published_at'] = null;
+		}
+
+		if($this->type != Page::TYPE_SYSTEM_PAGE) {
+			if($data['parent_id']) {
+				$parent = Page::findOrFail($data['parent_id']);
+				if($parent->type == Page::TYPE_CATALOG && $data['is_container']) {
+					$data['type'] = Page::TYPE_CATALOG;
+				} else {
+					$data['type'] = Page::TYPE_PAGE;
+				}
+			} else {
+				$data['type'] = Page::TYPE_PAGE;
+			}
+		}
+
+		$data['user_id'] = $this->user_id ? $this->user_id : Auth::user()->id;
+
+		return $data;
+	}
+
+	/**
+	 * Image uploading
+	 *
+	 * @param Request $request
+	 * @return bool
+	 */
+	public function setImage(Request $request)
+	{
+		$postImage = $request->file('image');
+		if (isset($postImage)) {
+			$fileName = Translit::generateFileName($postImage->getClientOriginalName());
+			$imagePath = public_path() . $this->imagePath . $this->id . '/';
+			$image = Image::make($postImage->getRealPath());
+			File::exists($imagePath) or File::makeDirectory($imagePath, 0755, true);
+
+			// delete old image
+			$this->deleteImage();
+
+//			if (Config::get('settings.maxImageWidth') && $image->width() > Config::get('settings.maxImageWidth')) {
+//				$image->resize(Config::get('settings.maxImageWidth'), null, function ($constraint) {
+//					$constraint->aspectRatio();
+//				});
+//			}
+//			if (Config::get('settings.maxImageHeight') && $image->height() > Config::get('settings.maxImageHeight')) {
+//				$image->resize(null, Config::get('settings.maxImageHeight'), function ($constraint) {
+//					$constraint->aspectRatio();
+//				});
+//			}
+			$watermark = Image::make(public_path('images/watermark.png'));
+			$watermark->resize(($image->width() * 2) / 3, null, function ($constraint) {
+				$constraint->aspectRatio();
+			})->save($imagePath . 'watermark.png');
+
+			$image->insert($imagePath . 'watermark.png', 'center')
+				->save($imagePath . $fileName);
+//				->save($imagePath . 'origin_' . $fileName);
+			
+			if (File::exists($imagePath . 'watermark.png')) {
+				File::delete($imagePath . 'watermark.png');
+			}
+			
+//			if ($image->width() > 225) {
+//				$image->resize(225, null, function ($constraint) {
+//					$constraint->aspectRatio();
+//				})
+//					->save($imagePath . $fileName);
+//			} else {
+//				$image->save($imagePath . $fileName);
+//			}
+//			$cropSize = ($image->width() < $image->height()) ? $image->width() : $image->height();
+//			$image->crop($cropSize, $cropSize)
+//				->resize(50, null, function ($constraint) {
+//					$constraint->aspectRatio();
+//				})->save($imagePath . 'mini_' . $fileName);
+			
+			$this->image = $fileName;
+			return true;
+		} else {
+			if($request->get('deleteImage')) {
+				$this->deleteImage();
+				return true;
+			}
+			return false;
+		}
+	}
+
+	/**
+	 * Delete old image
+	 */
+	public function deleteImage()
+	{
+		$imagePath = public_path() . $this->imagePath . $this->id . '/';
+		// delete old image
+		if(File::exists($imagePath . $this->image)) {
+			File::delete($imagePath . $this->image);
+		}
+		$this->image = null;
+	}
 }
