@@ -45,6 +45,7 @@
 
 namespace App\Models;
 
+use App\Helpers\Translit;
 use Illuminate\Database\Eloquent\Model;
 
 class Page extends Model
@@ -103,6 +104,61 @@ class Page extends Model
 	];
 
 	/**
+	 * @var array Validation rules
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	protected static $rules = [
+		'alias' => 'unique:pages,alias,:id|max:500|regex:/^[A-Za-z0-9\-]+$/u',
+		'parent_id' => 'integer',
+		'user_id' => 'integer',
+		'type' => 'integer',
+		'is_published' => 'boolean',
+		'is_container' => 'boolean',
+		'title' => 'required_without:menu_title|max:250',
+		'menu_title' => 'required_without:title|max:50',
+		'image' => 'image|max:3072',
+		'image_alt' => 'max:350',
+		'meta_title' => 'max:300',
+		'meta_desc' => 'max:300',
+		'meta_key' => 'max:300',
+	];
+
+	/**
+	 * Get validation rules
+	 * 
+	 * @param bool $id
+	 * @return array
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public static function rules($id = false)
+	{
+		$rules = self::$rules;
+		if ($id) {
+			foreach ($rules as &$rule) {
+				$rule = str_replace(':id', $id, $rule);
+			}
+		}
+		return $rules;
+	}
+
+
+	public static function boot()
+	{
+		parent::boot();
+
+		static::saving(function($page) {
+			if(!$page->isMain()) {
+				$page->alias = Translit::generateAlias($page->getTitle(), $page->alias);
+			} else {
+				$page->alias = '/';
+			}
+		});
+	}
+
+	/**
 	 * Родительская страница
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -132,6 +188,11 @@ class Page extends Model
 		return $this->hasMany('App\Models\Page', 'parent_id')
 			->whereIsPublished(1)
 			->where('published_at', '<', date('Y-m-d H:i:s'));
+	}
+
+	public function isMain()
+	{
+		return $this->id == 1 ? true : false;
 	}
 
 	/**
@@ -181,7 +242,7 @@ class Page extends Model
 
 		$pages = $query->get();
 		
-		$array = [];
+		$array[0] = '---';
 		foreach ($pages as $page) {
 			$array[$page->id] = $page->getTitle();
 
