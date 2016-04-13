@@ -98,6 +98,16 @@ class Order extends Model
 	}
 
 	/**
+	 * Менеджер, оформивший заказ
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function user()
+	{
+		return $this->belongsTo('App\Models\User', 'user_id');
+	}
+
+	/**
 	 * Товары (OrderProduct)
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\HasMany

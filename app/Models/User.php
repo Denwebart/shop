@@ -95,6 +95,36 @@ class User extends Authenticatable
     ];
 
 	/**
+	 * Принятые заказы
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function orders()
+	{
+		return $this->hasMany('App\Models\Order', 'user_id');
+	}
+
+	/**
+	 * Принятые звонки
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function requestedCalls()
+	{
+		return $this->hasMany('App\Models\RequestedCall', 'user_id');
+	}
+
+	/**
+	 * Комментарии
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function comments()
+	{
+		return $this->hasMany('App\Models\ProductReview', 'user_id');
+	}
+
+	/**
 	 * Get user's avatar path
 	 *
 	 * @return mixed

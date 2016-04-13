@@ -15,6 +15,7 @@
         <th>Сумма</th>
         <th>Дата заказа</th>
         <th>Статус</th>
+        <th>Менеджер</th>
         <th></th>
     </tr>
     </thead>
@@ -43,6 +44,12 @@
                         {{ \App\Models\Order::$statuses[$order->status] }}
                     </span>
                 </td>
+                <td>
+                    @if($order->user)
+                        <a href="{{ route('admin.users.show', ['id' => $order->user->id]) }}">
+                            {{ $order->user->login }}
+                        </a>
+                    @endif</td>
                 <td>
                     <a href="{{ route('admin.orders.show', ['id' => $order->id]) }}" title="Просмотреть" data-toggle="tooltip" class="m-r-15">
                         <i class="fa fa-eye fa-lg"></i>

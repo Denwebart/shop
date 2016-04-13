@@ -59,7 +59,9 @@ class UsersController extends Controller
 	 */
 	public function show($id)
 	{
-		dd('просмотр пользователя с id ' . $id);
+		$user = User::findOrFail($id);
+
+		return view('admin::users.show', compact('user'));
 	}
 	
 	/**
