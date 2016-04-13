@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3af8da1ed1e832371b335cfc0bc08673",
+    "hash": "f0122206115043d015ac58992183090c",
     "content-hash": "b9a4aa5377edff2867c50b5e6f83b896",
     "packages": [
         {
@@ -1099,16 +1099,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "1.18.2",
+            "version": "1.19.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "064b38c16790249488e7a8b987acf1c9d7383c09"
+                "reference": "5f56ed5212dc509c8dc8caeba2715732abb32dbf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/064b38c16790249488e7a8b987acf1c9d7383c09",
-                "reference": "064b38c16790249488e7a8b987acf1c9d7383c09",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/5f56ed5212dc509c8dc8caeba2715732abb32dbf",
+                "reference": "5f56ed5212dc509c8dc8caeba2715732abb32dbf",
                 "shasum": ""
             },
             "require": {
@@ -1173,7 +1173,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2016-04-02 13:12:58"
+            "time": "2016-04-12 18:29:35"
         },
         {
             "name": "mtdowling/cron-expression",
