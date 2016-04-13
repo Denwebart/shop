@@ -242,7 +242,7 @@ class Page extends Model
 
 		$pages = $query->get();
 		
-		$array = [];
+		$array[0] = '---';
 		foreach ($pages as $page) {
 			$array[$page->id] = $page->getTitle();
 

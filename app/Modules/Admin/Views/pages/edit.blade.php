@@ -41,11 +41,12 @@ View::share('title', $title);
     <div class="row">
         <div class="col-lg-12">
             <div class="card-box">
-                <form method="POST" class="form-horizontal" role="form" action="{{ route('admin.pages.update', ['id' => $page->id]) }}" id="main-form" enctype="multipart/form-data">
-                    <input type="hidden" name="_method" value="PUT">
+                {!! Form::model($page, ['route' => ['admin.pages.update', $page->id], 'class' => 'form-horizontal', 'id' => 'main-form', 'files' => true]) !!}
+                    {!! Form::hidden('_method', 'PUT') !!}
 
                     @include('admin::pages.form')
-                </form>
+
+                {!! Form::close() !!}
             </div>
         </div><!-- end col -->
     </div>

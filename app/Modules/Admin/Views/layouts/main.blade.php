@@ -13,6 +13,9 @@
     <!--Morris Chart CSS -->
     <link rel="stylesheet" href="{{ asset('backend/plugins/morris/morris.css') }}">
 
+    <!-- Notification css (Toastr) -->
+    <link href="{{ asset('backend/plugins/toastr/toastr.min.css') }}" rel="stylesheet" type="text/css" />
+
     @stack('styles')
 
     <!-- App css -->
@@ -346,9 +349,50 @@
 
 @stack('scripts')
 
+<!-- Toastr js -->
+<script src="{{ asset('backend/plugins/toastr/toastr.min.js') }}"></script>
+
 <!-- App js -->
 <script src="{{ asset('backend/js/jquery.core.js') }}"></script>
 <script src="{{ asset('backend/js/jquery.app.js') }}"></script>
+
+
+<script type="text/javascript">
+
+    @if(Session::has('successMessage'))
+        Command: toastr["success"]("{{ Session::get('successMessage') }}");
+    @endif
+
+    @if(Session::has('errorMessage'))
+        Command: toastr["error"]("{{ Session::get('errorMessage') }}");
+    @endif
+
+    @if(Session::has('warningMessage'))
+        Command: toastr["warning"]("{{ Session::get('warningMessage') }}");
+    @endif
+
+    @if(Session::has('infoMessage'))
+        Command: toastr["info"]("{{ Session::get('infoMessage') }}");
+    @endif
+
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": true,
+        "progressBar": false,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "3000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+</script>
 
 </body>
 </html>

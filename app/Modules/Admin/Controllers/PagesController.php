@@ -76,14 +76,17 @@ class PagesController extends Controller
 
 	    if ($validator->fails())
 	    {
-		    return redirect()->back()->withErrors($validator->errors())->withInput();
+		    return redirect(route('admin.pages.create', ['back_url' => urlencode(Input::get('backUrl'))]))
+			    ->withErrors($validator->errors())
+			    ->withInput()
+			    ->with('errorMessage', 'Исправьте ошибки валидации.');
 	    } else {
 		    $page = Page::create($data);
 
 		    if(Input::get('returnBack')) {
-			    return redirect(Input::get('backUrl'));
+			    return redirect(Input::get('backUrl'))->with('successMessage', 'Страница создана!');
 		    } else {
-			    return redirect(route('admin.pages.edit', ['id' => $page->id, 'back_url' => urlencode(Input::get('backUrl'))]));
+			    return redirect(route('admin.pages.edit', ['id' => $page->id, 'back_url' => urlencode(Input::get('backUrl'))]))->with('successMessage', 'Страница создана!');
 		    }
 	    }
     }
@@ -161,15 +164,18 @@ class PagesController extends Controller
 
 	    if ($validator->fails())
 	    {
-		    return redirect()->back()->withErrors($validator->errors())->withInput();
+		    return redirect(route('admin.pages.edit', ['id' => $page->id, 'back_url' => urlencode(Input::get('backUrl'))]))
+			    ->withErrors($validator->errors())
+			    ->withInput()
+			    ->with('errorMessage', 'Исправьте ошибки валидации.');
 	    } else {
 		    $page->fill($data);
 		    $page->save();
 
 		    if(Input::get('returnBack')) {
-			    return redirect(Input::get('backUrl'));
+			    return redirect(Input::get('backUrl'))->with('successMessage', 'Страница сохранена!');
 		    } else {
-			    return redirect(route('admin.pages.edit', ['id' => $page->id, 'back_url' => urlencode(Input::get('backUrl'))]));
+			    return redirect(route('admin.pages.edit', ['id' => $page->id, 'back_url' => urlencode(Input::get('backUrl'))]))->with('successMessage', 'Страница сохранена!');
 		    }
 	    }
     }
