@@ -30,7 +30,7 @@ View::share('title', $title);
                     <i class="fa fa-check"></i>
                     <span class="hidden-sm">Сохранить</span>
                 </button>
-                <a href="{{ URL::previous() }}" class="btn btn-primary btn-bordred waves-effect waves-light m-b-10 button-cancel">
+                <a href="{{ $backUrl }}" class="btn btn-primary btn-bordred waves-effect waves-light m-b-10 button-cancel">
                     <i class="fa fa-close"></i>
                     <span class="hidden-md hidden-sm">Отмена</span>
                 </a>
@@ -41,9 +41,11 @@ View::share('title', $title);
     <div class="row">
         <div class="col-lg-12">
             <div class="card-box">
-                <form method="POST" class="form-horizontal" role="form" action="{{ route('admin.products.store') }}" id="main-form">
+                {!! Form::model($product, ['route' => ['admin.products.store'], 'class' => 'form-horizontal', 'id' => 'main-form', 'files' => true]) !!}
+
                     @include('admin::products.form')
-                </form>
+
+                {!! Form::close() !!}
             </div>
         </div><!-- end col -->
     </div>
@@ -60,7 +62,7 @@ View::share('title', $title);
                     <i class="fa fa-check"></i>
                     <span class="hidden-sm">Сохранить</span>
                 </button>
-                <a href="{{ URL::previous() }}" class="btn btn-primary btn-bordred waves-effect waves-light m-b-10 button-cancel">
+                <a href="{{ $backUrl }}" class="btn btn-primary btn-bordred waves-effect waves-light m-b-10 button-cancel">
                     <i class="fa fa-close"></i>
                     <span class="hidden-md hidden-sm">Отмена</span>
                 </a>

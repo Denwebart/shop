@@ -8,12 +8,9 @@
 
 namespace App\Modules\Admin\Controllers;
 
-use App\Helpers\Translit;
 use App\Models\Page;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Validation\Validator;
 
@@ -56,7 +53,8 @@ class PagesController extends Controller
     public function store(Request $request)
     {
 	    $page = new Page();
-	    $data = $page->setData($request->except('image'));
+	    $data = $request->except('image');
+	    $data = array_merge($data, $page->setData($data));
 
 	    $validator = \Validator::make($data, Page::rules());
 
@@ -67,7 +65,8 @@ class PagesController extends Controller
 			    ->withInput()
 			    ->with('errorMessage', 'Страница не сохранена. Исправьте ошибки валидации.');
 	    } else {
-		    $page->create($data);
+		    $page->fill($data);
+		    $page->save();
 
 		    $page->setImage($request);
 		    $page->save();
@@ -116,7 +115,8 @@ class PagesController extends Controller
     public function update(Request $request, $id)
     {
 	    $page = Page::findOrFail($id);
-	    $data = $page->setData($request->except('image'));
+	    $data = $request->except('image');
+	    $data = array_merge($data, $page->setData($data));
 
 	    $rules = Page::rules($page->id);
 	    $messages = [];

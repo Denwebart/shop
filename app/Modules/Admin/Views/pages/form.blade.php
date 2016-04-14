@@ -84,7 +84,7 @@
         <div class="form-group">
             <div class="col-sm-6 col-md-6 @if($errors->has('image')) has-error @endif">
                 {!! Form::label('image', 'Изображение для страницы', ['class' => 'control-label m-b-5']) !!}
-                {!! Form::file('image', ['id' => 'image', 'class' => 'dropify', 'data-default-file' => $page->getImagePath(), 'data-max-file-size' => '3M']) !!}
+                {!! Form::file('image', ['id' => 'image', 'class' => 'dropify', 'data-default-file' => $page->getImageUrl(), 'data-max-file-size' => '3M']) !!}
                 <span class="help-block @if($errors->has('image')) hidden @endif">
                     <small>
                         Изображение отображается перед текстом страницы
@@ -259,7 +259,7 @@
                 'error': 'Ошибка.'
             },
             error: {
-                'fileSize': 'Размер файла слишком большой (максимум 1Мб).'
+                'fileSize': 'Размер файла слишком большой (максимум 3Мб).'
             }
         });
 
@@ -277,7 +277,6 @@
                 focus: false                  // set focus to editable area after initializing summernote
             });
         });
-
 
         // Buttons
         $(document).on('click', '.button-save-exit', function() {

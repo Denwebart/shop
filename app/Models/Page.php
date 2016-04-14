@@ -45,10 +45,11 @@
 
 namespace App\Models;
 
-use App\Helpers\Str;
 use App\Helpers\Translit;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 
@@ -148,16 +149,6 @@ class Page extends Model
 		return $rules;
 	}
 
-//	public function rules()
-//	{
-//		return [
-//			'name'        => 'required',
-//			'sku'         => 'required|unique:products,sku,' . $this->get('id'),
-//			'image'       => 'required|mimes:png'
-//		];
-//	}
-
-
 	public static function boot()
 	{
 		parent::boot();
@@ -211,7 +202,14 @@ class Page extends Model
 			->whereIsPublished(1)
 			->where('published_at', '<', date('Y-m-d H:i:s'));
 	}
-
+	
+	/**
+	 * Is main page?
+	 * @return bool
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
 	public function isMain()
 	{
 		return $this->id == 1 ? true : false;
@@ -230,13 +228,13 @@ class Page extends Model
 	}
 
 	/**
-	 * Get image path
+	 * Get image url
 	 *
 	 * @return mixed
 	 * @author     It Hill (it-hill.com@yandex.ua)
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
-	public function getImagePath()
+	public function getImageUrl()
 	{
 		return $this->image ? asset($this->imagePath . $this->id . '/' . $this->image) : '';
 	}
@@ -245,12 +243,13 @@ class Page extends Model
 	 * Get categories array
 	 *
 	 * @param bool $pageType
+	 * @param bool $empty
 	 * @return array List of categories (id => title)
 	 *
 	 * @author     It Hill (it-hill.com@yandex.ua)
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
-	public static function getCategory($pageType = false)
+	public static function getCategory($pageType = false, $empty = true)
 	{
 		$query = new Page();
 		$query = $query->select('id', 'parent_id', 'alias', 'title', 'menu_title', 'is_container', 'type');
@@ -264,7 +263,10 @@ class Page extends Model
 
 		$pages = $query->get();
 		
-		$array[0] = '---';
+		$array = [];
+		if($empty) {
+			$array[0] = '---';
+		}
 		foreach ($pages as $page) {
 			$array[$page->id] = $page->getTitle();
 

@@ -24,7 +24,7 @@
             <tr @if(!$product->is_published) class="not-published" @endif>
                 <td>{{ $product->id }}</td>
                 <td>
-                    <img src="{{ $product->getImagePath() }}" alt="{{ $product->image_alt }}" width="100">
+                    <img src="{{ $product->getImageUrl() }}" alt="{{ $product->image_alt }}" width="100">
                 </td>
                 <td>{{ $product->vendor_code }}</td>
                 <td>{{ $product->title }}</td>
