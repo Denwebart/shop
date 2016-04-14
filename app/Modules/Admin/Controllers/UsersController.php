@@ -21,7 +21,7 @@ class UsersController extends Controller
 	 */
 	public function index()
 	{
-		$users = User::select('id', 'login', 'email', 'role', 'firstname', 'lastname', 'avatar', 'is_active', 'created_at')
+		$users = User::select('id', 'login', 'email', 'role', 'phone', 'firstname', 'lastname', 'avatar', 'is_active', 'created_at')
 			->paginate(10);
 
 		return view('admin::users.index', compact('users'));
@@ -47,8 +47,30 @@ class UsersController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		var_dump('создание пользователя');
-		dd(Input::all());
+		$user = new User();
+		$data = $request->except('avatar');
+
+		$validator = \Validator::make($data, User::rules());
+
+		if ($validator->fails())
+		{
+			return redirect(route('admin.users.create', ['back_url' => urlencode($request->get('backUrl'))]))
+				->withErrors($validator->errors())
+				->withInput()
+				->with('errorMessage', 'Информация о пользователе не сохранена. Исправьте ошибки валидации.');
+		} else {
+			$user->fill($data);
+			$user->save();
+
+			$user->setImage($request);
+			$user->save();
+
+			if($request->get('returnBack')) {
+				return redirect($request->get('backUrl'))->with('successMessage', 'Пользователь создан!');
+			} else {
+				return redirect(route('admin.users.edit', ['id' => $user->id, 'back_url' => urlencode($request->get('backUrl'))]))->with('successMessage', 'Пользователь создан!');
+			}
+		}
 	}
 	
 	/**
@@ -72,7 +94,11 @@ class UsersController extends Controller
 	 */
 	public function edit($id)
 	{
-		return view('admin::users.edit');
+		$user = User::findOrFail($id);
+
+		$backUrl = \Request::has('back_url') ? urldecode(\Request::get('back_url')) : \URL::previous();
+		
+		return view('admin::users.edit', compact('user', 'backUrl'));
 	}
 
 	/**
@@ -84,7 +110,28 @@ class UsersController extends Controller
 	 */
 	public function update(Request $request, $id)
 	{
-		//
+		$user = User::findOrFail($id);
+		$data = $request->except('avatar');
+		
+		$validator = \Validator::make($data, User::rules($user->id));
+		
+		if ($validator->fails())
+		{
+			return redirect(route('admin.users.edit', ['id' => $user->id, 'back_url' => urlencode($request->get('backUrl'))]))
+				->withErrors($validator->errors())
+				->withInput()
+				->with('errorMessage', 'Информация о пользователе не сохранена. Исправьте ошибки валидации.');
+		} else {
+			$user->fill($data);
+			$user->setImage($request);
+			$user->save();
+			
+			if($request->get('returnBack')) {
+				return redirect($request->get('backUrl'))->with('successMessage', 'Информация о пользователе сохранена!');
+			} else {
+				return redirect(route('admin.users.edit', ['id' => $user->id, 'back_url' => urlencode($request->get('backUrl'))]))->with('successMessage', 'Информация о пользователе сохранена!');
+			}
+		}
 	}
 	
 	/**
