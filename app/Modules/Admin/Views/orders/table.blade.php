@@ -29,7 +29,7 @@
                     <ul class="products-list">
                         @foreach($order->groupedProducts as $product)
                             <li>
-                                <img src="{{ $product->getImagePath() }}" alt="{{ $product->image_alt }}" width="50">
+                                <img src="{{ $product->getImageUrl() }}" alt="{{ $product->image_alt }}" width="50">
                                 {{ $product->title }}
                                 ({{ $product->vendor_code }})
                                 x {{ $product->quantity }}

@@ -51,7 +51,7 @@
         {{--<div class="form-group">--}}
             {{--<div class="col-sm-6 col-md-6">--}}
                 {{--<label class="control-label m-b-5" for="image">Изображение для страницы</label>--}}
-                {{--<input name="image" id="image" type="file" class="dropify" data-default-file="{{ $product->getImagePath() }}" data-max-file-size="1M" />--}}
+                {{--<input name="image" id="image" type="file" class="dropify" data-default-file="{{ $product->getImageUrl() }}" data-max-file-size="1M" />--}}
                 {{--<span class="help-block">--}}
                     {{--<small>--}}
                         {{--Изображение отображается перед текстом страницы--}}

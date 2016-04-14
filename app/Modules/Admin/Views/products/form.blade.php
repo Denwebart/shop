@@ -7,104 +7,154 @@
 
 {!! csrf_field() !!}
 
-<input name="backUrl" type="hidden" value="{{ URL::previous() }}">
+{!! Form::hidden('backUrl', $backUrl) !!}
+{!! Form::hidden('returnBack', 1, ['id' => 'returnBack']) !!}
+{!! Form::hidden('deleteImage', 0, ['id' => 'deleteImage']) !!}
 
 <div class="row">
     <div class="col-lg-6 col-sm-12 col-xs-12 m-b-15">
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="parent_id">Категория</label>
+        <div class="form-group @if($errors->has('category_id')) has-error @endif">
+            {!! Form::label('category_id', 'Категория', ['class' => 'col-md-2 control-label']) !!}
             <div class="col-md-10">
-                <select name="parent_id" id="parent_id" class="form-control">
-                    <option value="0" @if($product->parent_id == 0) selected @endif> --- </option>
-                    @foreach(\App\Models\Page::getCategory(\App\Models\Page::TYPE_CATALOG) as $categoryId => $categoryTitle)
-                        <option value="{{ $categoryId }}" @if($product->parent_id == $categoryId) selected @endif>
-                            {{ $categoryTitle }}
-                        </option>
-                    @endforeach
-                </select>
+                {!! Form::select('category_id', \App\Models\Page::getCategory(\App\Models\Page::TYPE_CATALOG, false), $product->category_id, ['id' => 'category_id', 'class' => 'form-control']) !!}
+                @if ($errors->has('category_id'))
+                    <span class="help-block error">
+                        <strong>{{ $errors->first('category_id') }}</strong>
+                    </span>
+                @endif
+            </div>
+        </div>
+        <div class="form-group @if($errors->has('alias')) has-error @endif">
+            {!! Form::label('alias', 'Алиас', ['class' => 'col-md-2 control-label']) !!}
+            <div class="col-md-10">
+                {!! Form::text('alias', $product->alias, ['id' => 'alias', 'class' => 'form-control']) !!}
+
+                @if ($errors->has('alias'))
+                    <span class="help-block error">
+                        <strong>{{ $errors->first('alias') }}</strong>
+                    </span>
+                @endif
+            </div>
+        </div>
+        <div class="form-group @if($errors->has('vendor_code')) has-error @endif">
+            {!! Form::label('vendor_code', 'Артикул', ['class' => 'col-md-2 control-label']) !!}
+            <div class="col-md-10">
+                {!! Form::text('vendor_code', $product->vendor_code, ['id' => 'vendor_code', 'class' => 'form-control']) !!}
+
+                @if ($errors->has('vendor_code'))
+                    <span class="help-block error">
+                        <strong>{{ $errors->first('vendor_code') }}</strong>
+                    </span>
+                @endif
+            </div>
+        </div>
+        <div class="form-group @if($errors->has('title')) has-error @endif">
+            {!! Form::label('title', 'Заголовок', ['class' => 'col-md-2 control-label']) !!}
+            <div class="col-md-10">
+                {!! Form::text('title', $product->title, ['id' => 'title', 'class' => 'form-control']) !!}
+
+                @if ($errors->has('title'))
+                    <span class="help-block error">
+                        <strong>{{ $errors->first('title') }}</strong>
+                    </span>
+                @endif
+            </div>
+        </div>
+        <div class="form-group @if($errors->has('price')) has-error @endif">
+            {!! Form::label('price', 'Цена', ['class' => 'col-md-2 control-label']) !!}
+            <div class="col-md-10">
+                {!! Form::text('price', $product->price, ['id' => 'price', 'class' => 'form-control']) !!}
+
+                @if ($errors->has('price'))
+                    <span class="help-block error">
+                        <strong>{{ $errors->first('price') }}</strong>
+                    </span>
+                @endif
             </div>
         </div>
         <div class="form-group">
-            <label class="col-md-2 control-label" for="alias">Алиас</label>
-            <div class="col-md-10">
-                <input name="alias" id="alias" type="text" class="form-control" value="{{ $product->alias }}">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="vendor_code">Артикул</label>
-            <div class="col-md-10">
-                <input name="vendor_code" id="vendor_code" type="text" class="form-control" value="{{ $product->menu_title }}">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="title">Заголовок</label>
-            <div class="col-md-10">
-                <input name="title" id="title" type="text" class="form-control" value="{{ $product->title }}">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="title">Цена</label>
-            <div class="col-md-10">
-                <input name="title" id="title" type="text" class="form-control" value="{{ $product->price }}">
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-6 col-md-6">
-                <label class="control-label m-b-5" for="image">Изображение для страницы</label>
-                <input name="image" id="image" type="file" class="dropify" data-default-file="{{ $product->getImagePath() }}" data-max-file-size="1M" />
-                <span class="help-block">
+            <div class="col-sm-6 col-md-6 @if($errors->has('image')) has-error @endif">
+                {!! Form::label('image', 'Изображение для страницы', ['class' => 'control-label m-b-5']) !!}
+                {!! Form::file('image', ['id' => 'image', 'class' => 'dropify', 'data-default-file' => $product->getImageUrl(), 'data-max-file-size' => '3M']) !!}
+                <span class="help-block @if($errors->has('image')) hidden @endif">
                     <small>
                         Изображение отображается перед текстом страницы
                         и при выводе страниц блогом.
                     </small>
                 </span>
+                @if ($errors->has('image'))
+                    <span class="help-block error">
+                        <strong>{{ $errors->first('image') }}</strong>
+                    </span>
+                @endif
             </div>
-            <div class="col-sm-6 col-md-6">
-                <label class="control-label m-b-5" for="image_alt">Альт для изображения</label>
-                <textarea name="image_alt" id="image_alt" class="form-control" rows="8">
-                    {{ $product->image_alt }}
-                </textarea>
+            <div class="col-sm-6 col-md-6 @if($errors->has('image_alt')) has-error @endif">
+                {!! Form::label('image_alt', 'Альт для изображения', ['class' => 'control-label m-b-5']) !!}
+                {!! Form::textarea('image_alt', $product->image_alt, ['id' => 'image_alt', 'class' => 'form-control', 'rows' => 8]) !!}
+
+                @if ($errors->has('image_alt'))
+                    <span class="help-block error">
+                        <strong>{{ $errors->first('image_alt') }}</strong>
+                    </span>
+                @endif
             </div>
         </div>
     </div><!-- end col -->
 
     <div class="col-lg-6 col-sm-12 col-xs-12 m-b-15">
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="meta_title">Мета-тег Title</label>
+        <div class="form-group @if($errors->has('meta_title')) has-error @endif">
+            {!! Form::label('meta_title', 'Мета-тег Title', ['class' => 'col-md-2 control-label']) !!}
             <div class="col-md-10">
-                <textarea name="meta_title" id="meta_title" class="form-control" rows="2">{{ $product->meta_title }}</textarea>
-                <span class="help-block">
+                {!! Form::textarea('meta_title', $product->meta_title, ['id' => 'meta_title', 'class' => 'form-control', 'rows' => 2]) !!}
+
+                <span class="help-block @if($errors->has('meta_title')) hidden @endif">
                     <small>Самый важный SEO-тег. Рекомендуемая длина - 65 символов.</small>
                 </span>
+                @if ($errors->has('meta_title'))
+                    <span class="help-block error">
+                        <strong>{{ $errors->first('meta_title') }}</strong>
+                    </span>
+                @endif
             </div>
         </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="meta_desc">Мета-тег Description</label>
+        <div class="form-group @if($errors->has('meta_desc')) has-error @endif">
+            {!! Form::label('meta_desc', 'Мета-тег Description', ['class' => 'col-md-2 control-label']) !!}
             <div class="col-md-10">
-                <textarea name="meta_desc" id="meta_desc" class="form-control" rows="3">{{ $product->meta_desc }}</textarea>
-                <span class="help-block">
+                {!! Form::textarea('meta_desc', $product->meta_desc, ['id' => 'meta_desc', 'class' => 'form-control', 'rows' => 3]) !!}
+
+                <span class="help-block @if($errors->has('meta_desc')) hidden @endif">
                     <small>Второй по важности SEO-тег. Рекомендуемая длина - 160 символов.</small>
                 </span>
+                @if ($errors->has('meta_desc'))
+                    <span class="help-block error">
+                        <strong>{{ $errors->first('meta_desc') }}</strong>
+                    </span>
+                @endif
             </div>
         </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="meta_key">Мета-тег Keywords</label>
+        <div class="form-group @if($errors->has('meta_key')) has-error @endif">
+            {!! Form::label('meta_key', 'Мета-тег Keywords', ['class' => 'col-md-2 control-label']) !!}
             <div class="col-md-10">
-                <textarea name="meta_key" id="meta_key" class="form-control" rows="3">{{ $product->meta_key }}</textarea>
-                <span class="help-block">
+                {!! Form::textarea('meta_key', $product->meta_key, ['id' => 'meta_key', 'class' => 'form-control', 'rows' => 3]) !!}
+
+                <span class="help-block @if($errors->has('meta_key')) hidden @endif">
                     <small>Необязательный SEO-тег. Существительные в единственном числе через запятую.</small>
                 </span>
+                @if ($errors->has('meta_key'))
+                    <span class="help-block error">
+                        <strong>{{ $errors->first('meta_key') }}</strong>
+                    </span>
+                @endif
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group @if($errors->has('is_published')) has-error @endif">
             <div class="switchery-demo m-b-5">
                 <div class="col-md-2">
                 </div>
                 <div class="col-md-4">
-                    <input name="is_published" id="is_published" type="checkbox" @if($product->is_published) checked @endif data-plugin="switchery" data-color="#3bafda" data-size="small"/>
-                    <label class="control-label m-l-5" for="is_published">
-                        Опубликован
-                    </label>
+                    {!! Form::hidden('is_published', 0) !!}
+                    {!! Form::checkbox('is_published', 1, $product->is_published, ['id' => 'is_published', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
+                    {!! Form::label('is_published', 'Опубликован', ['class' => 'control-label m-l-5']) !!}
                 </div>
                 <div class="col-md-6">
                     @if(!$product->published_at)
@@ -112,25 +162,44 @@
                     @else
                         {{ \App\Helpers\Date::format($product->published_at, true) }}
                     @endif
+
+                    @if ($errors->has('is_published'))
+                        <span class="help-block error">
+                            <strong>{{ $errors->first('is_published') }}</strong>
+                        </span>
+                    @endif
                 </div>
+
             </div>
         </div>
     </div><!-- end col -->
 
     <div class="col-md-7 col-sm-12 col-xs-12">
-        <div class="form-group">
+        <div class="form-group @if($errors->has('content')) has-error @endif">
             <div class="col-md-12">
-                <label class="control-label m-b-5" for="content">Описание товара</label>
-                <textarea name="content" id="content" class="form-control editor" rows="10">{{ $product->content }}</textarea>
+                {!! Form::label('content', 'Текст страницы', ['class' => 'control-label m-b-5']) !!}
+                {!! Form::textarea('content', $product->content, ['id' => 'content', 'class' => 'form-control editor', 'rows' => 10]) !!}
+
+                @if ($errors->has('content'))
+                    <span class="help-block error">
+                        <strong>{{ $errors->first('content') }}</strong>
+                    </span>
+                @endif
             </div>
         </div>
     </div>
 
     <div class="col-md-5 col-sm-12 col-xs-12">
-        <div class="form-group">
+        <div class="form-group @if($errors->has('introtext')) has-error @endif">
             <div class="col-md-12">
-                <label class="control-label m-b-5" for="introtext">Краткое описание товара</label>
-                <textarea name="introtext" id="introtext" class="form-control editor" rows="10">{{ $product->introtext }}</textarea>
+                {!! Form::label('introtext', 'Краткое описание страницы', ['class' => 'control-label m-b-5']) !!}
+                {!! Form::textarea('introtext', $product->introtext, ['id' => 'introtext', 'class' => 'form-control editor', 'rows' => 10]) !!}
+
+                @if ($errors->has('introtext'))
+                    <span class="help-block error">
+                        <strong>{{ $errors->first('introtext') }}</strong>
+                    </span>
+                @endif
             </div>
         </div>
     </div>
@@ -150,9 +219,9 @@
     <script src="{{ asset('backend/plugins/summernote/lang/summernote-ru-RU.js') }}"></script>
 
     <script type="text/javascript">
-
+    
         // Image Uploader
-        $('.dropify').dropify({
+        var drEvent = $('.dropify').dropify({
             messages: {
                 'default': 'Кликните или перетащите файл.',
                 'replace': 'Кликните или перетащите файл для замены.',
@@ -160,10 +229,14 @@
                 'error': 'Ошибка.'
             },
             error: {
-                'fileSize': 'Размер файла слишком большой (максимум 1Мб).'
+                'fileSize': 'Размер файла слишком большой (максимум 3Мб).'
             }
         });
-
+    
+        drEvent.on('dropify.afterClear', function(event, element){
+            $('#deleteImage').val(1);
+        });
+    
         // WYSIWYG
         $(document).ready(function() {
             $('.editor').summernote({
@@ -174,17 +247,15 @@
                 focus: false                  // set focus to editable area after initializing summernote
             });
         });
-
+        
         // Buttons
         $(document).on('click', '.button-save-exit', function() {
             $("#main-form").submit();
         });
         $(document).on('click', '.button-save', function() {
+            $("#returnBack").val('0');
             $("#main-form").submit();
         });
-        $(document).on('click', '.button-cancel', function() {
-            $("#main-form").submit();
-        });
-
+    
     </script>
 @endpush

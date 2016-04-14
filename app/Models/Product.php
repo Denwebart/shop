@@ -46,13 +46,19 @@
 namespace App\Models;
 
 use App\Helpers\Str;
+use App\Helpers\Translit;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Intervention\Image\Facades\Image;
 
 class Product extends Model
 {
 	protected $table = 'products';
 
-	protected $imagePath = 'uploads/products/';
+	protected $imagePath = '/uploads/products/';
 
 	/**
 	 * Статус публикации (значение поля is_published)
@@ -74,6 +80,7 @@ class Product extends Model
 		'category_id',
 		'user_id',
 		'alias',
+		'vendor_code',
 		'is_published',
 		'title',
 		'price',
@@ -86,6 +93,55 @@ class Product extends Model
 		'meta_desc',
 		'meta_key',
 	];
+	
+	/**
+	 * @var array Validation rules
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	protected static $rules = [
+		'category_id' => 'required|integer',
+		'user_id' => 'integer',
+		'alias' => 'unique:products,alias,:id|max:500|regex:/^[A-Za-z0-9\-]+$/u',
+		'vendor_code' => 'unique:products,vendor_code,:id|max:50|regex:/^[А-Яа-яA-Za-z0-9\-]+$/u',
+		'is_published' => 'boolean',
+		'title' => 'required|max:250',
+		'price' => 'required|numeric|between:0,9999999999.99',
+		'image' => 'image|max:3072',
+		'image_alt' => 'max:350',
+		'meta_title' => 'max:300',
+		'meta_desc' => 'max:300',
+		'meta_key' => 'max:300',
+	];
+	
+	/**
+	 * Get validation rules
+	 *
+	 * @param bool $id
+	 * @return array
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public static function rules($id = false)
+	{
+		$rules = self::$rules;
+		if ($id) {
+			foreach ($rules as &$rule) {
+				$rule = str_replace(':id', $id, $rule);
+			}
+		}
+		return $rules;
+	}
+
+	public static function boot()
+	{
+		parent::boot();
+
+		static::saving(function($product) {
+			$product->alias = Translit::generateAlias($product->title, $product->alias);
+		});
+	}
 
 	/**
 	 * Категория
@@ -98,13 +154,13 @@ class Product extends Model
 	}
 
 	/**
-	 * Get image path
+	 * Get image url
 	 *
 	 * @return mixed
 	 * @author     It Hill (it-hill.com@yandex.ua)
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
-	public function getImagePath()
+	public function getImageUrl()
 	{
 		return $this->image ? asset($this->imagePath . $this->id . '/' . $this->image) : '';
 	}
@@ -115,5 +171,112 @@ class Product extends Model
 	public function getPrice()
 	{
 		return Str::priceFormat($this->price);
+	}
+
+	/**
+	 * Заполнение данных при создании и редактировании
+	 *
+	 * @param $data
+	 * @return mixed
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function setData($data)
+	{
+		if ($data['is_published'] && is_null($this->published_at)) {
+			$data['published_at'] = Carbon::now();
+		} elseif (!$data['is_published']) {
+			$data['published_at'] = null;
+		}
+		
+		$data['user_id'] = $this->user_id ? $this->user_id : Auth::user()->id;
+
+		return $data;
+	}
+
+	/**
+	 * Image uploading
+	 *
+	 * @param Request $request
+	 * @return bool
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function setImage(Request $request)
+	{
+		$postImage = $request->file('image');
+		if (isset($postImage)) {
+			$fileName = Translit::generateFileName($postImage->getClientOriginalName());
+			$imagePath = public_path() . $this->imagePath . $this->id . '/';
+			$image = Image::make($postImage->getRealPath());
+			File::exists($imagePath) or File::makeDirectory($imagePath, 0755, true);
+
+			// delete old image
+			$this->deleteImage();
+
+//			if (Config::get('settings.maxImageWidth') && $image->width() > Config::get('settings.maxImageWidth')) {
+//				$image->resize(Config::get('settings.maxImageWidth'), null, function ($constraint) {
+//					$constraint->aspectRatio();
+//				});
+//			}
+//			if (Config::get('settings.maxImageHeight') && $image->height() > Config::get('settings.maxImageHeight')) {
+//				$image->resize(null, Config::get('settings.maxImageHeight'), function ($constraint) {
+//					$constraint->aspectRatio();
+//				});
+//			}
+			$watermark = Image::make(public_path('images/watermark.png'));
+			$watermark->resize(($image->width() * 2) / 3, null, function ($constraint) {
+				$constraint->aspectRatio();
+			})->save($imagePath . 'watermark.png');
+
+			$image->insert($imagePath . 'watermark.png', 'center')
+				->save($imagePath . $fileName);
+//				->save($imagePath . 'origin_' . $fileName);
+
+			if (File::exists($imagePath . 'watermark.png')) {
+				File::delete($imagePath . 'watermark.png');
+			}
+
+//			if ($image->width() > 225) {
+//				$image->resize(225, null, function ($constraint) {
+//					$constraint->aspectRatio();
+//				})
+//					->save($imagePath . $fileName);
+//			} else {
+//				$image->save($imagePath . $fileName);
+//			}
+//			$cropSize = ($image->width() < $image->height()) ? $image->width() : $image->height();
+//			$image->crop($cropSize, $cropSize)
+//				->resize(50, null, function ($constraint) {
+//					$constraint->aspectRatio();
+//				})->save($imagePath . 'mini_' . $fileName);
+
+			$this->image = $fileName;
+			return true;
+		} else {
+			if($request->get('deleteImage')) {
+				$this->deleteImage();
+				return true;
+			}
+			return false;
+		}
+	}
+
+	/**
+	 * Delete old image
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function deleteImage()
+	{
+		$imagePath = public_path() . $this->imagePath . $this->id . '/';
+		// delete old image
+		if(File::exists($imagePath . $this->image)) {
+			File::delete($imagePath . $this->image);
+		}
+		$this->image = null;
 	}
 }
