@@ -45,6 +45,7 @@
 
 namespace App\Models;
 
+use App\Helpers\Str;
 use App\Helpers\Translit;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -174,6 +175,9 @@ class Page extends Model
 	 * Родительская страница
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
 	public function parent()
 	{
@@ -184,6 +188,9 @@ class Page extends Model
 	 * Все дочерние страницы
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
 	public function children()
 	{
@@ -194,6 +201,9 @@ class Page extends Model
 	 * Опубликованные дочерние страницы
 	 * 
 	 * @return mixed
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
 	public function publishedChildren()
 	{
@@ -272,6 +282,9 @@ class Page extends Model
 	 * 
 	 * @param $data
 	 * @return mixed
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
 	public function setData($data)
 	{
@@ -304,6 +317,9 @@ class Page extends Model
 	 *
 	 * @param Request $request
 	 * @return bool
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
 	public function setImage(Request $request)
 	{
@@ -367,6 +383,9 @@ class Page extends Model
 
 	/**
 	 * Delete old image
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
 	public function deleteImage()
 	{
