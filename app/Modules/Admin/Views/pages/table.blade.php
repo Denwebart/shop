@@ -9,7 +9,7 @@
     <thead>
     <tr>
         <th>ID</th>
-        <th></th>
+        <th>Тип</th>
         <th>Заголовок</th>
         <th>Заголовок меню</th>
         <th>Алиас</th>
@@ -24,9 +24,9 @@
                 <td>{{ $page->id }}</td>
                 <td>
                     @if($page->is_container)
-                        <i class="fa fa-folder"></i>
+                        <i class="fa fa-folder" title="Категория" data-toggle="tooltip"></i>
                     @else
-                        <i class="fa fa-file-o"></i>
+                        <i class="fa fa-file-o" title="Страница" data-toggle="tooltip"></i>
                     @endif
                 </td>
                 <td>{{ $page->title }}</td>
@@ -37,7 +37,7 @@
                     {{ \App\Models\Page::$is_published[$page->is_published] }}
                 </span>
                 </td>
-                <td>{{ date('j.m.Y в H:i', strtotime($page->published_at)) }}</td>
+                <td>{{ \App\Helpers\Date::format($page->published_at, true) }}</td>
                 <td>
                     <a href="{{ route('admin.pages.edit', ['id' => $page->id]) }}" title="Редактировать" data-toggle="tooltip" class="m-r-15">
                         <i class="fa fa-pencil fa-lg"></i>

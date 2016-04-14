@@ -57,8 +57,9 @@ class Date
 			$timestamp = strtotime($date);
 			$month = ($isShortMonth) ?
 				self::$shortMonths[date('n', $timestamp)] : self::$months[date('n', $timestamp)];
-			$time = ($withTime) ? " H:i" : "";
-			return date("j $month Y" . $time, $timestamp);
+			$time = ($withTime) ? " в H:i" : "";
+			$year = date('Y', $timestamp) != date('Y') ? ' ' . date('Y', $timestamp) : '';
+			return date("j $month" . $year . $time, $timestamp);
 		} else {
 			return '-';
 		}
@@ -90,9 +91,9 @@ class Date
 			} elseif ($delta < (24 * 60 * 60)) {
 				$result = 'сегодня в ' . date('H:i', $timestamp);
 			} else {
-				$date = date('Y', $timestamp) != date('Y') ? ' ' . date('Y', $timestamp) : '';
+				$year = date('Y', $timestamp) != date('Y') ? ' ' . date('Y', $timestamp) : '';
 				$result = date('j', $timestamp) . ' ' . self::$months[date('n', $timestamp)]
-					. $date
+					. $year
 					. ' в ' . date('H:i', strtotime($date));
 			}
 
