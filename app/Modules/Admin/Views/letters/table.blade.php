@@ -26,8 +26,8 @@
                 <td>{{ $letter->email }}</td>
                 <td>{{ $letter->subject }}</td>
                 <td>{{ \App\Helpers\Str::limit($letter->message, 30) }}</td>
-                <td>{{ date('j.m.Y в H:i', strtotime($letter->created_at)) }}</td>
-                <td>@if(is_null($letter->updated_at)) - @else {{ date('j.m.Y в H:i', strtotime($letter->updated_at)) }} @endif</td>
+                <td>{{ \App\Helpers\Date::format($letter->created_at) }}</td>
+                <td>{{ \App\Helpers\Date::format($letter->updated_at) }} @endif</td>
                 <td>
                     <a href="{{ route('admin.letters.show', ['id' => $letter->id]) }}" title="Прочесть" data-toggle="tooltip" class="m-r-15">
                         <i class="fa fa-pencil fa-lg"></i>

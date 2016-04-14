@@ -163,7 +163,7 @@ View::share('title', $title);
                                     <td>{{ $order->customer->username }}</td>
                                     <td>{{ $order->customer->getPhone() }}</td>
                                     <td>{{ $order->getTotalPrice() }}</td>
-                                    <td>{{ date('j.m.Y в H:i', strtotime($order->created_at)) }}</td>
+                                    <td>{{ \App\Helpers\Date::format($order->created_at) }}</td>
                                     <td>
                                         <span class="label  @if($order->status) label-{{ \App\Models\Order::$statusesClass[$order->status] }} @endif">
                                             {{ \App\Models\Order::$statuses[$order->status] }}

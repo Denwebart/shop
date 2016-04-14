@@ -35,7 +35,7 @@
                         {{ \App\Models\Product::$is_published[$product->is_published] }}
                     </span>
                 </td>
-                <td>{{ date('j.m.Y в H:i', strtotime($product->published_at)) }}</td>
+                <td>{{ \App\Helpers\Date::format($product->published_at) }}</td>
                 <td>
                     <a href="{{ route('admin.products.edit', ['id' => $product->id]) }}" title="Редактировать" data-toggle="tooltip" class="m-r-15">
                         <i class="fa fa-pencil fa-lg"></i>
