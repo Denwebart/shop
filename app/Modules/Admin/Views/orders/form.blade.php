@@ -110,7 +110,7 @@
                     {{--@if(!$product->published_at)--}}
                         {{--(сохраните, чтоб опубликовать)--}}
                     {{--@else--}}
-                        {{--{{ \App\Helpers\Date::format($product->published_at, true) }}--}}
+                        {{--{{ \App\Helpers\Date::format($product->published_at) }}--}}
                     {{--@endif--}}
                 {{--</div>--}}
             {{--</div>--}}

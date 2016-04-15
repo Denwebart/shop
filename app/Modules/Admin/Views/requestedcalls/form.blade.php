@@ -121,7 +121,7 @@
                     @if(!$page->published_at)
                         (сохраните, чтоб опубликовать)
                     @else
-                        {{ \App\Helpers\Date::format($page->published_at, true) }}
+                        {{ \App\Helpers\Date::format($page->published_at) }}
                     @endif
                 </div>
             </div>

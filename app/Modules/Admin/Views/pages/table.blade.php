@@ -37,7 +37,7 @@
                     {{ \App\Models\Page::$is_published[$page->is_published] }}
                 </span>
                 </td>
-                <td>{{ \App\Helpers\Date::format($page->published_at, true) }}</td>
+                <td>{{ \App\Helpers\Date::format($page->published_at) }}</td>
                 <td>
                     <a href="{{ route('admin.pages.edit', ['id' => $page->id]) }}" title="Редактировать" data-toggle="tooltip" class="m-r-15">
                         <i class="fa fa-pencil fa-lg"></i>
