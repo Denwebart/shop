@@ -57,9 +57,11 @@
                     <a href="{{ route('admin.orders.edit', ['id' => $order->id]) }}" title="Редактировать" data-toggle="tooltip" class="m-r-15">
                         <i class="fa fa-pencil fa-lg"></i>
                     </a>
-                    <a href="#" title="Удалить" data-toggle="tooltip">
-                        <i class="fa fa-trash fa-lg"></i>
-                    </a>
+                    @if(Auth::user()->isAdmin())
+                        <a href="#" title="Удалить" data-toggle="tooltip">
+                            <i class="fa fa-trash fa-lg"></i>
+                        </a>
+                    @endif
                 </td>
             </tr>
         @endforeach
