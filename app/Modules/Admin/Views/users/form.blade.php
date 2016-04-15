@@ -12,7 +12,7 @@
 {!! Form::hidden('deleteImage', 0, ['id' => 'deleteImage']) !!}
 
 <div class="row">
-    <div class="col-lg-6 col-sm-12 col-xs-12 m-b-15"> 
+    <div class="col-lg-6 col-sm-12 col-xs-12 m-b-15">
         <div class="form-group @if($errors->has('parent_id')) has-error @endif">
             {!! Form::label('login', 'Логин', ['class' => 'col-md-2 control-label']) !!}
             <div class="col-md-10">

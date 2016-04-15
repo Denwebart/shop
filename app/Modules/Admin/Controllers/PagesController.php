@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Validation\Validator;
+use Illuminate\View\View;
 
 class PagesController extends Controller
 {
@@ -154,6 +155,29 @@ class PagesController extends Controller
      */
     public function destroy($id)
     {
-	    dd('удаление страницы с id ' . $id);
+	    if(\Request::ajax()) {
+
+		    $page = Page::find($id);
+		    if($page->canBeDeleted()) {
+			   $page->delete();
+			    
+			    $pages = Page::select(['id', 'parent_id', 'alias', 'type', 'is_container', 'is_published', 'title', 'menu_title', 'published_at'])
+				    ->with('parent')
+				    ->paginate(10);
+
+			    return \Response::json([
+				    'success' => true,
+				    'message' => 'Страница успешно удалена.',
+				    'itemsCount' => view('parts.count')->with('models', $pages)->render(),
+				    'itemsPagination' => view('parts.pagination')->with('models', $pages)->render(),
+				    'itemsTable' => view('admin::pages.table')->with('pages', $pages)->render(),
+			    ]);
+		    } else {
+			    return \Response::json([
+				    'success' => false,
+				    'message' => 'Эта страница не может быть удалена.'
+			    ]);
+		    }
+	    }
     }
 }

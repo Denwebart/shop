@@ -16,7 +16,11 @@
         <div class="form-group @if($errors->has('parent_id')) has-error @endif">
             {!! Form::label('parent_id', 'Категория', ['class' => 'col-md-2 control-label']) !!}
             <div class="col-md-10">
-                {!! Form::select('parent_id', \App\Models\Page::getCategory(), $page->parent_id, ['id' => 'parent_id', 'class' => 'form-control']) !!}
+                @if($page->canBeDeleted())
+                    {!! Form::select('parent_id', \App\Models\Page::getCategory(), $page->parent_id, ['id' => 'parent_id', 'class' => 'form-control']) !!}
+                @else
+                    {!! Form::select('parent_id', \App\Models\Page::getCategory(), $page->parent_id, ['id' => 'parent_id', 'class' => 'form-control', 'disabled' => true]) !!}
+                @endif
                 @if ($errors->has('parent_id'))
                     <span class="help-block error">
                         <strong>{{ $errors->first('parent_id') }}</strong>
@@ -27,7 +31,11 @@
         <div class="form-group @if($errors->has('alias')) has-error @endif">
             {!! Form::label('alias', 'Алиас', ['class' => 'col-md-2 control-label']) !!}
             <div class="col-md-10">
-                {!! Form::text('alias', $page->alias, ['id' => 'alias', 'class' => 'form-control']) !!}
+                @if(!$page->isMain())
+                    {!! Form::text('alias', $page->alias, ['id' => 'alias', 'class' => 'form-control']) !!}
+                @else
+                    {!! Form::text('alias', $page->alias, ['id' => 'alias', 'class' => 'form-control', 'disabled' => true]) !!}
+                @endif
 
                 @if ($errors->has('alias'))
                     <span class="help-block error">
@@ -60,27 +68,29 @@
                 @endif
             </div>
         </div>
-        <div class="form-group @if($errors->has('is_container')) has-error @endif">
-            <div class="switchery-demo m-b-5">
-                <div class="col-md-2">
+        @if($page->canBeDeleted())
+            <div class="form-group @if($errors->has('is_container')) has-error @endif">
+                <div class="switchery-demo m-b-5">
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-4">
+                        {!! Form::hidden('is_container', 0) !!}
+                        {!! Form::checkbox('is_container', 1, $page->is_container, ['id' => 'is_container', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
+                        {!! Form::label('is_container', 'Категория', ['class' => 'control-label m-l-5']) !!}
+                    </div>
+                    <div class="col-md-6">
+                        <span class="help-block m-t-0">
+                            <small>Будет ли содержать вложенные страницы?</small>
+                        </span>
+                    </div>
+                    @if ($errors->has('is_container'))
+                        <span class="help-block error">
+                            <strong>{{ $errors->first('is_container') }}</strong>
+                        </span>
+                    @endif
                 </div>
-                <div class="col-md-4">
-                    {!! Form::hidden('is_container', 0) !!}
-                    {!! Form::checkbox('is_container', 1, $page->is_container, ['id' => 'is_container', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
-                    {!! Form::label('is_container', 'Категория', ['class' => 'control-label m-l-5']) !!}
-                </div>
-                <div class="col-md-6">
-                    <span class="help-block m-t-0">
-                        <small>Будет ли содержать вложенные страницы?</small>
-                    </span>
-                </div>
-                @if ($errors->has('is_container'))
-                    <span class="help-block error">
-                        <strong>{{ $errors->first('is_container') }}</strong>
-                    </span>
-                @endif
             </div>
-        </div>
+        @endif
         <div class="form-group">
             <div class="col-sm-6 col-md-6 @if($errors->has('image')) has-error @endif">
                 {!! Form::label('image', 'Изображение для страницы', ['class' => 'control-label m-b-5']) !!}
@@ -162,7 +172,11 @@
                 </div>
                 <div class="col-md-4">
                     {!! Form::hidden('is_published', 0) !!}
-                    {!! Form::checkbox('is_published', 1, $page->is_published, ['id' => 'is_published', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
+                    @if($page->canBeDeleted())
+                        {!! Form::checkbox('is_published', 1, $page->is_published, ['id' => 'is_published', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
+                    @else
+                        {!! Form::checkbox('is_published', 1, $page->is_published, ['id' => 'is_published', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small', 'disabled' => true]) !!}
+                    @endif
                     {!! Form::label('is_published', 'Опубликована', ['class' => 'control-label m-l-5']) !!}
                 </div>
                 <div class="col-md-6">

@@ -23,7 +23,8 @@ class ProductsReviewsController extends Controller
      */
     public function index()
     {
-	    $productsReviews = ProductReview::select(['id', 'user_name', 'user_email', 'text', 'is_published', 'created_at', 'published_at'])
+	    $productsReviews = ProductReview::select(['id', 'user_id', 'product_id', 'user_name', 'user_email', 'text', 'is_published', 'created_at', 'published_at'])
+		    ->with('user', 'product')
 		    ->paginate(10);
 
         return view('admin::productsReviews.index', compact('productsReviews'));

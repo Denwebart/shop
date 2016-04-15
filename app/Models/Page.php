@@ -216,6 +216,24 @@ class Page extends Model
 	}
 
 	/**
+	 * Can page be deleted?
+	 * @return bool
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function canBeDeleted()
+	{
+		if($this->type == self::TYPE_PAGE) {
+			return true;
+		} elseif($this->type == self::TYPE_CATALOG && $this->parent_id != 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
 	 * Get page title (menu_title or title)
 	 * 
 	 * @return mixed
