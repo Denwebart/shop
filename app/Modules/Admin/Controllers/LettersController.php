@@ -39,20 +39,7 @@ class LettersController extends Controller
     {
         dd('просмотр страницы с id ' . $id);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-	    $page = Page::findOrFail($id);
-
-	    return view('admin::pages.edit', compact('page'));
-    }
-
+	
     /**
      * Remove the specified resource from storage.
      *
@@ -61,6 +48,25 @@ class LettersController extends Controller
      */
     public function destroy($id)
     {
-	    dd('удаление страницы с id ' . $id);
+	    if(\Request::ajax()) {
+
+		    if(Letter::destroy($id)){
+
+			    $letters = Letter::paginate(10);
+
+			    return \Response::json([
+				    'success' => true,
+				    'message' => 'Писомо успешно удалено.',
+				    'itemsCount' => view('parts.count')->with('models', $letters)->render(),
+				    'itemsPagination' => view('parts.pagination')->with('models', $letters)->render(),
+				    'itemsTable' => view('admin::letters.table')->with('letters', $letters)->render(),
+			    ]);
+		    } else {
+			    return \Response::json([
+				    'success' => false,
+				    'message' => 'Произошла ошибка, письмо не удалено.'
+			    ]);
+		    }
+	    }
     }
 }

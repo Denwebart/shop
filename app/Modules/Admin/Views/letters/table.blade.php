@@ -27,12 +27,12 @@
                 <td>{{ $letter->subject }}</td>
                 <td>{{ \App\Helpers\Str::limit($letter->message, 30) }}</td>
                 <td>{{ \App\Helpers\Date::format($letter->created_at) }}</td>
-                <td>{{ \App\Helpers\Date::format($letter->updated_at) }} @endif</td>
+                <td>{{ \App\Helpers\Date::format($letter->updated_at) }}</td>
                 <td>
                     <a href="{{ route('admin.letters.show', ['id' => $letter->id]) }}" title="Прочесть" data-toggle="tooltip" class="m-r-15">
-                        <i class="fa fa-pencil fa-lg"></i>
+                        <i class="fa fa-eye fa-lg"></i>
                     </a>
-                    <a href="#" title="Удалить" data-toggle="tooltip">
+                    <a href="#" class="button-delete" title="Удалить" data-toggle="tooltip" data-item-id="{{ $letter->id }}" data-item-title="{{ $letter->name }} ({{ $letter->email }})">
                         <i class="fa fa-trash fa-lg"></i>
                     </a>
                 </td>
@@ -40,3 +40,54 @@
         @endforeach
     </tbody>
 </table>
+
+@push('styles')
+    <link href="{{ asset('backend/plugins/bootstrap-sweetalert/sweet-alert.css') }}" rel="stylesheet" type="text/css" />
+@endpush
+
+@push('scripts')
+    <script src="{{ asset('backend/plugins/bootstrap-sweetalert/sweet-alert.min.js') }}"></script>
+    <script type="text/javascript">
+        !function ($) {
+            "use strict";
+
+            $('#table-container').on('click', '.button-delete', function (e) {
+                var itemId = $(this).data('itemId');
+                var itemTitle = $(this).data('itemTitle');
+                sweetAlert(
+                        {
+                            title: "Удалить письмо?",
+                            text: 'Вы точно хотите удалить письмо от "'+ itemTitle +'"?',
+                            type: "error",
+                            showCancelButton: true,
+                            cancelButtonText: 'Отмена',
+                            confirmButtonClass: 'btn-danger waves-effect waves-light',
+                            confirmButtonText: 'Удалить'
+                        },
+                        function(){
+                            $.ajax({
+                                url: "/admin/letters/" + itemId,
+                                dataType: "text json",
+                                type: "DELETE",
+                                data: {},
+                                beforeSend: function (request) {
+                                    return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+                                },
+                                success: function (response) {
+                                    if (response.success) {
+                                        Command: toastr["success"](response.message);
+
+                                        $('.count-container').html(response.itemsCount);
+                                        $('.pagination-container').html(response.itemsPagination);
+                                        $('#table-container').html(response.itemsTable);
+                                    } else {
+                                        Command: toastr["warning"](response.message);
+                                    }
+                                }
+                            });
+                        });
+            })
+
+        }(window.jQuery);
+    </script>
+@endpush

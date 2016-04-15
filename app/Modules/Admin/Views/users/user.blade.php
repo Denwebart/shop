@@ -12,7 +12,13 @@
         </a>
         <ul class="dropdown-menu" role="menu">
             <li><a href="{{ route('admin.users.edit', ['id' => $user->id]) }}">Редактировать</a></li>
-            <li><a href="#">Удалить</a></li>
+            <li>
+                @if(!$user->isAdmin())
+                    <a href="#" class="button-delete" title="Удалить" data-toggle="tooltip" data-item-id="{{ $user->id }}" data-item-title="{{ $user->login }}">
+                        Удалить
+                    </a>
+                @endif
+            </li>
         </ul>
     </div>
     <div>

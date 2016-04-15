@@ -12,7 +12,7 @@ Route::group(['module' => 'Admin', 'prefix' => 'admin', 'middleware' => 'web', '
 	Route::resource('pages', 'PagesController');
 	Route::resource('calls', 'RequestedCallsController', ['except' => ['create', 'store', 'destroy', 'show']]);
 	Route::resource('reviews', 'ProductsReviewsController', ['except' => ['create']]);
-	Route::resource('letters', 'LettersController', ['except' => ['create', 'store', 'update']]);
+	Route::resource('letters', 'LettersController', ['except' => ['create', 'store', 'edit', 'update']]);
 	Route::resource('users', 'UsersController');
 	Route::resource('settings', 'SettingsController', ['except' => [
 		'create', 'store', 'destroy', 'show'

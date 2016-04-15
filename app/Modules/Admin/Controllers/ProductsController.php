@@ -147,6 +147,27 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
-	    dd('удаление продукта с id ' . $id);
+	    if(\Request::ajax()) {
+
+		    if(Product::destroy($id)){
+			
+			    $products = Product::select(['id', 'vendor_code', 'category_id', 'is_published', 'title', 'price', 'image', 'image_alt', 'published_at'])
+				    ->with('category')
+				    ->paginate(10);
+
+			    return \Response::json([
+				    'success' => true,
+				    'message' => 'Товар успешно удален.',
+				    'itemsCount' => view('parts.count')->with('models', $products)->render(),
+				    'itemsPagination' => view('parts.pagination')->with('models', $products)->render(),
+				    'itemsTable' => view('admin::products.table')->with('products', $products)->render(),
+			    ]);
+		    } else {
+			    return \Response::json([
+				    'success' => false,
+				    'message' => 'Произошла ошибка, товар не удален.'
+			    ]);
+		    }
+	    }
     }
 }

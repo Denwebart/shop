@@ -142,7 +142,29 @@ class UsersController extends Controller
 	 */
 	public function destroy($id)
 	{
-		dd('удаление пользователя с id ' . $id);
+		if(\Request::ajax()) {
+
+			$user = User::find($id);
+			if(!$user->isAdmin() || $user->id == \Auth::user()->id) {
+				$user->delete();
+
+				$users = User::select('id', 'login', 'email', 'role', 'phone', 'firstname', 'lastname', 'avatar', 'is_active', 'created_at')
+					->paginate(10);
+
+				return \Response::json([
+					'success' => true,
+					'message' => 'Пользователь успешно удален.',
+					'itemsCount' => view('parts.count')->with('models', $users)->render(),
+					'itemsPagination' => view('parts.pagination')->with('models', $users)->render(),
+					'itemsTable' => view('admin::users.table')->with('users', $users)->render(),
+				]);
+			} else {
+				return \Response::json([
+					'success' => false,
+					'message' => 'Пользователь ' . $user->login . ' не может быть удален.'
+				]);
+			}
+		}
 	}
 
 }

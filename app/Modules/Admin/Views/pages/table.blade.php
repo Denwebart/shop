@@ -67,38 +67,37 @@
                 var itemId = $(this).data('itemId');
                 var itemTitle = $(this).data('itemTitle');
                 sweetAlert(
-                    {
-                        title: "Удалить страницу?",
-                        text: 'Вы точно хотите удалить страницу "'+ itemTitle +'"?',
-                        type: "error",
-                        showCancelButton: true,
-                        cancelButtonText: 'Отмена',
-                        confirmButtonClass: 'btn-danger waves-effect waves-light',
-                        confirmButtonText: 'Удалить'
-                    },
-                    function(){
-                        $.ajax({
-                            url: "/admin/pages/" + itemId,
-                            dataType: "text json",
-                            type: "DELETE",
-                            data: {},
-                            beforeSend: function (request) {
-                                return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
-                            },
-                            success: function (response) {
-                                if (response.success) {
-                                    Command: toastr["success"](response.message);
+                {
+                    title: "Удалить страницу?",
+                    text: 'Вы точно хотите удалить страницу "'+ itemTitle +'"?',
+                    type: "error",
+                    showCancelButton: true,
+                    cancelButtonText: 'Отмена',
+                    confirmButtonClass: 'btn-danger waves-effect waves-light',
+                    confirmButtonText: 'Удалить'
+                },
+                function(){
+                    $.ajax({
+                        url: "/admin/pages/" + itemId,
+                        dataType: "text json",
+                        type: "DELETE",
+                        data: {},
+                        beforeSend: function (request) {
+                            return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+                        },
+                        success: function (response) {
+                            if (response.success) {
+                                Command: toastr["success"](response.message);
 
-                                    $('.count-container').html(response.itemsCount);
-                                    $('.pagination-container').html(response.itemsPagination);
-                                    $('#table-container').html(response.itemsTable);
-                                } else {
-                                    Command: toastr["warning"](response.message);
-                                }
+                                $('.count-container').html(response.itemsCount);
+                                $('.pagination-container').html(response.itemsPagination);
+                                $('#table-container').html(response.itemsTable);
+                            } else {
+                                Command: toastr["warning"](response.message);
                             }
-                        });
-                    }
-                );
+                        }
+                    });
+                });
             })
 
         }(window.jQuery);

@@ -99,6 +99,27 @@ class ProductsReviewsController extends Controller
      */
     public function destroy($id)
     {
-	    dd('удаление страницы с id ' . $id);
+	    if(\Request::ajax()) {
+
+		    if(ProductReview::destroy($id)){
+
+			    $productsReviews = ProductReview::select(['id', 'user_id', 'product_id', 'user_name', 'user_email', 'text', 'is_published', 'created_at', 'published_at'])
+				    ->with('user', 'product')
+				    ->paginate(10);
+
+			    return \Response::json([
+				    'success' => true,
+				    'message' => 'Отзыв успешно удален.',
+				    'itemsCount' => view('parts.count')->with('models', $productsReviews)->render(),
+				    'itemsPagination' => view('parts.pagination')->with('models', $productsReviews)->render(),
+				    'itemsTable' => view('admin::productsReviews.table')->with('productsReviews', $productsReviews)->render(),
+			    ]);
+		    } else {
+			    return \Response::json([
+				    'success' => false,
+				    'message' => 'Произошла ошибка, отзыв не удален.'
+			    ]);
+		    }
+	    }
     }
 }
