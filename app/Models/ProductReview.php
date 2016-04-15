@@ -45,4 +45,24 @@ class ProductReview extends Model
 		'product_id'
 	];
 
+	/**
+	 * Менеджер, который написал отзыв
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function user()
+	{
+		return $this->belongsTo('App\Models\User', 'user_id');
+	}
+	
+	/**
+	 * Товар, к которому оставлен отзыв
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function product()
+	{
+		return $this->belongsTo('App\Models\Product', 'product_id');
+	}
+
 }

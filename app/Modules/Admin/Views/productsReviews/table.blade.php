@@ -23,9 +23,23 @@
         @foreach($productsReviews as $productReview)
             <tr @if(!$productReview->is_published) class="not-published" @endif>
                 <td>{{ $productReview->id }}</td>
-                <td>{{ $productReview->product_id }}</td>
-                <td>{{ $productReview->user_name }}</td>
-                <td>{{ $productReview->user_email }}</td>
+                <td>{{ $productReview->product->title }}</td>
+                <td>
+                    @if($productReview->user)
+                        <a href="{{ route('admin.users.show', ['id' => $productReview->user->id]) }}">
+                            {{ $productReview->user->login }}
+                        </a>
+                    @else
+                        {{ $productReview->user_name }}
+                    @endif
+                </td>
+                <td>
+                    @if($productReview->user)
+                            {{ $productReview->user->email }}
+                    @else
+                        {{ $productReview->user_email }}
+                    @endif
+                </td>
                 <td>{{ \App\Helpers\Str::limit($productReview->text, 30) }}</td>
                 <td>
                 <span class="label @if($productReview->is_published) label-success @else label-danger @endif">
