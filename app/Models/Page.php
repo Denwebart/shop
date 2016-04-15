@@ -305,7 +305,9 @@ class Page extends Model
 					$data['type'] = Page::TYPE_PAGE;
 				}
 			} else {
-				$data['type'] = Page::TYPE_PAGE;
+				if($this->type != self::TYPE_CATALOG) {
+					$data['type'] = Page::TYPE_PAGE;
+				}
 			}
 		}
 
@@ -335,42 +337,25 @@ class Page extends Model
 			// delete old image
 			$this->deleteImage();
 
-//			if (Config::get('settings.maxImageWidth') && $image->width() > Config::get('settings.maxImageWidth')) {
-//				$image->resize(Config::get('settings.maxImageWidth'), null, function ($constraint) {
-//					$constraint->aspectRatio();
-//				});
-//			}
-//			if (Config::get('settings.maxImageHeight') && $image->height() > Config::get('settings.maxImageHeight')) {
-//				$image->resize(null, Config::get('settings.maxImageHeight'), function ($constraint) {
-//					$constraint->aspectRatio();
-//				});
-//			}
 			$watermark = Image::make(public_path('images/watermark.png'));
 			$watermark->resize(($image->width() * 2) / 3, null, function ($constraint) {
 				$constraint->aspectRatio();
 			})->save($imagePath . 'watermark.png');
 
 			$image->insert($imagePath . 'watermark.png', 'center')
-				->save($imagePath . $fileName);
-//				->save($imagePath . 'origin_' . $fileName);
+				->save($imagePath . 'origin_' . $fileName);
 			
 			if (File::exists($imagePath . 'watermark.png')) {
 				File::delete($imagePath . 'watermark.png');
 			}
 			
-//			if ($image->width() > 225) {
-//				$image->resize(225, null, function ($constraint) {
-//					$constraint->aspectRatio();
-//				})
-//					->save($imagePath . $fileName);
-//			} else {
-//				$image->save($imagePath . $fileName);
-//			}
-//			$cropSize = ($image->width() < $image->height()) ? $image->width() : $image->height();
-//			$image->crop($cropSize, $cropSize)
-//				->resize(50, null, function ($constraint) {
-//					$constraint->aspectRatio();
-//				})->save($imagePath . 'mini_' . $fileName);
+			if ($image->width() > 760) {
+				$image->resize(760, null, function ($constraint) {
+					$constraint->aspectRatio();
+				})->save($imagePath . $fileName);
+			} else {
+				$image->save($imagePath . $fileName);
+			}
 			
 			$this->image = $fileName;
 			return true;

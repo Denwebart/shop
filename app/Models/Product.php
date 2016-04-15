@@ -216,42 +216,41 @@ class Product extends Model
 			// delete old image
 			$this->deleteImage();
 
-//			if (Config::get('settings.maxImageWidth') && $image->width() > Config::get('settings.maxImageWidth')) {
-//				$image->resize(Config::get('settings.maxImageWidth'), null, function ($constraint) {
-//					$constraint->aspectRatio();
-//				});
-//			}
-//			if (Config::get('settings.maxImageHeight') && $image->height() > Config::get('settings.maxImageHeight')) {
-//				$image->resize(null, Config::get('settings.maxImageHeight'), function ($constraint) {
-//					$constraint->aspectRatio();
-//				});
-//			}
 			$watermark = Image::make(public_path('images/watermark.png'));
 			$watermark->resize(($image->width() * 2) / 3, null, function ($constraint) {
 				$constraint->aspectRatio();
 			})->save($imagePath . 'watermark.png');
 
 			$image->insert($imagePath . 'watermark.png', 'center')
-				->save($imagePath . $fileName);
-//				->save($imagePath . 'origin_' . $fileName);
+				->save($imagePath . 'origin_' . $fileName);
 
 			if (File::exists($imagePath . 'watermark.png')) {
 				File::delete($imagePath . 'watermark.png');
 			}
 
-//			if ($image->width() > 225) {
-//				$image->resize(225, null, function ($constraint) {
-//					$constraint->aspectRatio();
-//				})
-//					->save($imagePath . $fileName);
-//			} else {
-//				$image->save($imagePath . $fileName);
-//			}
-//			$cropSize = ($image->width() < $image->height()) ? $image->width() : $image->height();
-//			$image->crop($cropSize, $cropSize)
-//				->resize(50, null, function ($constraint) {
-//					$constraint->aspectRatio();
-//				})->save($imagePath . 'mini_' . $fileName);
+			if ($image->width() > 1200) {
+				$image->resize(1200, null, function ($constraint) {
+					$constraint->aspectRatio();
+				})->crop(1200, 1507)
+				->save($imagePath . 'zoom_' . $fileName);
+			} else {
+				$width = $image->width();
+				$height = $width * 1.255;
+				$image->resize($width, null, function ($constraint) {
+					$constraint->aspectRatio();
+				})->crop($width, (integer) $height)
+				->save($imagePath . 'zoom_' . $fileName);
+			}
+
+			$image->resize(458, null, function ($constraint) {
+					$constraint->aspectRatio();
+				})->crop(458, 575)
+				->save($imagePath . $fileName);
+
+			$image->resize(100, null, function ($constraint) {
+					$constraint->aspectRatio();
+				})->crop(100, 126)
+				->save($imagePath . 'mini_' . $fileName);
 
 			$this->image = $fileName;
 			return true;
