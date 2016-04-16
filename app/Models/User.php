@@ -56,17 +56,20 @@ class User extends Authenticatable
 	/**
 	 * Роль пользователя (значение поля role)
 	 */
+	const ROLE_NONE    = 0;
 	const ROLE_ADMIN   = 1;
 	const ROLE_MANAGER = 2;
 	const ROLE_USER    = 3;
 
 	public static $roles = [
+		self::ROLE_NONE    => '-',
 		self::ROLE_ADMIN   => 'Администратор',
 		self::ROLE_MANAGER => 'Менеджер',
 		self::ROLE_USER    => 'Пользователь',
 	];
 	
 	public static $rolesClass = [
+		self::ROLE_NONE    => 'empty',
 		self::ROLE_ADMIN   => 'success',
 		self::ROLE_MANAGER => 'info',
 		self::ROLE_USER    => 'primary',
@@ -96,9 +99,9 @@ class User extends Authenticatable
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
 	protected static $rules = [
-		'login' => 'unique:users,login,:id|max:50|regex:/^[A-Za-z0-9\-\_]+$/u',
-		'email' => 'email|max:255',
-		'password' => 'max:255',
+		'login' => 'required|unique:users,login,:id|max:50|regex:/^[A-Za-z0-9\-\_]+$/u',
+		'email' => 'required|email|max:255',
+		'password' => 'required|max:255|confirmed',
 		'role' => 'integer',
 		'firstname' => 'max:50|regex:/^[A-Za-zА-Яа-яЁёЇїІіЄє \-\']+$/u',
 		'lastname' => 'max:50|regex:/^[A-Za-zА-Яа-яЁёЇїІіЄє \-\']+$/u',

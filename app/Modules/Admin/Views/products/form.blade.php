@@ -250,6 +250,7 @@
         
         // Buttons
         $(document).on('click', '.button-save-exit', function() {
+            $("#returnBack").val('1');
             $("#main-form").submit();
         });
         $(document).on('click', '.button-save', function() {

@@ -19,6 +19,7 @@
                 @if($page->canBeDeleted())
                     {!! Form::select('parent_id', \App\Models\Page::getCategory(), $page->parent_id, ['id' => 'parent_id', 'class' => 'form-control']) !!}
                 @else
+                    {!! Form::hidden('parent_id', $page->parent_id) !!}
                     {!! Form::select('parent_id', \App\Models\Page::getCategory(), $page->parent_id, ['id' => 'parent_id', 'class' => 'form-control', 'disabled' => true]) !!}
                 @endif
                 @if ($errors->has('parent_id'))
@@ -171,10 +172,11 @@
                 <div class="col-md-2">
                 </div>
                 <div class="col-md-4">
-                    {!! Form::hidden('is_published', 0) !!}
                     @if($page->canBeDeleted())
+                        {!! Form::hidden('is_published', 0) !!}
                         {!! Form::checkbox('is_published', 1, $page->is_published, ['id' => 'is_published', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
                     @else
+                        {!! Form::hidden('is_published', 1) !!}
                         {!! Form::checkbox('is_published', 1, $page->is_published, ['id' => 'is_published', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small', 'disabled' => true]) !!}
                     @endif
                     {!! Form::label('is_published', 'Опубликована', ['class' => 'control-label m-l-5']) !!}
@@ -294,6 +296,7 @@
 
         // Buttons
         $(document).on('click', '.button-save-exit', function() {
+            $("#returnBack").val('1');
             $("#main-form").submit();
         });
         $(document).on('click', '.button-save', function() {

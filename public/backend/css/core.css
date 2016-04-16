@@ -667,6 +667,10 @@ textarea.form-control {
   letter-spacing: 0.05em;
   padding: .3em .6em .3em;
 }
+.label-empty {
+    background-color: #ffffff;
+    color:#98a6ad;
+}
 .label-default {
   background-color: #71b6f9;
 }

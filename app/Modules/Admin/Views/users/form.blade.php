@@ -13,7 +13,7 @@
 
 <div class="row">
     <div class="col-lg-6 col-sm-12 col-xs-12 m-b-15">
-        <div class="form-group @if($errors->has('parent_id')) has-error @endif">
+        <div class="form-group @if($errors->has('login')) has-error @endif">
             {!! Form::label('login', 'Логин', ['class' => 'col-md-2 control-label']) !!}
             <div class="col-md-10">
                 {!! Form::text('login', $user->login, ['id' => 'login', 'class' => 'form-control']) !!}
@@ -32,18 +32,6 @@
                 @if ($errors->has('email'))
                     <span class="help-block error">
                         <strong>{{ $errors->first('email') }}</strong>
-                    </span>
-                @endif
-            </div>
-        </div>
-        <div class="form-group @if($errors->has('password')) has-error @endif">
-            {!! Form::label('password', 'Пароль', ['class' => 'col-md-2 control-label']) !!}
-            <div class="col-md-10">
-                {!! Form::password('password', ['id' => 'password', 'class' => 'form-control']) !!}
-
-                @if ($errors->has('password'))
-                    <span class="help-block error">
-                        <strong>{{ $errors->first('password') }}</strong>
                     </span>
                 @endif
             </div>
@@ -86,18 +74,6 @@
                 @endif
             </div>
         </div>
-        <div class="form-group @if($errors->has('description')) has-error @endif">
-            {!! Form::label('description', 'Заметка', ['class' => 'col-md-2 control-label']) !!}
-            <div class="col-md-10">
-                {!! Form::textarea('description', $user->description, ['id' => 'description', 'class' => 'form-control']) !!}
-
-                @if ($errors->has('description'))
-                    <span class="help-block error">
-                        <strong>{{ $errors->first('description') }}</strong>
-                    </span>
-                @endif
-            </div>
-        </div>
         <div class="form-group @if($errors->has('phone')) has-error @endif">
             {!! Form::label('phone', 'Телефон', ['class' => 'col-md-2 control-label']) !!}
             <div class="col-md-10">
@@ -110,21 +86,67 @@
                 @endif
             </div>
         </div>
+        <div class="form-group @if($errors->has('description')) has-error @endif">
+            {!! Form::label('description', 'Заметка', ['class' => 'col-md-2 control-label']) !!}
+            <div class="col-md-10">
+                {!! Form::textarea('description', $user->description, ['id' => 'description', 'class' => 'form-control']) !!}
+
+                @if ($errors->has('description'))
+                    <span class="help-block error">
+                        <strong>{{ $errors->first('description') }}</strong>
+                    </span>
+                @endif
+            </div>
+        </div>
     </div>
     <div class="col-lg-6 col-sm-12 col-xs-12 m-b-15 @if($errors->has('avatar')) has-error @endif">
-        {!! Form::label('avatar', 'Аватарка', ['class' => 'control-label m-b-5']) !!}
-        {!! Form::file('avatar', ['id' => 'avatar', 'class' => 'dropify', 'data-default-file' => $user->getAvatarUrl(), 'data-max-file-size' => '3M']) !!}
-        <span class="help-block @if($errors->has('avatar')) hidden @endif">
-            <small>
-                Изображение отображается перед текстом страницы
-                и при выводе страниц блогом.
-            </small>
-        </span>
-        @if ($errors->has('avatar'))
-            <span class="help-block error">
-                <strong>{{ $errors->first('avatar') }}</strong>
-            </span>
-        @endif
+        <div class="form-group @if($errors->has('avatar')) has-error @endif">
+            {!! Form::label('avatar', 'Аватарка', ['class' => 'col-md-3 control-label m-b-5']) !!}
+            <div class="col-md-9">
+                {!! Form::file('avatar', ['id' => 'avatar', 'class' => 'dropify', 'data-default-file' => $user->getAvatarUrl(), 'data-max-file-size' => '3M']) !!}
+                @if ($errors->has('avatar'))
+                    <span class="help-block error">
+                        <strong>{{ $errors->first('avatar') }}</strong>
+                    </span>
+                @endif
+            </div>
+        </div>
+
+        <div class="col-md-3 m-b-10">
+            <h4 class="pull-right">Пароль</h4>
+        </div>
+        <div class="col-md-9 m-b-10">
+            @if(Route::is('admin.users.edit'))
+                <span class="help-block m-t-10">
+                    <small>Не заполняйте эти поля, если не собираетесь менять пароль.</small>
+                </span>
+            @endif
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group @if($errors->has('password')) has-error @endif">
+            {!! Form::label('password', 'Новый пароль', ['class' => 'col-md-3 control-label']) !!}
+            <div class="col-md-9">
+                {!! Form::password('password', ['id' => 'password', 'class' => 'form-control']) !!}
+
+                @if ($errors->has('password'))
+                    <span class="help-block error">
+                        <strong>{{ $errors->first('password') }}</strong>
+                    </span>
+                @endif
+            </div>
+        </div>
+        <div class="form-group @if($errors->has('password_confirmation')) has-error @endif">
+            {!! Form::label('password_confirmation', 'Повтор пароля', ['class' => 'col-md-3 control-label']) !!}
+            <div class="col-md-9">
+                {!! Form::password('password_confirmation', ['id' => 'password_confirmation', 'class' => 'form-control']) !!}
+
+                @if ($errors->has('password_confirmation'))
+                    <span class="help-block error">
+                        <strong>{{ $errors->first('password_confirmation') }}</strong>
+                    </span>
+                @endif
+            </div>
+        </div>
     </div>
 
 </div><!-- end row -->
@@ -157,6 +179,7 @@
 
     // Buttons
     $(document).on('click', '.button-save-exit', function() {
+        $("#returnBack").val('1');
         $("#main-form").submit();
     });
     $(document).on('click', '.button-save', function() {

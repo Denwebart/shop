@@ -35,8 +35,10 @@ class UsersController extends Controller
 	public function create()
 	{
 		$user = new User();
+
+		$backUrl = \Request::has('back_url') ? urldecode(\Request::get('back_url')) : \URL::previous();
 		
-		return view('admin::users.create', compact('user'));
+		return view('admin::users.create', compact('user', 'backUrl'));
 	}
 	
 	/**
@@ -49,6 +51,7 @@ class UsersController extends Controller
 	{
 		$user = new User();
 		$data = $request->except('avatar');
+		$data['password'] = bcrypt($data['password']);
 
 		$validator = \Validator::make($data, User::rules());
 
@@ -112,8 +115,15 @@ class UsersController extends Controller
 	{
 		$user = User::findOrFail($id);
 		$data = $request->except('avatar');
-		
-		$validator = \Validator::make($data, User::rules($user->id));
+		if($data['password']) {
+			$data['password'] = bcrypt($data['password']);
+		} else {
+			unset($data['password']);
+		}
+
+		$rules = User::rules($user->id);
+		$rules['password'] = 'max:255|confirmed';
+		$validator = \Validator::make($data, $rules);
 		
 		if ($validator->fails())
 		{

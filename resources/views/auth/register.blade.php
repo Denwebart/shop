@@ -12,10 +12,10 @@
 
                 <div class="form-group{{ $errors->has('login') ? ' has-error' : '' }}">
                     <div class="col-xs-12">
-                        <input name="login" value="{{ old('name') }}" class="form-control" type="text" required="" placeholder="Логин">
+                        <input name="login" value="{{ old('login') }}" class="form-control" type="text" placeholder="Логин">
 
                         @if ($errors->has('login'))
-                            <span class="help-block">
+                            <span class="help-block error">
                                 <strong>{{ $errors->first('login') }}</strong>
                             </span>
                         @endif
@@ -24,10 +24,10 @@
 
                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                     <div class="col-xs-12">
-                        <input name="email" value="{{ old('email') }}" class="form-control" type="email" required="" placeholder="Email">
+                        <input name="email" value="{{ old('email') }}" class="form-control" type="email" placeholder="Email">
 
                         @if ($errors->has('email'))
-                            <span class="help-block">
+                            <span class="help-block error">
                                 <strong>{{ $errors->first('email') }}</strong>
                             </span>
                         @endif
@@ -36,10 +36,10 @@
 
                 <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                     <div class="col-xs-12">
-                        <input name="password" class="form-control" type="password" required="" placeholder="Пароль">
+                        <input name="password" class="form-control" type="password" placeholder="Пароль">
 
                         @if ($errors->has('password'))
-                            <span class="help-block">
+                            <span class="help-block error">
                                 <strong>{{ $errors->first('password') }}</strong>
                             </span>
                         @endif
@@ -48,10 +48,10 @@
 
                 <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
                     <div class="col-xs-12">
-                        <input name="password_confirmation" class="form-control" type="password" required="" placeholder="Подтверждение пароля">
+                        <input name="password_confirmation" class="form-control" type="password" placeholder="Подтверждение пароля">
 
                         @if ($errors->has('password_confirmation'))
-                            <span class="help-block">
+                            <span class="help-block error">
                                 <strong>{{ $errors->first('password_confirmation') }}</strong>
                             </span>
                         @endif
