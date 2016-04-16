@@ -43,6 +43,7 @@ class RequestedCall extends Model
 	const STATUS_NOT_PHONED = 2;
 	
 	public static $statuses = [
+		self::STATUS_NONE       => '-',
 		self::STATUS_PHONED     => 'Дозвонились',
 		self::STATUS_NOT_PHONED => 'Не дозвонились',
 	];
@@ -71,7 +72,6 @@ class RequestedCall extends Model
 		'user_id' => 'integer',
 		'name' => 'max:50|regex:/^[A-Za-zА-Яа-яЁёЇїІіЄє \-\']+$/u',
 		'phone' => 'max:50|regex:/^[0-9]+$/u',
-		'status' => 'integer',
 	];
 
 	/**

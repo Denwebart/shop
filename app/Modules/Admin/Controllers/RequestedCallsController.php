@@ -60,14 +60,17 @@ class RequestedCallsController extends Controller
 		    $data['user_id'] = Auth::user()->id;
 		    $data['answered_at'] = Carbon::now();
 	    }
-	    $validator = \Validator::make($data, RequestedCall::rules());
+	    $rules = RequestedCall::rules();
+	    $rules['status'] = 'integer|between:1,2';
+	    $messages = ['status.between' => 'Вы не можете сохранить, не выставив статус.'];
+	    $validator = \Validator::make($data, $rules, $messages);
 
 	    if ($validator->fails())
 	    {
 		    return redirect(route('admin.calls.edit', ['id' => $call->id, 'back_url' => urlencode($request->get('backUrl'))]))
 			    ->withErrors($validator->errors())
 			    ->withInput()
-			    ->with('errorMessage', 'Информация не сохранена. Исправьте ошибки валидации.');
+			    ->with('errorMessage', 'Информация не сохранена.');
 	    } else {
 		    $call->fill($data);
 		    $call->save();
