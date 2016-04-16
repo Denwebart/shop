@@ -36,7 +36,7 @@
                 @endif
             </div>
         </div>
-        @if($user->isAdmin())
+        @if(Auth::user()->isAdmin())
             <div class="form-group @if($errors->has('role')) has-error @endif">
                 {!! Form::label('role', 'Права', ['class' => 'col-md-2 control-label']) !!}
                 <div class="col-md-10">

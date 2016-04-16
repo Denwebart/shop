@@ -119,7 +119,7 @@
                 <h5>{{ Auth::user()->login }}</h5>
                 <ul class="list-inline">
                     <li>
-                        <a href="#" >
+                        <a href="{{ route('admin.users.edit', ['id' => Auth::user()->id]) }}">
                             <i class="fa fa-cog"></i>
                         </a>
                     </li>

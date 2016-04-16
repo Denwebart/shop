@@ -75,8 +75,14 @@
                     <div class="col-md-2">
                     </div>
                     <div class="col-md-4">
-                        {!! Form::hidden('is_container', 0) !!}
-                        {!! Form::checkbox('is_container', 1, $page->is_container, ['id' => 'is_container', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
+                        @if($page->type == \App\Models\Page::TYPE_CATALOG)
+                            {!! Form::hidden('is_container', 1) !!}
+                            {!! Form::checkbox('is_container', 1, $page->is_container, ['id' => 'is_container', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small', 'disabled' => true]) !!}
+                        @else
+                            {!! Form::hidden('is_container', 0) !!}
+                            {!! Form::checkbox('is_container', 1, $page->is_container, ['id' => 'is_container', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
+                        @endif
+
                         {!! Form::label('is_container', 'Категория', ['class' => 'control-label m-l-5']) !!}
                     </div>
                     <div class="col-md-6">

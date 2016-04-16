@@ -65,14 +65,14 @@ class User extends Authenticatable
 		self::ROLE_NONE    => '-',
 		self::ROLE_ADMIN   => 'Администратор',
 		self::ROLE_MANAGER => 'Менеджер',
-		self::ROLE_USER    => 'Пользователь',
+//		self::ROLE_USER    => 'Пользователь',
 	];
 	
 	public static $rolesClass = [
 		self::ROLE_NONE    => 'empty',
 		self::ROLE_ADMIN   => 'success',
 		self::ROLE_MANAGER => 'info',
-		self::ROLE_USER    => 'primary',
+//		self::ROLE_USER    => 'primary',
 	];
 
     /**
