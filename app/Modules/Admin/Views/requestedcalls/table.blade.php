@@ -27,12 +27,12 @@
                 <td>{{ $call->getPhone() }}</td>
                 <td>
                     @if($call->status)
-                        <span class="label @if($call->status == \App\Models\RequestedCall::STATUS_PHONED) label-success @else label-danger @endif pull-right">
+                        <span class="label @if($call->status == \App\Models\RequestedCall::STATUS_PHONED) label-success @else label-danger @endif">
                             {{ \App\Models\RequestedCall::$statuses[$call->status] }}
                         </span>
                     @endif
                 </td>
-                <td>{{ $call->comment }}</td>
+                <td>{{ \App\Helpers\Str::limit($call->comment, 50) }}</td>
                 <td>{{ \App\Helpers\Date::getRelative($call->created_at) }}</td>
                 <td>{{ \App\Helpers\Date::getRelative($call->answered_at) }}</td>
                 <td >
