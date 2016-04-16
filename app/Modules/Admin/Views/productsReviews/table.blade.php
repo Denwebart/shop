@@ -56,7 +56,7 @@
                     <a href="{{ route('admin.pages.edit', ['id' => $productReview->id]) }}" title="Редактировать" data-toggle="tooltip" class="m-r-15">
                         <i class="fa fa-pencil fa-lg"></i>
                     </a>
-                    <a href="#" class="button-delete" title="Удалить" data-toggle="tooltip" data-item-id="{{ $productReview->id }}" data-item-title="{{ $productReview->user ? $productReview->user->login : $productReview->user_name }}@if($productReview->product) к товару &#34;{{ $productReview->product->title }}&#34;@endif">
+                    <a href="javascript:void(0)" class="button-delete" title="Удалить" data-toggle="tooltip" data-item-id="{{ $productReview->id }}" data-item-title="{{ $productReview->user ? $productReview->user->login : $productReview->user_name }}@if($productReview->product) к товару &#34;{{ $productReview->product->title }}&#34;@endif">
                         <i class="fa fa-trash fa-lg"></i>
                     </a>
                 </td>

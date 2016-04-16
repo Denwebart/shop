@@ -62,7 +62,7 @@
                         <i class="fa fa-pencil fa-lg"></i>
                     </a>
                     @if(Auth::user()->isAdmin())
-                        <a href="#" title="Удалить" data-toggle="tooltip">
+                        <a href="javascript:void(0)" title="Удалить" data-toggle="tooltip">
                             <i class="fa fa-trash fa-lg"></i>
                         </a>
                     @endif

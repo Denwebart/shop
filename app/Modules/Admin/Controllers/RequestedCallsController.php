@@ -41,7 +41,7 @@ class RequestedCallsController extends Controller
 	    $call = RequestedCall::findOrFail($id);
 
 	    $backUrl = \Request::has('back_url') ? urldecode(\Request::get('back_url')) : URL::previous();
-
+	    
 	    return view('admin::requestedcalls.edit', compact('call', 'backUrl'));
     }
 
@@ -82,4 +82,34 @@ class RequestedCallsController extends Controller
 		    }
 	    }
     }
+
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function destroy($id)
+	{
+		if(\Request::ajax()) {
+
+			if(RequestedCall::destroy($id)){
+
+				$calls = RequestedCall::paginate(10);
+
+				return \Response::json([
+					'success' => true,
+					'message' => 'Звонок успешно удален.',
+					'itemsCount' => view('parts.count')->with('models', $calls)->render(),
+					'itemsPagination' => view('parts.pagination')->with('models', $calls)->render(),
+					'itemsTable' => view('admin::requestedCalls.table')->with('calls', $calls)->render(),
+				]);
+			} else {
+				return \Response::json([
+					'success' => false,
+					'message' => 'Произошла ошибка, звонок не был удалён.'
+				]);
+			}
+		}
+	}
 }

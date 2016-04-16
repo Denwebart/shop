@@ -37,7 +37,9 @@ class LettersController extends Controller
      */
     public function show($id)
     {
-        dd('просмотр страницы с id ' . $id);
+	    $letter = Letter::findOrFail($id);
+
+	    return view('admin::letters.show', compact('letter'));
     }
 	
     /**
@@ -56,7 +58,7 @@ class LettersController extends Controller
 
 			    return \Response::json([
 				    'success' => true,
-				    'message' => 'Писомо успешно удалено.',
+				    'message' => 'Письмо успешно удалено.',
 				    'itemsCount' => view('parts.count')->with('models', $letters)->render(),
 				    'itemsPagination' => view('parts.pagination')->with('models', $letters)->render(),
 				    'itemsTable' => view('admin::letters.table')->with('letters', $letters)->render(),

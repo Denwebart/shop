@@ -47,7 +47,7 @@
                     <a href="{{ route('admin.products.edit', ['id' => $product->id]) }}" title="Редактировать" data-toggle="tooltip" class="m-r-15">
                         <i class="fa fa-pencil fa-lg"></i>
                     </a>
-                    <a href="#" class="button-delete" title="Удалить" data-toggle="tooltip" data-item-id="{{ $product->id }}" data-item-title="{{ $product->title }}">
+                    <a href="javascript:void(0)" class="button-delete" title="Удалить" data-toggle="tooltip" data-item-id="{{ $product->id }}" data-item-title="{{ $product->title }}">
                         <i class="fa fa-trash fa-lg"></i>
                     </a>
                 </td>

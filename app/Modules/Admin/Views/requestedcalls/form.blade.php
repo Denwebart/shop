@@ -14,23 +14,32 @@
 <div class="row">
     <div class="col-lg-5 col-sm-12 col-xs-12 m-b-15">
         <div class="form-group">
-            Имя: {{ $call->name }}
-            <br>
-            Телефон: {{ $call->phone }}
-            <br>
-            Заказан: {{ \App\Helpers\Date::format($call->created_at) }}
-            <br>
-            Обработан: {{ \App\Helpers\Date::format($call->answered_at) }}
-            <br>
-            Менеджер:
-            @if($call->user)
-                <a href="{{ route('admin.users.show', ['id' => $call->user->id]) }}">
-                    <img src="{{ $call->user->getAvatarUrl() }}" class="img-circle" width="40px" alt="{{ $call->user->login }}" title="Ответил {{ $call->user->login }}" data-toggle="tooltip" data-placement="right">
-                    <span class="m-l-5">{{ $call->user->login }}</span>
-                </a>
-            @else
-                -
-            @endif
+            <div class="col-md-2">Имя:</div>
+            <div class="col-md-10"><h4 class="m-t-0">{{ $call->name }}</h4></div>
+
+            <div class="col-md-2">Телефон:</div>
+            <div class="col-md-10"><h4 class="m-t-0">{{ $call->phone }}</h4></div>
+
+            <div class="col-md-2">Заказан:</div>
+            <div class="col-md-10"><h4 class="m-t-0">{{ \App\Helpers\Date::format($call->created_at) }}</h4></div>
+
+            <div class="col-md-2">Обработан:</div>
+            <div class="col-md-10"><h4 class="m-t-0">{{ \App\Helpers\Date::format($call->answered_at) }}</h4></div>
+
+            <div class="col-md-2 @if($call->user) m-t-15 @endif">Менеджер:</div>
+
+            <div class="col-md-10 @if($call->user) m-t-5 @endif">
+                <h4 class="m-t-0">
+                    @if($call->user)
+                        <a href="{{ route('admin.users.show', ['id' => $call->user->id]) }}">
+                            <img src="{{ $call->user->getAvatarUrl() }}" class="img-circle" width="40px" alt="{{ $call->user->login }}" title="Ответил {{ $call->user->login }}" data-toggle="tooltip" data-placement="right">
+                            <span class="m-l-5">{{ $call->user->login }}</span>
+                        </a>
+                    @else
+                        -
+                    @endif
+                </h4>
+            </div>
         </div>
     </div><!-- end col -->
 
@@ -53,7 +62,7 @@
                 {!! Form::textarea('comment', $call->comment, ['id' => 'comment', 'class' => 'form-control', 'rows' => 5]) !!}
 
                 <span class="help-block @if($errors->has('comment')) hidden @endif">
-                    <small>Что написать???????.</small>
+                    <small>Заметка о звонке.</small>
                 </span>
                 @if ($errors->has('comment'))
                     <span class="help-block error">
@@ -66,13 +75,8 @@
 
 </div><!-- end row -->
 
-@push('styles')
-    <link href="{{ asset('backend/plugins/switchery/switchery.min.css') }}" rel="stylesheet" />
-@endpush
 
 @push('scripts')
-    <script src="{{ asset('backend/plugins/switchery/switchery.min.js') }}"></script>
-
     <script type="text/javascript">
 
         // Buttons
@@ -84,6 +88,5 @@
             $("#returnBack").val('0');
             $("#main-form").submit();
         });
-
     </script>
 @endpush
