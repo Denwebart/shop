@@ -24,7 +24,7 @@ View::share('title', $title);
     <div class="row">
         <div class="col-sm-4">
             <div class="count-container">
-                @include('parts.count', ['models' => $requestedcalls])
+                @include('parts.count', ['models' => $calls])
             </div>
         </div>
         <div class="col-sm-8">
@@ -49,12 +49,12 @@ View::share('title', $title);
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="count-container m-t-8">
-                            @include('parts.count', ['models' => $requestedcalls])
+                            @include('parts.count', ['models' => $calls])
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="pagination-container pull-right">
-                            @include('parts.pagination', ['models' => $requestedcalls])
+                            @include('parts.pagination', ['models' => $calls])
                         </div>
                     </div>
                 </div>

@@ -13,40 +13,40 @@
         <th>Телефон</th>
         <th>Статус</th>
         <th>Комментарий</th>
-        <th>Дата звонка</th>
-        <th>Принят</th>
+        <th>Заказан</th>
+        <th>Обработан</th>
         <th>Менеджер</th>
         <th></th>
     </tr>
     </thead>
     <tbody>
-        @foreach($requestedcalls as $requestedcall)
-            <tr @if(is_null($requestedcall->status)) class="bg-muted" @endif>
-                <td>{{ $requestedcall->id }}</td>
-                <td>{{ $requestedcall->name }}</td>
-                <td>{{ $requestedcall->getPhone() }}</td>
+        @foreach($calls as $call)
+            <tr @if(is_null($call->status)) class="bg-muted" @endif>
+                <td>{{ $call->id }}</td>
+                <td>{{ $call->name }}</td>
+                <td>{{ $call->getPhone() }}</td>
                 <td>
-                    @if(!is_null($requestedcall->status))
-                        <span class="label @if($requestedcall->status == \App\Models\RequestedCall::STATUS_PHONED) label-success @else label-danger @endif pull-right">
-                            {{ \App\Models\RequestedCall::$statuses[$requestedcall->status] }}
+                    @if($call->status)
+                        <span class="label @if($call->status == \App\Models\RequestedCall::STATUS_PHONED) label-success @else label-danger @endif pull-right">
+                            {{ \App\Models\RequestedCall::$statuses[$call->status] }}
                         </span>
                     @endif
                 </td>
-                <td>{{ $requestedcall->comment }}</td>
-                <td>{{ \App\Helpers\Date::getRelative($requestedcall->created_at) }}</td>
-                <td>{{ \App\Helpers\Date::getRelative($requestedcall->updated_at) }}</td>
+                <td>{{ $call->comment }}</td>
+                <td>{{ \App\Helpers\Date::getRelative($call->created_at) }}</td>
+                <td>{{ \App\Helpers\Date::getRelative($call->answered_at) }}</td>
                 <td >
-                    @if($requestedcall->user)
-                        <a href="{{ route('admin.users.show', ['id' => $requestedcall->user->id]) }}">
-                            <img src="{{ $requestedcall->user->getAvatarUrl() }}" class="img-circle" width="40px" alt="{{ $requestedcall->user->login }}" title="Ответил {{ $requestedcall->user->login }}" data-toggle="tooltip" data-placement="right">
-                            <span class="m-l-5">{{ $requestedcall->user->login }}</span>
+                    @if($call->user)
+                        <a href="{{ route('admin.users.show', ['id' => $call->user->id]) }}">
+                            <img src="{{ $call->user->getAvatarUrl() }}" class="img-circle" width="40px" alt="{{ $call->user->login }}" title="Ответил {{ $call->user->login }}" data-toggle="tooltip" data-placement="right">
+                            <span class="m-l-5">{{ $call->user->login }}</span>
                         </a>
                     @else
                         -
                     @endif
                 </td>
                 <td>
-                    <a href="{{ route('admin.calls.edit', ['id' => $requestedcall->id]) }}" title="Редактировать" data-toggle="tooltip" class="m-r-15">
+                    <a href="{{ route('admin.calls.edit', ['id' => $call->id]) }}" title="Редактировать" data-toggle="tooltip" class="m-r-15">
                         <i class="fa fa-pencil fa-lg"></i>
                     </a>
                 </td>

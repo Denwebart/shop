@@ -9,8 +9,10 @@
 namespace App\Modules\Admin\Controllers;
 
 use App\Models\RequestedCall;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\URL;
 
@@ -23,9 +25,9 @@ class RequestedCallsController extends Controller
      */
     public function index()
     {
-	    $requestedcalls = RequestedCall::paginate(10);
+	    $calls = RequestedCall::paginate(10);
 
-        return view('admin::requestedcalls.index', compact('requestedcalls'));
+        return view('admin::requestedcalls.index', compact('calls'));
     }
 
     /**
@@ -36,9 +38,11 @@ class RequestedCallsController extends Controller
      */
     public function edit($id)
     {
-	    $page = RequestedCall::findOrFail($id);
+	    $call = RequestedCall::findOrFail($id);
 
-	    return view('admin::pages.edit', compact('page'));
+	    $backUrl = \Request::has('back_url') ? urldecode(\Request::get('back_url')) : URL::previous();
+
+	    return view('admin::requestedcalls.edit', compact('call', 'backUrl'));
     }
 
     /**
@@ -50,7 +54,29 @@ class RequestedCallsController extends Controller
      */
     public function update(Request $request, $id)
     {
-	    var_dump('редактирование страницы с id '. $id);
-	    dd(Input::all());
+	    $call = RequestedCall::findOrFail($id);
+	    $data = $request->all();
+	    if(!$call->user_id) {
+		    $data['user_id'] = Auth::user()->id;
+		    $data['answered_at'] = Carbon::now();
+	    }
+	    $validator = \Validator::make($data, RequestedCall::rules());
+
+	    if ($validator->fails())
+	    {
+		    return redirect(route('admin.calls.edit', ['id' => $call->id, 'back_url' => urlencode($request->get('backUrl'))]))
+			    ->withErrors($validator->errors())
+			    ->withInput()
+			    ->with('errorMessage', 'Информация не сохранена. Исправьте ошибки валидации.');
+	    } else {
+		    $call->fill($data);
+		    $call->save();
+
+		    if($request->get('returnBack')) {
+			    return redirect($request->get('backUrl'))->with('successMessage', 'Информация сохранена!');
+		    } else {
+			    return redirect(route('admin.calls.edit', ['id' => $call->id, 'back_url' => urlencode($request->get('backUrl'))]))->with('successMessage', 'Информация сохранена!');
+		    }
+	    }
     }
 }

@@ -38,6 +38,7 @@ class RequestedCall extends Model
 	/**
 	 * Статус заказанного звонка (значение поля status)
 	 */
+	const STATUS_NONE       = 0;
 	const STATUS_PHONED     = 1;
 	const STATUS_NOT_PHONED = 2;
 	
@@ -52,9 +53,45 @@ class RequestedCall extends Model
 	 * @var array
 	 */
 	protected $fillable = [
-		'product_id',
-		'property_value_id',
+		'user_id',
+		'name',
+		'phone',
+		'status',
+		'comment',
+		'answered_at',
 	];
+
+	/**
+	 * @var array Validation rules
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	protected static $rules = [
+		'user_id' => 'integer',
+		'name' => 'max:50|regex:/^[A-Za-zА-Яа-яЁёЇїІіЄє \-\']+$/u',
+		'phone' => 'max:50|regex:/^[0-9]+$/u',
+		'status' => 'integer',
+	];
+
+	/**
+	 * Get validation rules
+	 *
+	 * @param bool $id
+	 * @return array
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public static function rules($id = false)
+	{
+		$rules = self::$rules;
+		if ($id) {
+			foreach ($rules as &$rule) {
+				$rule = str_replace(':id', $id, $rule);
+			}
+		}
+		return $rules;
+	}
 
 	/**
 	 * @return mixed
