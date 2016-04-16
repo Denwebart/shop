@@ -343,6 +343,10 @@ a:focus {
     padding: 0;
     margin: 0;
 }
+.product-images img {
+    display: block;
+    margin: 0 0 3px 3px;
+}
 
 /* Card Box */
 .card-box {
@@ -669,7 +673,7 @@ textarea.form-control {
 }
 .label-empty {
     background-color: #ffffff;
-    color:#98a6ad;
+    color: #98a6ad;
 }
 .label-default {
   background-color: #71b6f9;
