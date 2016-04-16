@@ -13,6 +13,7 @@
         <th>Заголовок</th>
         <th>Заголовок меню</th>
         <th>Алиас</th>
+        <th>Родительская категория</th>
         <th>Статус публикации</th>
         <th>Дата публикации</th>
         <th></th>
@@ -32,6 +33,13 @@
                 <td>{{ $page->title }}</td>
                 <td>{{ $page->menu_title }}</td>
                 <td>{{ $page->alias }}</td>
+                <td>
+                    @if($page->parent)
+                        {{ $page->parent->getTitle() }}
+                    @else
+                        -
+                    @endif
+                </td>
                 <td>
                 <span class="label @if($page->is_published) label-success @else label-danger @endif">
                     {{ \App\Models\Page::$is_published[$page->is_published] }}

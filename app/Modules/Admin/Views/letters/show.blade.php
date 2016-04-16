@@ -64,7 +64,7 @@ View::share('title', $title);
 
                     <div class="col-lg-7 col-sm-12 col-xs-12 m-b-15">
                         <div class="row">
-                            <div class="col-md-2">Текст сообщения</div>
+                            <div class="col-md-2">Текст сообщения:</div>
                             <div class="col-md-10"><span class="m-t-0">{{ $letter->message }}</span></div>
                         </div>
                     </div><!-- end col -->

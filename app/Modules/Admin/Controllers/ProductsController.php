@@ -24,7 +24,7 @@ class ProductsController extends Controller
     public function index()
     {
 	    $products = Product::select(['id', 'vendor_code', 'category_id', 'is_published', 'title', 'price', 'image', 'image_alt', 'published_at'])
-		    ->with('category')
+		    ->with('category', 'images')
 		    ->paginate(10);
 
         return view('admin::products.index', compact('products'));
@@ -152,7 +152,7 @@ class ProductsController extends Controller
 		    if(Product::destroy($id)){
 			
 			    $products = Product::select(['id', 'vendor_code', 'category_id', 'is_published', 'title', 'price', 'image', 'image_alt', 'published_at'])
-				    ->with('category')
+				    ->with('category', 'images')
 				    ->paginate(10);
 
 			    return \Response::json([

@@ -224,7 +224,7 @@ class Page extends Model
 	 */
 	public function canBeDeleted()
 	{
-		if($this->type == self::TYPE_PAGE) {
+		if($this->type == self::TYPE_PAGE || !$this->type) {
 			return true;
 		} elseif($this->type == self::TYPE_CATALOG && $this->parent_id != 0) {
 			return true;
@@ -317,8 +317,9 @@ class Page extends Model
 		if($this->type != Page::TYPE_SYSTEM_PAGE) {
 			if($data['parent_id']) {
 				$parent = Page::findOrFail($data['parent_id']);
-				if($parent->type == Page::TYPE_CATALOG && $data['is_container']) {
+				if($parent->type == Page::TYPE_CATALOG) {
 					$data['type'] = Page::TYPE_CATALOG;
+					$data['is_container'] = 1;
 				} else {
 					$data['type'] = Page::TYPE_PAGE;
 				}

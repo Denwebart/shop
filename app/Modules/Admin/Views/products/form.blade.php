@@ -73,13 +73,12 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="col-sm-6 col-md-6 @if($errors->has('image')) has-error @endif">
-                {!! Form::label('image', 'Изображение для страницы', ['class' => 'control-label m-b-5']) !!}
+            <div class="col-sm-4 col-md-4 @if($errors->has('image')) has-error @endif">
+                {!! Form::label('image', 'Изображение для товара', ['class' => 'control-label m-b-5']) !!}
                 {!! Form::file('image', ['id' => 'image', 'class' => 'dropify', 'data-default-file' => $product->getImageUrl(), 'data-max-file-size' => '3M']) !!}
                 <span class="help-block @if($errors->has('image')) hidden @endif">
                     <small>
-                        Изображение отображается перед текстом страницы
-                        и при выводе страниц блогом.
+                        Главное изображение товара.
                     </small>
                 </span>
                 @if ($errors->has('image'))
@@ -88,7 +87,7 @@
                     </span>
                 @endif
             </div>
-            <div class="col-sm-6 col-md-6 @if($errors->has('image_alt')) has-error @endif">
+            <div class="col-sm-8 col-md-8 @if($errors->has('image_alt')) has-error @endif">
                 {!! Form::label('image_alt', 'Альт для изображения', ['class' => 'control-label m-b-5']) !!}
                 {!! Form::textarea('image_alt', $product->image_alt, ['id' => 'image_alt', 'class' => 'form-control', 'rows' => 8]) !!}
 
@@ -98,7 +97,50 @@
                     </span>
                 @endif
             </div>
+            <div class="col-md-12">
+                <div class="task-detail">
+                    <div class="attached-files">
+                        <div class="files-list">
+                            @foreach($product->images as $image)
+                                <div class="file-box">
+{{--                                    {!! Form::file('image['. $image->id .']', ['id' => 'image['. $image->id .']', 'class' => 'img-responsive img-thumbnail dropify', 'data-default-file' => $image->getImageUrl(), 'data-max-file-size' => '3M']) !!}--}}
+                                    <a href="">
+                                        <img src="{{ $image->getImageUrl() }}" class="img-responsive img-thumbnail" alt="">
+                                    </a>
+                                </div>
+                            @endforeach
+
+                            <div class="file-box m-l-15">
+                                <div class="fileupload add-new-plus">
+                                    <span><i class="zmdi-plus zmdi"></i></span>
+                                    <input type="file" class="upload">
+                                </div>
+                            </div>
+                        </div>
+                        <span class="help-block">
+                            <small>Дополнительные изображения для товара.</small>
+                        </span>
+                    </div>
+                </div>
+            </div>
         </div>
+
+
+
+
+        {{--<div class="form-group product-images">--}}
+            {{--<div class="col-md-12">--}}
+                {{--{!! Form::label('images[0]', 'Дополнительные изображения для товара', ['class' => 'control-label m-b-5']) !!}--}}
+            {{--</div>--}}
+            {{--<div class="col-xs-3 col-sm-2 col-md-2 @if($errors->has('images[0]')) has-error @endif">--}}
+                {{--{!! Form::file('images[0]', ['id' => 'images[0]', 'class' => 'dropify', 'data-default-file' => $product->getImageUrl(), 'data-max-file-size' => '3M']) !!}--}}
+                {{--@if ($errors->has('images[0]'))--}}
+                    {{--<span class="help-block error">--}}
+                        {{--<strong>{{ $errors->first('images[0]') }}</strong>--}}
+                    {{--</span>--}}
+                {{--@endif--}}
+            {{--</div>--}}
+        {{--</div>--}}
     </div><!-- end col -->
 
     <div class="col-lg-6 col-sm-12 col-xs-12 m-b-15">
@@ -219,7 +261,7 @@
     <script src="{{ asset('backend/plugins/summernote/lang/summernote-ru-RU.js') }}"></script>
 
     <script type="text/javascript">
-    
+
         // Image Uploader
         var drEvent = $('.dropify').dropify({
             messages: {
@@ -232,11 +274,24 @@
                 'fileSize': 'Размер файла слишком большой (максимум 3Мб).'
             }
         });
-    
+
         drEvent.on('dropify.afterClear', function(event, element){
             $('#deleteImage').val(1);
         });
-    
+
+        $('.dropify-more').dropify({
+            messages: {
+                'default': '+',
+                'replace': 'Кликните или перетащите файл для замены.',
+                'remove': 'x',
+                'error': '!'
+            },
+            error: {
+                'fileSize': 'Размер файла слишком большой (максимум 3Мб).'
+            }
+        });
+
+
         // WYSIWYG
         $(document).ready(function() {
             $('.editor').summernote({
@@ -247,7 +302,7 @@
                 focus: false                  // set focus to editable area after initializing summernote
             });
         });
-        
+
         // Buttons
         $(document).on('click', '.button-save-exit', function() {
             $("#returnBack").val('1');
@@ -257,6 +312,6 @@
             $("#returnBack").val('0');
             $("#main-form").submit();
         });
-    
+
     </script>
 @endpush

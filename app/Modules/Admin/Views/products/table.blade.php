@@ -24,7 +24,14 @@
             <tr @if(!$product->is_published) class="not-published" @endif>
                 <td>{{ $product->id }}</td>
                 <td>
-                    <img src="{{ $product->getImageUrl() }}" alt="{{ $product->image_alt }}" width="100">
+                    <img src="{{ $product->getImageUrl() }}" alt="{{ $product->image_alt }}" width="100" class="pull-left">
+                    @if(count($product->images))
+                        <div class="product-images pull-left">
+                            @foreach($product->images as $image)
+                                <img src="{{ $image->getImageUrl() }}" alt="{{ $image->image_alt }}" width="20">
+                            @endforeach
+                        </div>
+                    @endif
                 </td>
                 <td>{{ $product->vendor_code }}</td>
                 <td>{{ $product->title }}</td>

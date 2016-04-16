@@ -28,6 +28,8 @@ class ProductImage extends Model
 
 	public $timestamps = false;
 
+	protected $imagePath = '/uploads/products/';
+
 	/**
 	 * The attributes that are mass assignable.
 	 *
@@ -39,4 +41,58 @@ class ProductImage extends Model
 		'image_alt',
 		'position',
 	];
+
+	/**
+	 * @var array Validation rules
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	protected static $rules = [
+		'user_id' => 'integer',
+		'image' => 'image|max:3072',
+		'image_alt' => 'max:350',
+		'position' => 'integer',
+	];
+
+	/**
+	 * Get validation rules
+	 *
+	 * @param bool $id
+	 * @return array
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public static function rules($id = false)
+	{
+		$rules = self::$rules;
+		if ($id) {
+			foreach ($rules as &$rule) {
+				$rule = str_replace(':id', $id, $rule);
+			}
+		}
+		return $rules;
+	}
+
+	/**
+	 * Product
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function product()
+	{
+		return $this->belongsTo('App\Models\Product', 'product_id');
+	}
+
+	/**
+	 * Get image url
+	 *
+	 * @return mixed
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function getImageUrl()
+	{
+		return $this->product ? asset($this->imagePath . $this->product->id . '/images/' . $this->id . '/' . $this->image) : '';
+	}
 }

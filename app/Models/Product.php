@@ -154,6 +154,16 @@ class Product extends Model
 	}
 
 	/**
+	 * Images
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function images()
+	{
+		return $this->hasMany('App\Models\ProductImage', 'product_id');
+	}
+
+	/**
 	 * Get image url
 	 *
 	 * @return mixed
