@@ -9,10 +9,13 @@
     <thead>
     <tr>
         <th>ID</th>
+        <th></th>
         <th>К товару</th>
         <th>Имя</th>
         <th>Email</th>
-        <th>Текст отзыва</th>
+        <th>Рейтинг</th>
+        <th>Полезен</th>
+        <th>Не полезен</th>
         <th>Статус публикации</th>
         <th>Оставлен</th>
         <th>Дата публикации</th>
@@ -23,6 +26,13 @@
         @foreach($productsReviews as $productReview)
             <tr @if(!$productReview->is_published) class="not-published" @endif>
                 <td>{{ $productReview->id }}</td>
+                <td>
+                    @if($productReview->parent_id)
+                        <i class="fa fa-level-down"></i>
+                    @else
+                        <i class="fa fa-comment"></i>
+                    @endif
+                </td>
                 <td>
                     @if($productReview->product)
                         {{ $productReview->product->title }}
@@ -44,18 +54,28 @@
                         {{ $productReview->user_email }}
                     @endif
                 </td>
-                <td>{{ \App\Helpers\Str::limit($productReview->text, 30) }}</td>
+                <td>{{ $productReview->rating }}</td>
+                <td>{{ $productReview->like }}</td>
+                <td>{{ $productReview->dislike }}</td>
                 <td>
-                <span class="label @if($productReview->is_published) label-success @else label-danger @endif">
-                    {{ \App\Models\Page::$is_published[$productReview->is_published] }}
-                </span>
+                    <span class="label @if($productReview->is_published) label-success @else label-danger @endif">
+                        {{ \App\Models\Page::$is_published[$productReview->is_published] }}
+                    </span>
                 </td>
                 <td>{{ \App\Helpers\Date::format($productReview->created_at) }}</td>
                 <td>{{ \App\Helpers\Date::format($productReview->published_at) }}</td>
                 <td>
-                    <a href="{{ route('admin.pages.edit', ['id' => $productReview->id]) }}" title="Редактировать" data-toggle="tooltip" class="m-r-15">
+                    @if($productReview->parent_id == 0)
+                        <a href="#" title="Ответить" data-toggle="tooltip">
+                            <i class="fa fa-reply"></i>
+                        </a>
+                    @endif
+                </td>
+                <td>
+                    <a href="{{ route('admin.reviews.edit', ['id' => $productReview->id]) }}" title="Редактировать" data-toggle="tooltip" class="m-r-15">
                         <i class="fa fa-pencil fa-lg"></i>
                     </a>
+
                     <a href="javascript:void(0)" class="button-delete" title="Удалить" data-toggle="tooltip" data-item-id="{{ $productReview->id }}" data-item-title="{{ $productReview->user ? $productReview->user->login : $productReview->user_name }}@if($productReview->product) к товару &#34;{{ $productReview->product->title }}&#34;@endif">
                         <i class="fa fa-trash fa-lg"></i>
                     </a>

@@ -23,7 +23,7 @@ class ProductsReviewsController extends Controller
      */
     public function index()
     {
-	    $productsReviews = ProductReview::select(['id', 'user_id', 'product_id', 'user_name', 'user_email', 'text', 'is_published', 'created_at', 'published_at'])
+	    $productsReviews = ProductReview::select(['id', 'parent_id', 'user_id', 'product_id', 'rating', 'like', 'dislike', 'user_name', 'user_email', 'is_published', 'created_at', 'published_at'])
 		    ->with('user', 'product')
 		    ->paginate(10);
 
@@ -73,9 +73,11 @@ class ProductsReviewsController extends Controller
      */
     public function edit($id)
     {
-	    $page = Page::findOrFail($id);
+	    $productReview = ProductReview::findOrFail($id);
 
-	    return view('admin::pages.edit', compact('page'));
+	    $backUrl = \Request::has('back_url') ? urldecode(\Request::get('back_url')) : URL::previous();
+
+	    return view('admin::productsReviews.edit', compact('productReview', 'backUrl'));
     }
 
     /**
@@ -103,7 +105,7 @@ class ProductsReviewsController extends Controller
 
 		    if(ProductReview::destroy($id)){
 
-			    $productsReviews = ProductReview::select(['id', 'user_id', 'product_id', 'user_name', 'user_email', 'text', 'is_published', 'created_at', 'published_at'])
+			    $productsReviews = ProductReview::select(['id', 'parent_id', 'user_id', 'product_id', 'rating', 'like', 'dislike', 'user_name', 'user_email', 'is_published', 'created_at', 'published_at'])
 				    ->with('user', 'product')
 				    ->paginate(10);
 
