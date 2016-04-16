@@ -43,7 +43,7 @@
                         <i class="fa fa-pencil fa-lg"></i>
                     </a>
                     @if($page->canBeDeleted())
-                        <a href="#" class="button-delete" title="Удалить" data-toggle="tooltip" data-item-id="{{ $page->id }}" data-item-title="{{ $page->getTitle() }}">
+                        <a href="javascript:void(0)" class="button-delete" title="Удалить" data-toggle="tooltip" data-item-id="{{ $page->id }}" data-item-title="{{ $page->getTitle() }}">
                             <i class="fa fa-trash fa-lg"></i>
                         </a>
                     @endif

@@ -62,5 +62,4 @@ View::share('title', $title);
         </div><!-- end col -->
     </div>
     <!-- end row -->
-
 @endsection

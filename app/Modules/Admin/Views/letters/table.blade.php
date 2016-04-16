@@ -24,7 +24,7 @@
                 <td>{{ $letter->id }}</td>
                 <td>{{ $letter->name }}</td>
                 <td>{{ $letter->email }}</td>
-                <td>{{ $letter->subject }}</td>
+                <td>{{ \App\Helpers\Str::limit($letter->subject, 30) }}</td>
                 <td>{{ \App\Helpers\Str::limit($letter->message, 30) }}</td>
                 <td>{{ \App\Helpers\Date::format($letter->created_at) }}</td>
                 <td>{{ \App\Helpers\Date::format($letter->updated_at) }}</td>
@@ -32,7 +32,7 @@
                     <a href="{{ route('admin.letters.show', ['id' => $letter->id]) }}" title="Прочесть" data-toggle="tooltip" class="m-r-15">
                         <i class="fa fa-eye fa-lg"></i>
                     </a>
-                    <a href="#" class="button-delete" title="Удалить" data-toggle="tooltip" data-item-id="{{ $letter->id }}" data-item-title="{{ $letter->name }} ({{ $letter->email }})">
+                    <a href="javascript:void(0)" class="button-delete" title="Удалить" data-toggle="tooltip" data-item-id="{{ $letter->id }}" data-item-title="{{ $letter->name }} ({{ $letter->email }})">
                         <i class="fa fa-trash fa-lg"></i>
                     </a>
                 </td>
@@ -57,7 +57,7 @@
                 sweetAlert(
                         {
                             title: "Удалить письмо?",
-                            text: 'Вы точно хотите удалить письмо от "'+ itemTitle +'"?',
+                            text: 'Вы точно хотите удалить письмо от '+ itemTitle +' ?',
                             type: "error",
                             showCancelButton: true,
                             cancelButtonText: 'Отмена',

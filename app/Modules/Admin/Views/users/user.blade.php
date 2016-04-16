@@ -14,7 +14,7 @@
             <li><a href="{{ route('admin.users.edit', ['id' => $user->id]) }}">Редактировать</a></li>
             <li>
                 @if(!$user->isAdmin())
-                    <a href="#" class="button-delete" title="Удалить" data-toggle="tooltip" data-item-id="{{ $user->id }}" data-item-title="{{ $user->login }}">
+                    <a href="javascript:void(0)" class="button-delete" title="Удалить" data-toggle="tooltip" data-item-id="{{ $user->id }}" data-item-title="{{ $user->login }}">
                         Удалить
                     </a>
                 @endif
