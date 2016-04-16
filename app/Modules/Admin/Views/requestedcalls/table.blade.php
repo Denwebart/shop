@@ -35,7 +35,16 @@
                 <td>{{ $requestedcall->comment }}</td>
                 <td>{{ \App\Helpers\Date::getRelative($requestedcall->created_at) }}</td>
                 <td>{{ \App\Helpers\Date::getRelative($requestedcall->updated_at) }}</td>
-                <td>{{ $requestedcall->user_id }}</td>
+                <td >
+                    @if($requestedcall->user)
+                        <a href="{{ route('admin.users.show', ['id' => $requestedcall->user->id]) }}">
+                            <img src="{{ $requestedcall->user->getAvatarUrl() }}" class="img-circle" width="40px" alt="{{ $requestedcall->user->login }}" title="Ответил {{ $requestedcall->user->login }}" data-toggle="tooltip" data-placement="right">
+                            <span class="m-l-5">{{ $requestedcall->user->login }}</span>
+                        </a>
+                    @else
+                        -
+                    @endif
+                </td>
                 <td>
                     <a href="{{ route('admin.calls.edit', ['id' => $requestedcall->id]) }}" title="Редактировать" data-toggle="tooltip" class="m-r-15">
                         <i class="fa fa-pencil fa-lg"></i>

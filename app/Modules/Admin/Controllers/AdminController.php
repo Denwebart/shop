@@ -24,9 +24,13 @@ class AdminController extends Controller
 	{
 		$orders = Order::select(['id', 'customer_id', 'total_price', 'status', 'created_at', 'paid_at'])
 			->with('customer')
+			->limit(10)
 			->get();
 
-		$calls = RequestedCall::select(['id', 'name', 'phone', 'status', 'created_at'])->get();
+		$calls = RequestedCall::select(['id', 'user_id', 'name', 'phone', 'status', 'created_at'])
+			->with('user')
+			->limit(5)
+			->get();
 
 		return view('admin::admin.index', compact('calls', 'orders'));
 	}

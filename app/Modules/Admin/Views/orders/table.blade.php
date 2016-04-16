@@ -47,9 +47,13 @@
                 <td>
                     @if($order->user)
                         <a href="{{ route('admin.users.show', ['id' => $order->user->id]) }}">
-                            {{ $order->user->login }}
+                            <img src="{{ $order->user->getAvatarUrl() }}" class="img-circle" width="40px" alt="{{ $order->user->login }}" title="Принял заказ {{ $order->user->login }}" data-toggle="tooltip" data-placement="right">
+                            <span class="m-l-5">{{ $order->user->login }}</span>
                         </a>
-                    @endif</td>
+                    @else
+                        -
+                    @endif
+                </td>
                 <td>
                     <a href="{{ route('admin.orders.show', ['id' => $order->id]) }}" title="Просмотреть" data-toggle="tooltip" class="m-r-15">
                         <i class="fa fa-eye fa-lg"></i>

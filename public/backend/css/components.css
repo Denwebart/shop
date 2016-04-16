@@ -1277,6 +1277,11 @@ table.dataTable td.focus {
   margin-right: 15px;
   width: 40px;
 }
+.inbox-widget .inbox-item .inbox-item-img .empty {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+}
 .inbox-widget .inbox-item img {
   width: 40px;
 }

@@ -18,13 +18,13 @@ View::share('title', $title);
             <div class="card-box">
 
                 <div class="pull-right">
-                    <a href="orders.html" class="card-drop">
+                    <a href="{{ route('admin.orders.index') }}" class="card-drop">
                         <i class="fa fa-angle-double-right"></i>
                     </a>
                 </div>
 
                 <h4 class="header-title m-t-0 m-b-30">
-                    <a href="orders.html">
+                    <a href="{{ route('admin.orders.index') }}">
                         Заказы
                     </a>
                 </h4>
@@ -43,13 +43,13 @@ View::share('title', $title);
             <div class="card-box">
 
                 <div class="pull-right">
-                    <a href="#" class="card-drop">
+                    <a href="{{ route('admin.letters.index') }}" class="card-drop">
                         <i class="fa fa-angle-double-right"></i>
                     </a>
                 </div>
 
                 <h4 class="header-title m-t-0 m-b-30">
-                    <a href="#">Письма</a>
+                    <a href="{{ route('admin.letters.index') }}">Письма</a>
                 </h4>
 
                 <div class="widget-chart-1">
@@ -72,13 +72,13 @@ View::share('title', $title);
             <div class="card-box">
 
                 <div class="pull-right">
-                    <a href="#" class="card-drop">
+                    <a href="{{ route('admin.reviews.index') }}" class="card-drop">
                         <i class="fa fa-angle-double-right"></i>
                     </a>
                 </div>
 
                 <h4 class="header-title m-t-0 m-b-30">
-                    <a href="#">Отзывы</a>
+                    <a href="{{ route('admin.reviews.index') }}">Отзывы</a>
                 </h4>
 
                 <div class="widget-chart-1">
@@ -100,13 +100,13 @@ View::share('title', $title);
             <div class="card-box">
 
                 <div class="pull-right">
-                    <a href="#" class="card-drop">
+                    <a href="{{ route('admin.calls.index') }}" class="card-drop">
                         <i class="fa fa-angle-double-right"></i>
                     </a>
                 </div>
 
                 <h4 class="header-title m-t-0 m-b-30">
-                    <a href="#">Заказанные звонки</a>
+                    <a href="{{ route('admin.calls.index') }}">Заказанные звонки</a>
                 </h4>
 
                 <div class="widget-box-2">
@@ -202,7 +202,11 @@ View::share('title', $title);
                         <a href="#">
                             <div class="inbox-item @if(is_null($call->status)) bg-muted @endif">
                                 <div class="inbox-item-img">
-                                    <img src="{{ asset('backend/images/users/avatar-1.jpg') }}" class="img-circle" alt="">
+                                    @if($call->user)
+                                        <img src="{{ $call->user->getAvatarUrl() }}" class="img-circle" alt="{{ $call->user->login }}" title="Ответил {{ $call->user->login }}" data-toggle="tooltip" data-placement="right">
+                                    @else
+                                        <div class="empty" title="Никто не звонил" data-toggle="tooltip" data-placement="right"></div>
+                                    @endif
                                 </div>
                                 <p class="inbox-item-author">{{ $call->name }}</p>
                                 <p class="inbox-item-text">

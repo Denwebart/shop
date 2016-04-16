@@ -42,8 +42,8 @@ class RequestedCall extends Model
 	const STATUS_NOT_PHONED = 2;
 	
 	public static $statuses = [
-		self::STATUS_PHONED     => 'дозвонились',
-		self::STATUS_NOT_PHONED => 'не дозвонились',
+		self::STATUS_PHONED     => 'Дозвонились',
+		self::STATUS_NOT_PHONED => 'Не дозвонились',
 	];
 
 	/**
@@ -62,6 +62,16 @@ class RequestedCall extends Model
 	public function getPhone()
 	{
 		return Str::phoneFormat($this->phone);
+	}
+
+	/**
+	 * Менеджер, ответивший на звонок
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function user()
+	{
+		return $this->belongsTo('App\Models\User', 'user_id');
 	}
 
 }
