@@ -18,7 +18,6 @@ class Letter extends Model
 	 * @var array
 	 */
 	protected $fillable = [
-		'id',
 		'name',
 		'email',
 		'subject',

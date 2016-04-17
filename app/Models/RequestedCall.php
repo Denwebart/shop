@@ -70,8 +70,8 @@ class RequestedCall extends Model
 	 */
 	protected static $rules = [
 		'user_id' => 'integer',
-		'name' => 'max:50|regex:/^[A-Za-zА-Яа-яЁёЇїІіЄє \-\']+$/u',
-		'phone' => 'max:50|regex:/^[0-9]+$/u',
+		'name' => 'required|max:50|regex:/^[A-Za-zА-Яа-яЁёЇїІіЄє \-\']+$/u',
+		'phone' => 'required|max:50|regex:/^[0-9]+$/u',
 	];
 
 	/**

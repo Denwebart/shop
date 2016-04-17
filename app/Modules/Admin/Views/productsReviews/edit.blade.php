@@ -41,7 +41,7 @@ View::share('title', $title);
     <div class="row">
         <div class="col-lg-12">
             <div class="card-box">
-                <form method="POST" class="form-horizontal" role="form" action="{{ route('admin.reviews.edit', ['id' => $productReview->id]) }}" id="main-form">
+                <form method="POST" class="form-horizontal" role="form" action="{{ route('admin.reviews.update', ['id' => $productReview->id]) }}" id="main-form">
                     <input type="hidden" name="_method" value="PUT">
 
                     @include('admin::productsReviews.form')

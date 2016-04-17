@@ -136,6 +136,9 @@ a:focus {
 /* =============
    Helper clasess
 ============= */
+.inline-block {
+    display: inline-block;
+}
 .p-0 {
   padding: 0px !important;
 }
@@ -187,6 +190,9 @@ a:focus {
 }
 .m-l-15 {
   margin-left: 15px !important;
+}
+.m-l-45 {
+    margin-left: 45px !important;
 }
 .m-t-5 {
   margin-top: 5px !important;
@@ -342,6 +348,12 @@ a:focus {
     list-style: none;
     padding: 0;
     margin: 0;
+}
+.products-list li:first-child {
+    margin-top: 0;
+}
+.products-list li {
+    margin-top: 5px;
 }
 .product-images img {
     display: block;

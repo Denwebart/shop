@@ -28,9 +28,9 @@
                 <td>{{ $productReview->id }}</td>
                 <td>
                     @if($productReview->parent_id)
-                        <i class="fa fa-level-down"></i>
+                        <i class="fa fa-level-down" title="Комментарий к отзыву" data-toggle="tooltip"></i>
                     @else
-                        <i class="fa fa-comment"></i>
+                        <i class="fa fa-comment" title="Отзыв к товару" data-toggle="tooltip"></i>
                     @endif
                 </td>
                 <td>
@@ -59,7 +59,7 @@
                 <td>{{ $productReview->dislike }}</td>
                 <td>
                     <span class="label @if($productReview->is_published) label-success @else label-danger @endif">
-                        {{ \App\Models\Page::$is_published[$productReview->is_published] }}
+                        {{ \App\Models\ProductReview::$is_published[$productReview->is_published] }}
                     </span>
                 </td>
                 <td>{{ \App\Helpers\Date::format($productReview->created_at) }}</td>

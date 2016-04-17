@@ -199,7 +199,7 @@ View::share('title', $title);
 
                 <div class="inbox-widget nicescroll" style="height: 315px;">
                     @forelse($calls as $call)
-                        <a href="#">
+                        <a href="{{ route('admin.calls.edit', ['id' => $call->id]) }}">
                             <div class="inbox-item @if(is_null($call->status)) bg-muted @endif">
                                 <div class="inbox-item-img">
                                     @if($call->user)
@@ -211,7 +211,7 @@ View::share('title', $title);
                                 <p class="inbox-item-author">{{ $call->name }}</p>
                                 <p class="inbox-item-text">
                                     <span class="phone">{{ $call->getPhone() }}</span>
-                                    @if(!is_null($call->status))
+                                    @if($call->status)
                                         <span class="label @if($call->status == \App\Models\RequestedCall::STATUS_PHONED) label-success @else label-danger @endif pull-right">
                                             {{ \App\Models\RequestedCall::$statuses[$call->status] }}
                                         </span>

@@ -9,9 +9,9 @@
 namespace App\Modules\Admin\Controllers;
 
 use App\Models\ProductReview;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\URL;
 
 class ProductsReviewsController extends Controller
@@ -28,41 +28,6 @@ class ProductsReviewsController extends Controller
 		    ->paginate(10);
 
         return view('admin::productsReviews.index', compact('productsReviews'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-	    $page = new Page();
-
-	    return view('admin::pages.create', compact('page'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-	    var_dump('создание страницы');
-        dd(Input::all());
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        dd('просмотр страницы с id ' . $id);
     }
 
     /**
@@ -89,8 +54,35 @@ class ProductsReviewsController extends Controller
      */
     public function update(Request $request, $id)
     {
-	    var_dump('редактирование страницы с id '. $id);
-	    dd(Input::all());
+	    $review = ProductReview::findOrFail($id);
+	    $data = $request->all();
+
+	    if ($data['is_published'] && is_null($review->published_at)) {
+		    $data['published_at'] = Carbon::now();
+	    } elseif (!$data['is_published']) {
+		    $data['published_at'] = null;
+	    }
+
+	    $validator = \Validator::make($data, ProductReview::rules());
+
+	    if ($validator->fails())
+	    {
+		    return redirect(route('admin.reviews.edit', ['id' => $review->id, 'back_url' => urlencode($request->get('backUrl'))]))
+			    ->withErrors($validator->errors())
+			    ->withInput()
+			    ->with('errorMessage', 'Информация не сохранена.');
+	    } else {
+		    $review->fill($data);
+		    $review->save();
+
+		    if($request->get('returnBack')) {
+			    return redirect($request->get('backUrl'))
+				    ->with('successMessage', 'Информация сохранена!');
+		    } else {
+			    return redirect(route('admin.reviews.edit', ['id' => $review->id, 'back_url' => urlencode($request->get('backUrl'))]))
+				    ->with('successMessage', 'Информация сохранена!');
+		    }
+	    }
     }
 
     /**
