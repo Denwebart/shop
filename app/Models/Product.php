@@ -283,6 +283,15 @@ class Product extends Model
 	{
 		$imagePath = public_path() . $this->imagePath . $this->id . '/';
 		// delete old image
+		if(File::exists($imagePath . 'origin_' . $this->image)) {
+			File::delete($imagePath . 'origin_' . $this->image);
+		}
+		if(File::exists($imagePath . 'zoom_' . $this->image)) {
+			File::delete($imagePath . 'zoom_' . $this->image);
+		}
+		if(File::exists($imagePath . 'mini_' . $this->image)) {
+			File::delete($imagePath . 'mini_' . $this->image);
+		}
 		if(File::exists($imagePath . $this->image)) {
 			File::delete($imagePath . $this->image);
 		}
