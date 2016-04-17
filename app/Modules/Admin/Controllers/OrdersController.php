@@ -29,30 +29,6 @@ class OrdersController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-	    $order = new Order();
-
-	    return view('admin::orders.create', compact('order'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-	    var_dump('создание заказа');
-        dd(Input::all());
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -60,7 +36,9 @@ class OrdersController extends Controller
      */
     public function show($id)
     {
-        dd('просмотр заказа с id ' . $id);
+	    $order = Order::findOrFail($id);
+
+	    return view('admin::orders.show', compact('order'));
     }
 
     /**
@@ -71,7 +49,7 @@ class OrdersController extends Controller
      */
     public function edit($id)
     {
-	    $order = order::findOrFail($id);
+	    $order = Order::findOrFail($id);
 
 	    return view('admin::orders.edit', compact('order'));
     }
