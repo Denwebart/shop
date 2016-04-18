@@ -8,6 +8,8 @@ Route::group(['module' => 'Admin', 'prefix' => 'admin', 'middleware' => 'web', '
 	
 	Route::get('/', ['as' => 'admin.index', 'uses' => 'AdminController@index']);
 	Route::resource('orders', 'OrdersController');
+	Route::post('orders/get_statuses', ['as' => 'admin.orders.getJsonOrderStatues', 'uses' => 'OrdersController@getJsonOrderStatues']);
+	Route::post('orders/{orders}/set_status', ['as' => 'admin.orders.setOrderStatus', 'uses' => 'OrdersController@setOrderStatus']);
 	Route::resource('products', 'ProductsController');
 	Route::resource('pages', 'PagesController');
 	Route::resource('calls', 'RequestedCallsController', ['except' => ['create', 'store', 'show']]);

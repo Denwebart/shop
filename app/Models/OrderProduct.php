@@ -45,4 +45,14 @@ class OrderProduct extends Model
 	{
 		return Str::priceFormat($this->price);
 	}
+
+	/**
+	 * Product
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function product()
+	{
+		return $this->belongsTo('App\Models\Product', 'product_id');
+	}
 }

@@ -36,7 +36,9 @@ class OrdersController extends Controller
      */
     public function show($id)
     {
-	    $order = Order::findOrFail($id);
+	    $order = Order::whereId($id)
+		    ->with('groupedOrderProducts', 'groupedOrderProducts.product')
+		    ->first();
 
 	    return view('admin::orders.show', compact('order'));
     }
@@ -77,4 +79,54 @@ class OrdersController extends Controller
     {
 	    dd('удаление заказа с id ' . $id);
     }
+
+	/**
+	 * Get order statuses array in Json format
+	 *
+	 * @param Request $request
+	 * @return \Illuminate\Http\JsonResponse
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function getJsonOrderStatues(Request $request)
+	{
+		if($request->ajax()) {
+			$statusesArray = [];
+			foreach(Order::$statuses as $key => $status) {
+				$statusesArray[] = [
+					'value' => $key,
+					'text' => $status,
+					'class' => Order::$statusesClass[$key]
+				];
+			}
+			return \Response::json($statusesArray);
+		}
+	}
+
+	/**
+	 * Change order status
+	 *
+	 * @param Request $request
+	 * @return \Illuminate\Http\JsonResponse
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function setOrderStatus(Request $request, $id)
+	{
+		if($request->ajax()) {
+			$order = Order::findOrFail($id);
+			$order->status = $request->get('value');
+			if(!$order->user) {
+				$order->user_id = Auth::user()->id;
+			}
+			$order->save();
+
+			return \Response::json([
+				'success' => true,
+				'message' => 'Статус заказа изменён.'
+			]);
+		}
+	}
 }

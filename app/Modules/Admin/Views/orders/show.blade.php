@@ -47,90 +47,128 @@ View::share('title', $title);
                 <div class="panel-body">
                     <div class="clearfix">
                         <div class="pull-left">
-                            <h3 class="logo">Adminto</h3>
+                            <h3>
+                                Заказ № {{ $order->id }}
+                            </h3>
                         </div>
                         <div class="pull-right">
-                            <h4>Invoice # <br>
-                                <strong>2016-04-23654789</strong>
-                            </h4>
+                            <h5>
+                                <strong class="m-r-10">Дата заказа:</strong>
+                                {{ \App\Helpers\Date::format($order->created_at) }}
+                            </h5>
+                            <h5 class="form-group m-t-10">
+                                <strong class="m-r-10">Статус заказа:</strong>
+                                <a href="javascript:void(0)" id="order-status" data-type="select" data-pk="1" data-value="{{ $order->status }}" data-title="Изменение статуса заказа"></a>
+                                {{--<span class="label label-{{ \App\Models\Order::$statusesClass[$order->status] }}">--}}
+                                    {{--{{ \App\Models\Order::$statuses[$order->status] }}--}}
+                                {{--</span>--}}
+                            </h5>
                         </div>
                     </div>
                     <hr>
+                    <!-- end row -->
                     <div class="row">
-                        <div class="col-md-12">
-
-                            <div class="pull-left m-t-30">
-                                <address>
-                                    <strong>Twitter, Inc.</strong><br>
-                                    795 Folsom Ave, Suite 600<br>
-                                    San Francisco, CA 94107<br>
-                                    <abbr title="Phone">P:</abbr> (123) 456-7890
-                                </address>
+                        <div class="col-md-4 col-sm-12">
+                            <h4>Заказчик</h4>
+                            <div class="row m-b-10">
+                                <div class="col-md-4 col-sm-3">
+                                    <p><strong>Имя:</strong></p>
+                                </div>
+                                <div class="col-md-8 col-sm-9">
+                                    <p>{{ $order->customer->username }}</p>
+                                </div>
                             </div>
-                            <div class="pull-right m-t-30">
-                                <p><strong>Order Date: </strong> Jan 17, 2016</p>
-                                <p class="m-t-10"><strong>Order Status: </strong> <span class="label label-pink">Pending</span></p>
-                                <p class="m-t-10"><strong>Order ID: </strong> #123456</p>
+                            <div class="row">
+                                <div class="col-md-4 col-sm-3">
+                                    <p><strong>Телефон:</strong></p>
+                                </div>
+                                <div class="col-md-8 col-sm-9">
+                                    <p>{{ \App\Helpers\Str::phoneFormat($order->customer->phone) }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <h4>Оплата</h4>
+                            <div class="row m-b-10">
+                                <div class="col-md-5 col-sm-3">
+                                    <p><strong>Способ оплаы:</strong></p>
+                                </div>
+                                <div class="col-md-7 col-sm-9">
+                                    <p>{{ \App\Models\Order::$paymentTypes[$order->payment_type] }}</p>
+                                </div>
+                            </div>
+                            <div class="row m-b-10">
+                                <div class="col-md-5 col-sm-3">
+                                    <p><strong>Статус оплаты:</strong></p>
+                                </div>
+                                <div class="col-md-7 col-sm-9">
+                                    <p>
+                                        <span class="label label-{{ \App\Models\Order::$paymentStatusesClass[$order->payment_status] }}">
+                                            {{ \App\Models\Order::$paymentStatuses[$order->payment_status] }}
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-3">
+                                    <p><strong>Дата оплаты:</strong></p>
+                                </div>
+                                <div class="col-md-7 col-sm-9">
+                                    <p>{{ \App\Helpers\Date::format($order->paid_at) }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <h4>Доставка</h4>
+                            <div class="row m-b-10">
+                                <div class="col-md-5 col-sm-3">
+                                    <p><strong>Способ доставки:</strong></p>
+                                </div>
+                                <div class="col-md-7 col-sm-9">
+                                    <p>{{ $order->deliveryType->title }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-3">
+                                    <p><strong>Адрес доставки:</strong></p>
+                                </div>
+                                <div class="col-md-7 col-sm-9">
+                                    <p>{{ $order->address }}</p>
+                                </div>
                             </div>
                         </div><!-- end col -->
                     </div>
-                    <!-- end row -->
 
-                    <div class="m-h-50"></div>
+                    <hr>
 
                     <div class="row">
                         <div class="col-md-12">
+                            <h4 class="m-t-20">Товары</h4>
                             <div class="table-responsive">
-                                <table class="table m-t-30">
+                                <table class="table m-t-10">
                                     <thead>
-                                    <tr><th>#</th>
-                                        <th>Item</th>
-                                        <th>Description</th>
-                                        <th>Quantity</th>
-                                        <th>Unit Cost</th>
-                                        <th>Total</th>
-                                    </tr></thead>
+                                        <tr>
+                                            <th>№</th>
+                                            <th>Товар</th>
+                                            <th>Количество</th>
+                                            <th>Цена</th>
+                                            <th class="text-right">Всего</th>
+                                        </tr>
+                                    </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>LCD</td>
-                                        <td>Lorem ipsum dolor sit amet.</td>
-                                        <td>1</td>
-                                        <td>$380</td>
-                                        <td>$380</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Mobile</td>
-                                        <td>Lorem ipsum dolor sit amet.</td>
-                                        <td>5</td>
-                                        <td>$50</td>
-                                        <td>$250</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>LED</td>
-                                        <td>Lorem ipsum dolor sit amet.</td>
-                                        <td>2</td>
-                                        <td>$500</td>
-                                        <td>$1000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>LCD</td>
-                                        <td>Lorem ipsum dolor sit amet.</td>
-                                        <td>3</td>
-                                        <td>$300</td>
-                                        <td>$900</td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td>Mobile</td>
-                                        <td>Lorem ipsum dolor sit amet.</td>
-                                        <td>5</td>
-                                        <td>$80</td>
-                                        <td>$400</td>
-                                    </tr>
+                                        @foreach($order->groupedOrderProducts as $key => $orderProducts)
+                                            <tr>
+                                                <td>{{ $key + 1 }}</td>
+                                                <td>
+                                                    <img src="{{ $orderProducts->product->getImageUrl() }}" alt="{{ $orderProducts->product->image_alt }}" width="50">
+                                                    {{ $orderProducts->product->title }}
+                                                    ({{ $orderProducts->product->vendor_code }})
+                                                </td>
+                                                <td>{{ $orderProducts->quantity }}</td>
+                                                <td>{{ \App\Helpers\Str::priceFormat($orderProducts->price) }}</td>
+                                                <td class="text-right">{{ \App\Helpers\Str::priceFormat($orderProducts->total_price) }}</td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -139,30 +177,54 @@ View::share('title', $title);
                     <div class="row">
                         <div class="col-md-6 col-sm-6 col-xs-6">
                             <div class="clearfix m-t-40">
-                                <h5 class="small text-inverse font-600">PAYMENT TERMS AND POLICIES</h5>
-
+                                <h4>Комментарий к заказу</h4>
                                 <small>
-                                    All accounts are to be paid within 7 days from receipt of
-                                    invoice. To be paid by cheque or credit card or direct payment
-                                    online. If account is not paid within 7 days the credits details
-                                    supplied as confirmation of work undertaken will be charged the
-                                    agreed quoted fee noted above.
+                                    {{ $order->comment }}
                                 </small>
                             </div>
                         </div>
-                        <div class="col-md-3 col-sm-6 col-xs-6 col-md-offset-3">
-                            <p class="text-right"><b>Sub-total:</b> 2930.00</p>
-                            <p class="text-right">Discout: 12.9%</p>
-                            <p class="text-right">VAT: 12.9%</p>
+                        <div class="col-md-4 col-sm-6 col-xs-6 col-md-offset-2 text-right">
+                            <div class="row m-b-10">
+                                <div class="col-md-7 col-sm-7">
+                                    <p><strong>Всего:</strong></p>
+                                </div>
+                                <div class="col-md-5 col-sm-5">
+                                    <p>{{ \App\Helpers\Str::priceFormat($order->total_price) }}</p>
+                                </div>
+                            </div>
+                            <div class="row m-b-10">
+                                <div class="col-md-7 col-sm-7">
+                                    <p><strong>Стоимость доставки:</strong></p>
+                                </div>
+                                <div class="col-md-5 col-sm-5">
+                                    <p>{{ \App\Helpers\Str::priceFormat(0) }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-7 col-sm-7">
+                                    <p><strong>Скидка:</strong></p>
+                                </div>
+                                <div class="col-md-5 col-sm-5">
+                                    <p>
+                                        -
+                                    </p>
+                                </div>
+                            </div>
                             <hr>
-                            <h3 class="text-right">USD 2930.00</h3>
+                            <div class="row">
+                                <div class="col-md-7 col-sm-7">
+                                    <h3 class="font-16">Общая сумма заказа:</h3>
+                                </div>
+                                <div class="col-md-5 col-sm-5">
+                                    <h3>{{ \App\Helpers\Str::priceFormat($order->total_price) }}</h3>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <hr>
                     <div class="hidden-print">
                         <div class="pull-right">
                             <a href="javascript:window.print()" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-print"></i></a>
-                            <a href="#" class="btn btn-primary waves-effect waves-light">Submit</a>
                         </div>
                     </div>
                 </div>
@@ -172,5 +234,76 @@ View::share('title', $title);
 
     </div>
     <!-- end row -->
-
 @endsection
+
+@push('styles')
+    <!-- XEditable Plugin -->
+    <link type="text/css" href="{{ asset('backend/plugins/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css') }}" rel="stylesheet">
+@endpush
+
+@push('scripts')
+    <!-- XEditable Plugin -->
+    <script src="{{ asset('backend/plugins/moment/moment.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('backend/plugins/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js') }}"></script>
+
+
+    <script type="text/javascript">
+        //modify buttons style
+        $.fn.editableform.buttons =
+            '<button type="submit" class="btn btn-primary editable-submit btn-sm waves-effect waves-light"><i class="zmdi zmdi-check"></i></button>' +
+            '<button type="button" class="btn editable-cancel btn-sm waves-effect"><i class="zmdi zmdi-close"></i></button>';
+
+        $.fn.editableform.defaults.params = function (params) {
+            params._token = $("meta[name='csrf-token']").attr('content');
+            return params;
+        };
+
+        function getOrderStatues() {
+            return $.ajax({
+                url: "{{ route('admin.orders.getJsonOrderStatues') }}",
+                dataType: "json",
+                type: "POST",
+                async: true,
+                beforeSend: function (request) {
+                    return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+                }
+            });
+        }
+
+        getOrderStatues().done(function(result) {
+            $('#order-status').editable({
+                type: 'select',
+                prepend: false,
+                defaultValue: '{{ $order->status }}',
+                ajaxOptions: {
+                    dataType: 'json',
+                    sourceCache: 'false'
+                },
+                source: result,
+                url: "{{ route('admin.orders.setOrderStatus', ['id' => $order->id]) }}",
+                display: function(value, result) {
+                    var html = [],
+                        checked = $.fn.editableutils.itemsByValue(value, result);
+
+                    var checkedText, checkedClass;
+                    $.each(checked, function(i, v) {
+                        checkedText = v.text;
+                        checkedClass = v.class
+                    });
+
+                    if(checked.length) {
+                        $.each(checked, function(i, v) { html.push($.fn.editableutils.escape(v.text)); });
+                        $(this).html(html.join(', '));
+                    } else {
+                        $(this).empty();
+                    }
+
+                    $(this).html('<span class="label label-' + checkedClass + '">' + checkedText + '</span>');
+                }
+            });
+        }).fail(function() {
+
+        });
+
+    </script>
+@endpush

@@ -275,6 +275,9 @@ a:focus {
 .font-13 {
   font-size: 13px !important;
 }
+.font-16 {
+    font-size: 16px !important;
+}
 .wrapper-md {
   padding: 20px;
 }
@@ -688,7 +691,7 @@ textarea.form-control {
     color: #98a6ad;
 }
 .label-default {
-  background-color: #71b6f9;
+  background-color: #cecece;
 }
 .label-primary {
   background-color: #188ae2;
