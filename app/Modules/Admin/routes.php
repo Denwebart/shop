@@ -10,6 +10,7 @@ Route::group(['module' => 'Admin', 'prefix' => 'admin', 'middleware' => 'web', '
 	Route::resource('orders', 'OrdersController');
 	Route::resource('products', 'ProductsController');
 	Route::resource('pages', 'PagesController');
+	Route::resource('slider', 'SliderController');
 	Route::resource('calls', 'RequestedCallsController', ['except' => ['create', 'store', 'show']]);
 	Route::resource('reviews', 'ProductsReviewsController', ['except' => ['create', 'store', 'show']]);
 	Route::resource('letters', 'LettersController', ['except' => ['create', 'store', 'edit', 'update']]);

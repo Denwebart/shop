@@ -157,7 +157,7 @@ View::share('title', $title);
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($orders as $order)
+                            @foreach($orders as $order)
                                 <tr @if(!$order->status) class="bg-muted" @endif>
                                     <td>{{ $order->id }}</td>
                                     <td>{{ $order->customer->username }}</td>
