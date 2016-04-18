@@ -197,6 +197,12 @@
                             <span>Настройки</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('admin.slider.index') }}" class="waves-effect @if(Request::is('admin/slider*')) active @endif">
+                            <i class="fa fa-picture-o"></i>
+                            <span>Слайдер</span>
+                        </a>
+                    </li>
                 </ul>
                 <div class="clearfix"></div>
             </div>
