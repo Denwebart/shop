@@ -115,6 +115,7 @@ class SliderController extends Controller
     public function update(Request $request, $id)
     {
 	    $slider = Slider::findOrFail($id);
+	    $oldImageName = $slider->image;
 	    $data = $request->all();
 	    
 	    $rules = Slider::rules($slider->id);
@@ -130,6 +131,7 @@ class SliderController extends Controller
 			    ->with('errorMessage', 'Слайд не сохранён. Исправьте ошибки валидации.');
 	    } else {
 		    $slider->fill($data);
+		    $slider->image = $oldImageName;
 		    $slider->setImage($request);
 		    $slider->save();
 

@@ -21,7 +21,7 @@ class UsersController extends Controller
 	 */
 	public function index()
 	{
-		$users = User::select('id', 'login', 'email', 'role', 'phone', 'firstname', 'lastname', 'avatar', 'is_active', 'created_at')
+		$users = User::select('id', 'login', 'email', 'role', 'phone', 'firstname', 'lastname', 'description', 'avatar', 'is_active', 'created_at')
 			->paginate(10);
 
 		return view('admin::users.index', compact('users'));
@@ -158,7 +158,7 @@ class UsersController extends Controller
 			if(!$user->isAdmin() || $user->id == \Auth::user()->id) {
 				$user->delete();
 
-				$users = User::select('id', 'login', 'email', 'role', 'phone', 'firstname', 'lastname', 'avatar', 'is_active', 'created_at')
+				$users = User::select('id', 'login', 'email', 'role', 'phone', 'firstname', 'lastname', 'description', 'avatar', 'is_active', 'created_at')
 					->paginate(10);
 
 				return \Response::json([

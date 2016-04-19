@@ -14,7 +14,7 @@
     <div class="col-lg-6 col-sm-12 col-xs-12 m-b-15">
         <div class="form-group">
             <div class="col-sm-6 col-md-6 @if($errors->has('image')) has-error @endif">
-                {!! Form::label('image', 'Изображение для страницы', ['class' => 'control-label m-b-5']) !!}
+                {!! Form::label('image', 'Изображение', ['class' => 'control-label m-b-5']) !!}
                 {!! Form::file('image', ['id' => 'image', 'class' => 'dropify', 'data-default-file' => $slider->getImageUrl(), 'data-max-file-size' => '10M', 'data-show-remove' => false]) !!}
                 <span class="help-block @if($errors->has('image')) hidden @endif">
                     <small>

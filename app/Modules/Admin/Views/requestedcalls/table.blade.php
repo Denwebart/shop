@@ -21,7 +21,7 @@
     </thead>
     <tbody>
         @foreach($calls as $call)
-            <tr @if(is_null($call->status)) class="bg-muted" @endif>
+            <tr @if(!$call->status) class="bg-muted" @endif>
                 <td>{{ $call->id }}</td>
                 <td>{{ $call->name }}</td>
                 <td>{{ $call->getPhone() }}</td>

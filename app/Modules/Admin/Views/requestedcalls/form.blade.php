@@ -18,7 +18,7 @@
             <div class="col-md-10"><h4 class="m-t-0">{{ $call->name }}</h4></div>
 
             <div class="col-md-2">Телефон:</div>
-            <div class="col-md-10"><h4 class="m-t-0">{{ $call->phone }}</h4></div>
+            <div class="col-md-10"><h4 class="m-t-0">{{ \App\Helpers\Str::phoneFormat($call->phone) }}</h4></div>
 
             <div class="col-md-2">Заказан:</div>
             <div class="col-md-10"><h4 class="m-t-0">{{ \App\Helpers\Date::format($call->created_at) }}</h4></div>

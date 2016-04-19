@@ -67,8 +67,8 @@ class Slider extends Model
 	const PUBLISHED   = 1;
 
 	public static $is_published = [
-		self::UNPUBLISHED => 'Не опубликована',
-		self::PUBLISHED   => 'Опубликована',
+		self::UNPUBLISHED => 'Не опубликован',
+		self::PUBLISHED   => 'Опубликован',
 	];
 
 	/**
@@ -158,17 +158,7 @@ class Slider extends Model
 			// delete old image
 			$this->deleteImage();
 
-			$watermark = Image::make(public_path('images/watermark.png'));
-			$watermark->resize(($image->width() * 2) / 3, null, function ($constraint) {
-				$constraint->aspectRatio();
-			})->save($imagePath . 'watermark.png');
-
-			$image->insert($imagePath . 'watermark.png', 'center')
-				->save($imagePath . 'origin_' . $fileName);
-
-			if (File::exists($imagePath . 'watermark.png')) {
-				File::delete($imagePath . 'watermark.png');
-			}
+			$image->save($imagePath . 'origin_' . $fileName);
 
 			if ($image->width() > 760) {
 				$image->resize(760, null, function ($constraint) {
@@ -181,10 +171,6 @@ class Slider extends Model
 			$this->image = $fileName;
 			return true;
 		} else {
-			if($request->get('deleteImage')) {
-				$this->deleteImage();
-				return true;
-			}
 			return false;
 		}
 	}
@@ -201,6 +187,9 @@ class Slider extends Model
 		// delete old image
 		if(File::exists($imagePath . $this->image)) {
 			File::delete($imagePath . $this->image);
+		}
+		if(File::exists($imagePath . 'origin_' . $this->image)) {
+			File::delete($imagePath . 'origin_' . $this->image);
 		}
 		$this->image = null;
 	}
