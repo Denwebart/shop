@@ -63,13 +63,21 @@
         <div class="form-group @if($errors->has('price')) has-error @endif">
             {!! Form::label('price', 'Цена', ['class' => 'col-md-2 control-label']) !!}
             <div class="col-md-10">
-                {!! Form::text('price', $product->price, ['id' => 'price', 'class' => 'form-control']) !!}
-
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-ruble"></i></span>
+                    {!! Form::text('price', $product->price, ['id' => 'price', 'class' => 'form-control']) !!}
+                    <span class="input-group-addon">руб.</span>
+                </div>
                 @if ($errors->has('price'))
                     <span class="help-block error">
                         <strong>{{ $errors->first('price') }}</strong>
                     </span>
                 @endif
+                <span class="help-block @if($errors->has('image')) hidden @endif">
+                    <small>
+                        Цена только в рублях. Например: 1000 или 1000.00
+                    </small>
+                </span>
             </div>
         </div>
         <div class="form-group">

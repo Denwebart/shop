@@ -74,7 +74,7 @@
                     {!! Form::text('button_link', $slider->button_link, ['id' => 'button_link', 'class' => 'form-control']) !!}
 
                     <span class="help-block @if($errors->has('button_link')) hidden @endif">
-                    <small>Если ссылка для кнопки не выставлена - кнопка не будет отображена.</small>
+                    <small>Если ссылка для кнопки не выставлена - кнопка не будет отображена.<br>Пример: http://shop.dev/katalog</small>
                 </span>
                     @if ($errors->has('button_link'))
                         <span class="help-block error">

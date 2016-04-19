@@ -15,10 +15,16 @@
     <div class="col-lg-5 col-sm-12 col-xs-12 m-b-15">
         <div class="form-group">
             <div class="col-md-2">Имя:</div>
-            <div class="col-md-10"><h4 class="m-t-0">{{ $call->name }}</h4></div>
+            <div class="col-md-10">
+                <h4 class="m-t-0">{{ $call->name }}</h4>
+                {!! Form::hidden('name', $call->name) !!}
+            </div>
 
             <div class="col-md-2">Телефон:</div>
-            <div class="col-md-10"><h4 class="m-t-0">{{ \App\Helpers\Str::phoneFormat($call->phone) }}</h4></div>
+            <div class="col-md-10">
+                <h4 class="m-t-0">{{ \App\Helpers\Str::phoneFormat($call->phone) }}</h4>
+                {!! Form::hidden('phone', $call->phone) !!}
+            </div>
 
             <div class="col-md-2">Заказан:</div>
             <div class="col-md-10"><h4 class="m-t-0">{{ \App\Helpers\Date::format($call->created_at) }}</h4></div>
