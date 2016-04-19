@@ -11,6 +11,7 @@ namespace App\Modules\Admin\Controllers;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\URL;
 
@@ -42,6 +43,30 @@ class OrdersController extends Controller
 
 	    return view('admin::orders.show', compact('order'));
     }
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function create()
+	{
+		$order = new Order();
+
+		return view('admin::orders.create', compact('order'));
+	}
+
+	/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @return \Illuminate\Http\Response
+	 */
+	public function store(Request $request)
+	{
+		var_dump('создание нового заказа');
+		dd(Input::all());
+	}
 
     /**
      * Show the form for editing the specified resource.
@@ -126,6 +151,56 @@ class OrdersController extends Controller
 			return \Response::json([
 				'success' => true,
 				'message' => 'Статус заказа изменён.'
+			]);
+		}
+	}
+
+	/**
+	 * Get payment statuses array in Json format
+	 *
+	 * @param Request $request
+	 * @return \Illuminate\Http\JsonResponse
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function getJsonPaymentStatues(Request $request)
+	{
+		if($request->ajax()) {
+			$statusesArray = [];
+			foreach(Order::$paymentStatuses as $key => $status) {
+				$statusesArray[] = [
+					'value' => $key,
+					'text' => $status,
+					'class' => Order::$paymentStatusesClass[$key]
+				];
+			}
+			return \Response::json($statusesArray);
+		}
+	}
+
+	/**
+	 * Change payment status of order
+	 *
+	 * @param Request $request
+	 * @return \Illuminate\Http\JsonResponse
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function setPaymentStatus(Request $request, $id)
+	{
+		if($request->ajax()) {
+			$order = Order::findOrFail($id);
+			$order->payment_status= $request->get('value');
+			if(!$order->user) {
+				$order->user_id = Auth::user()->id;
+			}
+			$order->save();
+
+			return \Response::json([
+				'success' => true,
+				'message' => 'Статус оплаты изменён.'
 			]);
 		}
 	}

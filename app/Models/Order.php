@@ -64,7 +64,7 @@ class Order extends Model
 	const STATUS_CLOSED     = 3;
 
 	public static $statuses = [
-		self::STATUS_NONE       => '-',
+		self::STATUS_NONE       => 'Не обработан',
 		self::STATUS_IN_PROCESS => 'В процессе',
 		self::STATUS_CANCELED   => 'Отменен',
 		self::STATUS_CLOSED     => 'Завершен',
@@ -99,16 +99,16 @@ class Order extends Model
 	/**
 	 * Способ оплаты (значение поля payment_type)
 	 */
-	const PAYMENT_TYPE_1 = 1;
-	const PAYMENT_TYPE_2 = 2;
-	const PAYMENT_TYPE_3 = 3;
-	const PAYMENT_TYPE_4 = 3;
+	const PAYMENT_TYPE_CASH = 1;
+	const PAYMENT_TYPE_VISA = 2;
+	const PAYMENT_TYPE_MASTERCARD = 3;
+	const PAYMENT_TYPE_MAESTRO = 3;
 
 	public static $paymentTypes = [
-		self::PAYMENT_TYPE_1 => 'Наличными',
-		self::PAYMENT_TYPE_2 => 'VISA',
-		self::PAYMENT_TYPE_3 => 'MasterCard',
-		self::PAYMENT_TYPE_4 => 'Maestro',
+		self::PAYMENT_TYPE_CASH => 'Наличными',
+		self::PAYMENT_TYPE_VISA => 'VISA',
+		self::PAYMENT_TYPE_MASTERCARD => 'MasterCard',
+		self::PAYMENT_TYPE_MAESTRO => 'Maestro',
 	];
 
 	/**

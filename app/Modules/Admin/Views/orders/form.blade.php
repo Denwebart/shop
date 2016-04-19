@@ -7,7 +7,7 @@
 
 {!! csrf_field() !!}
 
-<input name="backUrl" type="hidden" value="{{ URL::previous() }}">
+{{--<input name="backUrl" type="hidden" value="{{ URL::previous() }}">--}}
 
 <div class="row">
     {{--<div class="col-lg-6 col-sm-12 col-xs-12 m-b-15">--}}

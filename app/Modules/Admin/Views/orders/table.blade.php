@@ -40,9 +40,11 @@
                 <td>{{ $order->getTotalPrice() }}</td>
                 <td>{{ \App\Helpers\Date::format($order->created_at) }}</td>
                 <td>
-                    <span class="label @if($order->status) label-{{ \App\Models\Order::$statusesClass[$order->status] }} @endif">
-                        {{ \App\Models\Order::$statuses[$order->status] }}
-                    </span>
+                    @if($order->status != \App\Models\Order::STATUS_NONE)
+                        <span class="label @if($order->status) label-{{ \App\Models\Order::$statusesClass[$order->status] }} @endif">
+                            {{ \App\Models\Order::$statuses[$order->status] }}
+                        </span>
+                    @endif
                 </td>
                 <td>
                     @if($order->user)

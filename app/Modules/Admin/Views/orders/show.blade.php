@@ -20,53 +20,46 @@ View::share('title', $title);
                 <li>{{ $title }}</li>
             </ul>
         </div>
-        {{--<div class="col-sm-6 col-md-6 col-xs-12">--}}
-            {{--<div class="button pull-right">--}}
-                {{--<button type="button" class="btn btn-success btn-bordred waves-effect waves-light m-b-10 button-save-exit">--}}
-                    {{--<i class="fa fa-arrow-left"></i>--}}
-                    {{--<span>Сохранить и выйти</span>--}}
-                {{--</button>--}}
-                {{--<button type="button" class="btn btn-success btn-bordred waves-effect waves-light m-b-10 button-save">--}}
-                    {{--<i class="fa fa-check"></i>--}}
-                    {{--<span class="hidden-sm">Сохранить</span>--}}
-                {{--</button>--}}
-                {{--<a href="{{ URL::previous() }}" class="btn btn-primary btn-bordred waves-effect waves-light m-b-10 button-cancel">--}}
-                    {{--<i class="fa fa-close"></i>--}}
-                    {{--<span class="hidden-md hidden-sm">Отмена</span>--}}
-                {{--</a>--}}
-            {{--</div>--}}
-        {{--</div>--}}
+        <div class="col-sm-6 col-md-6 col-xs-12">
+            <div class="button pull-right">
+                <a href="{{ URL::previous() }}" class="btn btn-primary btn-bordred waves-effect waves-light m-b-10 button-cancel">
+                    <i class="fa fa-arrow-left"></i>
+                    <span class="hidden-md hidden-sm">Назад к списку заказов</span>
+                </a>
+            </div>
+        </div>
     </div>
 
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <!-- <div class="panel-heading">
-                    <h4>Invoice</h4>
-                </div> -->
-                <div class="panel-body">
-                    <div class="clearfix">
-                        <div class="pull-left">
-                            <h3>
-                                Заказ № {{ $order->id }}
-                            </h3>
-                        </div>
-                        <div class="pull-right">
-                            <h5>
-                                <strong class="m-r-10">Дата заказа:</strong>
-                                {{ \App\Helpers\Date::format($order->created_at) }}
-                            </h5>
-                            <h5 class="form-group m-t-10">
-                                <strong class="m-r-10">Статус заказа:</strong>
-                                <a href="javascript:void(0)" id="order-status" data-type="select" data-pk="1" data-value="{{ $order->status }}" data-title="Изменение статуса заказа"></a>
-                                {{--<span class="label label-{{ \App\Models\Order::$statusesClass[$order->status] }}">--}}
-                                    {{--{{ \App\Models\Order::$statuses[$order->status] }}--}}
-                                {{--</span>--}}
-                            </h5>
-                        </div>
+                <div class="panel-heading">
+                    <div class="pull-left">
+                        <h3 class="m-t-5 m-b-15">
+                            Заказ № {{ $order->id }}
+                        </h3>
+                        <span class="m-r-10">Заказ принял:</span>
+                        @if($order->user)
+                            <a href="{{ route('admin.users.show', ['id' => $order->user->id]) }}">
+                                <img src="{{ $order->user->getAvatarUrl() }}" class="img-circle" width="30px" alt="{{ $order->user->login }}">
+                                <span class="m-l-5">{{ $order->user->login }}</span>
+                            </a>
+                        @else
+                            -
+                        @endif
                     </div>
-                    <hr>
-                    <!-- end row -->
+                    <div class="pull-right">
+                        <h5 class="m-t-15">
+                            <strong class="m-r-10">Дата заказа:</strong>
+                            {{ \App\Helpers\Date::format($order->created_at) }}
+                        </h5>
+                        <h5 class="form-group m-t-15">
+                            <strong class="m-r-10">Статус заказа:</strong>
+                            <a href="javascript:void(0)" id="order-status" data-type="select" data-pk="1" data-value="{{ $order->status }}" data-title="Изменение статуса заказа"></a>
+                        </h5>
+                    </div>
+                </div>
+                <div class="panel-body p-t-10">
                     <div class="row">
                         <div class="col-md-4 col-sm-12">
                             <h4>Заказчик</h4>
@@ -75,7 +68,11 @@ View::share('title', $title);
                                     <p><strong>Имя:</strong></p>
                                 </div>
                                 <div class="col-md-8 col-sm-9">
-                                    <p>{{ $order->customer->username }}</p>
+                                    @if($order->customer)
+                                        <p>{{ $order->customer->username }}</p>
+                                    @else
+                                        -
+                                    @endif
                                 </div>
                             </div>
                             <div class="row">
@@ -83,7 +80,11 @@ View::share('title', $title);
                                     <p><strong>Телефон:</strong></p>
                                 </div>
                                 <div class="col-md-8 col-sm-9">
-                                    <p>{{ \App\Helpers\Str::phoneFormat($order->customer->phone) }}</p>
+                                    @if($order->customer)
+                                        <p>{{ \App\Helpers\Str::phoneFormat($order->customer->phone) }}</p>
+                                    @else
+                                        -
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -91,7 +92,7 @@ View::share('title', $title);
                             <h4>Оплата</h4>
                             <div class="row m-b-10">
                                 <div class="col-md-5 col-sm-3">
-                                    <p><strong>Способ оплаы:</strong></p>
+                                    <p><strong>Способ оплаты:</strong></p>
                                 </div>
                                 <div class="col-md-7 col-sm-9">
                                     <p>{{ \App\Models\Order::$paymentTypes[$order->payment_type] }}</p>
@@ -103,9 +104,13 @@ View::share('title', $title);
                                 </div>
                                 <div class="col-md-7 col-sm-9">
                                     <p>
-                                        <span class="label label-{{ \App\Models\Order::$paymentStatusesClass[$order->payment_status] }}">
-                                            {{ \App\Models\Order::$paymentStatuses[$order->payment_status] }}
-                                        </span>
+                                        @if(\App\Models\Order::PAYMENT_TYPE_CASH)
+                                            <a href="javascript:void(0)" id="payment-status" data-type="select" data-pk="1" data-value="{{ $order->payment_status }}" data-title="Изменение статуса оплаты"></a>
+                                        @else
+                                            <span class="label label-{{ \App\Models\Order::$paymentStatusesClass[$order->payment_status] }}">
+                                                {{ \App\Models\Order::$paymentStatuses[$order->payment_status] }}
+                                            </span>
+                                        @endif
                                     </p>
                                 </div>
                             </div>
@@ -125,7 +130,11 @@ View::share('title', $title);
                                     <p><strong>Способ доставки:</strong></p>
                                 </div>
                                 <div class="col-md-7 col-sm-9">
-                                    <p>{{ $order->deliveryType->title }}</p>
+                                    @if($order->deliveryType)
+                                        <p>{{ $order->deliveryType->title }}</p>
+                                    @else
+                                        -
+                                    @endif
                                 </div>
                             </div>
                             <div class="row">
@@ -258,6 +267,7 @@ View::share('title', $title);
             return params;
         };
 
+        // Изменение статуса заказа
         function getOrderStatues() {
             return $.ajax({
                 url: "{{ route('admin.orders.getJsonOrderStatues') }}",
@@ -269,7 +279,6 @@ View::share('title', $title);
                 }
             });
         }
-
         getOrderStatues().done(function(result) {
             $('#order-status').editable({
                 type: 'select',
@@ -299,6 +308,67 @@ View::share('title', $title);
                     }
 
                     $(this).html('<span class="label label-' + checkedClass + '">' + checkedText + '</span>');
+                },
+                success: function(response, newValue) {
+                    if(response.success) {
+                        Command: toastr["success"](response.message);
+                        return true;
+                    }
+                    return false;
+                }
+            });
+        }).fail(function() {
+
+        });
+
+        // Изменение статуса оплаты
+        function getPaymentStatues() {
+            return $.ajax({
+                url: "{{ route('admin.orders.getJsonPaymentStatues') }}",
+                dataType: "json",
+                type: "POST",
+                async: true,
+                beforeSend: function (request) {
+                    return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+                }
+            });
+        }
+        getPaymentStatues().done(function(result) {
+            $('#payment-status').editable({
+                type: 'select',
+                prepend: false,
+                defaultValue: '{{ $order->payment_status }}',
+                ajaxOptions: {
+                    dataType: 'json',
+                    sourceCache: 'false'
+                },
+                source: result,
+                url: "{{ route('admin.orders.setPaymentStatus', ['id' => $order->id]) }}",
+                display: function(value, result) {
+                    var html = [],
+                            checked = $.fn.editableutils.itemsByValue(value, result);
+
+                    var checkedText, checkedClass;
+                    $.each(checked, function(i, v) {
+                        checkedText = v.text;
+                        checkedClass = v.class
+                    });
+
+                    if(checked.length) {
+                        $.each(checked, function(i, v) { html.push($.fn.editableutils.escape(v.text)); });
+                        $(this).html(html.join(', '));
+                    } else {
+                        $(this).empty();
+                    }
+
+                    $(this).html('<span class="label label-' + checkedClass + '">' + checkedText + '</span>');
+                },
+                success: function(response, newValue) {
+                    if(response.success) {
+                        Command: toastr["success"](response.message);
+                        return true;
+                    }
+                    return false;
                 }
             });
         }).fail(function() {
