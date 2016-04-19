@@ -172,7 +172,9 @@ class Product extends Model
 	 */
 	public function getImageUrl()
 	{
-		return $this->image ? asset($this->imagePath . $this->id . '/' . $this->image) : '';
+		return $this->image
+			? asset($this->imagePath . $this->id . '/' . $this->image)
+			: asset('images/product-default-image.jpg');
 	}
 	
 	/**
