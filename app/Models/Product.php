@@ -104,7 +104,7 @@ class Product extends Model
 		'category_id' => 'required|integer',
 		'user_id' => 'integer',
 		'alias' => 'unique:products,alias,:id|max:500|regex:/^[A-Za-z0-9\-]+$/u',
-		'vendor_code' => 'unique:products,vendor_code,:id|max:50|regex:/^[А-Яа-яA-Za-z0-9\-]+$/u',
+		'vendor_code' => 'required|unique:products,vendor_code,:id|max:50|regex:/^[А-Яа-яA-Za-z0-9\-]+$/u',
 		'is_published' => 'boolean',
 		'title' => 'required|max:250',
 		'price' => 'required|numeric|between:0,9999999999.99',
@@ -141,6 +141,10 @@ class Product extends Model
 		static::saving(function($product) {
 			$product->alias = Translit::generateAlias($product->title, $product->alias);
 		});
+		static::deleting(function($product) {
+			$product->images()->delete();
+			$product->deleteImagesFolder();
+		});
 	}
 
 	/**
@@ -176,7 +180,19 @@ class Product extends Model
 			? asset($this->imagePath . $this->id . '/' . $this->image)
 			: asset('images/product-default-image.jpg');
 	}
-	
+
+	/**
+	 * Get image path
+	 *
+	 * @return mixed
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function getImagesPath()
+	{
+		return public_path() . $this->imagePath . $this->id . '/';
+	}
+
 	/**
 	 * @return mixed
 	 */
@@ -219,14 +235,14 @@ class Product extends Model
 	public function setImage(Request $request)
 	{
 		$postImage = $request->file('image');
+		$imagePath = $this->getImagesPath();
 		if (isset($postImage)) {
 			$fileName = Translit::generateFileName($postImage->getClientOriginalName());
-			$imagePath = public_path() . $this->imagePath . $this->id . '/';
 			$image = Image::make($postImage->getRealPath());
 			File::exists($imagePath) or File::makeDirectory($imagePath, 0755, true);
 
 			// delete old image
-			$this->deleteImage();
+			$this->deleteImages();
 
 			$watermark = Image::make(public_path('images/watermark.png'));
 			$watermark->resize(($image->width() * 2) / 3, null, function ($constraint) {
@@ -268,7 +284,10 @@ class Product extends Model
 			return true;
 		} else {
 			if($request->get('deleteImage')) {
-				$this->deleteImage();
+				$this->deleteImages();
+				if(!File::exists($imagePath . 'images')) {
+					$this->deleteImagesFolder();
+				}
 				return true;
 			}
 			return false;
@@ -281,22 +300,26 @@ class Product extends Model
 	 * @author     It Hill (it-hill.com@yandex.ua)
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
-	public function deleteImage()
+	public function deleteImages()
 	{
-		$imagePath = public_path() . $this->imagePath . $this->id . '/';
+		$prefixes = ['', 'origin_', 'zoom_', 'mini_'];
 		// delete old image
-		if(File::exists($imagePath . 'origin_' . $this->image)) {
-			File::delete($imagePath . 'origin_' . $this->image);
-		}
-		if(File::exists($imagePath . 'zoom_' . $this->image)) {
-			File::delete($imagePath . 'zoom_' . $this->image);
-		}
-		if(File::exists($imagePath . 'mini_' . $this->image)) {
-			File::delete($imagePath . 'mini_' . $this->image);
-		}
-		if(File::exists($imagePath . $this->image)) {
-			File::delete($imagePath . $this->image);
+		foreach ($prefixes as $prefix) {
+			if(File::exists($this->getImagesPath() . $prefix . $this->image)) {
+				File::delete($this->getImagesPath() . $prefix . $this->image);
+			}
 		}
 		$this->image = null;
+	}
+
+	/**
+	 * Delete image folder
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function deleteImagesFolder()
+	{
+		File::deleteDirectory($this->getImagesPath());
 	}
 }
