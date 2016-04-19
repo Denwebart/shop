@@ -61,6 +61,7 @@ class ProductReview extends Model
 		'like' => 'integer',
 		'dislike' => 'integer',
 		'is_published' => 'integer',
+		'text' => 'required',
 	];
 
 	/**
