@@ -25,7 +25,7 @@ class RequestedCallsController extends Controller
      */
     public function index()
     {
-	    $calls = RequestedCall::paginate(10);
+	    $calls = RequestedCall::with(['user'])->paginate(10);
 
         return view('admin::requestedcalls.index', compact('calls'));
     }
@@ -38,7 +38,7 @@ class RequestedCallsController extends Controller
      */
     public function edit($id)
     {
-	    $call = RequestedCall::findOrFail($id);
+	    $call = RequestedCall::with(['user'])->findOrFail($id);
 
 	    $backUrl = \Request::has('back_url') ? urldecode(\Request::get('back_url')) : URL::previous();
 	    

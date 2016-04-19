@@ -24,7 +24,7 @@ class OrdersController extends Controller
      */
     public function index()
     {
-	    $orders = Order::with(['customer', 'groupedProducts'])->paginate(10);
+	    $orders = Order::with(['user', 'customer', 'groupedProducts'])->paginate(10);
 
         return view('admin::orders.index', compact('orders'));
     }
