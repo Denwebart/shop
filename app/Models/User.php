@@ -171,14 +171,17 @@ class User extends Authenticatable
 	/**
 	 * Get user's avatar path
 	 *
+	 * @param bool $default
 	 * @return mixed
 	 * @author     It Hill (it-hill.com@yandex.ua)
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
-	public function getAvatarUrl() {
+	public function getAvatarUrl($default = true) {
 		return $this->avatar
 			? url($this->imagePath . $this->id . '/' . $this->avatar)
-			: url('images/default-avatar.jpg');
+			: ($default
+				? url('images/default-avatar.jpg')
+				: '');
 	}
 
 	/**

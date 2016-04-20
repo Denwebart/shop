@@ -81,9 +81,9 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="col-sm-4 col-md-4 @if($errors->has('image')) has-error @endif">
+            <div class="col-sm-5 col-md-5 @if($errors->has('image')) has-error @endif">
                 {!! Form::label('image', 'Изображение для товара', ['class' => 'control-label m-b-5']) !!}
-                {!! Form::file('image', ['id' => 'image', 'class' => 'dropify', 'data-default-file' => $product->getImageUrl(), 'data-max-file-size' => '3M']) !!}
+                {!! Form::file('image', ['id' => 'image', 'class' => 'dropify', 'data-default-file' => $product->getImageUrl(false), 'data-max-file-size' => '3M']) !!}
                 <span class="help-block @if($errors->has('image')) hidden @endif">
                     <small>
                         Главное изображение товара.
@@ -95,7 +95,7 @@
                     </span>
                 @endif
             </div>
-            <div class="col-sm-8 col-md-8 @if($errors->has('image_alt')) has-error @endif">
+            <div class="col-sm-7 col-md-7 @if($errors->has('image_alt')) has-error @endif">
                 {!! Form::label('image_alt', 'Альт для изображения', ['class' => 'control-label m-b-5']) !!}
                 {!! Form::textarea('image_alt', $product->image_alt, ['id' => 'image_alt', 'class' => 'form-control', 'rows' => 8]) !!}
 
@@ -112,7 +112,7 @@
                             @foreach($product->images as $image)
                                 <div class="file-box">
 {{--                                    {!! Form::file('image['. $image->id .']', ['id' => 'image['. $image->id .']', 'class' => 'img-responsive img-thumbnail dropify', 'data-default-file' => $image->getImageUrl(), 'data-max-file-size' => '3M']) !!}--}}
-                                    <a href="">
+                                    <a href="javascript:void(0)">
                                         <img src="{{ $image->getImageUrl() }}" class="img-responsive img-thumbnail" alt="">
                                     </a>
                                 </div>

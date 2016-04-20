@@ -103,7 +103,7 @@
         <div class="form-group @if($errors->has('avatar')) has-error @endif">
             {!! Form::label('avatar', 'Аватарка', ['class' => 'col-md-3 control-label m-b-5']) !!}
             <div class="col-md-9">
-                {!! Form::file('avatar', ['id' => 'avatar', 'class' => 'dropify', 'data-default-file' => $user->getAvatarUrl(), 'data-max-file-size' => '3M']) !!}
+                {!! Form::file('avatar', ['id' => 'avatar', 'class' => 'dropify', 'data-default-file' => $user->getAvatarUrl(false), 'data-max-file-size' => '3M']) !!}
                 @if ($errors->has('avatar'))
                     <span class="help-block error">
                         <strong>{{ $errors->first('avatar') }}</strong>
