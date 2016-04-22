@@ -72,6 +72,19 @@ class Slider extends Model
 	];
 
 	/**
+	 * Выравнивание текста (значение поля text_align)
+	 */
+	const ALIGN_CENTER = 0;
+	const ALIGN_LEFT   = 1;
+	const ALIGN_RIGHT  = 2;
+
+	public static $text_align = [
+		self::ALIGN_CENTER => 'По центру',
+		self::ALIGN_LEFT   => 'По левому краю',
+		self::ALIGN_RIGHT  => 'По правому краю',
+	];
+
+	/**
 	 * The attributes that are mass assignable.
 	 *
 	 * @var array
@@ -86,6 +99,7 @@ class Slider extends Model
 		'is_published',
 		'button_text',
 		'button_link',
+		'text_align',
 	];
 
 	/**
@@ -104,6 +118,7 @@ class Slider extends Model
 		'is_published' => 'boolean',
 		'button_text' => 'max:100',
 		'button_link' => 'url|max:250',
+		'text_align' => 'integer|min:0|max:2',
 	];
 
 	/**

@@ -44,7 +44,7 @@
                         {!! Form::checkbox('is_published', 1, $slider->is_published, ['id' => 'is_published', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
                         {!! Form::label('is_published', 'Опубликован', ['class' => 'control-label m-l-5']) !!}
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                         @if ($errors->has('is_published'))
                             <span class="help-block error">
                             <strong>{{ $errors->first('is_published') }}</strong>
@@ -131,37 +131,28 @@
                 @endif
             </div>
         </div>
+        <div class="form-group @if($errors->has('text_align')) has-error @endif">
+            <div class="switchery-demo m-b-5 m-l-10">
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    {!! Form::label('text_align', 'Выравнивание текста', ['class' => 'control-label m-l-5']) !!}
+
+                    @foreach(App\Models\Slider::$text_align as $alignKey => $alignValue)
+                        <div class="clearfix"></div>
+                        {!! $alignValue !!}
+                        {!! Form::radio('text_align', $alignKey, ($slider->text_align == $alignKey), ['class' => 'form-control']) !!}
+                    @endforeach
+                </div>
+                <div class="col-md-6">
+                    @if ($errors->has('text_align'))
+                        <span class="help-block error">
+                            <strong>{{ $errors->first('text_align') }}</strong>
+                        </span>
+                    @endif
+                </div>
+            </div>
+        </div>
     </div>
-
-    {{--<div class="col-md-7 col-sm-12 col-xs-12">--}}
-        {{--<div class="form-group @if($errors->has('content')) has-error @endif">--}}
-            {{--<div class="col-md-12">--}}
-                {{--{!! Form::label('content', 'Текст страницы', ['class' => 'control-label m-b-5']) !!}--}}
-                {{--{!! Form::textarea('content', $page->content, ['id' => 'content', 'class' => 'form-control editor', 'rows' => 10]) !!}--}}
-
-                {{--@if ($errors->has('content'))--}}
-                    {{--<span class="help-block error">--}}
-                        {{--<strong>{{ $errors->first('content') }}</strong>--}}
-                    {{--</span>--}}
-                {{--@endif--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    {{--</div>--}}
-
-    {{--<div class="col-md-5 col-sm-12 col-xs-12">--}}
-        {{--<div class="form-group @if($errors->has('introtext')) has-error @endif">--}}
-            {{--<div class="col-md-12">--}}
-                {{--{!! Form::label('introtext', 'Краткое описание страницы', ['class' => 'control-label m-b-5']) !!}--}}
-                {{--{!! Form::textarea('introtext', $page->introtext, ['id' => 'introtext', 'class' => 'form-control editor', 'rows' => 10]) !!}--}}
-
-                {{--@if ($errors->has('introtext'))--}}
-                    {{--<span class="help-block error">--}}
-                        {{--<strong>{{ $errors->first('introtext') }}</strong>--}}
-                    {{--</span>--}}
-                {{--@endif--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    {{--</div>--}}
 
 </div><!-- end row -->
 
