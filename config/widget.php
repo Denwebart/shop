@@ -6,6 +6,7 @@
 
 return [
 	'widgets' => [
-		'menu'
+		'menu',
+		'slider',
 	],
 ];

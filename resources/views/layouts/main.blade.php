@@ -138,12 +138,6 @@
                                         <span class="currency__item__title">(долларах)</span>
                                     </a>
                                 </li>
-                                <li class="currency__item">
-                                    <a href="#">
-                                        <span class="currency__item__symbol">€</span>
-                                        <span class="currency__item__title">(евро)</span>
-                                    </a>
-                                </li>
                             </ul>
                         </div>
                     </div>
@@ -313,12 +307,6 @@
                             <a href="#">
                                 <span class="currency__item__symbol">$</span>
                                 <span class="currency__item__title">(долларах)</span>
-                            </a>
-                        </li>
-                        <li class="currency__item">
-                            <a href="#">
-                                <span class="currency__item__symbol">€</span>
-                                <span class="currency__item__title">(евро)</span>
                             </a>
                         </li>
                     </ul>

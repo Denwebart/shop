@@ -1,51 +1,8 @@
 @extends('layouts.main')
 
 @section('content')
-        <!-- Slider section -->
-<section class="content p-t-0">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="category-slider single-slider">
-                    <ul class="animated-arrows">
-                        <li class="hover-squared">
-                            <img src="images/slider-small-01.jpg" alt=""/>
-                            <div class="single-slider__text align-center">
-                                <h2>Пальто</h2>
-                                <h3>Новая коллекция</h3>
-                                <h4>Лучшие модели 2016 года</h4>
-                                <a href="listing-open-filter.html" class="btn btn--wd btn--lg text-uppercase">Ссылка</a>
-                            </div>
-                            <div class="product-category__hover caption"></div>
-                        </li>
-                        <li class="hover-squared">
-                            <img src="images/slider-small-02.jpg" alt=""/>
-                            <div class="single-slider__text align-left">
-                                <h2>Плащи</h2>
-                                <h3>Новая коллекция</h3>
-                                <h4>Лучшие модели 2016 года</h4>
-                                <a href="listing-open-filter.html" class="btn btn--wd btn--lg text-uppercase">Ссылка</a>
-                            </div>
-                            <div class="product-category__hover caption"></div>
-                        </li>
-                        <li class="hover-squared">
-                            <img src="images/slider-small-03.jpg" alt=""/>
-                            <div class="single-slider__text align-right">
-                                <h2>Куртки</h2>
-                                <h3>Новая коллекция</h3>
-                                <h4>Лучшие модели 2016 года</h4>
-                                <a href="listing-open-filter.html" class="btn btn--wd btn--lg text-uppercase">Ссылка</a>
-                            </div>
-                            <div class="product-category__hover caption"></div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="divider divider--sm visible-xs visible-sm"></div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- End Slider section -->
+
+{!! $slider->show() !!}
 
 <!-- 12 items -->
 <section class="content">
