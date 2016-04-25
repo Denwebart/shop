@@ -10,83 +10,67 @@ namespace App\Widgets\Menu;
 
 class Menu
 {
+	private $menuItems = [];
+
+	public function __construct()
+	{
+		$allItems = \App\Models\Menu::with([
+				'page' => function($query) {
+					$query->select('id', 'alias', 'type', 'is_container', 'parent_id', 'title', 'menu_title');
+				}
+			])->orderBy('position', 'ASC')->get();
+
+		foreach ($allItems as $item) {
+			if($item->parent_id) {
+				$this->menuItems[$item->type][$item->parent_id]['children'][$item->id] = $item;
+			} else {
+				$this->menuItems[$item->type][$item->id] = $item;
+			}
+		}
+	}
+
+	/**
+	 * Get menu items
+	 *
+	 * @param $type
+	 * @return array|mixed
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	private function getMenuItems($type)
+	{
+		return isset($this->menuItems[$type]) ? $this->menuItems[$type] : [];
+	}
+
 	public function main()
 	{
-		$menuItems = \App\Models\Menu::whereType(\App\Models\Menu::TYPE_MAIN)
-			->whereParentId(0)
-			->with([
-				'page' => function($query) {
-					$query->select('id', 'alias', 'is_container', 'parent_id', 'title', 'menu_title');
-				},
-			])
-			->orderBy('position', 'ASC')
-			->get();
-
-		return view('widget.menu::main', compact('menuItems'));
+		return view('widget.menu::main')
+			->with('menuItems', $this->getMenuItems(\App\Models\Menu::TYPE_MAIN));
 	}
 
 	public function product()
 	{
-		$menuItems = \App\Models\Menu::whereType(\App\Models\Menu::TYPE_PRODUCT)
-			->whereParentId(0)
-			->with([
-				'page' => function($query) {
-					$query->select('id', 'alias', 'type', 'is_container', 'parent_id', 'title', 'menu_title');
-				},
-				'parent',
-				'parent.page' => function($query) {
-					$query->select('id', 'alias', 'type', 'is_container', 'parent_id', 'title', 'menu_title');
-				},
-			])
-			->orderBy('position', 'ASC')
-			->get();
-
-		return view('widget.menu::product', compact('menuItems'));
+		return view('widget.menu::product')
+			->with('menuItems', $this->getMenuItems(\App\Models\Menu::TYPE_PRODUCT));
 	}
 
 	public function bottomLeft()
 	{
-		$menuItems = \App\Models\Menu::whereType(\App\Models\Menu::TYPE_BOTTOM_LEFT)
-			->whereParentId(0)
-			->with([
-				'page' => function($query) {
-					$query->select('id', 'alias', 'is_container', 'parent_id', 'title', 'menu_title');
-				},
-			])
-			->orderBy('position', 'ASC')
-			->get();
-
-		return view('widget.menu::bottom', compact('menuItems'));
+		return view('widget.menu::bottom')
+			->with('menuItems', $this->getMenuItems(\App\Models\Menu::TYPE_BOTTOM_LEFT));
 	}
 
 	public function bottomRight()
 	{
-		$menuItems = \App\Models\Menu::whereType(\App\Models\Menu::TYPE_BOTTOM_RIGHT)
-			->whereParentId(0)
-			->with([
-				'page' => function($query) {
-					$query->select('id', 'alias', 'is_container', 'parent_id', 'title', 'menu_title');
-				},
-			])
-			->orderBy('position', 'ASC')
-			->get();
-
-		return view('widget.menu::bottom', compact('menuItems'));
+		return view('widget.menu::bottom')
+			->with('menuItems', $this->getMenuItems(\App\Models\Menu::TYPE_BOTTOM_RIGHT));
 	}
 
 	public function info()
 	{
-		$menuItems = \App\Models\Menu::whereType(\App\Models\Menu::TYPE_INFO)
-			->whereParentId(0)
-			->with([
-				'page' => function($query) {
-					$query->select('id', 'alias', 'is_container', 'parent_id', 'title', 'menu_title');
-				},
-			])
-			->orderBy('position', 'ASC')
-			->get();
-
-		return view('widget.menu::info', compact('menuItems'));
+		return view('widget.menu::info')
+			->with('menuItems', $this->getMenuItems(\App\Models\Menu::TYPE_INFO));
 	}
 
 }
