@@ -15,7 +15,7 @@
                         @foreach($items as $item)
                             <li class="hover-squared">
                                 <img src="{{ $item->getImageUrl() }}" alt="{{ $item->image_alt }}"/>
-                                <div class="single-slider__text align-center">
+                                <div class="single-slider__text {{ \App\Models\Slider::$textAlignClasses[$item->text_align] }}">
                                     @if($item->title) <h2>{{ $item->title }}</h2> @endif
                                     @if($item->text_1) <h3>{{ $item->text_1 }}</h3> @endif
                                     @if($item->text_2) <h4>{{ $item->text_2 }}</h4> @endif

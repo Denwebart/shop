@@ -137,7 +137,7 @@
                 <div class="col-md-4">
                     {!! Form::label('text_align', 'Выравнивание текста', ['class' => 'control-label m-l-5']) !!}
 
-                    @foreach(App\Models\Slider::$text_align as $alignKey => $alignValue)
+                    @foreach(App\Models\Slider::$textAlign as $alignKey => $alignValue)
                         <div class="clearfix"></div>
                         {!! $alignValue !!}
                         {!! Form::radio('text_align', $alignKey, ($slider->text_align == $alignKey), ['class' => 'form-control']) !!}
