@@ -10,6 +10,8 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Page;
+use App\Models\Product;
 use App\Widgets\Slider\Slider;
 
 class SiteController extends Controller
@@ -22,8 +24,20 @@ class SiteController extends Controller
 	 */
 	public function index() {
 
+		$page = Page::whereAlias('/')->firstOrFail();
+		\View::share('page', $page);
+
 		$slider = new Slider();
 
-		return view('index', compact('slider'));
+		$bestSellers = Product::select(\DB::raw('products.id, products.vendor_code, products.category_id, products.alias, products.is_published, products.title, products.price, products.image, products.image_alt, products.published_at, count(orders_products.product_id) as `boughtTimes`'))
+			->leftJoin('orders_products', 'products.id', '=', 'orders_products.product_id')
+			->where('products.is_published', '=', 1)
+			->groupBy('orders_products.product_id')
+			->orderBy('boughtTimes', 'DESC')
+			->orderBy('products.published_at', 'DESC')
+			->limit(12)
+			->get();
+
+		return view('index', compact('page', 'slider', 'bestSellers'));
 	}
 }
