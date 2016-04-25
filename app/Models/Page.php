@@ -246,6 +246,22 @@ class Page extends Model
 	}
 
 	/**
+	 * Get page url
+	 *
+	 * @return mixed
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function getUrl()
+	{
+		if($this->parent_id) {
+			return url($this->parent->getUrl() . '/' . $this->alias);
+		} else {
+			return url($this->alias);
+		}
+	}
+
+	/**
 	 * Get image url
 	 *
 	 * @return mixed

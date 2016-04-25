@@ -117,6 +117,7 @@ class SliderController extends Controller
 	    $slider = Slider::findOrFail($id);
 	    $oldImageName = $slider->image;
 	    $data = $request->all();
+	    $data['button_text'] = trim($request->get('button_text')) == '' ? null : $request->get('button_text');
 	    
 	    $rules = Slider::rules($slider->id);
 	    $rules['image'] = 'image|max:10240';

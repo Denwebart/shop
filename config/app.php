@@ -160,8 +160,10 @@ return [
 	    Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
 	    App\Modules\ServiceProvider::class,
+	    App\Widgets\ServiceProvider::class,
 	    Collective\Html\HtmlServiceProvider::class,
 	    Intervention\Image\ImageServiceProvider::class,
+	    App\Providers\CurrencyProvider::class,
     ],
 
     /*

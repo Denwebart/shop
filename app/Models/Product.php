@@ -158,6 +158,23 @@ class Product extends Model
 	}
 
 	/**
+	 * Order products
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\hasMany
+	 */
+	public function orderProducts()
+	{
+		return $this->hasMany('App\Models\OrderProduct', 'product_id');
+	}
+	
+	public function groupedOrderProducts()
+	{
+		return $this->hasMany('App\Models\OrderProduct', 'product_id')
+			->select(\DB::raw('*, count(*) as boughtTimes, orders_products.id as id'))
+			->groupBy('orders_products.product_id', 'orders_products.order_id');
+	}
+
+	/**
 	 * Images
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\HasMany

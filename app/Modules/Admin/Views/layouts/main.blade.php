@@ -112,10 +112,16 @@
             <!-- User -->
             <div class="user-box">
                 <div class="user-img">
-                    <img src="{{ Auth::user()->getAvatarUrl() }}" alt="{{ Auth::user()->login }}" title="{{ Auth::user()->login }}" class="img-circle img-thumbnail img-responsive">
-                    <div class="user-status online"><i class="fa fa-circle"></i></div>
+                    <a href="{{ route('admin.users.show', ['id' => Auth::user()->id]) }}">
+                        <img src="{{ Auth::user()->getAvatarUrl() }}" alt="{{ Auth::user()->login }}" title="{{ Auth::user()->login }}" class="img-circle img-thumbnail img-responsive">
+                        <div class="user-status online"><i class="fa fa-circle"></i></div>
+                    </a>
                 </div>
-                <h5>{{ Auth::user()->login }}</h5>
+                <h5>
+                    <a href="{{ route('admin.users.show', ['id' => Auth::user()->id]) }}">
+                        {{ Auth::user()->login }}
+                    </a>
+                </h5>
                 <ul class="list-inline">
                     <li>
                         <a href="{{ route('admin.users.edit', ['id' => Auth::user()->id]) }}">
