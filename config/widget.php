@@ -8,5 +8,6 @@ return [
 	'widgets' => [
 		'menu',
 		'slider',
+		'carousel',
 	],
 ];

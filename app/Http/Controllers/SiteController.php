@@ -12,6 +12,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Page;
 use App\Models\Product;
+use App\Widgets\Carousel\Carousel;
 use App\Widgets\Slider\Slider;
 
 class SiteController extends Controller
@@ -28,6 +29,7 @@ class SiteController extends Controller
 		\View::share('page', $page);
 
 		$slider = new Slider();
+		$carousel = new Carousel();
 
 		$bestSellers = Product::select(\DB::raw('products.id, products.vendor_code, products.category_id, products.alias, products.is_published, products.title, products.price, products.image, products.image_alt, products.published_at, count(orders_products.product_id) as `boughtTimes`'))
 			->leftJoin('orders_products', 'products.id', '=', 'orders_products.product_id')
@@ -38,6 +40,6 @@ class SiteController extends Controller
 			->limit(12)
 			->get();
 
-		return view('index', compact('page', 'slider', 'bestSellers'));
+		return view('index', compact('page', 'slider', 'carousel', 'bestSellers'));
 	}
 }
