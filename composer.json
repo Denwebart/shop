@@ -11,7 +11,8 @@
         "barryvdh/laravel-ide-helper": "^2.1",
         "doctrine/dbal": "^2.5",
         "laravelcollective/html": "5.2.*",
-        "intervention/image": "^2.3"
+        "intervention/image": "^2.3",
+        "rap2hpoutre/laravel-log-viewer": "^0.6.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

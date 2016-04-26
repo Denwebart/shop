@@ -1,5 +1,20 @@
 <?php
 /**
+ * @author     It Hill (it-hill.com@yandex.ua)
+ * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+ */
+
+namespace App\Models;
+
+use App\Helpers\Translit;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Intervention\Image\Facades\Image;
+
+/**
  * App\Models\Page
  *
  * @property integer $id
@@ -21,6 +36,9 @@
  * @property string $meta_title
  * @property string $meta_desc
  * @property string $meta_key
+ * @property-read \App\Models\Page $parent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Page[] $children
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Page[] $publishedChildren
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Page whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Page whereAlias($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Page whereParentId($value)
@@ -42,17 +60,6 @@
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Page whereMetaKey($value)
  * @mixin \Eloquent
  */
-
-namespace App\Models;
-
-use App\Helpers\Translit;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
-use Intervention\Image\Facades\Image;
-
 class Page extends Model
 {
 	protected $table = 'pages';

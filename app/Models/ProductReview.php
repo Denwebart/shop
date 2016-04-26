@@ -3,16 +3,48 @@
 /**
  * @author     It Hill (it-hill.com@yandex.ua)
  * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
- *
- * App\Models\ProductReview
- *
- * @mixin \Eloquent
  */
 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\ProductReview
+ *
+ * @property integer $id
+ * @property integer $user_id
+ * @property integer $parent_id
+ * @property integer $product_id
+ * @property string $user_name
+ * @property string $user_email
+ * @property string $text
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property string $published_at
+ * @property boolean $is_published
+ * @property boolean $rating
+ * @property integer $like
+ * @property integer $dislike
+ * @property-read \App\Models\User $user
+ * @property-read \App\Models\Product $product
+ * @property-read \App\Models\ProductReview $parent
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ProductReview whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ProductReview whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ProductReview whereParentId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ProductReview whereProductId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ProductReview whereUserName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ProductReview whereUserEmail($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ProductReview whereText($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ProductReview whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ProductReview whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ProductReview wherePublishedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ProductReview whereIsPublished($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ProductReview whereRating($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ProductReview whereLike($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ProductReview whereDislike($value)
+ * @mixin \Eloquent
+ */
 class ProductReview extends Model
 {
 	protected $table = 'products_reviews';
