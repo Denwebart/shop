@@ -1,46 +1,7 @@
 <?php
 /**
- * App\Models\Page
- *
- * @property integer $id
- * @property string $alias
- * @property integer $parent_id
- * @property integer $user_id
- * @property boolean $type
- * @property boolean $is_published
- * @property boolean $is_container
- * @property string $title
- * @property string $menu_title
- * @property string $image
- * @property string $image_alt
- * @property string $introtext
- * @property string $content
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
- * @property string $published_at
- * @property string $meta_title
- * @property string $meta_desc
- * @property string $meta_key
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Page whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Page whereAlias($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Page whereParentId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Page whereUserId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Page whereType($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Page whereIsPublished($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Page whereIsContainer($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Page whereTitle($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Page whereMenuTitle($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Page whereImage($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Page whereImageAlt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Page whereIntrotext($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Page whereContent($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Page whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Page whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Page wherePublishedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Page whereMetaTitle($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Page whereMetaDesc($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Page whereMetaKey($value)
- * @mixin \Eloquent
+ * @author     It Hill (it-hill.com@yandex.ua)
+ * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
  */
 
 namespace App\Models;
@@ -52,6 +13,31 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 
+/**
+ * App\Models\Slider
+ *
+ * @property integer $id
+ * @property string $image
+ * @property string $image_alt
+ * @property boolean $is_published
+ * @property string $title
+ * @property string $text_1
+ * @property string $text_2
+ * @property string $button_text
+ * @property string $button_link
+ * @property boolean $text_align
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Slider whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Slider whereImage($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Slider whereImageAlt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Slider whereIsPublished($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Slider whereTitle($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Slider whereText1($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Slider whereText2($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Slider whereButtonText($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Slider whereButtonLink($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Slider whereTextAlign($value)
+ * @mixin \Eloquent
+ */
 class Slider extends Model
 {
 	protected $table = 'slider';

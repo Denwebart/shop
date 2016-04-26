@@ -2,8 +2,22 @@
 /**
  * @author     It Hill (it-hill.com@yandex.ua)
  * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
- * 
+ */
+
+namespace App\Models;
+
+use App\Helpers\Str;
+use App\Helpers\Translit;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Intervention\Image\Facades\Image;
+
+/**
  * App\Models\Product
+ *
  * @property integer $id
  * @property string $vendor_code
  * @property integer $category_id
@@ -22,6 +36,10 @@
  * @property string $meta_title
  * @property string $meta_desc
  * @property string $meta_key
+ * @property-read \App\Models\Page $category
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\OrderProduct[] $orderProducts
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\OrderProduct[] $groupedOrderProducts
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ProductImage[] $images
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Product whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Product whereVendorCode($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Product whereCategoryId($value)
@@ -42,18 +60,6 @@
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Product whereMetaKey($value)
  * @mixin \Eloquent
  */
-
-namespace App\Models;
-
-use App\Helpers\Str;
-use App\Helpers\Translit;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
-use Intervention\Image\Facades\Image;
-
 class Product extends Model
 {
 	protected $table = 'products';

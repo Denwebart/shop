@@ -2,7 +2,13 @@
 /**
  * @author     It Hill (it-hill.com@yandex.ua)
  * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
- * 
+ */
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+/**
  * App\Models\Coupon
  *
  * @property integer $id
@@ -23,11 +29,6 @@
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Coupon whereDateEnd($value)
  * @mixin \Eloquent
  */
-
-namespace App\Models;
-
-use Illuminate\Database\Eloquent\Model;
-
 class Coupon extends Model
 {
 	protected $table = 'coupons';

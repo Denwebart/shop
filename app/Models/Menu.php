@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author     It Hill (it-hill.com@yandex.ua)
+ * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+ */
 
 namespace App\Models;
 
@@ -10,6 +14,24 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 
+/**
+ * App\Models\Menu
+ *
+ * @property integer $id
+ * @property boolean $type
+ * @property integer $page_id
+ * @property integer $parent_id
+ * @property integer $position
+ * @property-read \App\Models\Page $page
+ * @property-read \App\Models\Menu $parent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Menu[] $children
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Menu whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Menu whereType($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Menu wherePageId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Menu whereParentId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Menu wherePosition($value)
+ * @mixin \Eloquent
+ */
 class Menu extends Model
 {
 	protected $table = 'menus';

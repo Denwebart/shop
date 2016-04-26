@@ -2,7 +2,18 @@
 /**
  * @author     It Hill (it-hill.com@yandex.ua)
  * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
- *
+ */
+
+namespace App\Models;
+
+use App\Helpers\Str;
+use App\Helpers\Translit;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Intervention\Image\Facades\Image;
+
+/**
  * App\Models\User
  *
  * @property integer $id
@@ -20,6 +31,9 @@
  * @property string $remember_token
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Order[] $orders
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\RequestedCall[] $requestedCalls
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ProductReview[] $comments
  * @method static \Illuminate\Database\Query\Builder|\App\Models\User whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\User whereLogin($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\User whereEmail($value)
@@ -37,16 +51,6 @@
  * @method static \Illuminate\Database\Query\Builder|\App\Models\User whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-
-namespace App\Models;
-
-use App\Helpers\Str;
-use App\Helpers\Translit;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
-use Intervention\Image\Facades\Image;
-
 class User extends Authenticatable
 {
 	protected $table = 'users';
