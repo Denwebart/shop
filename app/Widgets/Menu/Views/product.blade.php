@@ -7,8 +7,22 @@
 
 @foreach($menuItems as $item)
     <li @if(\Request::is($item->page->getUrl()) || \Request::url() == url($item->page->alias)) class="active" @endif>
-        <a href="{{ $item->page->getUrl() }}">
+        <a href="{{ $item->page->getUrl() }}" @if(count($item->children)) class="dropdown-toggle" @endif>
             <span class="link-name">{{ $item->page->getTitle() }}</span>
+            @if(count($item->children))
+                <span class="caret"></span>
+            @endif
         </a>
+        @if(count($item->children))
+            <ul class="dropdown-menu animated fadeIn" role="menu">
+                @foreach($item->children as $childItem)
+                    <li>
+                        <a href="{{ $childItem->page->getUrl() }}">
+                            {{ $childItem->page->getTitle() }}
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        @endif
     </li>
 @endforeach
