@@ -158,6 +158,7 @@ return [
 
 	    Barryvdh\Debugbar\ServiceProvider::class,
 	    Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+	    Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
 
 	    App\Modules\ServiceProvider::class,
 	    App\Widgets\ServiceProvider::class,
