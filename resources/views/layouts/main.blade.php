@@ -51,13 +51,7 @@
             <div class="container">
                 <div class="pull-left hidden-sm">
                     <div class="social-links social-links--colorize">
-                        <ul>
-                            <li class="social-links__item"><a class="icon icon-vk" href="#"></a></li>
-                            <li class="social-links__item"><a class="icon icon-facebook" href="#"></a></li>
-                            <li class="social-links__item"><a class="icon icon-instagram" href="#"></a></li>
-                            <li class="social-links__item"><a class="icon icon-twitter" href="#"></a></li>
-                            <li class="social-links__item"><a class="icon icon-google" href="#"></a></li>
-                        </ul>
+                        @include('parts.socialButtons')
                     </div>
                 </div>
                 <div class="pull-left">
@@ -82,7 +76,7 @@
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" id="slide-nav"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
                     <!--  Logo  -->
-                    <a class="logo" href="index.html">
+                    <a class="logo" href="{{ url('/') }}">
                         <img class="logo-default" src="images/logo.png" alt=""/>
                         <img class="logo-mobile" src="images/logo-mobile.png" alt=""/>
                         <img class="logo-transparent" src="images/logo-transparent.png" alt=""/>
@@ -244,7 +238,7 @@
                 <div class="row">
                     <div class="col-md-3 hidden-xs hidden-sm">
                         <!--  Logo  -->
-                        <a class="logo logo--footer" href="index.html">
+                        <a class="logo logo--footer" href="{{ url('/') }}">
                             <img src="images/logo-transparent.png" alt=""/>
                         </a>
                         <!-- End Logo -->
@@ -273,13 +267,7 @@
                         <h5 class="title text-uppercase">Мы в социальных сетях</h5>
                         <div class="v-links-list">
                             <div class="social-links social-links--colorize social-links--large">
-                                <ul>
-                                    <li class="social-links__item"><a class="icon icon-vk" href="#"></a></li>
-                                    <li class="social-links__item"><a class="icon icon-facebook" href="#"></a></li>
-                                    <li class="social-links__item"><a class="icon icon-instagram" href="#"></a></li>
-                                    <li class="social-links__item"><a class="icon icon-twitter" href="#"></a></li>
-                                    <li class="social-links__item"><a class="icon icon-google" href="#"></a></li>
-                                </ul>
+                                @include('parts.socialButtons')
                             </div>
                         </div>
                     </div>

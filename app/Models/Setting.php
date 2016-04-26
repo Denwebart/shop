@@ -69,7 +69,7 @@ class Setting extends Model
 	const CATEGORY_SITE = 1;
 
 	public static $categories = [
-		self::CATEGORY_SITE => 'Общие настройки',
+		self::CATEGORY_SITE => 'Общие настройки сайта',
 	];
 
 	/**

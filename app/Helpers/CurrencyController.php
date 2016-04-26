@@ -14,22 +14,26 @@ use SimpleXMLElement;
 
 class CurrencyController implements CurrencyRate
 {
-	public function getCourse($currency = 'USD'){
-
+	public function getCourse($currency = 'USD')
+	{
 		$xml = $this->getXML();
 		return $this->procXML($xml, $currency);
-
 	}
-	private function getXML(){
+	
+	private function getXML()
+	{
 		$url = 'http://www.cbr.ru/scripts/XML_daily.asp';
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		
 		return $result = curl_exec($ch);
 	}
 
-	private function procXML($xml, $currency){
+	private function procXML($xml, $currency)
+	{
 		$rates = new SimpleXMLElement($xml);
+		
 		foreach ($rates->Valute as $rate){
 			if ($rate->CharCode == $currency){
 				return (string) $rate->Value;
