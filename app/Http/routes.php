@@ -7,4 +7,7 @@ Route::get('/', 'SiteController@index');
 
 Route::get('admin', ['as' => 'admin.index', 'uses' => 'AdminController@index']);
 
+Route::get('{pages}', ['uses' => 'SiteController@page']);
+
+
 Route::get('{products}', ['as' => 'product.productInfo', 'uses' => 'ProductController@productInfo']);

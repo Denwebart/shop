@@ -42,4 +42,21 @@ class SiteController extends Controller
 
 		return view('index', compact('page', 'slider', 'carousel', 'bestSellers'));
 	}
+
+	/**
+	 * Other pages
+	 *
+	 * @param $alias
+	 * @return mixed
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function page($alias)
+	{
+		$page = Page::whereAlias($alias)->firstOrFail();
+		\View::share('page', $page);
+
+		return view('page', compact('page'));
+	}
 }

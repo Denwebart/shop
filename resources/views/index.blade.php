@@ -18,7 +18,9 @@
 <!-- Content section -->
 <section class="content">
     <div class="container">
-        <h2 class="text-uppercase">{{ $page->title }}</h2>
+        @if($page->title)
+            <h2 class="text-uppercase">{{ $page->title }}</h2>
+        @endif
 
         {!! $page->content !!}
     </div>
