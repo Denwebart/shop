@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $description
  * @property string $value
  * @property boolean $is_active
+ * @property string $validation_rule
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Setting whereId($value)
@@ -29,6 +30,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Setting whereDescription($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Setting whereValue($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Setting whereIsActive($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Setting whereValidationRule($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Setting whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Setting whereUpdatedAt($value)
  * @mixin \Eloquent
@@ -43,12 +45,14 @@ class Setting extends Model
 	const TYPE_BOOLEAN = 1;
 	const TYPE_INTEGER = 2;
 	const TYPE_TEXT    = 3;
-	const TYPE_HTML    = 4;
+	const TYPE_STRING  = 4;
+	const TYPE_HTML    = 5;
 
 	public static $types = [
 		self::TYPE_BOOLEAN => 'Логическое значение',
 		self::TYPE_INTEGER => 'Целое число',
-		self::TYPE_TEXT    => 'Короткий текст',
+		self::TYPE_TEXT    => 'Длинный текст',
+		self::TYPE_STRING  => 'Короткий текст',
 		self::TYPE_HTML    => 'HTML-код',
 	];
 
@@ -81,5 +85,30 @@ class Setting extends Model
 		'value',
 		'is_active',
 	];
+
+	/**
+	 * @var array Validation rules
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	protected static $rules = [
+		'is_active' => 'boolean',
+	];
+
+	/**
+	 * Get validation rules for current setting
+	 *
+	 * @return array
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function getRules()
+	{
+		$rules = self::$rules;
+		$rules['value'] = $this->validation_rule;
+		return $rules;
+	}
 
 }
