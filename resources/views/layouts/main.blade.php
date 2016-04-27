@@ -80,6 +80,7 @@
                         <img class="logo-default" src="images/logo.png" alt=""/>
                         <img class="logo-mobile" src="images/logo-mobile.png" alt=""/>
                         <img class="logo-transparent" src="images/logo-transparent.png" alt=""/>
+                        <span>Интернет-магазин женской верхней одежды</span>
                     </a>
                     <!-- End Logo -->
                 </div>
@@ -240,6 +241,7 @@
                         <!--  Logo  -->
                         <a class="logo logo--footer" href="{{ url('/') }}">
                             <img src="images/logo-transparent.png" alt=""/>
+                            <span class="m-t-10">Интернет-магазин женской верхней одежды</span>
                         </a>
                         <!-- End Logo -->
                         <p>Далеко-далеко за словесными горами в стране гласных и согласных живут рыбные тексты.</p>
@@ -253,15 +255,7 @@
                         </div>
                     </div>
                     <div class="col-sm-3 col-md-3 col-sm-push-6 col-md-push-4">
-                        <h5 class="title text-uppercase">Контактная информация</h5>
-                        <div class="v-links-list">
-                            <ul>
-                                <li class="icon icon-home">7563 St. Vincent Place, Glasgow</li>
-                                <li class="icon icon-telephone">321321321, 321321321</li>
-                                <li class="icon icon-mail"><a href="mailto:info@mydomain.com">info@mydomain.com</a></li>
-                                <li class="icon icon-skype"><a href="#">shop.test</a></li>
-                            </ul>
-                        </div>
+                        @include('parts.contactInfo')
                     </div>
                     <div class="col-sm-6 col-md-4 col-sm-pull-3 col-md-pull-3">
                         <h5 class="title text-uppercase">Мы в социальных сетях</h5>
