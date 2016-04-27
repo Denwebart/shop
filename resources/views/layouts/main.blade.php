@@ -80,7 +80,11 @@
                         <img class="logo-default" src="images/logo.png" alt=""/>
                         <img class="logo-mobile" src="images/logo-mobile.png" alt=""/>
                         <img class="logo-transparent" src="images/logo-transparent.png" alt=""/>
-                        <span>Интернет-магазин женской верхней одежды</span>
+                        @if(isset($siteSettings['siteTitle']) && is_object($siteSettings['siteTitle']))
+                            <span>
+                                {{ $siteSettings['siteTitle']->value }}
+                            </span>
+                        @endif
                     </a>
                     <!-- End Logo -->
                 </div>
@@ -214,16 +218,12 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="h-links-list">
-                            <ul>
-                                {!! $menuWidget->bottomLeft() !!}
-                            </ul>
+                            {!! $menuWidget->bottomLeft() !!}
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="h-links-list text-right">
-                            <ul>
-                                {!! $menuWidget->bottomRight() !!}
-                            </ul>
+                            {!! $menuWidget->bottomRight() !!}
                         </div>
                     </div>
                 </div>
@@ -241,29 +241,27 @@
                         <!--  Logo  -->
                         <a class="logo logo--footer" href="{{ url('/') }}">
                             <img src="images/logo-transparent.png" alt=""/>
-                            <span class="m-t-10">Интернет-магазин женской верхней одежды</span>
                         </a>
                         <!-- End Logo -->
-                        <p>Далеко-далеко за словесными горами в стране гласных и согласных живут рыбные тексты.</p>
+                        @if(isset($siteSettings['footerText']) && is_object($siteSettings['footerText']))
+                            <p>{{ $siteSettings['footerText']->value }}</p>
+                        @endif
                     </div>
                     <div class="col-sm-3 col-md-2">
-                        <h5 class="title text-uppercase">Информация</h5>
-                        <div class="v-links-list">
-                            <ul>
-                                {!! $menuWidget->info() !!}
-                            </ul>
-                        </div>
+                        {!! $menuWidget->info() !!}
                     </div>
                     <div class="col-sm-3 col-md-3 col-sm-push-6 col-md-push-4">
                         @include('parts.contactInfo')
                     </div>
                     <div class="col-sm-6 col-md-4 col-sm-pull-3 col-md-pull-3">
-                        <h5 class="title text-uppercase">Мы в социальных сетях</h5>
-                        <div class="v-links-list">
-                            <div class="social-links social-links--colorize social-links--large">
-                                @include('parts.socialButtons')
+                        @if(isset($siteSettings['socialButtons']) && is_array($siteSettings['socialButtons']))
+                            <h5 class="title text-uppercase">Мы в социальных сетях</h5>
+                            <div class="v-links-list">
+                                <div class="social-links social-links--colorize social-links--large">
+                                    @include('parts.socialButtons')
+                                </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -297,9 +295,11 @@
         </div>
         <div class="footer__bottom">
             <div class="container">
-                <div class="copyright pull-left text-uppercase">
-                    © 2016 Все права защищены.
-                </div>
+                @if(isset($siteSettings['copyright']) && is_object($siteSettings['copyright']))
+                    <div class="copyright pull-left text-uppercase">
+                        {{ $siteSettings['copyright']->value }}
+                    </div>
+                @endif
                 <div class="created-by pull-right text-right">
                     Разработано студией
                     <a href="http://it-hill.com">

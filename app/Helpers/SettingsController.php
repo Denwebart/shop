@@ -29,7 +29,11 @@ class SettingsController
 		
 		foreach ($settings as $setting) {
 			$settingsLevel = explode('.', $setting->key);
-			$result[$settingsLevel[0]][$settingsLevel[1]] = $setting;
+			if(isset($settingsLevel[1])) {
+				$result[$settingsLevel[0]][$settingsLevel[1]] = $setting;
+			} else {
+				$result[$settingsLevel[0]] = $setting;
+			}
 		}
 		return isset($result) ? $result : [];
 	}
