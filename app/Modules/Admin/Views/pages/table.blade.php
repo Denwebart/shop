@@ -41,9 +41,9 @@
                     @endif
                 </td>
                 <td>
-                <span class="label @if($page->is_published) label-success @else label-danger @endif">
-                    {{ \App\Models\Page::$is_published[$page->is_published] }}
-                </span>
+                    <span class="label @if($page->is_published) label-success @else label-danger @endif">
+                        {{ \App\Models\Page::$is_published[$page->is_published] }}
+                    </span>
                 </td>
                 <td>{{ \App\Helpers\Date::format($page->published_at) }}</td>
                 <td>

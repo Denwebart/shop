@@ -80,9 +80,16 @@ View::share('title', $title);
                                     {!! Form::label('is_active', 'Включена', ['class' => 'control-label m-l-5']) !!}
                                 </div>
                                 <div class="col-md-6">
-                                    <span class="help-block m-t-0">
-                                        <small></small>
-                                    </span>
+                                    @if($setting->updated_at)
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                {!! Form::label('updated_at', 'Последнее обновление', ['class' => 'control-label']) !!}
+                                            </div>
+                                            <div class="col-md-6">
+                                                {{ \App\Helpers\Date::format($setting->updated_at) }}
+                                            </div>
+                                        </div>
+                                    @endif
                                 </div>
                                 @if ($errors->has('is_active'))
                                     <span class="help-block error">

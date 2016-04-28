@@ -13,6 +13,7 @@
         <th>Название</th>
         <th>Описание</th>
         <th>Значение</th>
+        <th>Статус</th>
         <th></th>
     </tr>
     </thead>
@@ -25,6 +26,11 @@
                 <td>{{ $setting->description }}</td>
                 <td>
                     {{ $setting->value }}
+                </td>
+                <td>
+                    <span class="label @if($setting->is_active) label-success @else label-danger @endif">
+                        {{ \App\Models\Setting::$is_published[$setting->is_active] }}
+                    </span>
                 </td>
                 <td>
                     <a href="{{ route('admin.settings.edit', ['id' => $setting->id]) }}" title="Редактировать" data-toggle="tooltip" class="m-r-15">
