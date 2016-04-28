@@ -88,6 +88,7 @@ class PagesController extends Controller
      */
     public function show($id)
     {
+	    //доделать
         dd('просмотр страницы с id ' . $id);
     }
 

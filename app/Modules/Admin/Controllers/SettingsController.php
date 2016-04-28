@@ -22,7 +22,7 @@ class SettingsController extends Controller
     public function index()
     {
 	    $settings = Setting::select('id', 'key', 'type', 'category', 'title', 'description', 'value', 'is_active')
-		    ->paginate(10);
+		    ->paginate(20);
 
         return view('admin::settings.index', compact('settings'));
     }
@@ -35,7 +35,11 @@ class SettingsController extends Controller
      */
     public function edit($id)
     {
-	    return view('admin::settings.edit');
+	    $setting = Setting::findOrFail($id);
+
+	    $backUrl = \Request::has('back_url') ? urldecode(\Request::get('back_url')) : \URL::previous();
+
+	    return view('admin::settings.edit', compact('setting', 'backUrl'));
     }
 
     /**
@@ -47,7 +51,27 @@ class SettingsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+	    $setting = Setting::findOrFail($id);
+	    $data = $request->all();
+
+	    $validator = \Validator::make($data, $setting->getRules());
+
+	    if ($validator->fails())
+	    {
+		    return redirect(route('admin.settings.edit', ['id' => $setting->id, 'back_url' => urlencode($request->get('backUrl'))]))
+			    ->withErrors($validator->errors())
+			    ->withInput()
+			    ->with('errorMessage', 'Информация не сохранена. Исправьте ошибки валидации.');
+	    } else {
+		    $setting->fill($data);
+		    $setting->save();
+
+		    if($request->get('returnBack')) {
+			    return redirect($request->get('backUrl'))->with('successMessage', 'Информация сохранена!');
+		    } else {
+			    return redirect(route('admin.settings.edit', ['id' => $setting->id, 'back_url' => urlencode($request->get('backUrl'))]))->with('successMessage', 'Информация сохранена!');
+		    }
+	    }
     }
 
 }
