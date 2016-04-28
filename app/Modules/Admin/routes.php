@@ -14,6 +14,7 @@ Route::group(['module' => 'Admin', 'prefix' => 'admin', 'middleware' => 'web', '
 	Route::post('orders/{orders}/set_payment_status', ['as' => 'admin.orders.setPaymentStatus', 'uses' => 'OrdersController@setPaymentStatus']);
 	Route::resource('products', 'ProductsController');
 	Route::resource('pages', 'PagesController');
+	Route::resource('shop_reviews', 'ReviewsController', ['except' => ['show']]);
 	Route::resource('slider', 'SliderController');
 	Route::resource('calls', 'RequestedCallsController', ['except' => ['create', 'store', 'show']]);
 	Route::resource('reviews', 'ProductsReviewsController', ['except' => ['create', 'store', 'show']]);

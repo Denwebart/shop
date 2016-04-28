@@ -171,7 +171,15 @@
                     <li>
                         <a href="{{ route('admin.reviews.index') }}" class="waves-effect @if(Request::is('admin/reviews*')) active @endif">
                             <i class="fa fa-comment"></i>
-                            <span>Отзывы</span>
+                            <span>Отзывы к товарам</span>
+                            <span class="label label-danger pull-right">7</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('admin.shop_reviews.index') }}" class="waves-effect @if(Request::is('admin/shop_reviews*')) active @endif">
+                            <i class="fa fa-comment"></i>
+                            <span>Отзывы о магазине</span>
                             <span class="label label-danger pull-right">7</span>
                         </a>
                     </li>
