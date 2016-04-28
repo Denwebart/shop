@@ -13,15 +13,20 @@ View::share('title', $title);
 @section('content')
 
     <div class="row">
-        <div class="col-sm-8">
+        <div class="col-sm-6">
             <ul class="breadcrumb">
                 <li><a href="{{ route('admin.index') }}">Главная</a></li>
                 <li>{{ $title }}</li>
             </ul>
         </div>
-        <div class="col-sm-4">
-            <a href="{{ route('admin.pages.create') }}" class="btn btn-success btn-bordred w-md waves-effect waves-light pull-right">
+        <div class="col-sm-6">
+            <a href="{{ route('admin.pages.create', ['type' => \App\Models\Page::TYPE_PAGE]) }}" class="btn btn-success btn-bordred w-md waves-effect waves-light pull-right m-l-10">
+                <i class="fa fa-file-o"></i>
                 Создать страницу
+            </a>
+            <a href="{{ route('admin.pages.create', ['type' => \App\Models\Page::TYPE_CATALOG]) }}" class="btn btn-success btn-bordred w-md waves-effect waves-light pull-right m-l-10">
+                <i class="fa fa-shopping-bag"></i>
+                Создать каталог товаров
             </a>
         </div>
     </div>

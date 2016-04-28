@@ -170,6 +170,19 @@ class Page extends Model
 	}
 
 	/**
+	 * Автор
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function user()
+	{
+		return $this->belongsTo('App\Models\User', 'user_id');
+	}
+
+	/**
 	 * Родительская страница
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -231,13 +244,7 @@ class Page extends Model
 	 */
 	public function canBeDeleted()
 	{
-		if($this->type == self::TYPE_PAGE || !$this->type) {
-			return true;
-		} elseif($this->type == self::TYPE_CATALOG && $this->parent_id != 0) {
-			return true;
-		} else {
-			return false;
-		}
+		return ($this->type != self::TYPE_SYSTEM_PAGE || !$this->type) ? true : false;
 	}
 
 	/**
@@ -337,19 +344,12 @@ class Page extends Model
 			$data['published_at'] = null;
 		}
 
-		if($this->type != Page::TYPE_SYSTEM_PAGE) {
-			if($data['parent_id']) {
-				$parent = Page::findOrFail($data['parent_id']);
-				if($parent->type == Page::TYPE_CATALOG) {
-					$data['type'] = Page::TYPE_CATALOG;
-					$data['is_container'] = 1;
-				} else {
-					$data['type'] = Page::TYPE_PAGE;
-				}
+		if(!$this->type && $this->type != Page::TYPE_SYSTEM_PAGE) {
+			if($data['is_catalog']) {
+				$data['type'] = Page::TYPE_CATALOG;
+				$data['is_container'] = 1;
 			} else {
-				if($this->type != self::TYPE_CATALOG) {
-					$data['type'] = Page::TYPE_PAGE;
-				}
+				$data['type'] = Page::TYPE_PAGE;
 			}
 		}
 

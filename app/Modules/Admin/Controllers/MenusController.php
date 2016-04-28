@@ -1,6 +1,6 @@
 <?php
 /**
- * Class PagesController
+ * Class MenusController
  *
  * @author     It Hill (it-hill.com@yandex.ua)
  * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Validation\Validator;
 use Illuminate\View\View;
 
-class PagesController extends Controller
+class MenusController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -36,12 +36,9 @@ class PagesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
 	    $page = new Page();
-	    if($request->has('type') && array_key_exists($request->get('type'), Page::$types) && $request->get('type') != Page::TYPE_SYSTEM_PAGE) {
-		    $page->type = $request->get('type');
-	    }
 
 	    $backUrl = \Request::has('back_url') ? urldecode(\Request::get('back_url')) : URL::previous();
 

@@ -24,8 +24,10 @@
             <tr @if(!$page->is_published) class="not-published" @endif>
                 <td>{{ $page->id }}</td>
                 <td>
-                    @if($page->is_container)
+                    @if($page->type == \App\Models\Page::TYPE_PAGE && $page->is_container)
                         <i class="fa fa-folder" title="Категория" data-toggle="tooltip"></i>
+                    @elseif($page->type == \App\Models\Page::TYPE_CATALOG)
+                        <i class="fa fa-shopping-bag" title="Каталог товаров" data-toggle="tooltip"></i>
                     @else
                         <i class="fa fa-file-o" title="Страница" data-toggle="tooltip"></i>
                     @endif

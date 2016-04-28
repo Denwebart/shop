@@ -24,6 +24,9 @@ File: Components
   border-radius: 2px;
   padding: 6px 14px;
 }
+.btn i {
+    margin-right: 5px;
+}
 .btn-group-lg > .btn,
 .btn-lg {
   padding: 10px 16px !important;

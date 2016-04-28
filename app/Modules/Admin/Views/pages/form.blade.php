@@ -11,6 +11,13 @@
 {!! Form::hidden('returnBack', 1, ['id' => 'returnBack']) !!}
 {!! Form::hidden('deleteImage', 0, ['id' => 'deleteImage']) !!}
 
+{!! Form::hidden('type', $page->type) !!}
+@if($page->type == \App\Models\Page::TYPE_CATALOG)
+    {!! Form::hidden('is_catalog', 1) !!}
+@else
+    {!! Form::hidden('is_catalog', 0) !!}
+@endif
+
 <div class="row">
     <div class="col-lg-6 col-sm-12 col-xs-12 m-b-15">
         <div class="form-group @if($errors->has('parent_id')) has-error @endif">
@@ -22,7 +29,7 @@
                     {!! Form::hidden('parent_id', $page->parent_id) !!}
                     {!! Form::select('parent_id', \App\Models\Page::getCategory(), $page->parent_id, ['id' => 'parent_id', 'class' => 'form-control', 'disabled' => true]) !!}
                 @endif
-                @if ($errors->has('parent_id'))
+                @if($errors->has('parent_id'))
                     <span class="help-block error">
                         <strong>{{ $errors->first('parent_id') }}</strong>
                     </span>
@@ -38,7 +45,7 @@
                     {!! Form::text('alias', $page->alias, ['id' => 'alias', 'class' => 'form-control', 'disabled' => true]) !!}
                 @endif
 
-                @if ($errors->has('alias'))
+                @if($errors->has('alias'))
                     <span class="help-block error">
                         <strong>{{ $errors->first('alias') }}</strong>
                     </span>
@@ -50,7 +57,7 @@
             <div class="col-md-10">
                 {!! Form::text('title', $page->title, ['id' => 'title', 'class' => 'form-control']) !!}
 
-                @if ($errors->has('title'))
+                @if($errors->has('title'))
                     <span class="help-block error">
                         <strong>{{ $errors->first('title') }}</strong>
                     </span>
@@ -62,7 +69,7 @@
             <div class="col-md-10">
                 {!! Form::text('menu_title', $page->menu_title, ['id' => 'menu_title', 'class' => 'form-control']) !!}
 
-                @if ($errors->has('menu_title'))
+                @if($errors->has('menu_title'))
                     <span class="help-block error">
                         <strong>{{ $errors->first('menu_title') }}</strong>
                     </span>
@@ -70,33 +77,59 @@
             </div>
         </div>
         @if($page->canBeDeleted())
-            <div class="form-group @if($errors->has('is_container')) has-error @endif">
-                <div class="switchery-demo m-b-5">
-                    <div class="col-md-2">
-                    </div>
-                    <div class="col-md-4">
-                        @if($page->type == \App\Models\Page::TYPE_CATALOG)
-                            {!! Form::hidden('is_container', 1) !!}
-                            {!! Form::checkbox('is_container', 1, $page->is_container, ['id' => 'is_container', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small', 'disabled' => true]) !!}
-                        @else
-                            {!! Form::hidden('is_container', 0) !!}
-                            {!! Form::checkbox('is_container', 1, $page->is_container, ['id' => 'is_container', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
+            @if(is_null($page->type))
+                <div class="form-group @if($errors->has('is_catalog')) has-error @endif">
+                    <div class="switchery-demo m-b-5">
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-md-4">
+                            {!! Form::hidden('is_catalog', 0) !!}
+                            {!! Form::checkbox('is_catalog', 1, ($page->type == \App\Models\Page::TYPE_CATALOG), ['id' => 'is_catalog', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
+                            {!! Form::label('is_catalog', 'Каталог товаров', ['class' => 'control-label m-l-5']) !!}
+                        </div>
+                        <div class="col-md-6">
+                            <span class="help-block m-t-0">
+                                <small>Будет ли содержать товары?</small>
+                            </span>
+                        </div>
+                        @if($errors->has('is_catalog'))
+                            <span class="help-block error">
+                                <strong>{{ $errors->first('is_catalog') }}</strong>
+                            </span>
                         @endif
-
-                        {!! Form::label('is_container', 'Категория', ['class' => 'control-label m-l-5']) !!}
                     </div>
-                    <div class="col-md-6">
-                        <span class="help-block m-t-0">
-                            <small>Будет ли содержать вложенные страницы?</small>
-                        </span>
-                    </div>
-                    @if ($errors->has('is_container'))
-                        <span class="help-block error">
-                            <strong>{{ $errors->first('is_container') }}</strong>
-                        </span>
-                    @endif
                 </div>
-            </div>
+            @endif
+
+            @if($page->type != \App\Models\Page::TYPE_CATALOG)
+                <div class="form-group @if($errors->has('is_container')) has-error @endif">
+                    <div class="switchery-demo m-b-5">
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-md-4">
+                            @if($page->type == \App\Models\Page::TYPE_CATALOG)
+                                {!! Form::hidden('is_container', 1) !!}
+                                {!! Form::checkbox('is_container', 1, $page->is_container, ['id' => 'is_container', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small', 'disabled' => true]) !!}
+                            @else
+                                {!! Form::hidden('is_container', 0) !!}
+                                {!! Form::checkbox('is_container', 1, $page->is_container, ['id' => 'is_container', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
+                            @endif
+
+                            {!! Form::label('is_container', 'Категория', ['class' => 'control-label m-l-5']) !!}
+                        </div>
+                        <div class="col-md-6">
+                            <span class="help-block m-t-0">
+                                <small>Будет ли содержать вложенные страницы?</small>
+                            </span>
+                        </div>
+                        @if($errors->has('is_container'))
+                            <span class="help-block error">
+                                <strong>{{ $errors->first('is_container') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
+            @endif
         @endif
         <div class="form-group">
             <div class="col-sm-6 col-md-6 @if($errors->has('image')) has-error @endif">
@@ -108,7 +141,7 @@
                         и при выводе страниц блогом.
                     </small>
                 </span>
-                @if ($errors->has('image'))
+                @if($errors->has('image'))
                     <span class="help-block error">
                         <strong>{{ $errors->first('image') }}</strong>
                     </span>
@@ -118,7 +151,7 @@
                 {!! Form::label('image_alt', 'Альт для изображения', ['class' => 'control-label m-b-5']) !!}
                 {!! Form::textarea('image_alt', $page->image_alt, ['id' => 'image_alt', 'class' => 'form-control', 'rows' => 8]) !!}
 
-                @if ($errors->has('image_alt'))
+                @if($errors->has('image_alt'))
                     <span class="help-block error">
                         <strong>{{ $errors->first('image_alt') }}</strong>
                     </span>
@@ -136,7 +169,7 @@
                 <span class="help-block @if($errors->has('meta_title')) hidden @endif">
                     <small>Самый важный SEO-тег. Рекомендуемая длина - 65 символов.</small>
                 </span>
-                @if ($errors->has('meta_title'))
+                @if($errors->has('meta_title'))
                     <span class="help-block error">
                         <strong>{{ $errors->first('meta_title') }}</strong>
                     </span>
@@ -151,7 +184,7 @@
                 <span class="help-block @if($errors->has('meta_desc')) hidden @endif">
                     <small>Второй по важности SEO-тег. Рекомендуемая длина - 160 символов.</small>
                 </span>
-                @if ($errors->has('meta_desc'))
+                @if($errors->has('meta_desc'))
                     <span class="help-block error">
                         <strong>{{ $errors->first('meta_desc') }}</strong>
                     </span>
@@ -166,7 +199,7 @@
                 <span class="help-block @if($errors->has('meta_key')) hidden @endif">
                     <small>Необязательный SEO-тег. Существительные в единственном числе через запятую.</small>
                 </span>
-                @if ($errors->has('meta_key'))
+                @if($errors->has('meta_key'))
                     <span class="help-block error">
                         <strong>{{ $errors->first('meta_key') }}</strong>
                     </span>
@@ -194,7 +227,7 @@
                         {{ \App\Helpers\Date::format($page->published_at) }}
                     @endif
 
-                    @if ($errors->has('is_published'))
+                    @if($errors->has('is_published'))
                         <span class="help-block error">
                             <strong>{{ $errors->first('is_published') }}</strong>
                         </span>
@@ -228,7 +261,7 @@
                 {!! Form::label('content', 'Текст страницы', ['class' => 'control-label m-b-5']) !!}
                 {!! Form::textarea('content', $page->content, ['id' => 'content', 'class' => 'form-control editor', 'rows' => 10]) !!}
 
-                @if ($errors->has('content'))
+                @if($errors->has('content'))
                     <span class="help-block error">
                         <strong>{{ $errors->first('content') }}</strong>
                     </span>
@@ -243,7 +276,7 @@
                 {!! Form::label('introtext', 'Краткое описание страницы', ['class' => 'control-label m-b-5']) !!}
                 {!! Form::textarea('introtext', $page->introtext, ['id' => 'introtext', 'class' => 'form-control editor', 'rows' => 10]) !!}
 
-                @if ($errors->has('introtext'))
+                @if($errors->has('introtext'))
                     <span class="help-block error">
                         <strong>{{ $errors->first('introtext') }}</strong>
                     </span>

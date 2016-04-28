@@ -4,7 +4,9 @@
  * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
  */
 
-$title = 'Редактирование страницы "' . $page->getTitle() . '"';
+$title = $page->type == \App\Models\Page::TYPE_CATALOG
+        ? 'Редактирование каталога товаров "' . $page->getTitle() . '"'
+        : 'Редактирование страницы "' . $page->getTitle() . '"';
 View::share('title', $title);
 ?>
 
@@ -40,6 +42,28 @@ View::share('title', $title);
 
     <div class="row">
         <div class="col-lg-12">
+
+            <div class="row">
+                <div class="col-md-6">
+                    @if($page->user)
+                        <p class="pull-left">
+                            Автор:
+                            <a href="{{ route('admin.users.show', ['id' => $page->user->id]) }}">
+                                <img src="{{ $page->user->getAvatarUrl() }}" class="img-circle m-l-5" width="30px" alt="{{ $page->user->login }}">
+                                <span class="m-l-5">{{ $page->user->login }}</span>
+                            </a>
+                        </p>
+                    @endif
+                </div>
+                <div class="col-md-6">
+                    @if($page->updated_at)
+                        <p class="pull-right">
+                            Последнее обновение: {{ \App\Helpers\Date::format($page->updated_at) }}
+                        </p>
+                    @endif
+                </div>
+            </div>
+
             <div class="card-box">
                 {!! Form::model($page, ['route' => ['admin.pages.update', $page->id], 'class' => 'form-horizontal', 'id' => 'main-form', 'files' => true]) !!}
                     {!! Form::hidden('_method', 'PUT') !!}

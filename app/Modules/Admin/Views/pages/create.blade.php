@@ -4,7 +4,9 @@
  * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
  */
 
-$title = 'Создание страницы';
+$title = $page->type == \App\Models\Page::TYPE_CATALOG
+            ? 'Создание каталога товаров'
+            : 'Создание страницы';
 View::share('title', $title);
 ?>
 
