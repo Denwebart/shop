@@ -9,5 +9,6 @@ return [
 		'menu',
 		'slider',
 		'carousel',
+		'reviews',
 	],
 ];
