@@ -53,6 +53,7 @@ class SettingsController extends Controller
     {
 	    $setting = Setting::findOrFail($id);
 	    $data = $request->all();
+	    $data['value'] = trim($request->get('value')) ? trim($request->get('value')) : null;
 
 	    $validator = \Validator::make($data, $setting->getRules());
 

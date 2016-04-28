@@ -9,7 +9,7 @@
         @foreach($siteSettings['socialButtons'] as $socialButtonKey => $socialButton)
             @if(is_object($socialButton))
                 <li class="social-links__item">
-                    <a class="icon icon-{{ $socialButtonKey }}" href="{{ $socialButton->value }}" title="{{ $socialButton->title }}"></a>
+                    <a class="icon icon-{{ $socialButtonKey }}" href="{{ $socialButton->value }}" title="{{ $socialButton->title }}" target="_blank"></a>
                 </li>
             @endif
         @endforeach
