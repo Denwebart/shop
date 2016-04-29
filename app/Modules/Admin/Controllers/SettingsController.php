@@ -19,10 +19,12 @@ class SettingsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(\App\Helpers\SettingsController $settings)
     {
-	    $settings = Setting::select('id', 'key', 'type', 'category', 'title', 'description', 'value', 'is_active')
-		    ->paginate(20);
+//	    $settings = Setting::select('id', 'key', 'type', 'category', 'title', 'description', 'value', 'is_active')
+//		    ->paginate(20);
+
+	    $settings = $settings->getAll();
 
         return view('admin::settings.index', compact('settings'));
     }
@@ -74,5 +76,29 @@ class SettingsController extends Controller
 		    }
 	    }
     }
+
+	/**
+	 * Set value
+	 *
+	 * @param Request $request
+	 * @param $id
+	 * @return \Illuminate\Http\JsonResponse
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function setValue(Request $request, $id)
+	{
+		if($request->ajax()) {
+			$setting = Setting::findOrFail($id);
+			$setting->value= $request->get('value');
+			$setting->save();
+
+			return \Response::json([
+				'success' => true,
+				'message' => 'Значение изменено.'
+			]);
+		}
+	}
 
 }

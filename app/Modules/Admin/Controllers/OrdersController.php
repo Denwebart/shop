@@ -133,6 +133,7 @@ class OrdersController extends Controller
 	 * Change order status
 	 *
 	 * @param Request $request
+	 * @param $id
 	 * @return \Illuminate\Http\JsonResponse
 	 *
 	 * @author     It Hill (it-hill.com@yandex.ua)
@@ -183,6 +184,7 @@ class OrdersController extends Controller
 	 * Change payment status of order
 	 *
 	 * @param Request $request
+	 * @param $id
 	 * @return \Illuminate\Http\JsonResponse
 	 *
 	 * @author     It Hill (it-hill.com@yandex.ua)

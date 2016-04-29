@@ -21,6 +21,7 @@ Route::group(['module' => 'Admin', 'prefix' => 'admin', 'middleware' => 'web', '
 	Route::resource('reviews', 'ProductsReviewsController', ['except' => ['create', 'store', 'show']]);
 	Route::resource('letters', 'LettersController', ['except' => ['create', 'store', 'edit', 'update']]);
 	Route::resource('users', 'UsersController');
+	Route::post('settings/set_value/{settings}', ['as' => 'admin.settings.setValue', 'uses' => 'SettingsController@setValue']);
 	Route::resource('settings', 'SettingsController', ['except' => [
 		'create', 'store', 'destroy', 'show'
 	]]);

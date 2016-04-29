@@ -344,25 +344,7 @@ View::share('title', $title);
                 },
                 source: result,
                 url: "{{ route('admin.orders.setPaymentStatus', ['id' => $order->id]) }}",
-                display: function(value, result) {
-                    var html = [],
-                            checked = $.fn.editableutils.itemsByValue(value, result);
-
-                    var checkedText, checkedClass;
-                    $.each(checked, function(i, v) {
-                        checkedText = v.text;
-                        checkedClass = v.class
-                    });
-
-                    if(checked.length) {
-                        $.each(checked, function(i, v) { html.push($.fn.editableutils.escape(v.text)); });
-                        $(this).html(html.join(', '));
-                    } else {
-                        $(this).empty();
-                    }
-
-                    $(this).html('<span class="label label-' + checkedClass + '">' + checkedText + '</span>');
-                },
+                ё
                 success: function(response, newValue) {
                     if(response.success) {
                         Command: toastr["success"](response.message);

@@ -668,6 +668,30 @@ textarea.form-control {
   line-height: 1.5;
   border-radius: 3px;
 }
+/* Form editable */
+.form-horizontal.form-editable .control-label {
+    padding-top: 7px;
+    text-align: left;
+}
+.form-horizontal.form-editable .control-label i {
+    width: 20px;
+    margin-right: 5px;
+}
+.form-horizontal.form-editable .form-group {
+    height: 30px;
+    border-top: 1px solid #ebeff2;
+    margin: 5px 0;
+}
+.form-horizontal.form-editable .form-group:first-child {
+    border-top: none;
+}
+.form-horizontal.form-editable .form-group .editable-inline .form-group {
+    margin: 2px 0;
+}
+.form-horizontal.form-editable .form-group .switchery-demo {
+    margin-top: 5px;
+}
+/* Form horizontal */
 .form-horizontal .control-label {
     padding-top: 0;
     margin-top: -3px;

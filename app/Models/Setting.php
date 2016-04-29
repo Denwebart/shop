@@ -77,6 +77,16 @@ class Setting extends Model
 	];
 
 	/**
+	 * Иконки для контактной информации
+	 */
+	public static $contactInfoIcons = [
+		'address' => 'home',
+		'phones' => 'phone',
+		'email' => 'envelope',
+		'skype' => 'skype',
+	];
+
+	/**
 	 * The attributes that are mass assignable.
 	 *
 	 * @var array
