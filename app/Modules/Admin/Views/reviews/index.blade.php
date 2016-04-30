@@ -21,7 +21,7 @@ View::share('title', $title);
         </div>
         <div class="col-sm-4">
             <a href="{{ route('admin.shop_reviews.create') }}" class="btn btn-success btn-bordred w-md waves-effect waves-light pull-right">
-                Создать страницу
+                Создать отзыв
             </a>
         </div>
     </div>
