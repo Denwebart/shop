@@ -170,7 +170,7 @@
                     </li>
                     <li>
                         <a href="{{ route('admin.reviews.index') }}" class="waves-effect @if(Request::is('admin/reviews*')) active @endif">
-                            <i class="fa fa-comment"></i>
+                            <i class="fa fa-comments"></i>
                             <span>Отзывы к товарам</span>
                             <span class="label label-danger pull-right">7</span>
                         </a>
