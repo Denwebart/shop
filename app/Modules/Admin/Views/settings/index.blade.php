@@ -79,14 +79,14 @@ View::share('title', $title);
                             {{ $settings[\App\Models\Setting::CATEGORY_SITE]['siteTitle']->title }}
                         </label>
                         <div class="col-md-7 col-sm-7">
-                            <a href="#" class="editable-text" data-value="{{ $settings[\App\Models\Setting::CATEGORY_SITE]['siteTitle']->value }}" data-type="text" data-id="{{ $settings[\App\Models\Setting::CATEGORY_SITE]['siteTitle']->id }}">
+                            <a href="#" class="editable-text" data-value="{{ $settings[\App\Models\Setting::CATEGORY_SITE]['siteTitle']->value }}" data-type="text" data-pk="{{ $settings[\App\Models\Setting::CATEGORY_SITE]['siteTitle']->id }}">
                                 {{ $settings[\App\Models\Setting::CATEGORY_SITE]['siteTitle']->value }}
                             </a>
                         </div>
                         <div class="col-md-2 col-sm-2">
                             <div class="switchery-demo">
                                 {!! Form::hidden('is_active', 0) !!}
-                                {!! Form::checkbox('is_active', 1, $settings[\App\Models\Setting::CATEGORY_SITE]['siteTitle']->is_active, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
+                                {!! Form::checkbox('is_active', 1, $settings[\App\Models\Setting::CATEGORY_SITE]['siteTitle']->is_active, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small', 'data-id' => $settings[\App\Models\Setting::CATEGORY_SITE]['siteTitle']->id]) !!}
                             </div>
                         </div>
                     </div>
@@ -96,14 +96,14 @@ View::share('title', $title);
                             {{ $settings[\App\Models\Setting::CATEGORY_SITE]['copyright']->title }}
                         </label>
                         <div class="col-md-7 col-sm-7">
-                            <a href="#" class="editable-text" data-value="{{ $settings[\App\Models\Setting::CATEGORY_SITE]['copyright']->value }}" data-type="text" data-id="{{ $settings[\App\Models\Setting::CATEGORY_SITE]['copyright']->id }}">
+                            <a href="#" class="editable-text" data-value="{{ $settings[\App\Models\Setting::CATEGORY_SITE]['copyright']->value }}" data-type="text" data-pk="{{ $settings[\App\Models\Setting::CATEGORY_SITE]['copyright']->id }}">
                                 {{ $settings[\App\Models\Setting::CATEGORY_SITE]['copyright']->value }}
                             </a>
                         </div>
                         <div class="col-md-2 col-sm-2">
                             <div class="switchery-demo">
                                 {!! Form::hidden('is_active', 0) !!}
-                                {!! Form::checkbox('is_active', 1, $settings[\App\Models\Setting::CATEGORY_SITE]['copyright']->is_active, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
+                                {!! Form::checkbox('is_active', 1, $settings[\App\Models\Setting::CATEGORY_SITE]['copyright']->is_active, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small', 'data-id' => $settings[\App\Models\Setting::CATEGORY_SITE]['copyright']->id]) !!}
                             </div>
                         </div>
                     </div>
@@ -113,12 +113,12 @@ View::share('title', $title);
                             {{ $settings[\App\Models\Setting::CATEGORY_SITE]['footerText']->title }}
                         </label>
                         <div class="col-md-7 col-sm-7">
-                            <a href="#" class="editable-text" data-value="{{ $settings[\App\Models\Setting::CATEGORY_SITE]['footerText']->value }}" data-type="textarea" data-id="{{ $settings[\App\Models\Setting::CATEGORY_SITE]['footerText']->id }}">{{ $settings[\App\Models\Setting::CATEGORY_SITE]['footerText']->value }}</a>
+                            <a href="#" class="editable-text" data-value="{{ $settings[\App\Models\Setting::CATEGORY_SITE]['footerText']->value }}" data-type="textarea" data-pk="{{ $settings[\App\Models\Setting::CATEGORY_SITE]['footerText']->id }}">{{ $settings[\App\Models\Setting::CATEGORY_SITE]['footerText']->value }}</a>
                         </div>
                         <div class="col-md-2 col-sm-2">
                             <div class="switchery-demo">
                                 {!! Form::hidden('is_active', 0) !!}
-                                {!! Form::checkbox('is_active', 1, $settings[\App\Models\Setting::CATEGORY_SITE]['footerText']->is_active, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
+                                {!! Form::checkbox('is_active', 1, $settings[\App\Models\Setting::CATEGORY_SITE]['footerText']->is_active, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small', 'data-id' => $settings[\App\Models\Setting::CATEGORY_SITE]['footerText']->id]) !!}
                             </div>
                         </div>
                     </div>
@@ -142,14 +142,14 @@ View::share('title', $title);
                                 {{ $setting->title }}
                             </label>
                             <div class="col-md-7 col-sm-7">
-                                <a href="#" class="editable-text" data-value="{{ $setting->value }}" data-type="text" data-id="{{ $setting->id }}">
+                                <a href="#" class="editable-text" data-value="{{ $setting->value }}" data-type="text" data-pk="{{ $setting->id }}">
                                     {{ $setting->value }}
                                 </a>
                             </div>
                             <div class="col-md-2 col-sm-2">
                                 <div class="switchery-demo">
                                     {!! Form::hidden('is_active', 0) !!}
-                                    {!! Form::checkbox('is_active', 1, $setting->is_active, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
+                                    {!! Form::checkbox('is_active', 1, $setting->is_active, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small', 'data-id' => $setting->id]) !!}
                                 </div>
                             </div>
                         </div>
@@ -173,14 +173,14 @@ View::share('title', $title);
                                 {{ $setting->title }}
                             </label>
                             <div class="col-md-7 col-sm-7">
-                                <a href="#" class="editable-text" data-value="{{ $setting->value }}" data-type="text" data-id="{{ $setting->id }}">
+                                <a href="#" class="editable-text" data-value="{{ $setting->value }}" data-type="text" data-pk="{{ $setting->id }}">
                                     {{ $setting->value }}
                                 </a>
                             </div>
                             <div class="col-md-2 col-sm-2">
                                 <div class="switchery-demo">
                                     {!! Form::hidden('is_active', 0) !!}
-                                    {!! Form::checkbox('is_active', 1, $setting->is_active, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
+                                    {!! Form::checkbox('is_active', 1, $setting->is_active, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small', 'data-id' => $setting->id]) !!}
                                 </div>
                             </div>
                         </div>
@@ -203,7 +203,6 @@ View::share('title', $title);
     <script src="{{ asset('backend/plugins/switchery/switchery.min.js') }}"></script>
 
     <!-- XEditable Plugin -->
-    <script src="{{ asset('backend/plugins/moment/moment.js') }}"></script>
     <script type="text/javascript" src="{{ asset('backend/plugins/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js') }}"></script>
 
 
@@ -220,26 +219,50 @@ View::share('title', $title);
 
         // Text
         $('.editable-text').editable({
-            url: "/admin/settings/set_value/" + $(this).data('id'),
+            url: "{{ route('admin.settings.setValue') }}",
             mode: 'inline',
             prepend: false,
             emptytext: 'не задано',
-            defaultValue: $(this).data('value'),
             ajaxOptions: {
                 dataType: 'json',
                 sourceCache: 'false',
-                type: 'post'
+                type: 'PUT'
+            },
+            success: function(response, newValue) {
+                if(response.success) {
+                    Command: toastr["success"](response.message);
+                    return true;
+                } else {
+                    Command: toastr["error"](response.message);
+                    return response.error;
+                }
+                return false;
             }
-            , success: function(response, newValue) {
-                if(!response.success) return response.message;
+        });
+
+        // Change active ststus
+        $('[data-plugin=switchery]').on('change', function () {
+            if($(this).is(':checked')) {
+                var isActive = 1;
+            } else {
+                var isActive = 0;
             }
-//            success: function(response, newValue) {
-//                if(response.success) {
-//                    Command: toastr["success"](response.message);
-//                    return true;
-//                }
-//                return false;
-//            }
+            $.ajax({
+                url: "{{ route('admin.settings.setIsActive') }}",
+                dataType: "text json",
+                type: "POST",
+                data: {id: $(this).data('id'), 'is_active': isActive},
+                beforeSend: function(request) {
+                    return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+                },
+                success: function(response) {
+                    if(response.success){
+                        Command: toastr["success"](response.message);
+                    } else {
+                        Command: toastr["error"](response.message);
+                    }
+                }
+            });
         });
     </script>
 @endpush

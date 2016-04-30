@@ -252,9 +252,7 @@ View::share('title', $title);
 
 @push('scripts')
     <!-- XEditable Plugin -->
-    <script src="{{ asset('backend/plugins/moment/moment.js') }}"></script>
     <script type="text/javascript" src="{{ asset('backend/plugins/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js') }}"></script>
-
 
     <script type="text/javascript">
         //modify buttons style
@@ -282,7 +280,7 @@ View::share('title', $title);
         getOrderStatues().done(function(result) {
             $('#order-status').editable({
                 type: 'select',
-                prepend: false,
+//                prepend: false,
                 defaultValue: '{{ $order->status }}',
                 ajaxOptions: {
                     dataType: 'json',
@@ -344,7 +342,25 @@ View::share('title', $title);
                 },
                 source: result,
                 url: "{{ route('admin.orders.setPaymentStatus', ['id' => $order->id]) }}",
-                ё
+                display: function(value, result) {
+                    var html = [],
+                            checked = $.fn.editableutils.itemsByValue(value, result);
+
+                    var checkedText, checkedClass;
+                    $.each(checked, function(i, v) {
+                        checkedText = v.text;
+                        checkedClass = v.class
+                    });
+
+                    if(checked.length) {
+                        $.each(checked, function(i, v) { html.push($.fn.editableutils.escape(v.text)); });
+                        $(this).html(html.join(', '));
+                    } else {
+                        $(this).empty();
+                    }
+
+                    $(this).html('<span class="label label-' + checkedClass + '">' + checkedText + '</span>');
+                },
                 success: function(response, newValue) {
                     if(response.success) {
                         Command: toastr["success"](response.message);

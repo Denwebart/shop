@@ -62,7 +62,7 @@ class Setting extends Model
 	const INACTIVE = 0;
 	const ACTIVE   = 1;
 
-	public static $is_published = [
+	public static $is_active = [
 		self::INACTIVE => 'Отключена',
 		self::ACTIVE   => 'Включена',
 	];

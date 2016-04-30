@@ -81,23 +81,74 @@ class SettingsController extends Controller
 	 * Set value
 	 *
 	 * @param Request $request
-	 * @param $id
 	 * @return \Illuminate\Http\JsonResponse
 	 *
 	 * @author     It Hill (it-hill.com@yandex.ua)
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
-	public function setValue(Request $request, $id)
+	public function setValue(Request $request)
 	{
 		if($request->ajax()) {
-			$setting = Setting::findOrFail($id);
-			$setting->value= $request->get('value');
-			$setting->save();
+			$setting = Setting::findOrFail($request->get('pk'));
+			$data = $request->all();
+			$data['value'] = trim($request->get('value')) ? trim($request->get('value')) : null;
 
-			return \Response::json([
-				'success' => true,
-				'message' => 'Значение изменено.'
-			]);
+			if($setting) {
+				$validator = \Validator::make($data, $setting->getRules());
+
+				if ($validator->fails())
+				{
+					return \Response::json([
+						'success' => false,
+						'error' => $validator->errors()->first('value'),
+						'message' => 'Значение не изменено. Исправьте ошибки валидации.'
+					]);
+				} else {
+					$setting->value = $data['value'];
+					$setting->save();
+
+					return \Response::json([
+						'success' => true,
+						'message' => 'Значение изменено.'
+					]);
+				}
+			} else {
+				return \Response::json([
+					'success' => false,
+					'message' => 'Произошла ошибка.'
+				]);
+			}
+		}
+	}
+
+	/**
+	 * Set active status
+	 *
+	 * @param Request $request
+	 * @return \Illuminate\Http\JsonResponse
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function setIsActive(Request $request)
+	{
+		if($request->ajax()) {
+			$setting = Setting::findOrFail($request->get('id'));
+
+			if($setting) {
+				$setting->is_active = $request->get('is_active');
+				$setting->save();
+
+				return \Response::json([
+					'success' => true,
+					'message' => 'Статус изменен на "' . Setting::$is_active[$setting->is_active] . '".'
+				]);
+			} else {
+				return \Response::json([
+					'success' => false,
+					'message' => 'Произошла ошибка.'
+				]);
+			}
 		}
 	}
 
