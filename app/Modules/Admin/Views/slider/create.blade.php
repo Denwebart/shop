@@ -4,7 +4,7 @@
  * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
  */
 
-$title = 'Создание слайда';
+$title = 'Создание слайда на главной странице';
 View::share('title', $title);
 ?>
 
@@ -16,7 +16,7 @@ View::share('title', $title);
         <div class="col-sm-6 col-md-6 col-xs-12 hidden-xs">
             <ul class="breadcrumb m-b-10">
                 <li><a href="{{ route('admin.index') }}">Главная</a></li>
-                <li><a href="{{ route('admin.pages.index') }}">Слайды</a></li>
+                <li><a href="{{ route('admin.pages.index') }}">Слайды на главной странице</a></li>
                 <li>{{ $title }}</li>
             </ul>
         </div>

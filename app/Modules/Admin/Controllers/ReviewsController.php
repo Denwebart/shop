@@ -36,6 +36,7 @@ class ReviewsController extends Controller
 	public function create()
 	{
 		$review = new Review();
+		$review->is_published = Review::PUBLISHED;
 
 		$backUrl = \Request::has('back_url') ? urldecode(\Request::get('back_url')) : URL::previous();
 

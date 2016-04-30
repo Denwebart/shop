@@ -39,6 +39,7 @@ class PagesController extends Controller
     public function create(Request $request)
     {
 	    $page = new Page();
+	    $page->is_published = Page::PUBLISHED;
 	    if($request->has('type') && array_key_exists($request->get('type'), Page::$types) && $request->get('type') != Page::TYPE_SYSTEM_PAGE) {
 		    $page->type = $request->get('type');
 	    }
