@@ -678,7 +678,7 @@ textarea.form-control {
     margin-right: 5px;
 }
 .form-horizontal.form-editable .form-group {
-    height: 30px;
+    /*height: 30px;*/
     border-top: 1px solid #ebeff2;
     margin: 5px 0;
 }

@@ -93,23 +93,6 @@ View::share('title', $title);
 
                     <div class="form-group">
                         <label class="col-md-3 col-sm-3 control-label">
-                            {{ $settings[\App\Models\Setting::CATEGORY_SITE]['footerText']->title }}
-                        </label>
-                        <div class="col-md-7 col-sm-7">
-                            <a href="#" class="editable-text" data-value="{{ $settings[\App\Models\Setting::CATEGORY_SITE]['footerText']->value }}" data-type="text" data-id="{{ $settings[\App\Models\Setting::CATEGORY_SITE]['footerText']->id }}">
-                                {{ $settings[\App\Models\Setting::CATEGORY_SITE]['footerText']->value }}
-                            </a>
-                        </div>
-                        <div class="col-md-2 col-sm-2">
-                            <div class="switchery-demo">
-                                {!! Form::hidden('is_active', 0) !!}
-                                {!! Form::checkbox('is_active', 1, $settings[\App\Models\Setting::CATEGORY_SITE]['footerText']->is_active, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-md-3 col-sm-3 control-label">
                             {{ $settings[\App\Models\Setting::CATEGORY_SITE]['copyright']->title }}
                         </label>
                         <div class="col-md-7 col-sm-7">
@@ -121,6 +104,21 @@ View::share('title', $title);
                             <div class="switchery-demo">
                                 {!! Form::hidden('is_active', 0) !!}
                                 {!! Form::checkbox('is_active', 1, $settings[\App\Models\Setting::CATEGORY_SITE]['copyright']->is_active, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 col-sm-3 control-label">
+                            {{ $settings[\App\Models\Setting::CATEGORY_SITE]['footerText']->title }}
+                        </label>
+                        <div class="col-md-7 col-sm-7">
+                            <a href="#" class="editable-text" data-value="{{ $settings[\App\Models\Setting::CATEGORY_SITE]['footerText']->value }}" data-type="textarea" data-id="{{ $settings[\App\Models\Setting::CATEGORY_SITE]['footerText']->id }}">{{ $settings[\App\Models\Setting::CATEGORY_SITE]['footerText']->value }}</a>
+                        </div>
+                        <div class="col-md-2 col-sm-2">
+                            <div class="switchery-demo">
+                                {!! Form::hidden('is_active', 0) !!}
+                                {!! Form::checkbox('is_active', 1, $settings[\App\Models\Setting::CATEGORY_SITE]['footerText']->is_active, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
                             </div>
                         </div>
                     </div>
@@ -222,22 +220,26 @@ View::share('title', $title);
 
         // Text
         $('.editable-text').editable({
-            type: $(this).data('type'),
             url: "/admin/settings/set_value/" + $(this).data('id'),
             mode: 'inline',
             prepend: false,
+            emptytext: 'не задано',
             defaultValue: $(this).data('value'),
             ajaxOptions: {
                 dataType: 'json',
-                sourceCache: 'false'
-            },
-            success: function(response, newValue) {
-                if(response.success) {
-                    Command: toastr["success"](response.message);
-                    return true;
-                }
-                return false;
+                sourceCache: 'false',
+                type: 'post'
             }
+            , success: function(response, newValue) {
+                if(!response.success) return response.message;
+            }
+//            success: function(response, newValue) {
+//                if(response.success) {
+//                    Command: toastr["success"](response.message);
+//                    return true;
+//                }
+//                return false;
+//            }
         });
     </script>
 @endpush
