@@ -27,6 +27,10 @@ File: Components
 .btn i {
     margin-right: 5px;
 }
+.btn.editable-submit i,
+.btn.editable-cancel i {
+    margin-right: 0;
+}
 .btn-group-lg > .btn,
 .btn-lg {
   padding: 10px 16px !important;

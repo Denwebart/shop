@@ -669,6 +669,10 @@ textarea.form-control {
   border-radius: 3px;
 }
 /* Form editable */
+.form-horizontal.form-editable .help-block {
+    font-weight: 700;
+    font-size: 12px;
+}
 .form-horizontal.form-editable .control-label {
     padding-top: 7px;
     text-align: left;
@@ -676,6 +680,11 @@ textarea.form-control {
 .form-horizontal.form-editable .control-label i {
     width: 20px;
     margin-right: 5px;
+}
+.form-horizontal.form-editable .control-label small {
+    display: block;
+    font-weight: 400;
+    color: #98a6ad;
 }
 .form-horizontal.form-editable .form-group {
     /*height: 30px;*/

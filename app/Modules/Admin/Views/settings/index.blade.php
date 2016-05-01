@@ -4,7 +4,7 @@
  * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
  */
 
-$title = 'Настройки';
+$title = 'Настройки сайта';
 View::share('title', $title);
 ?>
 
@@ -23,48 +23,6 @@ View::share('title', $title);
         </div>
     </div>
 
-    {{--<div class="row">--}}
-        {{--<div class="col-sm-4">--}}
-            {{--<div class="count-container">--}}
-                {{--@include('parts.count', ['models' => $settings])--}}
-            {{--</div>--}}
-        {{--</div>--}}
-        {{--<div class="col-sm-8">--}}
-            {{--<div class="sort pull-right m-b-10">--}}
-                {{--<form class="form-inline">--}}
-                    {{--<div class="form-group">--}}
-                        {{--<input type="text" class="form-control input-sm" placeholder="Поиск...">--}}
-                    {{--</div>--}}
-                {{--</form>--}}
-            {{--</div>--}}
-        {{--</div><!-- end col-->--}}
-    {{--</div>--}}
-    <!-- end row -->
-
-    {{--<div class="row">--}}
-        {{--<div class="col-lg-12">--}}
-            {{--<div class="card-box">--}}
-                {{--<div id="table-container" class="table-responsive m-b-20">--}}
-                    {{--@include('admin::settings.table')--}}
-                {{--</div>--}}
-
-                {{--<div class="row">--}}
-                    {{--<div class="col-sm-6">--}}
-                        {{--<div class="count-container m-t-8">--}}
-                            {{--@include('parts.count', ['models' => $settings])--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="col-sm-6">--}}
-                        {{--<div class="pagination-container pull-right">--}}
-                            {{--@include('parts.pagination', ['models' => $settings])--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div><!-- end col -->--}}
-    {{--</div>--}}
-    <!-- end row -->
-
     <div class="row">
         <div class="col-lg-6">
             <div class="card-box">
@@ -77,11 +35,12 @@ View::share('title', $title);
                     <div class="form-group">
                         <label class="col-md-3 col-sm-3 control-label">
                             {{ $settings[\App\Models\Setting::CATEGORY_SITE]['siteTitle']->title }}
+                            @if($settings[\App\Models\Setting::CATEGORY_SITE]['siteTitle']->description)
+                                <small>{{ $settings[\App\Models\Setting::CATEGORY_SITE]['siteTitle']->description }}</small>
+                            @endif
                         </label>
                         <div class="col-md-7 col-sm-7">
-                            <a href="#" class="editable-text" data-value="{{ $settings[\App\Models\Setting::CATEGORY_SITE]['siteTitle']->value }}" data-type="text" data-pk="{{ $settings[\App\Models\Setting::CATEGORY_SITE]['siteTitle']->id }}">
-                                {{ $settings[\App\Models\Setting::CATEGORY_SITE]['siteTitle']->value }}
-                            </a>
+                            <a href="#" class="editable-text" data-value="{{ $settings[\App\Models\Setting::CATEGORY_SITE]['siteTitle']->value }}" data-type="textarea" data-pk="{{ $settings[\App\Models\Setting::CATEGORY_SITE]['siteTitle']->id }}">{{ $settings[\App\Models\Setting::CATEGORY_SITE]['siteTitle']->value }}</a>
                         </div>
                         <div class="col-md-2 col-sm-2">
                             <div class="switchery-demo">
@@ -94,11 +53,12 @@ View::share('title', $title);
                     <div class="form-group">
                         <label class="col-md-3 col-sm-3 control-label">
                             {{ $settings[\App\Models\Setting::CATEGORY_SITE]['copyright']->title }}
+                            @if($settings[\App\Models\Setting::CATEGORY_SITE]['copyright']->description)
+                                <small>{{ $settings[\App\Models\Setting::CATEGORY_SITE]['copyright']->description }}</small>
+                            @endif
                         </label>
                         <div class="col-md-7 col-sm-7">
-                            <a href="#" class="editable-text" data-value="{{ $settings[\App\Models\Setting::CATEGORY_SITE]['copyright']->value }}" data-type="text" data-pk="{{ $settings[\App\Models\Setting::CATEGORY_SITE]['copyright']->id }}">
-                                {{ $settings[\App\Models\Setting::CATEGORY_SITE]['copyright']->value }}
-                            </a>
+                            <a href="#" class="editable-text" data-value="{{ $settings[\App\Models\Setting::CATEGORY_SITE]['copyright']->value }}" data-type="textarea" data-pk="{{ $settings[\App\Models\Setting::CATEGORY_SITE]['copyright']->id }}">{{ $settings[\App\Models\Setting::CATEGORY_SITE]['copyright']->value }}</a>
                         </div>
                         <div class="col-md-2 col-sm-2">
                             <div class="switchery-demo">
@@ -111,6 +71,9 @@ View::share('title', $title);
                     <div class="form-group">
                         <label class="col-md-3 col-sm-3 control-label">
                             {{ $settings[\App\Models\Setting::CATEGORY_SITE]['footerText']->title }}
+                            @if($settings[\App\Models\Setting::CATEGORY_SITE]['footerText']->description)
+                                <small>{{ $settings[\App\Models\Setting::CATEGORY_SITE]['footerText']->description }}</small>
+                            @endif
                         </label>
                         <div class="col-md-7 col-sm-7">
                             <a href="#" class="editable-text" data-value="{{ $settings[\App\Models\Setting::CATEGORY_SITE]['footerText']->value }}" data-type="textarea" data-pk="{{ $settings[\App\Models\Setting::CATEGORY_SITE]['footerText']->id }}">{{ $settings[\App\Models\Setting::CATEGORY_SITE]['footerText']->value }}</a>
@@ -124,8 +87,7 @@ View::share('title', $title);
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-6">
+
             <div class="card-box">
 
                 <h4 class="header-title m-t-0 m-b-10"><b>Социальные сети</b></h4>
@@ -137,7 +99,7 @@ View::share('title', $title);
                 <div class="form-horizontal form-editable">
                     @foreach($settings[\App\Models\Setting::CATEGORY_SITE]['socialButtons'] as $key => $setting)
                         <div class="form-group">
-                            <label class="col-md-3 col-sm-3 control-label">
+                            <label class="col-md-3 col-sm-3 control-label" title="{{ $setting->description }}" data-toggle="tooltip">
                                 <i class="fa fa-{{ $key }}"></i>
                                 {{ $setting->title }}
                             </label>
@@ -171,11 +133,12 @@ View::share('title', $title);
                             <label class="col-md-3 col-sm-3 control-label">
                                 <i class="fa fa-{{ \App\Models\Setting::$contactInfoIcons[$key] }}"></i>
                                 {{ $setting->title }}
+                                @if($setting->description)
+                                    <small>{{ $setting->description }}</small>
+                                @endif
                             </label>
                             <div class="col-md-7 col-sm-7">
-                                <a href="#" class="editable-text" data-value="{{ $setting->value }}" data-type="text" data-pk="{{ $setting->id }}">
-                                    {{ $setting->value }}
-                                </a>
+                                <a href="#" class="editable-text" data-value="{{ $setting->value }}" @if($setting->type == \App\Models\Setting::TYPE_TEXT) data-type="textarea" @else data-type="text" @endif data-pk="{{ $setting->id }}">{{ $setting->value }}</a>
                             </div>
                             <div class="col-md-2 col-sm-2">
                                 <div class="switchery-demo">
@@ -186,6 +149,22 @@ View::share('title', $title);
                         </div>
                     @endforeach
                 </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card-box">
+
+                <h4 class="header-title m-t-0 m-b-10"><b>Меню сайта</b></h4>
+
+            </div>
+
+            <div class="card-box">
+
+                <h4 class="header-title m-t-0 m-b-10"><b>Слайдер</b></h4>
+
+                <a href="{{ route('admin.slider.index') }}">
+                    <span>Редактировать</span>
+                </a>
             </div>
         </div><!-- end col -->
     </div>

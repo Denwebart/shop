@@ -132,6 +132,20 @@
   z-index: 1;
   opacity: 0;
 }
+.settings-menu {
+    margin-left: 10px;
+}
+.settings-menu a {
+    font-size: 26px;
+    color: #435966;
+    display: block;
+    line-height: 70px;
+    padding: 0 10px;
+}
+.settings-menu a:hover,
+.settings-menu a.active {
+    color: #71b6f9;
+}
 @-moz-keyframes pulse {
   0% {
     -moz-transform: scale(0);
