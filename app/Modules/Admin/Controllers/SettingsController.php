@@ -19,7 +19,7 @@ class SettingsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(\App\Helpers\SettingsController $settings)
+    public function index(\App\Helpers\Settings $settings)
     {
 //	    $settings = Setting::select('id', 'key', 'type', 'category', 'title', 'description', 'value', 'is_active')
 //		    ->paginate(20);

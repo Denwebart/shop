@@ -10,7 +10,7 @@ namespace App\Helpers;
 
 use App\Models\Setting;
 
-class SettingsController
+class Settings
 {
 	/**
 	 * @param $key

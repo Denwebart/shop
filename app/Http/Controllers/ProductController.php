@@ -20,12 +20,18 @@ class ProductController extends Controller
 	 * @author     It Hill (it-hill.com@yandex.ua)
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
-	public function productInfo($alias) {
+	public function productOneLevel($categoryOne = null, Product $product)
+	{
+		return view('product.productInfo')->with('page', $product);
+	}
 
-		$product = Product::whereAlias($alias)
-			->whereIsPublished(1)
-			->firstOrFail();
+	public function productTwoLevel($categoryOne = null, $categoryTwo = null, Product $product)
+	{
+		return view('product.productInfo')->with('page', $product);
+	}
 
-		return view('product.productInfo', compact('product'));
+	public function productThreeLevel($categoryOne = null, $categoryTwo = null, $categoryThree = null, Product $product)
+	{
+		return view('product.productInfo')->with('page', $product);
 	}
 }

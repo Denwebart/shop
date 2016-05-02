@@ -190,18 +190,51 @@ class Product extends Model
 		return $this->hasMany('App\Models\ProductImage', 'product_id');
 	}
 
+	public function getMetaTitle()
+	{
+		return $this->meta_title ? $this->meta_title : '';
+	}
+
+	public function getMetaDesc()
+	{
+		return $this->meta_desc ? $this->meta_desc : '';
+	}
+
+	public function getMetaKey()
+	{
+		return $this->meta_key ? $this->meta_key : '';
+	}
+	
 	/**
-	 * Get image url
+	 * Get page url
 	 *
-	 * @param bool $default
 	 * @return mixed
 	 * @author     It Hill (it-hill.com@yandex.ua)
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
-	public function getImageUrl($default = true)
+	public function getUrl()
 	{
+		if($this->category) {
+			return url($this->category->getUrl() . '/' . $this->alias);
+		} else {
+			return url($this->alias);
+		}
+	}
+
+	/**
+	 * Get image url
+	 *
+	 * @param bool $default
+	 * @param null $prefix
+	 * @return mixed
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function getImageUrl($default = true, $prefix = null)
+	{
+		$prefix = is_null($prefix) ? '' : ($prefix . '_');
 		return $this->image
-			? asset($this->imagePath . $this->id . '/' . $this->image)
+			? asset($this->imagePath . $this->id . '/' . $prefix . $this->image)
 			: ($default
 				? asset('images/product-default-image.jpg')
 			    : '');

@@ -259,6 +259,21 @@ class Page extends Model
 		return $this->menu_title ? $this->menu_title : $this->title;
 	}
 
+	public function getMetaTitle()
+	{
+		return $this->meta_title ? $this->meta_title : '';
+	}
+
+	public function getMetaDesc()
+	{
+		return $this->meta_desc ? $this->meta_desc : '';
+	}
+
+	public function getMetaKey()
+	{
+		return $this->meta_key ? $this->meta_key : '';
+	}
+
 	/**
 	 * Get page url
 	 *

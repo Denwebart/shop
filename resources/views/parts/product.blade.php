@@ -8,7 +8,7 @@
 <div class="product-preview-wrapper">
     <div class="product-preview open">
         <div class="product-preview__image">
-            <a href="{{ route('product.productInfo', ['alias' => $item->alias]) }}">
+            <a href="{{ $item->getUrl() }}">
                 <img src="{{ $item->getImageUrl() }}" alt=""/>
             </a>
             {{--<div class="product-preview__label product-preview__label--left product-preview__label--new">--}}
@@ -32,7 +32,7 @@
             </div>
             <div class="product-preview__info__title">
                 <h2>
-                    <a href="{{ route('product.productInfo', ['alias' => $item->alias]) }}">
+                    <a href="{{ $item->getUrl() }}">
                         {{ $item->title }}
                     </a>
                 </h2>

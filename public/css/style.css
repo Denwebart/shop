@@ -9104,7 +9104,6 @@ address {
 .v-links-list ul {
     position: relative;
     list-style: none;
-    margin: 0;
     padding: 0;
     display: inline-block;
     text-align: left;
@@ -9115,7 +9114,9 @@ address {
     padding: 0 0 4px;
     font-weight: lighter;
 }
-
+.v-links-list .contact-info li:not(.email) {
+    white-space: pre-wrap;
+}
 .v-links-list li.icon {
     padding: 0 0 4px 22px;
     vertical-align: middle;

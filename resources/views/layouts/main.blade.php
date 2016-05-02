@@ -3,9 +3,9 @@
 <head>
     <!-- Basic -->
     <meta charset="utf-8">
-    <title>Интернет-магазин верхней одежды</title>
-    <meta name="description" content="Интернет-магазин верхней одежды">
-    <meta name="keywords" content="HTML5 Template"/>
+    <title>{{ $page->getMetaTitle() }}</title>
+    <meta name="description" content="{{ $page->getMetaDesc() }}">
+    <meta name="keywords" content="{{ $page->getMetaKey() }}"/>
     <meta name="author" content="it-hill.com">
     <link rel="shortcut icon" href="{{ asset('images/favicons/favicon.ico') }}">
     <!-- Mobile Specific Metas -->
@@ -77,9 +77,9 @@
                     <button type="button" class="navbar-toggle" id="slide-nav"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
                     <!--  Logo  -->
                     <a class="logo" href="{{ url('/') }}">
-                        <img class="logo-default" src="images/logo.png" alt=""/>
-                        <img class="logo-mobile" src="images/logo-mobile.png" alt=""/>
-                        <img class="logo-transparent" src="images/logo-transparent.png" alt=""/>
+                        <img class="logo-default" src="{{ asset('images/logo.png') }}" alt=""/>
+                        <img class="logo-mobile" src="{{ asset('images/logo-mobile.png') }}" alt=""/>
+                        <img class="logo-transparent" src="{{ asset('images/logo-transparent.png') }}" alt=""/>
                         @if(isset($siteSettings['siteTitle']) && is_object($siteSettings['siteTitle']))
                             <span>
                                 {{ $siteSettings['siteTitle']->value }}
@@ -240,7 +240,7 @@
                     <div class="col-md-3 hidden-xs hidden-sm">
                         <!--  Logo  -->
                         <a class="logo logo--footer" href="{{ url('/') }}">
-                            <img src="images/logo-transparent.png" alt=""/>
+                            <img src="{{ asset('images/logo-transparent.png') }}" alt=""/>
                         </a>
                         <!-- End Logo -->
                         @if(isset($siteSettings['footerText']) && is_object($siteSettings['footerText']))
@@ -304,7 +304,7 @@
                     Разработано студией
                     <a href="http://it-hill.com">
                         IT Hill
-                        <img src="images/it-hill-logo.svg" alt="Студия создания сайтов IT Hill">
+                        <img src="{{ asset('images/it-hill-logo.svg') }}" alt="Студия создания сайтов IT Hill">
                     </a>
                 </div>
             </div>

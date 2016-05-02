@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Page;
+use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -24,9 +27,21 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        //
-
         parent::boot($router);
+
+	    $router->bind('product', function($alias) {
+			return Product::whereAlias($alias)
+				->whereIsPublished(1)
+				->where('published_at', '<', Carbon::now())
+				->firstOrFail();
+	    });
+
+	    $router->bind('page', function($alias) {
+		    return Page::whereAlias($alias)
+			    ->whereIsPublished(1)
+			    ->where('published_at', '<', Carbon::now())
+			    ->first();
+	    });
     }
 
     /**
