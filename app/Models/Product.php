@@ -222,6 +222,36 @@ class Product extends Model
 	}
 
 	/**
+	 * Get array with breadcrumb items
+	 *
+	 * @return array
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function getBreadcrumbItems()
+	{
+		$items[] = [
+			'url' => url('/'),
+			'title' => 'Главная',
+		];
+		if($this->category) {
+			$items = $items + $this->category->getBredcrumbItem($this->category, 1);
+			$items[] = [
+				'url' => $this->category->getUrl(),
+				'title' => $this->category->getTitle(),
+			];
+		}
+
+		$items[] = [
+			'url' => null,
+			'title' => $this->title,
+		];
+
+		return $items;
+	}
+
+	/**
 	 * Get image url
 	 *
 	 * @param bool $default

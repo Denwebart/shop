@@ -11,31 +11,8 @@
     <!-- Breadcrumb section -->
     <section class="breadcrumbs breadcrumbs-boxed">
         <div class="container">
-            <ol class="breadcrumb breadcrumb--wd pull-left">
-                <li><a href="index.html">Главная</a></li>
-                @if($page->category)
-                    @if($page->category->parent_id)
-                        @if($page->category->parent->parent_id)
-                            <li>
-                                <a href="{{ $page->category->parent->parent->getUrl() }}">
-                                    {{ $page->category->parent->parent->getTitle() }}
-                                </a>
-                            </li>
-                        @endif
-                        <li>
-                            <a href="{{ $page->category->parent->getUrl() }}">
-                                {{ $page->category->parent->getTitle() }}
-                            </a>
-                        </li>
-                    @endif
-                    <li>
-                        <a href="{{ $page->category->getUrl() }}">
-                            {{ $page->category->getTitle() }}
-                        </a>
-                    </li>
-                @endif
-                <li class="active">{{ $page->title }}</li>
-            </ol>
+            @include('parts.breadcrumbs')
+
             <ul id="productOther" class="product-other pull-right hidden-xs">
                 <li class="product-other__link product-prev">
                     <a href="product.html">Пальто демисезонное</a>

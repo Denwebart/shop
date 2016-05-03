@@ -7127,8 +7127,7 @@ body.fullwidth .header__dropdowns-container {
     border-color: #ffffff;
 }
 .navbar.navbar-wd .nav > li:hover > a .caret,
-.navbar.navbar-wd .nav > li:focus > a .caret,
-.navbar.navbar-wd .nav > li.active > a .caret {
+.navbar.navbar-wd .nav > li:focus > a .caret {
     color: #ffffff;
 }
 

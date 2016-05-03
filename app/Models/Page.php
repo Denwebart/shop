@@ -69,7 +69,7 @@ class Page extends Model
 	/**
 	 * Максимальная вложнность страниц
 	 */
-	const MAX_LEVEL = 3; // 4 уровня
+	const MAX_LEVEL = 4; // 4 уровня
 
 	/**
 	 * Тип страницы (значение поля type)
@@ -296,6 +296,50 @@ class Page extends Model
 	}
 
 	/**
+	 * Get array with breadcrumb items
+	 *
+	 * @return array
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function getBreadcrumbItems()
+	{
+		$items[] = [
+			'url' => url('/'),
+			'title' => 'Главная',
+		];
+		$items = $items + $this->getBredcrumbItem($this, 1);
+		$items[] = [
+			'url' => null,
+			'title' => $this->getTitle(),
+		];
+
+		return $items;
+	}
+
+	/**
+	 * Recursive function for get breadcrumbs item
+	 *
+	 * @param $level
+	 * @return array
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function getBredcrumbItem($page, $level)
+	{
+		if($page->parent) {
+			$items = $page->getBredcrumbItem($page->parent, $level + 1);
+			$items[$level] = [
+				'url' => $page->parent->getUrl(),
+				'title' => $page->parent->getTitle(),
+			];
+		}
+		return isset($items) ? $items : [];
+	}
+
+	/**
 	 * Get image url
 	 *
 	 * @return mixed
@@ -333,7 +377,7 @@ class Page extends Model
 		
 		$array = [];
 		if($empty) {
-			$array[0] = '---';
+			$array[0] = '&mdash;'; // тире
 		}
 		foreach ($pages as $page) {
 			$array[$page->id] = $page->getTitle();
@@ -354,9 +398,9 @@ class Page extends Model
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 *
 	 */
-	private static function getCategoryChildren($page, $level)
+	protected static function getCategoryChildren($page, $level)
 	{
-		if($level < self::MAX_LEVEL) {
+		if($level < (self::MAX_LEVEL - 1)) {
 			if(count($page->children)) {
 				foreach($page->children()->whereIsContainer(1)->get() as $child) {
 					$array[$child->id] = ' ' . str_repeat('&mdash; ', $level) . $child->getTitle();

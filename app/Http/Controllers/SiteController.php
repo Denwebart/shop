@@ -15,7 +15,6 @@ use App\Models\Product;
 use App\Widgets\Carousel\Carousel;
 use App\Widgets\Reviews\Reviews;
 use App\Widgets\Slider\Slider;
-use Barryvdh\Debugbar\Middleware\Debugbar;
 
 class SiteController extends Controller
 {
@@ -48,29 +47,46 @@ class SiteController extends Controller
 	/**
 	 * Other pages
 	 *
-	 * @param Page $page
+	 * @param \Illuminate\Http\Request $request
+	 * @param object $page
 	 * @return mixed
 	 *
 	 * @author     It Hill (it-hill.com@yandex.ua)
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
-	public function pageOneLevel(Page $page)
+	public function pageOneLevel(\Illuminate\Http\Request $request, $page)
 	{
-		return view('page', compact('page'));
+		return $this->renderPage($request, $page);
 	}
 
-	public function pageTwoLevel($parentOne, Page $page)
+	public function pageTwoLevel(\Illuminate\Http\Request $request, $parentOne, $page)
 	{
-		return view('page', compact('page'));
+		return $this->renderPage($request, $page);
 	}
 
-	public function pageThreeLevel($parentOne, $parentTwo, Page $page)
+	public function pageThreeLevel(\Illuminate\Http\Request $request, $parentOne, $parentTwo, $page)
 	{
-		return view('page', compact('page'));
+		return $this->renderPage($request, $page);
 	}
 
-	public function pageFourLevel($parentOne, $parentTwo, $parentThree, Page $page)
+	public function pageFourLevel(\Illuminate\Http\Request $request, $parentOne, $parentTwo, $parentThree, $page)
 	{
-		return view('page', compact('page'));
+		return $this->renderPage($request, $page);
+	}
+
+	protected function renderPage($request, $page)
+	{
+		if($request->getUri() != $page->getUrl()) {
+			abort(404);
+		}
+		if(is_a($page, 'App\Models\Page')) {
+			if($page->type == Page::TYPE_CATALOG) {
+				return view('catalog', compact('page'));
+			} else {
+				return view('page', compact('page'));
+			}
+		} else {
+			return view('product', compact('page'));
+		}
 	}
 }
