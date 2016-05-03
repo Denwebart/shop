@@ -69,6 +69,9 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes(Router $router)
     {
+	    $router->get( '/_debugbar/assets/stylesheets', '\Barryvdh\Debugbar\Controllers\AssetController@css' );
+	    $router->get( '/_debugbar/assets/javascript', '\Barryvdh\Debugbar\Controllers\AssetController@js' );
+
         $router->group([
             'namespace' => $this->namespace, 'middleware' => 'web',
         ], function ($router) {

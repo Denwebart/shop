@@ -34,6 +34,7 @@ class SiteController extends Controller
 
 		$bestSellers = Product::select(\DB::raw('products.id, products.vendor_code, products.category_id, products.alias, products.is_published, products.title, products.price, products.image, products.image_alt, products.published_at, count(orders_products.product_id) as `boughtTimes`'))
 			->leftJoin('orders_products', 'products.id', '=', 'orders_products.product_id')
+			->with('category', 'category.parent')
 			->where('products.is_published', '=', 1)
 			->groupBy('orders_products.product_id')
 			->orderBy('boughtTimes', 'DESC')
