@@ -20,17 +20,17 @@ class ProductController extends Controller
 	 * @author     It Hill (it-hill.com@yandex.ua)
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
-	public function productOneLevel($categoryOne = null, Product $product)
+	public function productOneLevel($categoryOne, Product $product)
 	{
 		return view('product.productInfo')->with('page', $product);
 	}
 
-	public function productTwoLevel($categoryOne = null, $categoryTwo = null, Product $product)
+	public function productTwoLevel($categoryOne, $categoryTwo, Product $product)
 	{
 		return view('product.productInfo')->with('page', $product);
 	}
 
-	public function productThreeLevel($categoryOne = null, $categoryTwo = null, $categoryThree = null, Product $product)
+	public function productThreeLevel($categoryOne, $categoryTwo, $categoryThree, Product $product)
 	{
 		return view('product.productInfo')->with('page', $product);
 	}

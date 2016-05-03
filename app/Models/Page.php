@@ -67,6 +67,11 @@ class Page extends Model
 	protected $imagePath = '/uploads/pages/';
 
 	/**
+	 * Максимальная вложнность страниц
+	 */
+	const MAX_LEVEL = 3; // 4 уровня
+
+	/**
 	 * Тип страницы (значение поля type)
 	 */
 	const TYPE_PAGE        = 1;
@@ -333,13 +338,35 @@ class Page extends Model
 		foreach ($pages as $page) {
 			$array[$page->id] = $page->getTitle();
 
+			$array = $array + self::getCategoryChildren($page, 1);
+		}
+		return $array;
+	}
+
+	/**
+	 * Recursive function for get child page array
+	 *
+	 * @param $page
+	 * @param $level
+	 * @return array
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 *
+	 */
+	private static function getCategoryChildren($page, $level)
+	{
+		if($level < self::MAX_LEVEL) {
 			if(count($page->children)) {
 				foreach($page->children()->whereIsContainer(1)->get() as $child) {
-					$array[$child->id] = ' --- ' . $child->getTitle();
+					$array[$child->id] = ' ' . str_repeat('&mdash; ', $level) . $child->getTitle();
+					if(count($child->children)) {
+						$array = $array + self::getCategoryChildren($child, $level + 1);
+					}
 				}
 			}
 		}
-		return $array;
+		return isset($array) ? $array : [];
 	}
 	
 	/**

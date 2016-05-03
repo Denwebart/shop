@@ -29,18 +29,18 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot($router);
 
+	    $router->bind('page', function($alias) {
+		    return Page::whereAlias($alias)
+			    ->whereIsPublished(1)
+			    ->where('published_at', '<', Carbon::now())
+			    ->firstOrFail();
+	    });
+
 	    $router->bind('product', function($alias) {
 			return Product::whereAlias($alias)
 				->whereIsPublished(1)
 				->where('published_at', '<', Carbon::now())
 				->firstOrFail();
-	    });
-
-	    $router->bind('page', function($alias) {
-		    return Page::whereAlias($alias)
-			    ->whereIsPublished(1)
-			    ->where('published_at', '<', Carbon::now())
-			    ->first();
 	    });
     }
 
