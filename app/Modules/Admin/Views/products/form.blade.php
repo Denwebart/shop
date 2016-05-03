@@ -83,7 +83,7 @@
         <div class="form-group">
             <div class="col-sm-5 col-md-5 @if($errors->has('image')) has-error @endif">
                 {!! Form::label('image', 'Изображение для товара', ['class' => 'control-label m-b-5']) !!}
-                {!! Form::file('image', ['id' => 'image', 'class' => 'dropify', 'data-default-file' => $product->getImageUrl(false), 'data-max-file-size' => '3M']) !!}
+                {!! Form::file('image', ['id' => 'image', 'class' => 'dropify', 'data-default-file' => $product->getImageUrl(null, false), 'data-max-file-size' => '3M']) !!}
                 <span class="help-block @if($errors->has('image')) hidden @endif">
                     <small>
                         Главное изображение товара.

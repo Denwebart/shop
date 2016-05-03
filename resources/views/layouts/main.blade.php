@@ -39,6 +39,8 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.js"></script>
     <![endif]-->
 
+    @stack('styles')
+
     <!-- Modernizr -->
     <script src="{{ asset('vendor/modernizr/modernizr.js') }}"></script>
 </head>
@@ -367,6 +369,9 @@
 <!-- jQuery form validation -->
 <script src="{{ asset('vendor/form/jquery.form.js') }}"></script>
 <script src="{{ asset('vendor/form/jquery.validate.min.js') }}"></script>
+
+@stack('scripts')
+
 <!-- Custom -->
 <script src="{{ asset('js/custom.js') }}"></script>
 <!-- SLIDER REVOLUTION 4.x SCRIPTS  -->

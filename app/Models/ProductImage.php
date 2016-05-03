@@ -89,13 +89,19 @@ class ProductImage extends Model
 	/**
 	 * Get image url
 	 *
+	 * @param null $prefix
 	 * @return mixed
 	 * @author     It Hill (it-hill.com@yandex.ua)
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
-	public function getImageUrl()
+	public function getImageUrl($prefix = null)
 	{
-		return $this->product ? asset($this->imagePath . $this->product->id . '/images/' . $this->id . '/' . $this->image) : '';
+		if($this->product) {
+			$prefix = is_null($prefix) ? '' : ($prefix . '_');
+			return $this->image
+				? asset($this->imagePath . $this->product->id . '/images/' . $this->id . '/' . $prefix . $this->image)
+				: '';
+		}
 	}
 
 	/**

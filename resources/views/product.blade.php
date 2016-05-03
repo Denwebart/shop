@@ -41,50 +41,19 @@
                         </div>
                         <div class="product-main-image__zoom"></div>
                     </div>
-                    <div class="product-images-carousel">
-                        <ul id="smallGallery">
-                            <li>
-                                <a href="#" data-image="images/product-red.jpg" data-zoom-image="images/product-red.jpg">
-                                    <img src="images/product-red.jpg" alt=""/>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" data-image="images/product-red-2.jpg" data-zoom-image="images/product-red-2.jpg">
-                                    <img src="images/product-red-2.jpg" alt=""/>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" data-image="images/product-red-3.jpg" data-zoom-image="images/product-red-3.jpg">
-                                    <img src="images/product-red-3.jpg" alt=""/>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" data-image="images/product-red-4.jpg" data-zoom-image="images/product-red-4.jpg">
-                                    <img src="images/product-red-4.jpg" alt=""/>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" data-image="images/product-yellow.jpg" data-zoom-image="images/product-yellow.jpg">
-                                    <img src="images/product-yellow.jpg" alt=""/>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" data-image="images/product-grey.jpg" data-zoom-image="images/product-grey.jpg">
-                                    <img src="images/product-grey.jpg" alt=""/>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" data-image="images/product-green.jpg" data-zoom-image="images/product-green.jpg">
-                                    <img src="images/product-green.jpg" alt=""/>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" data-image="images/product-blue.jpg" data-zoom-image="images/product-blue.jpg">
-                                    <img src="images/product-blue.jpg" alt=""/>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    @if(count($page->images))
+                        <div class="product-images-carousel">
+                            <ul id="smallGallery">
+                                @foreach($page->images as $image)
+                                    <li>
+                                        <a href="#" data-image="{{ $image->getImageUrl() }}" data-zoom-image="{{ $image->getImageUrl('zoom') }}">
+                                            <img src="{{ $image->getImageUrl('mini') }}" alt="{{ $image->image_alt }}"/>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                 </div>
                 <div class="product-info col-sm-8 col-md-4 col-lg-4">
                     <div class="product-info__title">
@@ -97,22 +66,22 @@
                         </div>
                     </div>
                     <div class="product-info__sku pull-right">
-                        Артикул: 00065 &nbsp;&nbsp;
-                        <span class="label label-success">В НАЛИЧИИ</span>
+                        Артикул: {{ $page->vendor_code }}
+                        <span class="label label-success m-l-10">В НАЛИЧИИ</span>
                     </div>
                     <ul id="singleGallery" class="visible-xs">
-                        <li><img src="images/product-red.jpg" alt="" /></li>
-                        <li><img src="images/product-red-2.jpg" alt=""/></li>
-                        <li><img src="images/product-red-3.jpg" alt=""/></li>
-                        <li><img src="images/product-red-4.jpg" alt=""/></li>
-                        <li><img src="images/product-yellow.jpg" alt=""/></li>
-                        <li><img src="images/product-grey.jpg" alt=""/></li>
-                        <li><img src="images/product-green.jpg" alt=""/></li>
-                        <li><img src="images/product-blue.jpg" alt=""/></li>
+                        <li><img src="/images/product-red.jpg" alt="" /></li>
+                        <li><img src="/images/product-red-2.jpg" alt=""/></li>
+                        <li><img src="/images/product-red-3.jpg" alt=""/></li>
+                        <li><img src="/images/product-red-4.jpg" alt=""/></li>
+                        <li><img src="/images/product-yellow.jpg" alt=""/></li>
+                        <li><img src="/images/product-grey.jpg" alt=""/></li>
+                        <li><img src="/images/product-green.jpg" alt=""/></li>
+                        <li><img src="/images/product-blue.jpg" alt=""/></li>
                     </ul>
                     <div class="price-box product-info__price">
-                        <span class="price-box__new">5 000 руб.</span>
-                        <span class="price-box__old">7 000 руб.</span>
+                        <span class="price-box__new">{{ \App\Helpers\Str::priceFormat($page->price) }}</span>
+                        {{--<span class="price-box__old">7 000 руб.</span>--}}
                     </div>
                     <div class="rating product-info__rating hidden-xs">
                         <span class="icon-star"></span>
@@ -121,19 +90,14 @@
                         <span class="icon-star"></span>
                         <span class="icon-star"></span>
                     </div>
-                    <!--<div class="divider divider&#45;&#45;xs product-info__divider"></div>-->
-                    <!--<div class="product-info__description">-->
-                    <!--Далеко-далеко за словесными горами в стране гласных и согласных живут-->
-                    <!--рыбные тексты. Вдали от всех живут они в буквенных домах-->
-                    <!--на берегу Семантика большого языкового океана. Маленький ручеек-->
-                    <!--Даль журчит по всей стране и обеспечивает ее всеми необходимыми-->
-                    <!--правилами. Эта парадигматическая страна, в которой жаренные члены-->
-                    <!--предложения залетают прямо в рот. Даже всемогущая пунктуация не-->
-                    <!--имеет власти над рыбными текстами, ведущими безорфографичный образ-->
-                    <!--жизни. Однажды одна маленькая строчка рыбного текста по имени Lorem-->
-                    <!--ipsum решила выйти в большой мир грамматики.-->
-                    <!--</div>-->
-                    <!--<div class="divider divider&#45;&#45;xs product-info__divider"></div>-->
+                    @if($page->introtext)
+                        <div class="divider divider&#45;&#45;xs product-info__divider"></div>
+                        <div class="product-info__description">
+                            {!! $page->introtext !!}
+                        </div>
+                    @endif
+
+                    <div class="divider divider&#45;&#45;xs product-info__divider"></div>
                     <label>Размер:</label>
                     <ul class="options-swatch options-swatch--size options-swatch--lg">
                         <li>XS</li>
@@ -150,49 +114,49 @@
                         <li>
                             <a href="#">
                                     <span class="swatch-label">
-                                        <img src="images/colors/blue.png" width="10" height="10" alt=""/>
+                                        <img src="/images/colors/blue.png" width="10" height="10" alt=""/>
                                     </span>
                             </a>
                         </li>
                         <li>
                             <a href="#">
                                     <span class="swatch-label">
-                                        <img src="images/colors/yellow.png" width="10" height="10" alt=""/>
+                                        <img src="/images/colors/yellow.png" width="10" height="10" alt=""/>
                                     </span>
                             </a>
                         </li>
                         <li>
                             <a href="#">
                                     <span class="swatch-label">
-                                        <img src="images/colors/green.png" width="10" height="10" alt=""/>
+                                        <img src="/images/colors/green.png" width="10" height="10" alt=""/>
                                     </span>
                             </a>
                         </li>
                         <li>
                             <a href="#">
                                     <span class="swatch-label">
-                                        <img src="images/colors/dark-grey.png" width="10" height="10" alt=""/>
+                                        <img src="/images/colors/dark-grey.png" width="10" height="10" alt=""/>
                                     </span>
                             </a>
                         </li>
                         <li>
                             <a href="#">
                                     <span class="swatch-label">
-                                        <img src="images/colors/grey.png" width="10" height="10" alt=""/>
+                                        <img src="/images/colors/grey.png" width="10" height="10" alt=""/>
                                     </span>
                             </a>
                         </li>
                         <li>
                             <a href="#">
                                     <span class="swatch-label">
-                                        <img src="images/colors/red.png" width="10" height="10" alt=""/>
+                                        <img src="/images/colors/red.png" width="10" height="10" alt=""/>
                                     </span>
                             </a>
                         </li>
                         <li>
                             <a href="#">
                                     <span class="swatch-label">
-                                        <img src="images/colors/white.png" width="10" height="10" alt=""/>
+                                        <img src="/images/colors/white.png" width="10" height="10" alt=""/>
                                     </span>
                             </a>
                         </li>
@@ -279,41 +243,23 @@
             <!-- Nav tabs -->
             <ul class="nav nav-tabs nav-tabs--wd" role="tablist">
                 <li class="active">
-                    <a href="#Tab1" aria-controls="home" role="tab" data-toggle="tab" class="text-uppercase">
+                    <a href="#description" aria-controls="home" role="tab" data-toggle="tab" class="text-uppercase">
                         Описание
                     </a>
                 </li>
-                <li><a href="#Tab2" role="tab" data-toggle="tab" class="text-uppercase">Отзывы (20)</a></li>
-                <li><a href="#Tab5" role="tab" data-toggle="tab" class="text-uppercase">Таблица размеров</a></li>
+                <li>
+                    <a href="#reviews" role="tab" data-toggle="tab" class="text-uppercase">
+                        Отзывы
+                        @if(count($page->getReviews())) ({{ count($page->getReviews()) }}) @endif
+                    </a>
+                </li>
+                <li><a href="#sizing-guide" role="tab" data-toggle="tab" class="text-uppercase">Таблица размеров</a></li>
             </ul>
 
             <!-- Tab panes -->
             <div class="tab-content tab-content--wd">
-                <div role="tabpanel" class="tab-pane active" id="Tab1">
-                    <p>
-                        Далеко-далеко за словесными горами в стране гласных и согласных живут
-                        рыбные тексты. Вдали от всех живут они в буквенных домах на берегу
-                        Семантика большого языкового океана. Маленький ручеек Даль журчит
-                        по всей стране и обеспечивает ее всеми необходимыми правилами.
-                        Эта парадигматическая страна, в которой жаренные члены
-                        предложения залетают прямо в рот. Даже всемогущая
-                        пунктуация не имеет власти над рыбными текстами,
-                        ведущими безорфографичный образ жизни.
-                    </p>
-                    <p>
-                        Однажды одна
-                        маленькая строчка рыбного текста по имени Lorem ipsum решила
-                        выйти в большой мир грамматики. Великий Оксмокс предупреждал ее о
-                        злых запятых, диких знаках вопроса и коварных точках с запятой, но текст
-                        не дал сбить себя с толку. Он собрал семь своих заглавных букв, подпоясал
-                        инициал за пояс и пустился в дорогу. Взобравшись на первую вершину курсивных
-                        гор, бросил он последний взгляд назад, на силуэт своего родного города Буквоград,
-                        на заголовок деревни Алфавит и на подзаголовок своего переулка Строчка. Грустный
-                        реторический вопрос скатился по его щеке и он продолжил свой путь. По дороге
-                        встретил текст рукопись. Она предупредила его: «В моей стране все переписывается
-                        по несколько раз. Единственное, что от меня осталось, это приставка «и». Возвращайся
-                        ты лучше в свою безопасную страну».
-                    </p>
+                <div role="tabpanel" class="tab-pane active" id="description">
+                    {!! $page->content !!}
                     <div class="divider divider--xs"></div>
                     <table class="table table-params">
                         <tbody>
@@ -336,114 +282,107 @@
                         </tbody>
                     </table>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="Tab2">
-                    <p class="hidden">Оставьте первым свой отзыв!</p>
-                    <div class="row">
-                        <div class="col-sm-5 col-md-4 col-lg-3">
-                            <h3 class="text-uppercase">Отзывы (20)</h3>
-                            <div class="rating-extended row">
-                                <div class="col-lg-12">
-                                    <h1 class="rating-extended__num pull-left"> 4.75</h1>
-                                    <div class="rating">
-                                        <span class="icon icon-star"></span>
-                                        <span class="icon icon-star"></span>
-                                        <span class="icon icon-star"></span>
-                                        <span class="icon icon-star"></span>
-                                        <span class="icon icon-star empty-star"></span>
+                <div role="tabpanel" class="tab-pane" id="reviews">
+                    @if(count($page->getReviews()))
+                        <div class="row">
+                            <div class="col-sm-5 col-md-4 col-lg-3">
+                                <h3 class="text-uppercase">Отзывы ({{ count($page->getReviews()) }})</h3>
+                                <div class="rating-extended row">
+                                    <div class="col-lg-12">
+                                        <h1 class="rating-extended__num pull-left"> 4.75</h1>
+                                        <div class="rating">
+                                            <span class="icon icon-star"></span>
+                                            <span class="icon icon-star"></span>
+                                            <span class="icon icon-star"></span>
+                                            <span class="icon icon-star"></span>
+                                            <span class="icon icon-star empty-star"></span>
+                                        </div>
+                                        <div>
+                                            <span class="icon icon-man"></span>
+                                            Отзывов: {{ count($page->getReviews()) }}
+                                        </div>
                                     </div>
-                                    <div><span class="icon icon-man"></span>Отзывов: 20</div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-lg-12">
+                                        <div class="progress">
+                                            <span class="rating-extended__label">5 звезд</span>
+                                            <div class="progress-bar progress-bar-five" role="progressbar" aria-valuenow="{{ count($page->getReviews()) }}" aria-valuemin="0" aria-valuemax="100" style="width: 70%">
+                                                <span class="rating-extended__reviews-count">10</span>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <div class="progress">
+                                            <span class="rating-extended__label">4 звезды</span>
+                                            <div class="progress-bar progress-bar-four" role="progressbar" aria-valuenow="{{ count($page->getReviews()) }}" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                                                <span class="rating-extended__reviews-count">4</span>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <div class="progress">
+                                            <span class="rating-extended__label">3 звезды</span>
+                                            <div class="progress-bar progress-bar-three" role="progressbar" aria-valuenow="{{ count($page->getReviews()) }}" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+                                                <span class="rating-extended__reviews-count">3</span>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <div class="progress">
+                                            <span class="rating-extended__label">2 звезды</span>
+                                            <div class="progress-bar progress-bar-two" role="progressbar" aria-valuenow="{{ count($page->getReviews()) }}" aria-valuemin="0" aria-valuemax="100" style="width: 15%">
+                                                <span class="rating-extended__reviews-count">2</span>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <div class="progress">
+                                            <span class="rating-extended__label">1 звезда</span>
+                                            <div class="progress-bar progress-bar-one" role="progressbar" aria-valuenow="{{ count($page->getReviews()) }}" aria-valuemin="0" aria-valuemax="100" style="width: 10%">
+                                                <span class="rating-extended__reviews-count">1</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="clearfix"></div>
-                                <div class="col-lg-12">
-                                    <div class="progress">
-                                        <span class="rating-extended__label">5 звезд</span>
-                                        <div class="progress-bar progress-bar-five" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 70%">
-                                            <span class="rating-extended__reviews-count">10</span>
-                                        </div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                    <div class="progress">
-                                        <span class="rating-extended__label">4 звезды</span>
-                                        <div class="progress-bar progress-bar-four" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                            <span class="rating-extended__reviews-count">4</span>
-                                        </div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                    <div class="progress">
-                                        <span class="rating-extended__label">3 звезды</span>
-                                        <div class="progress-bar progress-bar-three" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                                            <span class="rating-extended__reviews-count">3</span>
-                                        </div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                    <div class="progress">
-                                        <span class="rating-extended__label">2 звезды</span>
-                                        <div class="progress-bar progress-bar-two" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 15%">
-                                            <span class="rating-extended__reviews-count">2</span>
-                                        </div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                    <div class="progress">
-                                        <span class="rating-extended__label">1 звезда</span>
-                                        <div class="progress-bar progress-bar-one" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 10%">
-                                            <span class="rating-extended__reviews-count">1</span>
-                                        </div>
-                                    </div>
-                                </div>
+                                <div class="divider divider--md"></div>
                             </div>
-                            <div class="divider divider--md"></div>
-                        </div>
-                        <div class="col-sm-7 col-md-8 col-lg-9">
-                            <div class="count">
-                                Показано 2 из 20
-                            </div>
-                            <div class="review">
-                                <div class="rating"><span class="icon icon-star"></span><span
-                                            class="icon icon-star"></span><span class="icon icon-star"></span><span
-                                            class="icon icon-star"></span><span class="icon icon-star empty-star"></span>
+                            <div class="col-sm-7 col-md-8 col-lg-9">
+                                <div class="count">
+                                    Показано {{ count($page->getReviews()) }} из {{ count($page->getReviews()) }}
                                 </div>
-                                <h5 class="review__title">Очень понравился!</h5>
-                                <div class="review__content">
-                                    Маленький ручеек Даль журчит
-                                    по всей стране и обеспечивает ее всеми необходимыми правилами.
-                                    Эта парадигматическая страна, в которой жаренные члены
-                                    предложения залетают прямо в рот. Даже всемогущая
-                                    пунктуация не имеет власти над рыбными текстами,
-                                    ведущими безорфографичный образ жизни.
-                                </div>
-                                <div class="review__meta">
-                                    <strong>Валентина</strong>,
-                                    17 апреля 2016
-                                </div>
-                                <div class="review__comments"><a href="#">Комментарии (1)</a></div>
-                                <div class="review__helpful">Этот отзыв был полезен?
-                                    <a href="#">Да</a>
-                                    <a href="#">Нет</a>
-                                </div>
-                            </div>
-                            <div class="review">
-                                <div class="rating"><span class="icon icon-star"></span><span
-                                            class="icon icon-star"></span><span class="icon icon-star"></span><span
-                                            class="icon icon-star"></span><span class="icon icon-star"></span>
-                                </div>
-                                <h5 class="review__title">Отлично!</h5>
-                                <div class="review__content">
-                                    Далеко-далеко за словесными горами в стране гласных и согласных живут
-                                    рыбные тексты. Вдали от всех живут они в буквенных домах на берегу
-                                    Семантика большого языкового океана.
-                                </div>
-                                <div class="review__meta">
-                                    <strong>Наталья</strong>,
-                                    25 Марта, 2016
-                                </div>
-                                <div class="review__comments"><a href="#">Комментарии (1)</a></div>
-                                <div class="review__helpful">Этот отзыв был полезен?
-                                    <a href="#">Да</a>
-                                    <a href="#">Нет</a>
-                                </div>
+
+                                @foreach($page->getReviews() as $review)
+                                    <div class="review">
+                                        <div class="rating">
+                                            @include('parts.starRating', ['rating' => $review->rating])
+                                        </div>
+                                        {{--<h5 class="review__title">Очень понравился!</h5>--}}
+                                        <div class="review__content">
+                                            {{ $review->text }}
+                                        </div>
+                                        <div class="review__meta">
+                                            @if($review->user)
+                                                {{ \App\Models\User::$roles[$review->user->role] }}
+                                                @if(\Auth::check())
+                                                    <a href="{{ route('admin.users.show', ['id' => $review->user->id]) }}">
+                                                        <strong>{{ $review->user->login }}</strong>
+                                                    </a>,
+                                                @else
+                                                    <strong>{{ $review->user->login }}</strong>,
+                                                @endif
+                                            @else
+                                                <strong>{{ $review->user_name }}</strong>,
+                                            @endif
+                                            {{ \App\Helpers\Date::format($review->created_at) }}
+                                        </div>
+                                        <div class="review__comments"><a href="#">Комментарии (1)</a></div>
+                                        <div class="review__helpful">Этот отзыв был полезен?
+                                            <a href="#">Да</a>
+                                            <a href="#">Нет</a>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
-                    </div>
+                    @else
+                        <p>Оставьте первым свой отзыв!</p>
+                    @endif
                     <div class="divider divider--xs"></div>
                     <div class="row">
                         <div class="col-sm-5 col-md-4 col-lg-3">
@@ -467,7 +406,7 @@
                         </div>
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="Tab5">
+                <div role="tabpanel" class="tab-pane" id="sizing-guide">
                     <div class="table-responsive">
                         <table class="table table-params">
                             <tbody>
@@ -540,7 +479,7 @@
                 <div class="product-preview-wrapper">
                     <div class="product-preview open">
                         <div class="product-preview__image"><a href="#"><img
-                                        src="images/product-empty.png" data-lazy="images/1-yellow-blond.JPG"
+                                        src="/images/product-empty.png" data-lazy="images/1-yellow-blond.JPG"
                                         alt=""/></a></div>
                         <div class="product-preview__info text-center">
                             <div class="product-preview__info__btns"><a href="#"
@@ -577,7 +516,7 @@
                     <div class="product-preview open">
                         <div class="product-preview__image">
                             <a href="product.html">
-                                <img src="images/product-empty.png" data-lazy="images/2-black.JPG" alt=""/>
+                                <img src="/images/product-empty.png" data-lazy="images/2-black.JPG" alt=""/>
                             </a>
                         </div>
                         <div class="product-preview__label product-preview__label--left product-preview__label--new">
@@ -625,7 +564,7 @@
                     <div class="product-preview open">
                         <div class="product-preview__image">
                             <a href="product.html">
-                                <img src="images/product-empty.png" data-lazy="images/8-pink.JPG" alt=""/>
+                                <img src="/images/product-empty.png" data-lazy="images/8-pink.JPG" alt=""/>
                             </a>
                             <div class="product-preview__outstock">Продано</div>
                         </div>
@@ -657,7 +596,7 @@
                     <div class="product-preview open">
                         <div class="product-preview__image">
                             <a href="product.html">
-                                <img src="images/product-empty.png" data-lazy="images/5-red.JPG" alt=""/>
+                                <img src="/images/product-empty.png" data-lazy="images/5-red.JPG" alt=""/>
                             </a>
                             <div class="countdown_box">
                                 <div class="countdown_inner">
@@ -694,7 +633,7 @@
                     <div class="product-preview open">
                         <div class="product-preview__image">
                             <a href="product.html">
-                                <img src="images/product-empty.png" data-lazy="images/4-blue.JPG" alt=""/>
+                                <img src="/images/product-empty.png" data-lazy="images/4-blue.JPG" alt=""/>
                             </a>
                         </div>
                         <div class="product-preview__info text-center">
@@ -722,7 +661,7 @@
                 <div class="product-preview-wrapper">
                     <div class="product-preview open">
                         <div class="product-preview__image"><a href="product.html"><img
-                                        src="images/product-empty.png" data-lazy="images/2-black.JPG"
+                                        src="/images/product-empty.png" data-lazy="images/2-black.JPG"
                                         alt=""/></a></div>
                         <div class="product-preview__info text-center">
                             <div class="product-preview__info__btns"><a href="#"
@@ -749,7 +688,7 @@
                 <div class="product-preview-wrapper">
                     <div class="product-preview open">
                         <div class="product-preview__image"><a href="product.html"><img
-                                        src="images/product-empty.png" data-lazy="images/7-sky-blue.JPG"
+                                        src="/images/product-empty.png" data-lazy="images/7-sky-blue.JPG"
                                         alt=""/></a></div>
                         <div class="product-preview__info text-center">
                             <div class="product-preview__info__btns"><a href="#"
@@ -777,7 +716,7 @@
                     <div class="product-preview open">
                         <div class="product-preview__image">
                             <a href="product.html">
-                                <img src="images/1-yellow.JPG" data-lazy="images/1-yellow.JPG" alt=""/>
+                                <img src="/images/1-yellow.JPG" data-lazy="images/1-yellow.JPG" alt=""/>
                             </a>
                         </div>
                         <div class="product-preview__info text-center">
@@ -793,49 +732,49 @@
                                 <li>
                                     <a href="#">
                                             <span class="swatch-label">
-                                                <img src="images/colors/blue.png" width="10" height="10" alt=""/>
+                                                <img src="/images/colors/blue.png" width="10" height="10" alt=""/>
                                             </span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#">
                                             <span class="swatch-label">
-                                                <img src="images/colors/yellow.png" width="10" height="10" alt=""/>
+                                                <img src="/images/colors/yellow.png" width="10" height="10" alt=""/>
                                             </span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#">
                                             <span class="swatch-label">
-                                                <img src="images/colors/green.png" width="10" height="10" alt=""/>
+                                                <img src="/images/colors/green.png" width="10" height="10" alt=""/>
                                             </span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#">
                                             <span class="swatch-label">
-                                                <img src="images/colors/dark-grey.png" width="10" height="10" alt=""/>
+                                                <img src="/images/colors/dark-grey.png" width="10" height="10" alt=""/>
                                             </span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#">
                                             <span class="swatch-label">
-                                                <img src="images/colors/grey.png" width="10" height="10" alt=""/>
+                                                <img src="/images/colors/grey.png" width="10" height="10" alt=""/>
                                             </span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#">
                                             <span class="swatch-label">
-                                                <img src="images/colors/red.png" width="10" height="10" alt=""/>
+                                                <img src="/images/colors/red.png" width="10" height="10" alt=""/>
                                             </span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#">
                                             <span class="swatch-label">
-                                                <img src="images/colors/white.png" width="10" height="10" alt=""/>
+                                                <img src="/images/colors/white.png" width="10" height="10" alt=""/>
                                             </span>
                                     </a>
                                 </li>
@@ -871,3 +810,201 @@
     </section>
     <!-- End Content section -->
 @endsection
+
+@push('styles')
+    <!-- Magnific Popup core CSS file -->
+    <link rel="stylesheet" href="{{ asset('vendor/magnific-popup/magnific-popup.css') }}">
+@endpush
+
+@push('scripts')
+    <script src="{{ asset('vendor/elevatezoom/jquery.elevatezoom.js') }}"></script>
+    <!-- Magnific Popup core JS file -->
+    <script src="{{ asset('vendor/magnific-popup/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ asset('vendor/countdown/jquery.plugin.min.js') }}"></script>
+    <script src="{{ asset('vendor/countdown/jquery.countdown.min.js') }}"></script>
+
+    <script type="text/javascript">
+        // Without zoom previews switcher
+
+        jQuery(function($j) {
+
+            if (!$j('.product-zoom').length) {
+
+                $j('#mainProductImg').css({'min-height': $j('#mainProductImg img').height(), 'min-width': $j('#mainProductImg img').width() })
+
+
+                $j('#smallGallery a').click(function(e){
+                    e.preventDefault();
+                    $j('#smallGallery a').removeClass('active');
+                    $j(this).addClass('active');
+                    var targ = $j(this).parent('li').index();
+                    var curImg = $j('#mainProductImg').find('div.product-main-image__item.active');
+                    var cur = curImg.index();
+                    if (targ == cur) {
+                        return false;
+                    }
+                    else {
+                        var newImg = $j('#mainProductImg').find('div.product-main-image__item:nth-child('+ (targ+1) +')');
+                        curImg.removeClass('active');
+                        newImg.addClass('active')
+                    }
+                })
+
+            }
+
+            var prevW = window.innerWidth || $j(window).width();
+
+            $j(window).resize(debouncer(function(e) {
+
+                var currentW = window.innerWidth || $j(window).width();
+                if (currentW != prevW) {
+                    // start resize events
+                    if (!$j('.product-zoom').length) {
+
+                        $j('#mainProductImg').css({'min-height': '', 'min-width': '' })
+                        $j('#mainProductImg').css({'min-height': $j('#mainProductImg img').height(), 'min-width': $j('#mainProductImg img').width() })
+
+                    }
+                    // end resize events
+                }
+                prevW = window.innerWidth || $j(window).width();
+            }));
+
+        })
+
+        // Magnific Popup on Product Image click
+
+        jQuery(function($j) {
+
+            if ($j('#mainProductImg .zoom-link').length) {
+                $j('#mainProductImg').magnificPopup({
+                    disableOn: 767,
+                    delegate: '.zoom-link',
+                    type: 'image',
+                    mainClass: 'mfp-fade',
+                    preloader: true,
+                    fixedContentPos: false,
+                    gallery: {
+                        enabled: true,
+                        navigateByImgClick: true,
+                        preload: [0,1] // Will preload 0 - before current, and 1 after the current image
+                    }
+                });
+            }
+        })
+
+        // Elevate Zoom
+
+        jQuery(function($j) {
+
+            var windowW = window.innerWidth || document.documentElement.clientWidth;
+            $j('.product-zoom').imagesLoaded(function() {
+                if ($j('.product-zoom').length) {
+                    var zoomPosition
+                    if ( $j('html').css('direction').toLowerCase() == 'rtl' ) {
+                        zoomPosition = 11;
+                    }
+                    else {
+                        zoomPosition = 1
+                    }
+                    if (windowW > 767) {
+                        $j('.product-zoom').elevateZoom({
+                            zoomWindowHeight: $j('.product-zoom').height(),
+                            gallery: "smallGallery",
+                            galleryActiveClass: 'active',
+                            zoomWindowPosition	: zoomPosition
+                        })
+                    } else {
+                        $j(".product-zoom").elevateZoom({
+                            gallery: "smallGallery",
+                            zoomType: "inner",
+                            galleryActiveClass: 'active',
+                            zoomWindowPosition	: zoomPosition
+                        });
+                    }
+                }
+            })
+
+
+            $j('.product-main-image > .product-main-image__zoom ').bind('click', function(){
+
+
+                galleryObj = [];
+                current = 0;
+                itemN = 0;
+
+                if ($j('#smallGallery').length){
+                    $j('#smallGallery li a').not('.video-link').each(function() {
+                        if ($j(this).hasClass('active')) {
+                            current = itemN;
+                        }
+                        itemN++;
+                        var src = $j(this).data('zoom-image'),
+                                type = 'image';
+                        image = {};
+                        image ["src"] = src;
+                        image ["type"] = type;
+
+                        galleryObj.push(image);
+                    });
+                }
+
+                else {
+                    itemN++;
+                    var src = $j(this).parent().find('.product-zoom').data('zoom-image'),
+                            type = 'image';
+                    image = {};
+                    image ["src"] = src;
+                    image ["type"] = type;
+
+                    galleryObj.push(image);
+                }
+
+                $j.magnificPopup.open({
+                    items: galleryObj,
+                    gallery: {
+                        enabled: true,
+                    }
+                }, current);
+
+            });
+
+            var  prevW = windowW;
+
+
+            $j(window).resize(debouncer(function(e) {
+                var currentW = window.innerWidth || $j(window).width();
+
+                if (currentW != prevW) {
+                    // start resize events
+
+                    $j('.zoomContainer').remove();
+                    $j('.elevatezoom').removeData('elevateZoom');
+
+                    if ($j('.product-zoom').length) {
+                        if (currentW > 767) {
+                            $j('.product-zoom').elevateZoom({
+                                zoomWindowHeight: $j('.product-zoom').height(),
+                                gallery: "smallGallery"
+                            })
+                        } else {
+                            $j(".product-zoom").elevateZoom({
+                                gallery: "smallGallery",
+                                zoomType: "inner"
+                            });
+                        }
+                    }
+
+
+                    // end resize events
+                }
+
+
+                prevW = window.innerWidth || $j(window).width();
+
+
+            }));
+        })
+    </script>
+
+@endpush

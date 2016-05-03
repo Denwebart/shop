@@ -146,6 +146,12 @@ class Product extends Model
 
 		static::saving(function($product) {
 			$product->alias = Translit::generateAlias($product->title, $product->alias);
+			if(trim(strip_tags($product->introtext)) == '') {
+				$product->introtext = '';
+			}
+			if(trim(strip_tags($product->content)) == '') {
+				$product->content = '';
+			}
 		});
 		static::deleting(function($product) {
 			$product->images()->delete();
@@ -190,6 +196,16 @@ class Product extends Model
 		return $this->hasMany('App\Models\ProductImage', 'product_id');
 	}
 
+	/**
+	 * Reviews
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function reviews()
+	{
+		return $this->hasMany('App\Models\ProductReview', 'product_id');
+	}
+
 	public function getMetaTitle()
 	{
 		return $this->meta_title ? $this->meta_title : '';
@@ -219,6 +235,31 @@ class Product extends Model
 		} else {
 			return url($this->alias);
 		}
+	}
+
+	/**
+	 * Reviews
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function getReviews()
+	{
+		return $this->reviews()
+			->with('user')
+			->whereIsPublished(1)
+			->whereParentId(0)
+			->orderBy('published_at', 'DESC')->get();
+	}
+
+	/**
+	 * Rating
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function getRating()
+	{
+//		return $this->getReviews()->
 	}
 
 	/**
@@ -260,7 +301,7 @@ class Product extends Model
 	 * @author     It Hill (it-hill.com@yandex.ua)
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
-	public function getImageUrl($default = true, $prefix = null)
+	public function getImageUrl($prefix = null, $default = true)
 	{
 		$prefix = is_null($prefix) ? '' : ($prefix . '_');
 		return $this->image

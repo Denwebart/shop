@@ -169,7 +169,7 @@ View::share('title', $title);
                                             <tr>
                                                 <td>{{ $key + 1 }}</td>
                                                 <td>
-                                                    <img src="{{ $orderProducts->product->getImageUrl() }}" alt="{{ $orderProducts->product->image_alt }}" width="50">
+                                                    <img src="{{ $orderProducts->product->getImageUrl('mini') }}" alt="{{ $orderProducts->product->image_alt }}" width="50">
                                                     {{ $orderProducts->product->title }}
                                                     ({{ $orderProducts->product->vendor_code }})
                                                 </td>
