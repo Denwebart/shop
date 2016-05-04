@@ -244,7 +244,7 @@
                 <li>
                     <a href="#reviews" role="tab" data-toggle="tab" class="text-uppercase">
                         Отзывы
-                        @if(count($productReviews)) ({{ count($productReviews) }}) @endif
+                        <span class="count">({{ count($productReviews) }})</span>
                     </a>
                 </li>
                 <li><a href="#sizing-guide" role="tab" data-toggle="tab" class="text-uppercase">Таблица размеров</a></li>

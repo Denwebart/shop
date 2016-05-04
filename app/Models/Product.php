@@ -294,7 +294,7 @@ class Product extends Model
 			$totalRating = $totalRating + ($item->rating * $item->count);
 		}
 		$this->ratingInfo['sum'] = count($reviewsRating);
-		$this->ratingInfo['value'] = $totalRating / count($reviewsRating);
+		$this->ratingInfo['value'] = count($reviewsRating) ? ($totalRating / count($reviewsRating)) : 0;
 
 		return $this->ratingInfo;
 	}
