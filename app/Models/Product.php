@@ -151,14 +151,6 @@ class Product extends Model
 		return $rules;
 	}
 	
-	public function __construct(array $attributes = [])
-	{
-		parent::__construct($attributes);
-
-		$this->ratingInfo = $this->getRating();
-		$this->rating = $this->ratingInfo['value'];
-	}
-	
 	public static function boot()
 	{
 		parent::boot();
@@ -212,7 +204,7 @@ class Product extends Model
 	 */
 	public function images()
 	{
-		return $this->hasMany('App\Models\ProductImage', 'product_id');
+		return $this->hasMany('App\Models\ProductImage', 'product_id')->with('product');
 	}
 
 	/**
@@ -276,7 +268,7 @@ class Product extends Model
 	public function getReviews()
 	{
 		return $this->publishedReviews()
-			->with('user')
+			->with('user', 'publishedChildren')
 			->whereParentId(0)
 			->orderBy('published_at', 'DESC')->get();
 	}

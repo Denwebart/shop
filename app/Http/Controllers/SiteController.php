@@ -87,7 +87,10 @@ class SiteController extends Controller
 				return view('page', compact('page'));
 			}
 		} else {
-			return view('product', compact('page'));
+			$page->ratingInfo = $page->getRating();
+			$page->rating = $page->ratingInfo['value'];
+			$productReviews = $page->getReviews();
+			return view('product', compact('page', 'productReviews'));
 		}
 	}
 }
