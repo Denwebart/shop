@@ -65,6 +65,17 @@ class Product extends Model
 	protected $table = 'products';
 
 	protected $imagePath = '/uploads/products/';
+	
+	public $ratingInfo = [
+		1 => 0,
+		2 => 0,
+		3 => 0,
+		4 => 0,
+		5 => 0,
+		'sum' => 0,
+		'value' => 0
+	];
+	public $rating;
 
 	/**
 	 * Статус публикации (значение поля is_published)
@@ -139,7 +150,15 @@ class Product extends Model
 		}
 		return $rules;
 	}
+	
+	public function __construct(array $attributes = [])
+	{
+		parent::__construct($attributes);
 
+		$this->ratingInfo = $this->getRating();
+		$this->rating = $this->ratingInfo['value'];
+	}
+	
 	public static function boot()
 	{
 		parent::boot();
@@ -197,13 +216,25 @@ class Product extends Model
 	}
 
 	/**
-	 * Reviews
+	 * All Reviews
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
 	 */
 	public function reviews()
 	{
 		return $this->hasMany('App\Models\ProductReview', 'product_id');
+	}
+
+	/**
+	 * Reviews
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function publishedReviews()
+	{
+		return $this->hasMany('App\Models\ProductReview', 'product_id')
+			->whereIsPublished(1)
+			->where('published_at', '<', Carbon::now());
 	}
 
 	public function getMetaTitle()
@@ -244,22 +275,36 @@ class Product extends Model
 	 */
 	public function getReviews()
 	{
-		return $this->reviews()
+		return $this->publishedReviews()
 			->with('user')
-			->whereIsPublished(1)
 			->whereParentId(0)
 			->orderBy('published_at', 'DESC')->get();
 	}
 
 	/**
-	 * Rating
+	 * Rating info
 	 *
 	 * @author     It Hill (it-hill.com@yandex.ua)
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
 	public function getRating()
 	{
-//		return $this->getReviews()->
+		$reviewsRating = ProductReview::whereParentId(0)
+			->whereIsPublished(1)
+			->where('published_at', '<', Carbon::now())
+			->select(\DB::raw('rating, COUNT(*) as count'))
+			->groupBy('rating')
+			->get();
+
+		$totalRating = 0;
+		foreach ($reviewsRating as $item) {
+			$this->ratingInfo[$item->rating] = $item->count;
+			$totalRating = $totalRating + ($item->rating * $item->count);
+		}
+		$this->ratingInfo['sum'] = count($reviewsRating);
+		$this->ratingInfo['value'] = $totalRating / count($reviewsRating);
+
+		return $this->ratingInfo;
 	}
 
 	/**

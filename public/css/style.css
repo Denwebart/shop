@@ -11594,8 +11594,9 @@ form label.error {
 }
 
 .rating {
-    font-size: 10px;
+    font-size: 14px;
     line-height: 1em;
+    cursor: default !important;
 }
 
 .rating span {
@@ -11604,15 +11605,6 @@ form label.error {
 
 .rating .empty-star {
     opacity: 0.5;
-}
-
-.rating--big {
-    font-size: 13px;
-    line-height: 1.4em !important;
-}
-
-.rating--big span {
-    padding-right: 2px;
 }
 
 .price-box {
@@ -17268,6 +17260,9 @@ table.table-total h2 {
 .p-t-30 {
     padding-top: 30px !important;
 }
+.p-b-20 {
+    padding-bottom: 20px;
+}
 .m-t-0 {
     margin-top: 0 !important;
 }
@@ -17279,6 +17274,9 @@ table.table-total h2 {
 }
 .m-l-10 {
     margin-left: 10px !important;
+}
+.m-r-10 {
+    margin-right: 10px !important;
 }
 
 /* Colors */

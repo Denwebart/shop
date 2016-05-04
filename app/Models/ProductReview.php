@@ -7,6 +7,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -143,5 +144,33 @@ class ProductReview extends Model
 	public function parent()
 	{
 		return $this->belongsTo('App\Models\ProductReview', 'parent_id');
+	}
+
+	/**
+	 * Все комментарии к отзыву
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function children()
+	{
+		return $this->hasMany('App\Models\ProductReview', 'parent_id');
+	}
+
+	/**
+	 * Опубликованные комментарии к отзыву
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function publishedChildren()
+	{
+		return $this->hasMany('App\Models\ProductReview', 'parent_id')
+			->whereIsPublished(1)
+			->where('published_at', '<', Carbon::now());
 	}
 }

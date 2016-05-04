@@ -83,13 +83,7 @@
                         <span class="price-box__new">{{ \App\Helpers\Str::priceFormat($page->price) }}</span>
                         {{--<span class="price-box__old">7 000 руб.</span>--}}
                     </div>
-                    <div class="rating product-info__rating hidden-xs">
-                        <span class="icon-star"></span>
-                        <span class="icon-star"></span>
-                        <span class="icon-star"></span>
-                        <span class="icon-star"></span>
-                        <span class="icon-star"></span>
-                    </div>
+                    <div id="rating" class="rating product-rating hidden-xs p-b-20"></div>
                     @if($page->introtext)
                         <div class="divider divider&#45;&#45;xs product-info__divider"></div>
                         <div class="product-info__description">
@@ -289,14 +283,8 @@
                                 <h3 class="text-uppercase">Отзывы ({{ count($page->getReviews()) }})</h3>
                                 <div class="rating-extended row">
                                     <div class="col-lg-12">
-                                        <h1 class="rating-extended__num pull-left"> 4.75</h1>
-                                        <div class="rating">
-                                            <span class="icon icon-star"></span>
-                                            <span class="icon icon-star"></span>
-                                            <span class="icon icon-star"></span>
-                                            <span class="icon icon-star"></span>
-                                            <span class="icon icon-star empty-star"></span>
-                                        </div>
+                                        <h1 class="rating-extended__num pull-left">{{ $page->rating }}</h1>
+                                        <div class="rating product-rating"></div>
                                         <div>
                                             <span class="icon icon-man"></span>
                                             Отзывов: {{ count($page->getReviews()) }}
@@ -306,37 +294,57 @@
                                     <div class="col-lg-12">
                                         <div class="progress">
                                             <span class="rating-extended__label">5 звезд</span>
-                                            <div class="progress-bar progress-bar-five" role="progressbar" aria-valuenow="{{ count($page->getReviews()) }}" aria-valuemin="0" aria-valuemax="100" style="width: 70%">
-                                                <span class="rating-extended__reviews-count">10</span>
-                                            </div>
+                                            @if($page->ratingInfo[5])
+                                                <div class="progress-bar progress-bar-five" role="progressbar" aria-valuenow="{{ count($page->getReviews()) }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (100 * $page->ratingInfo[5]) / $page->ratingInfo['sum'] }}%">
+                                                    <span class="rating-extended__reviews-count">
+                                                        {{ $page->ratingInfo[5] }}
+                                                    </span>
+                                                </div>
+                                            @endif
                                         </div>
                                         <div class="clearfix"></div>
                                         <div class="progress">
                                             <span class="rating-extended__label">4 звезды</span>
-                                            <div class="progress-bar progress-bar-four" role="progressbar" aria-valuenow="{{ count($page->getReviews()) }}" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                                <span class="rating-extended__reviews-count">4</span>
-                                            </div>
+                                            @if($page->ratingInfo[4])
+                                                <div class="progress-bar progress-bar-four" role="progressbar" aria-valuenow="{{ count($page->getReviews()) }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (100 * $page->ratingInfo[4]) / $page->ratingInfo['sum'] }}%">
+                                                    <span class="rating-extended__reviews-count">
+                                                        {{ $page->ratingInfo[4] }}
+                                                    </span>
+                                                </div>
+                                            @endif
                                         </div>
                                         <div class="clearfix"></div>
                                         <div class="progress">
                                             <span class="rating-extended__label">3 звезды</span>
-                                            <div class="progress-bar progress-bar-three" role="progressbar" aria-valuenow="{{ count($page->getReviews()) }}" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                                                <span class="rating-extended__reviews-count">3</span>
-                                            </div>
+                                            @if($page->ratingInfo[3])
+                                                <div class="progress-bar progress-bar-three" role="progressbar" aria-valuenow="{{ count($page->getReviews()) }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (100 * $page->ratingInfo[3]) / $page->ratingInfo['sum'] }}%">
+                                                    <span class="rating-extended__reviews-count">
+                                                        {{ $page->ratingInfo[3] }}
+                                                    </span>
+                                                </div>
+                                            @endif
                                         </div>
                                         <div class="clearfix"></div>
                                         <div class="progress">
                                             <span class="rating-extended__label">2 звезды</span>
-                                            <div class="progress-bar progress-bar-two" role="progressbar" aria-valuenow="{{ count($page->getReviews()) }}" aria-valuemin="0" aria-valuemax="100" style="width: 15%">
-                                                <span class="rating-extended__reviews-count">2</span>
-                                            </div>
+                                            @if($page->ratingInfo[2])
+                                                <div class="progress-bar progress-bar-two" role="progressbar" aria-valuenow="{{ count($page->getReviews()) }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (100 * $page->ratingInfo[2]) / $page->ratingInfo['sum'] }}%">
+                                                    <span class="rating-extended__reviews-count">
+                                                        {{ $page->ratingInfo[2] }}
+                                                    </span>
+                                                </div>
+                                            @endif
                                         </div>
                                         <div class="clearfix"></div>
                                         <div class="progress">
                                             <span class="rating-extended__label">1 звезда</span>
-                                            <div class="progress-bar progress-bar-one" role="progressbar" aria-valuenow="{{ count($page->getReviews()) }}" aria-valuemin="0" aria-valuemax="100" style="width: 10%">
-                                                <span class="rating-extended__reviews-count">1</span>
-                                            </div>
+                                            @if($page->ratingInfo[1])
+                                                <div class="progress-bar progress-bar-one" role="progressbar" aria-valuenow="{{ count($page->getReviews()) }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (100 * $page->ratingInfo[1]) / $page->ratingInfo['sum'] }}%">
+                                                    <span class="rating-extended__reviews-count">
+                                                        {{ $page->ratingInfo[1] }}
+                                                    </span>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -371,10 +379,19 @@
                                             @endif
                                             {{ \App\Helpers\Date::format($review->created_at) }}
                                         </div>
-                                        <div class="review__comments"><a href="#">Комментарии (1)</a></div>
-                                        <div class="review__helpful">Этот отзыв был полезен?
-                                            <a href="#">Да</a>
-                                            <a href="#">Нет</a>
+                                        <div class="review__comments">
+                                            <a href="#">Комментарии ({{ count($review->publishedChildren) }})</a>
+                                        </div>
+                                        <div class="review__helpful">
+                                            <span class="m-r-10">Этот отзыв был полезен?</span>
+                                            <a href="#" class="like" data-id="{{ $review->id }}">
+                                                Да
+                                                <span class="count">({{ $review->like }})</span>
+                                            </a>
+                                            <a href="#" class="dislike" data-id="{{ $review->id }}">
+                                                Нет
+                                                <span class="count">({{ $review->dislike }})</span>
+                                            </a>
                                         </div>
                                     </div>
                                 @endforeach
@@ -479,7 +496,7 @@
                 <div class="product-preview-wrapper">
                     <div class="product-preview open">
                         <div class="product-preview__image"><a href="#"><img
-                                        src="/images/product-empty.png" data-lazy="images/1-yellow-blond.JPG"
+                                        src="/images/product-empty.png" data-lazy="/images/1-yellow-blond.JPG"
                                         alt=""/></a></div>
                         <div class="product-preview__info text-center">
                             <div class="product-preview__info__btns"><a href="#"
@@ -516,7 +533,7 @@
                     <div class="product-preview open">
                         <div class="product-preview__image">
                             <a href="product.html">
-                                <img src="/images/product-empty.png" data-lazy="images/2-black.JPG" alt=""/>
+                                <img src="/images/product-empty.png" data-lazy="/images/2-black.JPG" alt=""/>
                             </a>
                         </div>
                         <div class="product-preview__label product-preview__label--left product-preview__label--new">
@@ -564,7 +581,7 @@
                     <div class="product-preview open">
                         <div class="product-preview__image">
                             <a href="product.html">
-                                <img src="/images/product-empty.png" data-lazy="images/8-pink.JPG" alt=""/>
+                                <img src="/images/product-empty.png" data-lazy="/images/8-pink.JPG" alt=""/>
                             </a>
                             <div class="product-preview__outstock">Продано</div>
                         </div>
@@ -596,7 +613,7 @@
                     <div class="product-preview open">
                         <div class="product-preview__image">
                             <a href="product.html">
-                                <img src="/images/product-empty.png" data-lazy="images/5-red.JPG" alt=""/>
+                                <img src="/images/product-empty.png" data-lazy="/images/5-red.JPG" alt=""/>
                             </a>
                             <div class="countdown_box">
                                 <div class="countdown_inner">
@@ -633,7 +650,7 @@
                     <div class="product-preview open">
                         <div class="product-preview__image">
                             <a href="product.html">
-                                <img src="/images/product-empty.png" data-lazy="images/4-blue.JPG" alt=""/>
+                                <img src="/images/product-empty.png" data-lazy="/images/4-blue.JPG" alt=""/>
                             </a>
                         </div>
                         <div class="product-preview__info text-center">
@@ -661,7 +678,7 @@
                 <div class="product-preview-wrapper">
                     <div class="product-preview open">
                         <div class="product-preview__image"><a href="product.html"><img
-                                        src="/images/product-empty.png" data-lazy="images/2-black.JPG"
+                                        src="/images/product-empty.png" data-lazy="/images/2-black.JPG"
                                         alt=""/></a></div>
                         <div class="product-preview__info text-center">
                             <div class="product-preview__info__btns"><a href="#"
@@ -688,7 +705,7 @@
                 <div class="product-preview-wrapper">
                     <div class="product-preview open">
                         <div class="product-preview__image"><a href="product.html"><img
-                                        src="/images/product-empty.png" data-lazy="images/7-sky-blue.JPG"
+                                        src="/images/product-empty.png" data-lazy="/images/7-sky-blue.JPG"
                                         alt=""/></a></div>
                         <div class="product-preview__info text-center">
                             <div class="product-preview__info__btns"><a href="#"
@@ -716,7 +733,7 @@
                     <div class="product-preview open">
                         <div class="product-preview__image">
                             <a href="product.html">
-                                <img src="/images/1-yellow.JPG" data-lazy="images/1-yellow.JPG" alt=""/>
+                                <img src="/images/1-yellow.JPG" data-lazy="/images/1-yellow.JPG" alt=""/>
                             </a>
                         </div>
                         <div class="product-preview__info text-center">
@@ -822,8 +839,21 @@
     <script src="{{ asset('vendor/magnific-popup/jquery.magnific-popup.min.js') }}"></script>
     <script src="{{ asset('vendor/countdown/jquery.plugin.min.js') }}"></script>
     <script src="{{ asset('vendor/countdown/jquery.countdown.min.js') }}"></script>
+    <script src="{{ asset('vendor/jrate/jRate.min.js') }}"></script>
 
     <script type="text/javascript">
+        // Product Rating
+        $(".product-rating").jRate({
+            rating: '{{ $page->rating }}',
+            precision: 0, // целое число
+            width: 18,
+            height: 18,
+            shapeGap: '2px',
+            startColor: '#F9BC39',
+            endColor: '#F9BC39',
+            readOnly: true
+        });
+
         // Without zoom previews switcher
 
         jQuery(function($j) {
