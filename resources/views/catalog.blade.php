@@ -7,20 +7,20 @@
             @include('parts.breadcrumbs')
         </div>
     </section>
+
     <!-- Content section -->
-    <section class="content">
-        <div class="container">
-            @if($page->title)
-                <h2 class="category-outer__text__title text-uppercase">{{ $page->title }}</h2>
-            @endif
-            <p>
-                Здесь будет располагаться текст страницы <strong>каталога</strong> или
-                <strong>категории</strong> в каталоге. Ниже, в качестве примера, будет представлен
-                рыбный текст, который используется для временного наполнения при производстве
-                <strong>веб-сайтов</strong>, пока финальный текст еще не создан.
-            </p>
-        </div>
-    </section>
+    @if($page->title || $page->introtext)
+        <section class="content">
+            <div class="container">
+                @if($page->title)
+                    <h2 class="category-outer__text__title text-uppercase">{{ $page->title }}</h2>
+                @endif
+                @if($page->introtext)
+                    {!! $page->introtext !!}
+                @endif
+            </div>
+        </section>
+    @endif
 
     <section class="content">
         <div class="container">
@@ -883,25 +883,22 @@
     </section>
 
     <!-- Content section -->
-    <section class="content">
-        <div class="container">
-            <h3 class="category-outer__text__title text-uppercase">
-                Текст для описания каталога товаров
-            </h3>
-            <p>
-                Здесь будет располагаться текст страницы <strong>каталога</strong> или
-                <strong>категории</strong> в каталоге. Ниже, в качестве примера, будет представлен
-                рыбный текст, который используется для временного наполнения при производстве
-                <strong>веб-сайтов</strong>, пока финальный текст еще не создан.
-            </p>
-            <p>
-                Далеко-далеко за словесными горами в стране гласных и согласных живут
-                <a href="http://www.blindtextgenerator.com/ru/about-lorem-ipsum">рыбные тексты</a>.
-                Вдали от всех живут они в буквенных домах на берегу Семантика большого языкового
-                океана. Маленький ручеек Даль журчит по всей стране и обеспечивает ее всеми необходимыми
-                правилами. Эта парадигматическая страна, в которой жаренные члены предложения залетают
-                прямо в рот.
-            </p>
-        </div>
-    </section>
+    @if($page->content)
+        <section class="content">
+            <div class="container">
+                {!! $page->content !!}
+            </div>
+        </section>
+    @endif
 @endsection
+
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('vendor/nouislider/nouislider.css') }}">
+@endpush
+
+@push('scripts')
+    <script src="{{ asset('vendor/elevatezoom/jquery.elevatezoom.js') }}"></script>
+    <script src="{{ asset('vendor/isotope/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ asset('vendor/nouislider/nouislider.min.js') }}"></script>
+    <script src="{{ asset('vendor/imagesloaded/imagesloaded.pkgd.min.js') }}"></script>
+@endpush

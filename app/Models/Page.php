@@ -171,6 +171,12 @@ class Page extends Model
 			} else {
 				$page->alias = '/';
 			}
+			if(trim(strip_tags($page->introtext)) == '') {
+				$page->introtext = '';
+			}
+			if(trim(strip_tags($page->content)) == '') {
+				$page->content = '';
+			}
 		});
 	}
 
