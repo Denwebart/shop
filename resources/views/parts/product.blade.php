@@ -94,7 +94,7 @@
             </div>
             @if($item->introtext || $item->content)
                 <div class="product-preview__info__description">
-                    {{ $item->introtext ? $item->introtext : \App\Helpers\Str::closeTags(\App\Helpers\Str::limit($item->content)) }}
+                    {!! $item->introtext ? $item->introtext : \App\Helpers\Str::closeTags(\App\Helpers\Str::limit($item->content, 500)) !!}
                 </div>
             @endif
             <div class="product-preview__info__link">

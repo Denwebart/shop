@@ -15,6 +15,7 @@ use App\Models\Product;
 use App\Widgets\Carousel\Carousel;
 use App\Widgets\Reviews\Reviews;
 use App\Widgets\Slider\Slider;
+use Carbon\Carbon;
 
 class SiteController extends Controller
 {
@@ -77,12 +78,31 @@ class SiteController extends Controller
 
 	protected function renderPage($request, $page)
 	{
-		if($request->getUri() != $page->getUrl()) {
+		if(url($request->getPathInfo()) != $page->getUrl()) {
 			abort(404);
 		}
 		if(is_a($page, 'App\Models\Page')) {
 			if($page->type == Page::TYPE_CATALOG) {
-				return view('catalog', compact('page'));
+				$subcategoryIds = Page::select(['id', 'parent_id'])
+					->whereParentId($page->id)
+					->whereIsPublished(1)
+					->where('published_at', '<', Carbon::now())
+					->pluck('id');
+
+				$subcategoryIds[] = $page->id;
+
+				// доделать сортировку по популярности
+				$products = Product::whereIn('category_id', $subcategoryIds)
+					->whereIsPublished(1)
+					->where('published_at', '<', Carbon::now())
+					->with([
+						'category' => function($q) {
+							$q->select(['id', 'parent_id', 'alias', 'is_container']);
+						}
+					])
+					->paginate(12);
+
+				return view('catalog', compact('page', 'products'));
 			} else {
 				return view('page', compact('page'));
 			}

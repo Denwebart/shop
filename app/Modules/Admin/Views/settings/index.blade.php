@@ -164,17 +164,19 @@ View::share('title', $title);
                     <h5>{{ $menuTitle }}</h5>
                     <div class="menu-tree" data-menu-type="{{ $menuType }}">
                         <ul>
-                            @foreach($menuItems[$menuType] as $item)
-                                <li data-jstree='{"type":"{{ $item->page->type == \App\Models\Page::TYPE_PAGE && $item->page->is_container ? 'category' : ($item->page->type == \App\Models\Page::TYPE_CATALOG ? 'catalog' : 'file') }}", "opened":false}' data-page-id="{{ $item->page->id }}" data-menu-id="{{ $item->id }}">{{ $item->page->getTitle() }}
-                                    @if(count($item->children))
-                                        <ul>
-                                            @foreach($item->children as $child)
-                                                <li data-jstree='{"icon":"{{ $child->page->type == \App\Models\Page::TYPE_PAGE && $child->page->is_container ? 'fa fa-folder' : ($child->page->type == \App\Models\Page::TYPE_CATALOG ? 'fa fa-shopping-bag' : 'fa fa-file-o') }}", "opened":false, "children:false"}' data-page-id="{{ $child->page->id }}" data-menu-id="{{ $item->id }}">{{ $child->page->getTitle() }}</li>
-                                            @endforeach
-                                        </ul>
-                                    @endif
-                                </li>
-                            @endforeach
+                            @if(isset($menuItems[$menuType]))
+                                @foreach($menuItems[$menuType] as $item)
+                                    <li data-jstree='{"type":"{{ $item->page->type == \App\Models\Page::TYPE_PAGE && $item->page->is_container ? 'category' : ($item->page->type == \App\Models\Page::TYPE_CATALOG ? 'catalog' : 'file') }}", "opened":false}' data-page-id="{{ $item->page->id }}" data-menu-id="{{ $item->id }}">{{ $item->page->getTitle() }}
+                                        @if(count($item->children))
+                                            <ul>
+                                                @foreach($item->children as $child)
+                                                    <li data-jstree='{"icon":"{{ $child->page->type == \App\Models\Page::TYPE_PAGE && $child->page->is_container ? 'fa fa-folder' : ($child->page->type == \App\Models\Page::TYPE_CATALOG ? 'fa fa-shopping-bag' : 'fa fa-file-o') }}", "opened":false, "children:false"}' data-page-id="{{ $child->page->id }}" data-menu-id="{{ $item->id }}">{{ $child->page->getTitle() }}</li>
+                                                @endforeach
+                                            </ul>
+                                        @endif
+                                    </li>
+                                @endforeach
+                            @endif
                         </ul>
                     </div>
                 @endforeach

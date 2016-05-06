@@ -233,6 +233,34 @@ class Page extends Model
 			->whereIsPublished(1)
 			->where('published_at', '<', date('Y-m-d H:i:s'));
 	}
+
+	/**
+	 * Все товары в каталоге
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function products()
+	{
+		return $this->hasMany('App\Models\Product', 'category_id');
+	}
+
+	/**
+	 * Опубликованные товары в каталоге
+	 *
+	 * @return mixed
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function publishedProducts()
+	{
+		return $this->hasMany('App\Models\Product', 'category_id')
+			->whereIsPublished(1)
+			->where('published_at', '<', Carbon::now());
+	}
 	
 	/**
 	 * Is main page?
