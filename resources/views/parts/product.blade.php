@@ -26,9 +26,9 @@
         </div>
         <div class="product-preview__info text-center">
             <div class="product-preview__info__btns">
-                <a href="#" class="btn btn--round">
+                <button class="btn btn--round add-to-cart" data-product-id="{{ $item->id }}">
                     <span class="icon-ecommerce"></span>
-                </a>
+                </button>
             </div>
             <div class="product-preview__info__title">
                 <h2>
@@ -102,10 +102,12 @@
                     <span class="icon icon-favorite"></span>
                     <span class="product-preview__info__link__text dashed-bottom">Добавить в список желаний</span>
                 </a>
-                <a href="#" class="btn btn--wd buy-link">
+                <button class="btn btn--wd buy-link">
                     <span class="icon icon-ecommerce"></span>
-                    <span class="product-preview__info__link__text">Добавить в корзину</span>
-                </a>
+                    <span class="product-preview__info__link__text add-to-cart" data-product-id="{{ $item->id }}">
+                        Добавить в корзину
+                    </span>
+                </button>
             </div>
         </div>
     </div>

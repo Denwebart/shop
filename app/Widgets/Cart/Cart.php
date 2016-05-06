@@ -8,17 +8,45 @@
 
 namespace App\Widgets\Cart;
 
-
+use Illuminate\Routing\Controller as BaseController;
 use App\Models\Product;
+use Illuminate\Http\Request;
 
-class Cart
+class Cart extends BaseController
 {
 	public function show()
 	{
 		$products = Product::all();
-//		$products = [];
 
 		return view('widget.cart::index', compact('products'));
+	}
+	
+	public function addToCart(Request $request)
+	{
+		if($request->ajax()) {
+
+			$product = Product::find($request->get('id'));
+			if($product) {
+				// доделать добавление в корзину
+
+				$products = [];
+				
+				return \Response::json([
+					'success' => true,
+					'cartHtml' => view('widget.cart::index')->with('products', $products)->render(),
+				]);
+			}
+
+			return \Response::json([
+				'success' => true,
+				'message' => 'Произошла ошибка, товар не был добавлен в корзину.'
+			]);
+		}
+	}
+	
+	public function removeFromCart(Request $request)
+	{
+		
 	}
 	
 }

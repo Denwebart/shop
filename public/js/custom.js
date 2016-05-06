@@ -2208,14 +2208,6 @@ jQuery(function($j) {
 	
     "use strict";
 	
-	 $j('.ajax-to-cart').click(function(e){
-		e.preventDefault();
-		 $j(this).addClass('btn--wait');
-		 $j.ajax({url: "ajax.php", success: function(result){
-			 $j('.ajax-to-cart').removeClass('btn--wait');
-			 $j('#modalAddToCart').modal("toggle");
-			}});
-	});
 	 $j('.ajax-to-wishlist').click(function(e){
 		e.preventDefault();
 		$j('#modalAddToWishlist').modal("toggle");		

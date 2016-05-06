@@ -7,6 +7,8 @@
     <meta name="description" content="{{ $page->getMetaDesc() }}">
     <meta name="keywords" content="{{ $page->getMetaKey() }}"/>
     <meta name="author" content="it-hill.com">
+    <meta name="csrf-token" content="{!! csrf_token() !!}">
+
     <link rel="shortcut icon" href="{{ asset('images/favicons/favicon.ico') }}">
     <!-- Mobile Specific Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -142,9 +144,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="header__cart pull-left">
-                        {!! $cartWidget->show() !!}
-                    </div>
+                    {!! $cartWidget->show() !!}
                 </div>
                 <!-- End Cart & Currency -->
             </div>
@@ -254,20 +254,8 @@
     </footer>
 </div>
 
-<div class="modal fade bs-example-modal-sm" role="dialog" id="modalAddToCart">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <button type="button" class="close icon-clear" data-dismiss="modal"></button>
-            <div class="text-center">
-                <div class="divider divider--xs"></div>
-                <p>Продукт успешно добавлен в корзину!</p>
-                <div class="divider divider--xs"></div>
-                <a href="#" class="btn btn--wd">Посмотреть корзину</a>
-                <div class="divider divider--xs"></div>
-            </div>
-        </div>
-    </div>
-</div>
+@yield('bottom')
+
 <div class="modal fade bs-example-modal-sm" role="dialog" id="modalAddToWishlist">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
