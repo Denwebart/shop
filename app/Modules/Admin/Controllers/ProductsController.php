@@ -157,7 +157,7 @@ class ProductsController extends Controller
 
 			    return \Response::json([
 				    'success' => true,
-				    'message' => 'Товар успешно удален.',
+				    'message' => 'Товар успешно удалён.',
 				    'itemsCount' => view('parts.count')->with('models', $products)->render(),
 				    'itemsPagination' => view('parts.pagination')->with('models', $products)->render(),
 				    'itemsTable' => view('admin::products.table')->with('products', $products)->render(),
@@ -165,7 +165,7 @@ class ProductsController extends Controller
 		    } else {
 			    return \Response::json([
 				    'success' => false,
-				    'message' => 'Произошла ошибка, товар не удален.'
+				    'message' => 'Произошла ошибка, товар не удалён.'
 			    ]);
 		    }
 	    }

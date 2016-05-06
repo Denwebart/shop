@@ -58,7 +58,7 @@ class LettersController extends Controller
 
 			    return \Response::json([
 				    'success' => true,
-				    'message' => 'Письмо успешно удалено.',
+				    'message' => 'Письмо успешно удалёно.',
 				    'itemsCount' => view('parts.count')->with('models', $letters)->render(),
 				    'itemsPagination' => view('parts.pagination')->with('models', $letters)->render(),
 				    'itemsTable' => view('admin::letters.table')->with('letters', $letters)->render(),
@@ -66,7 +66,7 @@ class LettersController extends Controller
 		    } else {
 			    return \Response::json([
 				    'success' => false,
-				    'message' => 'Произошла ошибка, письмо не удалено.'
+				    'message' => 'Произошла ошибка, письмо не удалёно.'
 			    ]);
 		    }
 	    }

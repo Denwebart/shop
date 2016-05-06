@@ -14,23 +14,7 @@ class Menu
 
 	public function __construct()
 	{
-		$allItems = \App\Models\Menu::whereParentId(0)
-			->with([
-				'page' => function($query) {
-					$query->select('id', 'alias', 'type', 'is_container', 'parent_id', 'title', 'menu_title');
-				},
-				'children',
-				'children.page' => function($query) {
-					$query->select('id', 'alias', 'type', 'is_container', 'parent_id', 'title', 'menu_title');
-				},
-				'children.page.parent' => function($query) {
-					$query->select('id', 'alias', 'type', 'is_container', 'parent_id', 'title', 'menu_title');
-				},
-			])->orderBy('position', 'ASC')->get();
-
-		foreach ($allItems as $item) {
-			$this->menuItems[$item->type][$item->id] = $item;
-		}
+		$this->menuItems = \App\Models\Menu::getMenuItems();
 	}
 
 	/**

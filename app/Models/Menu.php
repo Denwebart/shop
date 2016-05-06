@@ -138,4 +138,43 @@ class Menu extends Model
 		return $this->hasMany('App\Models\Menu', 'parent_id');
 	}
 
+	/**
+	 * Get all menu items as array
+	 *
+	 * @param integer $type
+	 * @return array
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public static function getMenuItems($type = null)
+	{
+		$query = self::whereParentId(0)
+			->with([
+				'page' => function($query) {
+					$query->select('id', 'alias', 'type', 'is_container', 'parent_id', 'title', 'menu_title');
+				},
+				'children',
+				'children.page' => function($query) {
+					$query->select('id', 'alias', 'type', 'is_container', 'parent_id', 'title', 'menu_title');
+				},
+				'children.page.parent' => function($query) {
+					$query->select('id', 'alias', 'type', 'is_container', 'parent_id', 'title', 'menu_title');
+				},
+			]);
+			if($type) {
+				$query = $query->whereType($type);
+			}
+		$allItems = $query->orderBy('position', 'ASC')->get();
+
+		foreach ($allItems as $item) {
+			if($type) {
+				$result[$item->id] = $item;
+			} else {
+				$result[$item->type][$item->id] = $item;
+			}
+		}
+
+		return isset($result) ? $result : [];
+	}
 }

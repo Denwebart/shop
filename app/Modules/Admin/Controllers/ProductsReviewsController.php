@@ -103,7 +103,7 @@ class ProductsReviewsController extends Controller
 
 			    return \Response::json([
 				    'success' => true,
-				    'message' => 'Отзыв успешно удален.',
+				    'message' => 'Отзыв успешно удалён.',
 				    'itemsCount' => view('parts.count')->with('models', $productsReviews)->render(),
 				    'itemsPagination' => view('parts.pagination')->with('models', $productsReviews)->render(),
 				    'itemsTable' => view('admin::productsReviews.table')->with('productsReviews', $productsReviews)->render(),
@@ -111,7 +111,7 @@ class ProductsReviewsController extends Controller
 		    } else {
 			    return \Response::json([
 				    'success' => false,
-				    'message' => 'Произошла ошибка, отзыв не удален.'
+				    'message' => 'Произошла ошибка, отзыв не удалён.'
 			    ]);
 		    }
 	    }

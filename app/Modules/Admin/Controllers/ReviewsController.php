@@ -143,7 +143,7 @@ class ReviewsController extends Controller
 
 			return \Response::json([
 				'success' => true,
-				'message' => 'Отзыв о магазине успешно удален.',
+				'message' => 'Отзыв о магазине успешно удалён.',
 				'itemsCount'      => view('parts.count')->with('models', $reviews)->render(),
 				'itemsPagination' => view('parts.pagination')->with('models', $reviews)->render(),
 				'itemsTable'      => view('admin::reviews.table')->with('reviews', $reviews)->render(),

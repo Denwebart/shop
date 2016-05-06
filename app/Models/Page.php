@@ -126,7 +126,7 @@ class Page extends Model
 	 * @author     It Hill (it-hill.com@yandex.ua)
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
-	protected static $rules = [
+	public static $rules = [
 		'alias' => 'unique:pages,alias,:id|max:500|regex:/^[A-Za-z0-9\-]+$/u',
 		'parent_id' => 'integer',
 		'user_id' => 'integer',

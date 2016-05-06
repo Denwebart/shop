@@ -8,6 +8,7 @@
 
 namespace App\Modules\Admin\Controllers;
 
+use App\Models\Menu;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -26,7 +27,9 @@ class SettingsController extends Controller
 
 	    $settings = $settings->getAll();
 
-        return view('admin::settings.index', compact('settings'));
+	    $menuItems = Menu::getMenuItems();
+
+        return view('admin::settings.index', compact('settings', 'menuItems'));
     }
 
     /**

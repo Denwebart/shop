@@ -8,6 +8,7 @@
 
 namespace App\Modules\Admin\Controllers;
 
+use App\Models\Menu;
 use App\Models\Page;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -181,4 +182,104 @@ class MenusController extends Controller
 		    }
 	    }
     }
+
+	/**
+	 * Get menu items array in Json format
+	 *
+	 * @param Request $request
+	 * @return \Illuminate\Http\JsonResponse
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function getJsonMenuItems(Request $request)
+	{
+		if($request->ajax()) {
+			$items = [];
+			foreach(Menu::getMenuItems($request->get('type')) as $key => $item) {
+				$valueArray = [
+					'id' => $item->id,
+					'parent' => $item->parent_id ? $item->parent_id : "#",
+					'text' => $item->page->getTitle(),
+					'children' => count($item->children) ? true : false
+				];
+				if($request->get('type')) {
+					$items[] = $valueArray;
+				} else {
+					$items[$item->type][] = $valueArray;
+				}
+			}
+
+			return \Response::json([
+				'items' => json_encode($items, JSON_UNESCAPED_UNICODE)
+			]);
+		}
+	}
+
+	/**
+	 * Rename menu item
+	 *
+	 * @param Request $request
+	 * @return \Illuminate\Http\JsonResponse
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function rename(Request $request)
+	{
+		// доделать изменение заголовка меню для других пунктов меню (в других меню)
+		if($request->ajax()) {
+			$page = Page::find($request->get('page_id'));
+			if($page) {
+				$newMenuTitle = trim($request->get('menu_title'));
+				$validator = \Validator::make(['menu_title' => $newMenuTitle], ['menu_title' => Page::$rules['menu_title']]);
+				if($validator->fails()) {
+					return \Response::json([
+						'success' => false,
+						'message' => 'Произошла ошибка, пункт меню не переименован. ' . $validator->errors()->first('menu_title')
+					]);
+				}
+
+				$page->menu_title = $newMenuTitle;
+				$page->save();
+
+				return \Response::json([
+					'success' => true,
+					'message' => 'Пункт меню успешно переименован.'
+				]);
+			}
+
+			return \Response::json([
+				'success' => true,
+				'message' => 'Произошла ошибка, пункт меню не переименован.'
+			]);
+		}
+	}
+
+	/**
+	 * Delete menu item
+	 *
+	 * @param Request $request
+	 * @return \Illuminate\Http\JsonResponse
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function delete(Request $request)
+	{
+		if($request->ajax()) {
+			$menu = Menu::find($request->get('id'));
+			if($menu->delete()) {
+				return \Response::json([
+					'success' => true,
+					'message' => 'Пункт меню успешно удалён.'
+				]);
+			}
+
+			return \Response::json([
+				'success' => true,
+				'message' => 'Произошла ошибка, пункт меню не удалён'
+			]);
+		}
+	}
 }

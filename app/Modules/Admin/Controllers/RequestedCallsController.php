@@ -99,7 +99,7 @@ class RequestedCallsController extends Controller
 
 				return \Response::json([
 					'success' => true,
-					'message' => 'Звонок успешно удален.',
+					'message' => 'Звонок успешно удалён.',
 					'itemsCount' => view('parts.count')->with('models', $calls)->render(),
 					'itemsPagination' => view('parts.pagination')->with('models', $calls)->render(),
 					'itemsTable' => view('admin::requestedCalls.table')->with('calls', $calls)->render(),

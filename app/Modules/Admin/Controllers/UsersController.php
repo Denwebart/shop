@@ -163,7 +163,7 @@ class UsersController extends Controller
 
 				return \Response::json([
 					'success' => true,
-					'message' => 'Пользователь успешно удален.',
+					'message' => 'Пользователь успешно удалён.',
 					'itemsCount' => view('parts.count')->with('models', $users)->render(),
 					'itemsPagination' => view('parts.pagination')->with('models', $users)->render(),
 					'itemsTable' => view('admin::users.table')->with('users', $users)->render(),
@@ -171,7 +171,7 @@ class UsersController extends Controller
 			} else {
 				return \Response::json([
 					'success' => false,
-					'message' => 'Пользователь ' . $user->login . ' не может быть удален.'
+					'message' => 'Пользователь ' . $user->login . ' не может быть удалён.'
 				]);
 			}
 		}

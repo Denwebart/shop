@@ -23,8 +23,8 @@ Route::group(['module' => 'Admin', 'prefix' => 'admin', 'middleware' => 'web', '
 	Route::resource('users', 'UsersController');
 	Route::post('settings/set_is_active/', ['as' => 'admin.settings.setIsActive', 'uses' => 'SettingsController@setIsActive']);
 	Route::put('settings/set_value/', ['as' => 'admin.settings.setValue', 'uses' => 'SettingsController@setValue']);
-	Route::resource('settings', 'SettingsController', ['except' => [
-		'create', 'store', 'destroy', 'show'
-	]]);
-
+	Route::resource('settings', 'SettingsController', ['except' => ['create', 'store', 'destroy', 'show']]);
+	Route::post('menus/get_menu_items', ['as' => 'admin.menus.getJsonMenuItems', 'uses' => 'MenusController@getJsonMenuItems']);
+	Route::post('menus/rename', ['as' => 'admin.menus.rename', 'uses' => 'MenusController@rename']);
+	Route::post('menus/delete', ['as' => 'admin.menus.delete', 'uses' => 'MenusController@delete']);
 });
