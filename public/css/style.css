@@ -7037,8 +7037,9 @@ body.fullwidth .header__dropdowns-container {
 }
 
 @media (min-width: 768px) {
+    /* все dropdown */
     .navbar.navbar-wd .dropdown-menu {
-        margin-top: -4px;
+        margin-top: 7px;
         padding: 10px 18px;
         border-bottom-width: 2px;
         border-bottom-style: solid;
@@ -7046,6 +7047,10 @@ body.fullwidth .header__dropdowns-container {
         -webkit-box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.15);
         -moz-box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.15);
         box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.15);
+    }
+    /* выпадающее меню */
+    .navbar.navbar-wd .products-menu .dropdown-menu {
+        margin-top: -4px;
     }
 
     .navbar.navbar-wd .dropdown-menu > li > a {
@@ -7132,9 +7137,10 @@ body.fullwidth .header__dropdowns-container {
 }
 
 @media (min-width: 768px) {
+    /* все dropdown */
     header a.dropdown-toggle:before,
     header a.dropdown-toggle:after {
-        bottom: 3px;
+        bottom: -8px;
         left: 50%;
         border: solid transparent;
         content: " ";
@@ -7149,6 +7155,11 @@ body.fullwidth .header__dropdowns-container {
         -ms-transition: opacity 100ms 0 ease-out;
         -o-transition: opacity 100ms 0 ease-out;
         transition: opacity 100ms 0 ease-out;
+    }
+    /* выпадающее меню */
+    header .products-menu a.dropdown-toggle:before,
+    header .products-menu a.dropdown-toggle:after {
+        bottom: 3px;
     }
 
     header a.dropdown-toggle:after {

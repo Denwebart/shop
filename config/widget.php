@@ -10,5 +10,6 @@ return [
 		'slider',
 		'carousel',
 		'reviews',
+		'cart',
 	],
 ];

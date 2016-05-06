@@ -96,7 +96,7 @@
                         {!! $menuWidget->main() !!}
                     </ul>
 
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav products-menu">
                         {!! $menuWidget->product() !!}
 
                         <!--<li>-->
@@ -143,67 +143,7 @@
                         </div>
                     </div>
                     <div class="header__cart pull-left">
-                        <span class="header__cart__indicator hidden-xs hidden-sm hidden-md hidden-lg">
-                            22 000 руб.
-                        </span>
-                        <div class="dropdown pull-right">
-                            <a href="#" class="btn dropdown-toggle btn--links--dropdown header__cart__button header__dropdowns__button" data-toggle="dropdown">
-                                <span class="icon icon-bag-alt"></span>
-                                <span class="badge badge--menu">2</span>
-                            </a>
-                            <div class="dropdown-menu animated fadeIn shopping-cart" role="menu">
-                                <div class="shopping-cart__top text-uppercase">Корзина (2)</div>
-                                <ul>
-                                    <li class='shopping-cart__item'>
-                                        <div class="shopping-cart__item__image pull-left">
-                                            <a href="product.html">
-                                                <img src="images/7-sky-blue.JPG" alt=""/>
-                                            </a>
-                                        </div>
-                                        <div class="shopping-cart__item__info">
-                                            <div class="shopping-cart__item__info__title">
-                                                <a href="product.html">Элегантное пальто демисезонное</a>
-                                            </div>
-                                            <div class="shopping-cart__item__info__option">Цвет: Голубой</div>
-                                            <div class="shopping-cart__item__info__option">Размер: 42-46</div>
-                                            <div class="shopping-cart__item__info__price">5 000 руб.</div>
-                                            <div class="shopping-cart__item__info__qty">Кол-во: 1</div>
-                                            <div class="shopping-cart__item__info__delete">
-                                                <a href="#" class="icon icon-clear"></a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class='shopping-cart__item'>
-                                        <div class="shopping-cart__item__image pull-left">
-                                            <a href="product.html">
-                                                <img src="images/2-black.JPG" alt=""/>
-                                            </a>
-                                        </div>
-                                        <div class="shopping-cart__item__info">
-                                            <div class="shopping-cart__item__info__title">
-                                                <a href="product.html">Пальто демисезонное</a>
-                                            </div>
-                                            <div class="shopping-cart__item__info__option">Цвет: Черный</div>
-                                            <div class="shopping-cart__item__info__option">Размер: 42-46</div>
-                                            <div class="shopping-cart__item__info__price">15 000 руб.</div>
-                                            <div class="shopping-cart__item__info__qty">Кол-во: 1</div>
-                                            <div class="shopping-cart__item__info__delete">
-                                                <a href="#" class="icon icon-clear"></a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <div class="shopping-cart__bottom">
-                                    <div class="pull-left">
-                                        Всего:
-                                        <span class="shopping-cart__total">22 000 руб.</span>
-                                    </div>
-                                    <div class="pull-right">
-                                        <button class="btn btn--wd text-uppercase">Оформить заказ</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {!! $cartWidget->show() !!}
                     </div>
                 </div>
                 <!-- End Cart & Currency -->
