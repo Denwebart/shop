@@ -83,6 +83,7 @@ class SiteController extends Controller
 		}
 		if(is_a($page, 'App\Models\Page')) {
 			if($page->type == Page::TYPE_CATALOG) {
+				// доделать вложенность
 				$subcategoryIds = Page::select(['id', 'parent_id'])
 					->whereParentId($page->id)
 					->whereIsPublished(1)

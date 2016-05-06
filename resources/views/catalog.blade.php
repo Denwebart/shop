@@ -302,9 +302,7 @@
                     </div>
                 </div>
                 <div id="centerCol">
-                    <div class="products-grid products-listing products-col products-isotope four-in-row">
-                        @each('parts.product', $products, 'item')
-                    </div>
+                    @include('parts.productsList')
                 </div>
             </div>
             <div id="pagination" class="text-center">
