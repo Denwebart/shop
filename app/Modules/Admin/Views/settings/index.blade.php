@@ -149,6 +149,31 @@ View::share('title', $title);
                         </div>
                     @endforeach
                 </div>
+
+                <h5 class="header-title m-t-20 m-b-10"><b>Координаты на карте</b></h5>
+                <p class="text-muted font-13 m-b-15">
+                    Карта будет отображена на страницы с контактами только в том случае,
+                    если заполнены и включены обе настройки.
+                </p>
+
+                <div class="form-horizontal form-editable">
+                    @foreach($settings[\App\Models\Setting::CATEGORY_CONTACT_PAGE]['map'] as $key => $setting)
+                        <div class="form-group">
+                            <label class="col-md-3 col-sm-3 control-label">
+                                {{ $setting->title }}
+                            </label>
+                            <div class="col-md-7 col-sm-7">
+                                <a href="#" class="editable-text" data-value="{{ $setting->value }}" data-type="text" data-pk="{{ $setting->id }}">{{ $setting->value }}</a>
+                            </div>
+                            <div class="col-md-2 col-sm-2">
+                                <div class="switchery-demo">
+                                    {!! Form::hidden('is_active', 0) !!}
+                                    {!! Form::checkbox('is_active', 1, $setting->is_active, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small', 'data-id' => $setting->id]) !!}
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </div>
         <div class="col-lg-6">

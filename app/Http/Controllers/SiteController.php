@@ -10,8 +10,10 @@
 namespace App\Http\Controllers;
 
 
+use App\Helpers\Settings;
 use App\Models\Page;
 use App\Models\Product;
+use App\Models\Setting;
 use App\Widgets\Carousel\Carousel;
 use App\Widgets\Reviews\Reviews;
 use App\Widgets\Slider\Slider;
@@ -56,27 +58,27 @@ class SiteController extends Controller
 	 * @author     It Hill (it-hill.com@yandex.ua)
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
-	public function pageOneLevel(\Illuminate\Http\Request $request, $page)
+	public function pageOneLevel(\Illuminate\Http\Request $request, Settings $settings, $page)
 	{
-		return $this->renderPage($request, $page);
+		return $this->renderPage($request, $settings, $page);
 	}
 
-	public function pageTwoLevel(\Illuminate\Http\Request $request, $parentOne, $page)
+	public function pageTwoLevel(\Illuminate\Http\Request $request, Settings $settings, $parentOne, $page)
 	{
-		return $this->renderPage($request, $page);
+		return $this->renderPage($request, $settings, $page);
 	}
 
-	public function pageThreeLevel(\Illuminate\Http\Request $request, $parentOne, $parentTwo, $page)
+	public function pageThreeLevel(\Illuminate\Http\Request $request, Settings $settings, $parentOne, $parentTwo, $page)
 	{
-		return $this->renderPage($request, $page);
+		return $this->renderPage($request, $settings, $page);
 	}
 
-	public function pageFourLevel(\Illuminate\Http\Request $request, $parentOne, $parentTwo, $parentThree, $page)
+	public function pageFourLevel(\Illuminate\Http\Request $request, Settings $settings, $parentOne, $parentTwo, $parentThree, $page)
 	{
-		return $this->renderPage($request, $page);
+		return $this->renderPage($request, $settings, $page);
 	}
 
-	protected function renderPage($request, $page)
+	protected function renderPage($request, $settings, $page)
 	{
 		if(url($request->getPathInfo()) != $page->getUrl()) {
 			abort(404);
@@ -105,6 +107,14 @@ class SiteController extends Controller
 
 				return view('catalog', compact('page', 'products'));
 			} else {
+				if($page->id == Page::ID_CONTACT_PAGE) {
+					$contactPageSettings = $settings->getCategory(Setting::CATEGORY_CONTACT_PAGE);
+
+					return view('contact', compact('page', 'contactPageSettings'));
+				} elseif($page->id == Page::ID_SITEMAP_PAGE) {
+					return view('sitemap', compact('page'));
+				}
+				
 				return view('page', compact('page'));
 			}
 		} else {

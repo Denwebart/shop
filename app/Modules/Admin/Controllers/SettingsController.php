@@ -22,9 +22,6 @@ class SettingsController extends Controller
      */
     public function index(\App\Helpers\Settings $settings)
     {
-//	    $settings = Setting::select('id', 'key', 'type', 'category', 'title', 'description', 'value', 'is_active')
-//		    ->paginate(20);
-
 	    $settings = $settings->getAll();
 
 	    $menuItems = Menu::getMenuItems();

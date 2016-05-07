@@ -72,6 +72,12 @@ class Page extends Model
 	const MAX_LEVEL = 4; // 4 уровня
 
 	/**
+	 * Id страниц с контактной формы и карты сайта
+	 */
+	const ID_CONTACT_PAGE = 2;
+	const ID_SITEMAP_PAGE = 3;
+
+	/**
 	 * Тип страницы (значение поля type)
 	 */
 	const TYPE_PAGE        = 1;
