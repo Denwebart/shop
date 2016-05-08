@@ -12,10 +12,7 @@
 
 <section class="breadcrumbs  hidden-xs">
     <div class="container">
-        <ol class="breadcrumb breadcrumb--wd pull-left">
-            <li><a href="{{ url('/') }}">Главная</a></li>
-            <li class="active">{{ $page->getTitle() }}</li>
-        </ol>
+        @include('parts.breadcrumbs')
     </div>
 </section>
 

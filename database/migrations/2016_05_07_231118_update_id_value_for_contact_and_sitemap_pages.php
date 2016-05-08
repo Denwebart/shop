@@ -16,6 +16,9 @@ class UpdateIdValueForContactAndSitemapPages extends Migration
 	    DB::table('pages')->where('id', '=', 3)->update(['id' => 2]);
 	    DB::table('pages')->where('id', '=', 4)->update(['id' => 3]);
 	    DB::table('pages')->where('id', '=', 999)->update(['id' => 4]);
+
+	    DB::table('pages')->where('parent_id', '=', 2)->update(['parent_id' => 4]);
+	    DB::table('products')->where('category_id', '=', 2)->update(['category_id' => 4]);
     }
 
     /**
@@ -29,5 +32,8 @@ class UpdateIdValueForContactAndSitemapPages extends Migration
 	    DB::table('pages')->where('id', '=', 3)->update(['id' => 4]);
 	    DB::table('pages')->where('id', '=', 2)->update(['id' => 3]);
 	    DB::table('pages')->where('id', '=', 999)->update(['id' => 2]);
+
+	    DB::table('pages')->where('parent_id', '=', 4)->update(['parent_id' => 2]);
+	    DB::table('products')->where('category_id', '=', 4)->update(['category_id' => 2]);
     }
 }

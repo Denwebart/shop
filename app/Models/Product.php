@@ -229,6 +229,11 @@ class Product extends Model
 			->where('published_at', '<', Carbon::now());
 	}
 
+	public function getTitle()
+	{
+		return $this->title;
+	}
+
 	public function getMetaTitle()
 	{
 		return $this->meta_title ? $this->meta_title : '';

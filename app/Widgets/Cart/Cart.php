@@ -16,7 +16,7 @@ class Cart extends BaseController
 {
 	public function show()
 	{
-		$products = Product::all();
+		$products = Product::with(['category', 'category.parent'])->get();
 
 		return view('widget.cart::index', compact('products'));
 	}

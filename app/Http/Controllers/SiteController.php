@@ -112,7 +112,21 @@ class SiteController extends Controller
 
 					return view('contact', compact('page', 'contactPageSettings'));
 				} elseif($page->id == Page::ID_SITEMAP_PAGE) {
-					return view('sitemap', compact('page'));
+					
+					$sitemapItems = Page::whereParentId(0)
+						->whereIsPublished(1)
+						->where('published_at', '<', date('Y-m-d H:i:s'))
+						->with([
+							'publishedChildren' => function($query) {
+								$query->select('id', 'parent_id', 'type', 'is_container', 'alias', 'title', 'menu_title');
+							},
+							'publishedProducts' => function($query) {
+								$query->select('id', 'category_id', 'alias', 'title');
+							},
+						])
+						->get(['id', 'parent_id', 'type', 'is_container', 'alias', 'title', 'menu_title']);
+
+					return view('sitemap', compact('page', 'sitemapItems'));
 				}
 				
 				return view('page', compact('page'));
@@ -124,4 +138,6 @@ class SiteController extends Controller
 			return view('product', compact('page', 'productReviews'));
 		}
 	}
+
+	
 }
