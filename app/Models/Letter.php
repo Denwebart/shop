@@ -43,5 +43,35 @@ class Letter extends Model
 		'message',
 	];
 
+	/**
+	 * @var array Validation rules
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public static $rules = [
+		'name' => 'required|max:50|regex:/^[A-Za-zА-Яа-яЁёЇїІіЄє \-\']+$/u',
+		'email' => 'required|email|max:255',
+		'subject' => 'max:250',
+		'message' => 'required',
+	];
 
+	/**
+	 * Get validation rules
+	 *
+	 * @param bool $id
+	 * @return array
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public static function rules($id = false)
+	{
+		$rules = self::$rules;
+		if ($id) {
+			foreach ($rules as &$rule) {
+				$rule = str_replace(':id', $id, $rule);
+			}
+		}
+		return $rules;
+	}
 }

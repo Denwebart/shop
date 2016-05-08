@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 
 
 use App\Helpers\Settings;
+use App\Models\Letter;
 use App\Models\Page;
 use App\Models\Product;
 use App\Models\Setting;
@@ -18,6 +19,7 @@ use App\Widgets\Carousel\Carousel;
 use App\Widgets\Reviews\Reviews;
 use App\Widgets\Slider\Slider;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class SiteController extends Controller
 {
@@ -139,5 +141,35 @@ class SiteController extends Controller
 		}
 	}
 
-	
+
+	/**
+	 * Sending letter from contact form
+	 *
+	 * @param Request $request
+	 * @return \Illuminate\Http\JsonResponse
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function sendLetter(Request $request)
+	{
+		if($request->ajax()) {
+			$data = $request->all();
+			$validator = \Validator::make($data, Letter::rules());
+
+			if($validator->fails()) {
+				return \Response::json([
+					'success' => false,
+					'message' => 'Письмо не отправлено. Исправьте ошибки валидации.'
+				]);
+			}
+
+			Letter::create($data);
+
+			return \Response::json([
+				'success' => true,
+				'message' => 'Ваше письмо успешно отправлено!',
+			]);
+		}
+	}
 }

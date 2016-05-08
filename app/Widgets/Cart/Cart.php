@@ -38,7 +38,7 @@ class Cart extends BaseController
 			}
 
 			return \Response::json([
-				'success' => true,
+				'success' => false,
 				'message' => 'Произошла ошибка, товар не был добавлен в корзину.'
 			]);
 		}

@@ -17,7 +17,11 @@ class CurrencyController implements CurrencyRate
 	public function getCourse($currency = 'USD')
 	{
 		$xml = $this->getXML();
-		return $this->procXML($xml, $currency);
+		if($xml) {
+			return $this->procXML($xml, $currency);
+		} else {
+			return false;
+		}
 	}
 	
 	private function getXML()

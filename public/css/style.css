@@ -9660,9 +9660,9 @@ blockquote.blockquote--wd footer {
 .infobox__icon {
     display: table-cell;
     vertical-align: middle;
-    padding: 25px 20px;
-    width: auto;
-    font-size: 64px;
+    padding: 20px 20px;
+    width: 90px;
+    font-size: 50px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     -webkit-transition: box-shadow 300ms 0s ease;
     -moz-transition: box-shadow 300ms 0s ease;

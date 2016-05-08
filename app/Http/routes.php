@@ -7,6 +7,7 @@ Route::auth();
 
 Route::get('/', 'SiteController@index');
 
+Route::post('letter/send', ['as' => 'letter.send', 'uses' => 'SiteController@sendLetter']);
 Route::post('cart/add', ['as' => 'cart.add', 'uses' => '\App\Widgets\Cart\Cart@addToCart']);
 Route::post('cart/remove', ['as' => 'cart.remove', 'uses' => '\App\Widgets\Cart\Cart@removeFromCart']);
 

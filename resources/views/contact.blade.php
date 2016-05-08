@@ -38,38 +38,57 @@
                 </div>
 
                 <div class="col-md-6">
-                    <form id="contactform" class="contact-form" name="contactform" method="post" novalidate>
+                    {!! Form::open(['url' => route('letter.send'), 'id' => 'contact-form', 'class' => 'contact-form']) !!}
+                        {!! csrf_field() !!}
                         <h3 class="text-uppercase text-center">Отправить сообщение</h3>
-                        <div id="success">
-                            <p>Ваше сообщение успешно отправлено!</p>
+
+                        <div id="success-message" class="hidden">
+                            @include('parts.message', ['class' => 'success', 'icon' => 'icon-mail-fill'])
                         </div>
-                        <div id="error">
-                            <p>Ошибка. Что-то пошло не так.</p>
+
+                        <div id="error-message" class="hidden">
+                            @include('parts.message', ['class' => 'error'])
+                        </div>
+
+                        <div class="input-group input-group--wd">
+                            {!! Form::text('name', null, ['id' => 'name', 'class' => 'input--full']) !!}
+                            <span class="input-group__bar"></span>
+                            {!! Form::label('name', 'Ваше имя *') !!}
+
+                            <span class="help-block error">
+                                <strong>{{ $errors->first('name') }}</strong>
+                            </span>
                         </div>
                         <div class="input-group input-group--wd">
-                            <input type="text" class="input--full" name="name">
+                            {!! Form::text('email', null, ['id' => 'email', 'class' => 'input--full']) !!}
                             <span class="input-group__bar"></span>
-                            <label>Ваше имя *</label>
+                            {!! Form::label('email', 'Ваш email-адрес *') !!}
+
+                            <span class="help-block error">
+                                <strong>{{ $errors->first('email') }}</strong>
+                            </span>
                         </div>
                         <div class="input-group input-group--wd">
-                            <input type="text" class="input--full" name="email">
+                            {!! Form::text('subject', null, ['id' => 'subject', 'class' => 'input--full']) !!}
                             <span class="input-group__bar"></span>
-                            <label>Ваш email-адрес *</label>
+                            {!! Form::label('subject', 'Тема') !!}
+
+                            <span class="help-block error">
+                                <strong>{{ $errors->first('subject') }}</strong>
+                            </span>
                         </div>
                         <div class="input-group input-group--wd">
-                            <input type="text" class="input--full" name="subject">
+                            {!! Form::textarea('message', null, ['id' => 'message', 'class' => 'input--full']) !!}
                             <span class="input-group__bar"></span>
-                            <label>Тема</label>
+                            {!! Form::label('message', 'Сообщение *') !!}
+
+                            <span class="help-block error">
+                                <strong>{{ $errors->first('message') }}</strong>
+                            </span>
                         </div>
-                        <div class="input-group input-group--wd">
-                            <textarea class="textarea--full" name="message"></textarea>
-                            <span class="input-group__bar"></span>
-                            <label>Сообщение</label>
-                        </div>
-                        <button type="submit" id="submit" class="pull-right btn btn--wd text-uppercase">
-                            Отправить сообщение
-                        </button>
-                    </form>
+
+                        {!! Form::submit('Отправить сообщение', ['class' => 'pull-right btn btn--wd text-uppercase']) !!}
+                    {!! Form::close() !!}
                 </div>
                 <div class="divider divider--md"></div>
             </div>
@@ -85,6 +104,39 @@
     @endif
     <!-- End Map section -->
 @endsection
+
+@push('scripts')
+    <script type="text/javascript">
+        jQuery(function($j) {
+
+            // Ajax for our form
+            $j('form').on('submit', function(event){
+                event.preventDefault ? event.preventDefault() : event.returnValue = false;
+
+                var formData = $j(this).serialize(),
+                    url = $j(this).attr('action');
+
+                $j.ajax({
+                    url: url,
+                    dataType: "json",
+                    type: "POST",
+                    data: formData,
+                    async: true,
+                    beforeSend: function (request) {
+                        return request.setRequestHeader('X-CSRF-Token', $j("meta[name='csrf-token']").attr('content'));
+                    },
+                    success: function(response) {
+                        if(response.success){
+                            $j('#success-message').show().find('.infobox__text').text(response.message);
+                        } else {
+                            $j('#error-message').show().find('.infobox__text').text(response.message);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+@endpush
 
 @push('styles')
     @if(isset($contactPageSettings['map']) && isset($contactPageSettings['map']['latitude']) && isset($contactPageSettings['map']['longitude']))
