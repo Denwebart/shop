@@ -160,7 +160,8 @@ class SiteController extends Controller
 			if($validator->fails()) {
 				return \Response::json([
 					'success' => false,
-					'message' => 'Письмо не отправлено. Исправьте ошибки валидации.'
+					'message' => 'Письмо не отправлено. Исправьте ошибки валидации.',
+					'errors' => $validator->errors()
 				]);
 			}
 

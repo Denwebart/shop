@@ -279,8 +279,10 @@
     </div>
 </div>
 <!-- Vendor -->
-<!-- jQuery 1.10.1-->
-<script src="{{ asset('vendor/jquery/jquery.js') }}"></script>
+<!-- jQuery 1.12.3-->
+<script src="{{ asset('vendor/jquery/jquery-1.12.3.js') }}"></script>
+<!-- jQuery 1.11.2-->
+{{--<script src="{{ asset('vendor/jquery/jquery.js') }}"></script>--}}
 <!-- Bootstrap 3-->
 <script src="{{ asset('vendor/bootstrap/bootstrap.min.js') }}"></script>
 <!-- Specific Page Vendor -->

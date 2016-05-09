@@ -42,11 +42,11 @@
                         {!! csrf_field() !!}
                         <h3 class="text-uppercase text-center">Отправить сообщение</h3>
 
-                        <div id="success-message" class="hidden">
+                        <div id="success-message">
                             @include('parts.message', ['class' => 'success', 'icon' => 'icon-mail-fill'])
                         </div>
 
-                        <div id="error-message" class="hidden">
+                        <div id="error-message">
                             @include('parts.message', ['class' => 'error'])
                         </div>
 
@@ -55,8 +55,8 @@
                             <span class="input-group__bar"></span>
                             {!! Form::label('name', 'Ваше имя *') !!}
 
-                            <span class="help-block error">
-                                <strong>{{ $errors->first('name') }}</strong>
+                            <span class="help-block error name_error">
+                                {{ $errors->first('name') }}
                             </span>
                         </div>
                         <div class="input-group input-group--wd">
@@ -64,8 +64,8 @@
                             <span class="input-group__bar"></span>
                             {!! Form::label('email', 'Ваш email-адрес *') !!}
 
-                            <span class="help-block error">
-                                <strong>{{ $errors->first('email') }}</strong>
+                            <span class="help-block error email_error">
+                                {{ $errors->first('email') }}
                             </span>
                         </div>
                         <div class="input-group input-group--wd">
@@ -73,8 +73,8 @@
                             <span class="input-group__bar"></span>
                             {!! Form::label('subject', 'Тема') !!}
 
-                            <span class="help-block error">
-                                <strong>{{ $errors->first('subject') }}</strong>
+                            <span class="help-block error subject_error">
+                                {{ $errors->first('subject') }}
                             </span>
                         </div>
                         <div class="input-group input-group--wd">
@@ -82,8 +82,8 @@
                             <span class="input-group__bar"></span>
                             {!! Form::label('message', 'Сообщение *') !!}
 
-                            <span class="help-block error">
-                                <strong>{{ $errors->first('message') }}</strong>
+                            <span class="help-block error message_error">
+                                {{ $errors->first('message') }}
                             </span>
                         </div>
 
@@ -110,10 +110,11 @@
         jQuery(function($j) {
 
             // Ajax for our form
-            $j('form').on('submit', function(event){
+            $j('#contact-form').on('submit', function(event){
                 event.preventDefault ? event.preventDefault() : event.returnValue = false;
 
-                var formData = $j(this).serialize(),
+                var $form = $j(this),
+                    formData = $form.serialize(),
                     url = $j(this).attr('action');
 
                 $j.ajax({
@@ -127,8 +128,16 @@
                     },
                     success: function(response) {
                         if(response.success){
+                            $form.trigger('reset');
                             $j('#success-message').show().find('.infobox__text').text(response.message);
                         } else {
+                            $form.find('.has-error').removeClass('has-error');
+                            $form.find('.help-block.error').text('');
+                            $j.each(response.errors, function(index, value) {
+                                var errorDiv = '.' + index + '_error';
+                                $form.find(errorDiv).parent().addClass('has-error');
+                                $form.find(errorDiv).empty().append(value);
+                            });
                             $j('#error-message').show().find('.infobox__text').text(response.message);
                         }
                     }
@@ -241,8 +250,7 @@
                 // Let's also add a marker while we're at it
                 var marker = new google.maps.Marker({
                     position: new google.maps.LatLng(latitude, longitude),
-                    map: map,
-    //                title: 'Координаты магазина.' // text when you hover over the marker
+                    map: map
                 });
             }
         </script>
