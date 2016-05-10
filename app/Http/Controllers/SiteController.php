@@ -20,7 +20,6 @@ use App\Widgets\Reviews\Reviews;
 use App\Widgets\Slider\Slider;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class SiteController extends Controller
 {

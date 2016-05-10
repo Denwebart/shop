@@ -8,6 +8,7 @@
 
 namespace App\Widgets\Cart;
 
+use App\Models\Page;
 use Illuminate\Routing\Controller as BaseController;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class Cart extends BaseController
 	{
 		$products = Product::with(['category', 'category.parent'])->get();
 
-		return view('widget.cart::index', compact('products'));
+		return view('widget.cart::cart', compact('products'));
 	}
 	
 	public function addToCart(Request $request)
@@ -33,7 +34,7 @@ class Cart extends BaseController
 				
 				return \Response::json([
 					'success' => true,
-					'cartHtml' => view('widget.cart::index')->with('products', $products)->render(),
+					'cartHtml' => view('widget.cart::cart')->with('products', $products)->render(),
 				]);
 			}
 
