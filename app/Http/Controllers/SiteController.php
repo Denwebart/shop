@@ -20,6 +20,7 @@ use App\Widgets\Reviews\Reviews;
 use App\Widgets\Slider\Slider;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class SiteController extends Controller
 {
@@ -141,6 +142,34 @@ class SiteController extends Controller
 		}
 	}
 
+	/**
+	 * XML Sitemap
+	 *
+	 * @param Settings $settings
+	 * @return \Illuminate\Contracts\View\View
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function sitemapXml(Settings $settings)
+	{
+		$sitemapItems = Page::whereParentId(0)
+			->whereIsPublished(1)
+			->where('published_at', '<', date('Y-m-d H:i:s'))
+			->with([
+				'publishedChildren' => function($query) {
+					$query->select('id', 'parent_id', 'type', 'is_container', 'alias', 'title', 'menu_title', 'updated_at', 'published_at');
+				},
+				'publishedProducts' => function($query) {
+					$query->select('id', 'category_id', 'alias', 'title');
+				},
+			])
+			->get(['id', 'parent_id', 'type', 'is_container', 'alias', 'title', 'menu_title', 'updated_at', 'published_at']);
+
+		$content = \View::make('sitemapXml', compact('sitemapItems'))->render();
+
+		return response($content)->header('Content-Type', 'text/xml');
+	}
 
 	/**
 	 * Sending letter from contact form

@@ -27,7 +27,7 @@ class View
 	 * @author     It Hill (it-hill.com@yandex.ua)
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
-	public static function getChildrenPages($model, $level = 1)
+	public static function getChildrenPages($model, $level = 1, $view = null)
 	{
 
 		// доделать: оптимизировать количество запросов, возможно выбирать одним запросом?
@@ -35,48 +35,63 @@ class View
 			if(count($model->publishedChildren)) {
 				$children = $model->publishedChildren()->with([
 					'parent' => function($query) {
-						$query->select('id', 'parent_id', 'type', 'is_container', 'alias', 'title', 'menu_title');
+						$query->select('id', 'parent_id', 'type', 'is_container', 'alias', 'title', 'menu_title', 'updated_at', 'published_at');
 					},
 					'publishedChildren' => function($query) {
-						$query->select('id', 'parent_id', 'type', 'is_container', 'alias', 'title', 'menu_title');
+						$query->select('id', 'parent_id', 'type', 'is_container', 'alias', 'title', 'menu_title', 'updated_at', 'published_at');
 					}
-				])->get();
+				])->get(['id', 'parent_id', 'type', 'is_container', 'alias', 'title', 'menu_title', 'updated_at', 'published_at']);
 			} else {
 				$children = [];
 			}
 			if(count($model->publishedProducts)) {
 				$products = $model->publishedProducts()->with([
 					'category' => function($query) {
-						$query->select('id', 'parent_id', 'type', 'is_container', 'alias', 'title', 'menu_title');
+						$query->select('id', 'parent_id', 'type', 'is_container', 'alias', 'title', 'menu_title', 'updated_at', 'published_at');
 					},
 					'category.parent' => function($query) {
-						$query->select('id', 'parent_id', 'type', 'is_container', 'alias', 'title', 'menu_title');
+						$query->select('id', 'parent_id', 'type', 'is_container', 'alias', 'title', 'menu_title', 'updated_at', 'published_at');
 					},
 					'category.parent.parent' => function($query) {
-						$query->select('id', 'parent_id', 'type', 'is_container', 'alias', 'title', 'menu_title');
+						$query->select('id', 'parent_id', 'type', 'is_container', 'alias', 'title', 'menu_title', 'updated_at', 'published_at');
 					}
-				])->get();
+				])->get(['id', 'category_id', 'alias', 'title', 'updated_at', 'published_at']);
 			} else {
 				$products = [];
 			}
 
-			if(count($children) || count($products)) {
-				echo '<ul class="level-' . $level . '">';
-				++$level;
-				foreach ($children as $item) {
-					echo '<li>';
-					echo \View::make('parts.listItem', compact('item', 'level'))->render();
-					if ($item->is_container && (count($model->publishedChildren) || count($model->publishedProducts))) {
-						self::getChildrenPages($item, $level);
+			if(!$view) {
+				if(count($children) || count($products)) {
+					echo '<ul class="level-' . $level . '">';
+					++$level;
+					foreach ($children as $item) {
+						echo '<li>';
+						echo \View::make('parts.listItem', compact('item', 'level'))->render();
+						if ($item->is_container && (count($model->publishedChildren) || count($model->publishedProducts))) {
+							self::getChildrenPages($item, $level);
+						}
+						echo '</li>';
 					}
-					echo '</li>';
+					foreach ($products as $item) {
+						echo '<li>';
+						echo \View::make('parts.listItem', compact('item', 'level'))->render();
+						echo '</li>';
+					}
+					echo '</ul>';
 				}
-				foreach ($products as $item) {
-					echo '<li>';
-					echo \View::make('parts.listItem', compact('item', 'level'))->render();
-					echo '</li>';
+			} elseif($view == 'xml') {
+				if(count($children) || count($products)) {
+					++$level;
+					foreach ($children as $item) {
+						echo \View::make('parts.xmlItem', compact('item', 'level'))->render();
+						if ($item->is_container && (count($model->publishedChildren) || count($model->publishedProducts))) {
+							self::getChildrenPages($item, $level, 'xml');
+						}
+					}
+					foreach ($products as $item) {
+						echo \View::make('parts.xmlItem', compact('item', 'level'))->render();
+					}
 				}
-				echo '</ul>';
 			}
 		}
 	}
