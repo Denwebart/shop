@@ -53,7 +53,9 @@
                         <span class="shopping-cart__total">22 000 руб.</span>
                     </div>
                     <div class="pull-right">
-                        <button class="btn btn--wd text-uppercase">Оформить заказ</button>
+                        <a href="{{ route('cart.index') }}" class="btn btn--wd text-uppercase">
+                            Оформить заказ
+                        </a>
                     </div>
                 </div>
             @else
@@ -74,7 +76,7 @@
                     <div class="divider divider--xs"></div>
                     <p>Продукт успешно добавлен в корзину!</p>
                     <div class="divider divider--xs"></div>
-                    <a href="#" class="btn btn--wd">Посмотреть корзину</a>
+                    <a href="{{ route('cart.index') }}" class="btn btn--wd">Посмотреть корзину</a>
                     <div class="divider divider--xs"></div>
                 </div>
             </div>
