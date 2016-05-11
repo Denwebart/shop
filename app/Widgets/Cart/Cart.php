@@ -8,18 +8,24 @@
 
 namespace App\Widgets\Cart;
 
+use Carbon\Carbon;
 use Illuminate\Routing\Controller as BaseController;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
 class Cart extends BaseController
 {
+	protected $cart = [
+		'products' => [],
+		'total_price' => 0,
+	];
+
 	public function show()
 	{
 		//доделать вывод товаров корзины
-		$products = Product::with(['category', 'category.parent'])->get();
+		$cart = $this->getCart();
 
-		return view('widget.cart::cart', compact('products'));
+		return view('widget.cart::cart', compact('cart'));
 	}
 	
 	public function addToCart(Request $request)
@@ -31,11 +37,11 @@ class Cart extends BaseController
 				// доделать добавление в корзину
 				$this->addProduct($request, $product, $request->get('quantity', 1));
 
-				$products = $this->getProducts();
+				$cart = $this->getCart();
 				
 				return \Response::json([
 					'success' => true,
-					'cartHtml' => view('widget.cart::cart')->with('products', $products)->render(),
+					'cartHtml' => view('widget.cart::cart')->with('cart', $cart)->render(),
 				]);
 			}
 
@@ -45,13 +51,53 @@ class Cart extends BaseController
 			]);
 		}
 	}
-	
+
 	public function removeFromCart(Request $request)
 	{
-		// доделать
-		
+		if($request->ajax()) {
+
+			$this->deleteProduct($request);
+
+			$cart = $this->getCart();
+
+			return \Response::json([
+				'success' => true,
+				'cartProductsHtml' => view('widget.cart::cartProducts')->with('cart', $cart)->render(),
+				'productsCount' => count($cart['products']),
+			]);
+		}
 	}
 
+	public function getCart()
+	{
+		$cart = \Session::get('cart', $this->cart);
+
+		foreach ($cart['products'] as $key => $item) {
+			$productsIds[] = $item['product_id'];
+		}
+
+		if(isset($productsIds)) {
+			$productModels = Product::whereIn('id', $productsIds)
+				->whereIsPublished(1)
+				->where('published_at', '<', Carbon::now())
+				->with([
+					'category' => function($q) {
+						$q->select(['id', 'parent_id', 'alias', 'type']);
+					}
+				])->get(['id', 'category_id', 'alias', 'title', 'image', 'image_alt', 'price']);
+
+			foreach($productModels as $productModel) {
+				foreach($cart['products'] as $key => $item) {
+					if($productModel->id == $item['product_id']) {
+						$cart['products'][$key]['product'] = $productModel;
+						$cart['total_price'] = $cart['total_price'] + $productModel->getPrice();
+					}
+				}
+			}
+		}
+
+		return $cart;
+	}
 
 	/**
 	 * Add product to cart with session
@@ -64,17 +110,31 @@ class Cart extends BaseController
 	 */
 	protected function addProduct(Request $request, $product, $quantity = 1)
 	{
-		$cartProducts = $request->session()->get('cart', []);
-		$cartProducts[] = [
+		// доделать добавление с разными параметрами (цвет, размер)
+		$cart = $request->session()->get('cart', $this->cart);
+
+		$cart['products'][] = [
 			'product_id' => $product->id,
 			'quantity' => $quantity,
+			'options' => [],
 		];
-		$request->session()->put('cart', $cartProducts);
+
+		$request->session()->put('cart', $cart);
 	}
 
-
-	protected function getProducts()
+	/**
+	 * Delete product from cart session
+	 *
+	 * @param Request $request
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	protected function deleteProduct(Request $request)
 	{
-		return [];
+		// доделать добавление с разными параметрами (цвет, размер)
+		$cart = $request->session()->get('cart', $this->cart);
+		unset($cart['products'][$request->key]);
+
+		$request->session()->put('cart', $cart);
 	}
 }

@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Page;
 use App\Models\Product;
+use App\Widgets\Cart\Cart;
 
 class CartController extends Controller
 {
@@ -18,8 +19,10 @@ class CartController extends Controller
 	{
 		$page = new Page();
 		$page->title = 'Корзина товаров';
-		$products = Product::with(['category', 'category.parent'])->get();
 
-		return view('widget.cart::index', compact('page', 'products'));
+		$cart = new Cart();
+		$cart = $cart->getCart();
+
+		return view('widget.cart::index', compact('page', 'cart'));
 	}
 }

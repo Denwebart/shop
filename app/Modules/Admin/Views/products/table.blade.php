@@ -35,7 +35,7 @@
                 </td>
                 <td>{{ $product->vendor_code }}</td>
                 <td>{{ $product->title }}</td>
-                <td>{{ $product->getPrice() }}</td>
+                <td>{{ \App\Helpers\Str::priceFormat($product->getPrice()) }}</td>
                 <td>{{ $product->category->getTitle() }}</td>
                 <td>
                     <span class="label @if($product->is_published) label-success @else label-danger @endif">

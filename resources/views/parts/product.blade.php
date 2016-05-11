@@ -89,7 +89,7 @@
             {{--</li>--}}
             {{--</ul>--}}
             <div class="price-box ">
-                <span class="price-box__new">{{ \App\Helpers\Str::priceFormat($item->price) }}</span>
+                <span class="price-box__new">{{ \App\Helpers\Str::priceFormat($item->getPrice()) }}</span>
                 {{--<span class="price-box__old">6000 руб.</span>--}}
             </div>
             @if($item->introtext || $item->content)

@@ -45,7 +45,7 @@ class OrderProduct extends Model
 	 */
 	public function getPrice()
 	{
-		return Str::priceFormat($this->price);
+		return $this->price;
 	}
 
 	/**

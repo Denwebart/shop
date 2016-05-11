@@ -7,7 +7,7 @@
 @extends('layouts.main')
 
 @section('content')
-        <!-- Breadcrumb section -->
+<!-- Breadcrumb section -->
 
 <section class="breadcrumbs  hidden-xs">
     <div class="container">
@@ -24,51 +24,9 @@
                     <h2 class="text-uppercase">{{ $page->title }}</h2>
                 @endif
 
-                @if(count($products))
-                    <div class="shopping-cart__top text-uppercase">
-                        Корзина (<span class="count-cart-items">{{ count($products) }}</span>)
-                    </div>
-                    <ul>
-                        @foreach($products as $product)
-                            <li class='shopping-cart__item'>
-                                <div class="shopping-cart__item__image pull-left">
-                                    <a href="{{ $product->getUrl() }}">
-                                        <img src="{{ $product->getImageUrl('mini') }}" alt="{{ $product->image_alt }}"/>
-                                    </a>
-                                </div>
-                                <div class="shopping-cart__item__info">
-                                    <div class="shopping-cart__item__info__title">
-                                        <a href="{{ $product->getUrl() }}">
-                                            {{ $product->title }}
-                                        </a>
-                                    </div>
-                                    {{--<div class="shopping-cart__item__info__option">Цвет: Голубой</div>--}}
-                                    {{--<div class="shopping-cart__item__info__option">Размер: 42-46</div>--}}
-                                    <div class="shopping-cart__item__info__price">
-                                        {{ \App\Helpers\Str::priceFormat($product->price) }}
-                                    </div>
-                                    <div class="shopping-cart__item__info__qty">Кол-во: 1</div>
-                                    <div class="shopping-cart__item__info__delete">
-                                        <a href="#" class="icon icon-clear"></a>
-                                    </div>
-                                </div>
-                            </li>
-                        @endforeach
-                    </ul>
-                    <div class="shopping-cart__bottom">
-                        <div class="pull-left">
-                            Всего:
-                            <span class="shopping-cart__total">22 000 руб.</span>
-                        </div>
-                        <div class="pull-right">
-                            <button class="btn btn--wd text-uppercase">Оформить заказ</button>
-                        </div>
-                    </div>
-                @else
-                    <div class="align-center m-t-5">
-                        Корзина пуста.
-                    </div>
-                @endif
+                <div class="cart-products">
+                    @include('widget.cart::cartProducts')
+                </div>
             </div>
         </div>
     </div>
