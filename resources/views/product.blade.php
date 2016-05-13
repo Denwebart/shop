@@ -161,7 +161,7 @@
                         <div class="input-group-qty pull-left">
                             <span class="pull-left"> </span>
                             <input type="text" name="quant[1]" class="input-number input--wd input-qty pull-left" value="1" min="1" max="100">
-                                <span class="pull-left btn-number-container">
+                            <span class="pull-left btn-number-container">
                                 <button type="button" class="btn btn-number btn-number--plus" data-type="plus" data-field="quant[1]">
                                     +
                                 </button>

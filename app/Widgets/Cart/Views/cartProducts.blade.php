@@ -28,7 +28,16 @@
                     <div class="shopping-cart__item__info__price">
                         {{ \App\Helpers\Str::priceFormat($item['product']->price) }}
                     </div>
-                    <div class="shopping-cart__item__info__qty">Кол-во: 1</div>
+                    <div class="shopping-cart__item__info__qty">
+                        <div class="input-group-qty pull-left">
+                            <span class="pull-left m-r-5">Кол-во: </span>
+                            <input type="text" name="quantity" class="input-number input--wd input-qty pull-left" value="1" min="1" max="100">
+                            <span class="pull-left btn-number-container">
+                                <button type="button" class="btn btn-number btn-number--plus" data-type="plus" data-field="quantity">+</button>
+                                <button type="button" class="btn btn-number btn-number--minus" disabled="disabled" data-type="minus" data-field="quantity">&#8211;</button>
+                            </span>
+                        </div>
+                    </div>
                     <div class="shopping-cart__item__info__delete">
                         <a href="#" class="icon icon-clear remove-from-cart" data-product-id="{{ $item['product']->id }}" data-product-key="{{ $key }}"></a>
                     </div>
