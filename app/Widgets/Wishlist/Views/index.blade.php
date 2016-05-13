@@ -24,8 +24,8 @@
                     <h2 class="text-uppercase">{{ $page->title }}</h2>
                 @endif
 
-                <div class="cart-products">
-                    @include('widget.cart::cartProducts')
+                <div class="wishlist-products">
+                    @include('widget.wishlist::products')
                 </div>
             </div>
         </div>

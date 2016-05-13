@@ -2202,26 +2202,6 @@ jQuery(function($j) {
 
 });
 
-
-
-jQuery(function($j) {
-	
-    "use strict";
-	
-	 $j('.ajax-to-wishlist').click(function(e){
-		e.preventDefault();
-		$j('#modalAddToWishlist').modal("toggle");		
-		$j('#modalAddToWishlist .loading').show();
-		$j('#modalAddToWishlist .success').hide();		
-		$j.ajax({url: "ajax.php", success: function(result){
-			$j('#modalAddToWishlist .loading').hide();
-			$j('#modalAddToWishlist .success').show();
-
-			}});
-	});
-});
-
-
 // MD inputs label
 
 jQuery(function($j) {

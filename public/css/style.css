@@ -6609,7 +6609,8 @@ body.fullwidth .header__dropdowns-container {
 }
 
 /* Cart */
-.header__cart {
+.header__cart,
+.header__wishlist {
     display: inline-block;
 }
 
@@ -6621,26 +6622,33 @@ body.fullwidth .header__dropdowns-container {
     padding-top: 3px;
 }
 
-.header__cart .badge.badge--menu {
+.header__cart .badge.badge--menu,
+.header__wishlist .badge.badge--menu {
     right: -2px;
     top: 5px;
 }
 
-.header__cart__button {
+.header__cart__button,
+.header__wishlist__button {
     padding: 0;
 }
 
-.header__cart__button .icon {
+.header__cart__button .icon,
+.header__wishlist__button .icon {
     font-size: 36px;
     margin-top: -5px;
 }
 
 @media (max-width: 767px) {
-    .header__cart {
-        margin-right: 15px;
+    .header__cart,
+    .header__wishlist {
         margin-top: 3px;
     }
-    .header__cart__button .icon {
+    .header__wishlist {
+        margin-right: 15px;
+    }
+    .header__cart__button .icon,
+    .header__wishlist__button .icon {
         margin-top: 0;
     }
 }
@@ -6822,7 +6830,8 @@ body.fullwidth .header__dropdowns-container {
     line-height: 40px;
 }
 
-.header-line .header__dropdowns .header__cart__button .icon {
+.header-line .header__dropdowns .header__cart__button .icon,
+.header-line .header__dropdowns .header__wishlist__button .icon {
     font-size: 24px;
     margin-top: -2px;
 }
@@ -8019,7 +8028,8 @@ body.fullwidth .header__dropdowns-container {
         top: -57px;
     }
 
-    .header--max .header__dropdowns .header__cart__button .icon {
+    .header--max .header__dropdowns .header__cart__button .icon,
+    .header--max .header__dropdowns .header__wishlist__button .icon {
         font-size: 24px;
         margin-top: 5px;
     }
@@ -8029,7 +8039,8 @@ body.fullwidth .header__dropdowns-container {
         padding-top: 0;
     }
 
-    .header--max a.btn.dropdown-toggle.btn--links--dropdown.header__cart__button.header__dropdowns__button {
+    .header--max a.btn.dropdown-toggle.btn--links--dropdown.header__cart__button.header__dropdowns__button,
+    .header--max a.btn.dropdown-toggle.btn--links--dropdown.header__wishlist__button.header__dropdowns__button {
         border-width: 0;
         margin-left: 8px;
     }
@@ -8053,7 +8064,8 @@ body.fullwidth .header__dropdowns-container {
         padding: 0 12px;
     }
 
-    .header--max .header__cart .badge.badge--menu {
+    .header--max .header__cart .badge.badge--menu,
+    .header--max .header__wishlist .badge.badge--menu {
         right: 2px;
     }
 
@@ -10614,10 +10626,10 @@ form label.error {
 
 .badge.badge--menu {
     position: absolute;
-    padding: 0;
+    padding: 0 3px;
     right: -5px;
     top: -5px;
-    width: 18px;
+    min-width: 18px;
     height: 18px;
     line-height: 18px;
     text-align: center;

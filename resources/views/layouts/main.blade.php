@@ -85,7 +85,7 @@
                         <img class="logo-mobile" src="{{ asset('images/logo-mobile.png') }}" alt=""/>
                         <img class="logo-transparent" src="{{ asset('images/logo-transparent.png') }}" alt=""/>
                         @if(isset($siteSettings['siteTitle']) && is_object($siteSettings['siteTitle']))
-                            <span>
+                            <span class="hidden-xs">
                                 {{ $siteSettings['siteTitle']->value }}
                             </span>
                         @endif
@@ -145,6 +145,8 @@
                         </div>
                     </div>
                     {!! $cartWidget->show() !!}
+
+                    {!! $wishlistWidget->show() !!}
                 </div>
                 <!-- End Cart & Currency -->
             </div>
@@ -256,28 +258,6 @@
 
 @yield('bottom')
 
-<div class="modal fade bs-example-modal-sm" role="dialog" id="modalAddToWishlist">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <button type="button" class="close icon-clear" data-dismiss="modal"></button>
-            <div class="text-center">
-                <div class="divider divider--xs"></div>
-                <div class="loading">
-                    <div class="divider divider--sm"></div>
-                    <div class="loader">
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                    </div>
-                </div>
-                <p class="success">Продукт успешно добавлен в Ваш список желаний! </p>
-                <div class="divider divider--xs"></div>
-            </div>
-        </div>
-    </div>
-</div>
 <!-- Vendor -->
 <!-- jQuery 1.12.3-->
 <script src="{{ asset('vendor/jquery/jquery-1.12.3.js') }}"></script>
