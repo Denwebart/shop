@@ -7,7 +7,7 @@
 
 <div id="cart" class="header__cart pull-left">
     <div class="dropdown pull-right">
-        <a href="#" class="btn dropdown-toggle btn--links--dropdown header__cart__button header__dropdowns__button" data-toggle="dropdown">
+        <a href="#" class="btn dropdown-toggle btn--links--dropdown header__cart__button header__dropdowns__button" data-toggle="dropdown" title="Корзина" data-toggle="tooltip">
             <span class="icon icon-bag-alt"></span>
             <span class="badge badge--menu count-cart-items @if(!count($cart['products'])) hidden @endif">
                 {{ count($cart['products']) }}
@@ -20,6 +20,8 @@
 </div>
 
 @section('bottom')
+    @parent
+
     <div class="modal fade bs-example-modal-sm" role="dialog" id="modalAddToCart">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">

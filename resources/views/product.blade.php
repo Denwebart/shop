@@ -175,7 +175,7 @@
                     <div class="divider divider--xs"></div>
                     <ul class="product-links product-links--inline">
                         <li>
-                            <a href="#">
+                            <a href="#" class="add-to-wishlist" data-product-id="" rel="nofollow">
                                 <span class="icon icon-favorite"></span>
                                 <span class="dashed-bottom">Добавить в список желаний</span>
                             </a>
@@ -521,7 +521,7 @@
                                 <p>Suspendisse consectetur odio diam, ut consequat quam aliquet at.</p>
                             </div>
                             <div class="product-preview__info__link">
-                                <a href="#" class="ajax-to-wishlist"><span class="icon icon-favorite"></span><span
+                                <a href="#" class="add-to-wishlist" data-product-id="" rel="nofollow"><span class="icon icon-favorite"></span><span
                                             class="product-preview__info__link__text dashed-bottom">Добавить в список желаний</span></a><a
                                         href="#" class="btn btn--wd buy-link"><span
                                             class="icon icon-ecommerce"></span><span
@@ -561,7 +561,7 @@
                                 <p>Suspendisse consectetur odio diam, ut consequat quam aliquet at.</p>
                             </div>
                             <div class="product-preview__info__link">
-                                <a href="#" class="ajax-to-wishlist">
+                                <a href="#" class="add-to-wishlist" data-product-id="" rel="nofollow">
                                     <span class="icon icon-favorite"></span>
                                         <span class="product-preview__info__link__text dashed-bottom">
                                             Добавить в список желаний
@@ -601,7 +601,7 @@
                                 <p>Suspendisse consectetur odio diam, ut consequat quam aliquet at.</p>
                             </div>
                             <div class="product-preview__info__link">
-                                <a href="#" class="ajax-to-wishlist"><span class="icon icon-favorite"></span><span
+                                <a href="#" class="add-to-wishlist" data-product-id="" rel="nofollow"><span class="icon icon-favorite"></span><span
                                             class="product-preview__info__link__text dashed-bottom">Добавить в список желаний</span></a><a
                                         href="#" class="btn btn--wd buy-link"><span
                                             class="icon icon-ecommerce"></span><span
@@ -638,7 +638,7 @@
                                 <p>Suspendisse consectetur odio diam, ut consequat quam aliquet at.</p>
                             </div>
                             <div class="product-preview__info__link">
-                                <a href="#" class="ajax-to-wishlist"><span class="icon icon-favorite"></span><span
+                                <a href="#" class="add-to-wishlist" data-product-id="" rel="nofollow"><span class="icon icon-favorite"></span><span
                                             class="product-preview__info__link__text dashed-bottom">Добавить в список желаний</span></a><a
                                         href="#" class="btn btn--wd buy-link"><span
                                             class="icon icon-ecommerce"></span><span
@@ -667,7 +667,7 @@
                                 <p>Suspendisse consectetur odio diam, ut consequat quam aliquet at.</p>
                             </div>
                             <div class="product-preview__info__link">
-                                <a href="#" class="ajax-to-wishlist"><span class="icon icon-favorite"></span><span
+                                <a href="#" class="add-to-wishlist" data-product-id="" rel="nofollow"><span class="icon icon-favorite"></span><span
                                             class="product-preview__info__link__text dashed-bottom">Добавить в список желаний</span></a><a
                                         href="#" class="btn btn--wd buy-link"><span
                                             class="icon icon-ecommerce"></span><span
@@ -694,7 +694,7 @@
                                 <p>Suspendisse consectetur odio diam, ut consequat quam aliquet at.</p>
                             </div>
                             <div class="product-preview__info__link">
-                                <a href="#" class="ajax-to-wishlist"><span class="icon icon-favorite"></span><span
+                                <a href="#" class="add-to-wishlist" data-product-id="" rel="nofollow"><span class="icon icon-favorite"></span><span
                                             class="product-preview__info__link__text dashed-bottom">Добавить в список желаний</span></a><a
                                         href="#" class="btn btn--wd buy-link"><span
                                             class="icon icon-ecommerce"></span><span
@@ -721,7 +721,7 @@
                                 <p>Suspendisse consectetur odio diam, ut consequat quam aliquet at.</p>
                             </div>
                             <div class="product-preview__info__link">
-                                <a href="#" class="ajax-to-wishlist"><span class="icon icon-favorite"></span><span
+                                <a href="#" class="add-to-wishlist" data-product-id="" rel="nofollow"><span class="icon icon-favorite"></span><span
                                             class="product-preview__info__link__text dashed-bottom">Добавить в список желаний</span></a><a
                                         href="#" class="btn btn--wd buy-link"><span
                                             class="icon icon-ecommerce"></span><span
@@ -806,7 +806,7 @@
                                 <p>Suspendisse consectetur odio diam, ut consequat quam aliquet at.</p>
                             </div>
                             <div class="product-preview__info__link">
-                                <a href="#" class="ajax-to-wishlist">
+                                <a href="#" class="add-to-wishlist" data-product-id="" rel="nofollow">
                                     <span class="icon icon-favorite"></span>
                                         <span class="product-preview__info__link__text dashed-bottom">
                                             Добавить в список желаний

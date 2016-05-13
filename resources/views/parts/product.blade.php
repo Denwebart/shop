@@ -98,7 +98,7 @@
                 </div>
             @endif
             <div class="product-preview__info__link">
-                <a href="#">
+                <a href="#" class="add-to-wishlist" data-product-id="{{ $item->id }}" rel="nofollow">
                     <span class="icon icon-favorite"></span>
                     <span class="product-preview__info__link__text dashed-bottom">Добавить в список желаний</span>
                 </a>

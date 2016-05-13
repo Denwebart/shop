@@ -133,7 +133,7 @@ class Cart extends BaseController
 	{
 		// доделать добавление с разными параметрами (цвет, размер)
 		$cart = $request->session()->get('cart', $this->cart);
-		unset($cart['products'][$request->key]);
+		unset($cart['products'][$request->get('key')]);
 
 		$request->session()->put('cart', $cart);
 	}

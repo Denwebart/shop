@@ -11,5 +11,6 @@ return [
 		'carousel',
 		'reviews',
 		'cart',
+		'wishlist',
 	],
 ];

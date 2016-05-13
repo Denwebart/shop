@@ -6,6 +6,7 @@ use App\Helpers\Settings;
 use App\Models\Setting;
 use App\Widgets\Cart\Cart;
 use App\Widgets\Menu\Menu;
+use App\Widgets\Wishlist\Wishlist;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -23,5 +24,6 @@ class Controller extends BaseController
 		\View::share('courseUSD', $course->getCourse());
 		\View::share('menuWidget', new Menu());
 		\View::share('cartWidget', new Cart());
+		\View::share('wishlistWidget', new Wishlist());
 	}
 }

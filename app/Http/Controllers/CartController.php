@@ -10,7 +10,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Page;
-use App\Models\Product;
 use App\Widgets\Cart\Cart;
 
 class CartController extends Controller
