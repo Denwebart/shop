@@ -87,58 +87,136 @@ class SiteController extends Controller
 		}
 		if(is_a($page, 'App\Models\Page')) {
 			if($page->type == Page::TYPE_CATALOG) {
-				// доделать вложенность
-				$subcategoryIds = Page::select(['id', 'parent_id'])
-					->whereParentId($page->id)
-					->whereIsPublished(1)
-					->where('published_at', '<', Carbon::now())
-					->pluck('id');
-
-				$subcategoryIds[] = $page->id;
-
-				// доделать сортировку по популярности
-				$products = Product::whereIn('category_id', $subcategoryIds)
-					->whereIsPublished(1)
-					->where('published_at', '<', Carbon::now())
-					->with([
-						'category' => function($q) {
-							$q->select(['id', 'parent_id', 'alias', 'is_container']);
-						}
-					])
-					->paginate(12);
-
-				return view('catalog', compact('page', 'products'));
+				return $this->getCatalogPage($request, $settings, $page);
 			} else {
 				if($page->id == Page::ID_CONTACT_PAGE) {
-					$contactPageSettings = $settings->getCategory(Setting::CATEGORY_CONTACT_PAGE);
-
-					return view('contact', compact('page', 'contactPageSettings'));
+					return $this->getContactPage($request, $settings, $page);
 				} elseif($page->id == Page::ID_SITEMAP_PAGE) {
-					
-					$sitemapItems = Page::whereParentId(0)
-						->whereIsPublished(1)
-						->where('published_at', '<', date('Y-m-d H:i:s'))
-						->with([
-							'publishedChildren' => function($query) {
-								$query->select('id', 'parent_id', 'type', 'is_container', 'alias', 'title', 'menu_title');
-							},
-							'publishedProducts' => function($query) {
-								$query->select('id', 'category_id', 'alias', 'title');
-							},
-						])
-						->get(['id', 'parent_id', 'type', 'is_container', 'alias', 'title', 'menu_title']);
-
-					return view('sitemap', compact('page', 'sitemapItems'));
+					return $this->getSitemapPage($request, $settings, $page);
 				}
-				
-				return view('page', compact('page'));
+				return $this->getPage($request, $settings, $page);
 			}
 		} else {
-			$page->ratingInfo = $page->getRating();
-			$page->rating = $page->ratingInfo['value'];
-			$productReviews = $page->getReviews();
-			return view('product', compact('page', 'productReviews'));
+			return $this->getProductPage($request, $settings, $page);
 		}
+	}
+
+	/**
+	 * Other page
+	 *
+	 * @param $request
+	 * @param $settings
+	 * @param $page
+	 * @return mixed
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	protected function getPage($request, $settings, $page)
+	{
+		return view('page', compact('page'));
+	}
+
+	/**
+	 * Contact page
+	 *
+	 * @param $request
+	 * @param $settings
+	 * @param $page
+	 * @return mixed
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	protected function getContactPage($request, $settings, $page)
+	{
+		$contactPageSettings = $settings->getCategory(Setting::CATEGORY_CONTACT_PAGE);
+
+		return view('contact', compact('page', 'contactPageSettings'));
+	}
+
+	/**
+	 * HTML Sitemap page
+	 *
+	 * @param $request
+	 * @param $settings
+	 * @param $page
+	 * @return mixed
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	protected function getSitemapPage($request, $settings, $page)
+	{
+		$sitemapItems = Page::whereParentId(0)
+			->whereIsPublished(1)
+			->where('published_at', '<', date('Y-m-d H:i:s'))
+			->with([
+				'publishedChildren' => function($query) {
+					$query->select('id', 'parent_id', 'type', 'is_container', 'alias', 'title', 'menu_title');
+				},
+				'publishedProducts' => function($query) {
+					$query->select('id', 'category_id', 'alias', 'title');
+				},
+			])
+			->get(['id', 'parent_id', 'type', 'is_container', 'alias', 'title', 'menu_title']);
+
+		return view('sitemap', compact('page', 'sitemapItems'));
+	}
+
+	/**
+	 * Product catalog page
+	 *
+	 * @param $request
+	 * @param $settings
+	 * @param $page
+	 * @return mixed
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	protected function getCatalogPage($request, $settings, $page)
+	{
+		// доделать вложенность
+		$subcategoryIds = Page::select(['id', 'parent_id'])
+			->whereParentId($page->id)
+			->whereIsPublished(1)
+			->where('published_at', '<', Carbon::now())
+			->pluck('id');
+
+		$subcategoryIds[] = $page->id;
+
+		// доделать сортировку по популярности
+		$products = Product::whereIn('category_id', $subcategoryIds)
+			->whereIsPublished(1)
+			->where('published_at', '<', Carbon::now())
+			->with([
+				'category' => function($q) {
+					$q->select(['id', 'parent_id', 'alias', 'is_container']);
+				}
+			])
+			->paginate(12);
+
+		return view('catalog', compact('page', 'products'));
+	}
+
+	/**
+	 * Product page
+	 *
+	 * @param $request
+	 * @param $settings
+	 * @param $page
+	 * @return mixed
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	protected function getProductPage($request, $settings, $page)
+	{
+		$page->ratingInfo = $page->getRating();
+		$page->rating = $page->ratingInfo['value'];
+		$productReviews = $page->getReviews();
+		return view('product', compact('page', 'productReviews'));
 	}
 
 	/**

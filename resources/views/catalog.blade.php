@@ -46,21 +46,22 @@
 
                     <div class="filters-row__select">
                         <label>На странице: </label>
-                        <select class="selectpicker" data-style="select--wd select--wd--sm" data-width="60">
-                            <option>12</option>
-                            <option>24</option>
-                            <option>36</option>
+                        <select class="selectpicker onpage" name="onpage" data-style="select--wd select--wd--sm" data-width="60">
+                            <option value="12">12</option>
+                            <option value="24">24</option>
+                            <option value="36">36</option>
                         </select>
                     </div>
                     <div class="filters-row__select">
                         <label>Сортировать по: </label>
-                        <select class="selectpicker" data-style="select--wd select--wd--sm" data-width="130">
-                            <option>дате</option>
-                            <option>цене</option>
-                            <option>рейтингу</option>
+                        <select class="selectpicker sortby" name="sortby" data-style="select--wd select--wd--sm" data-width="130">
+                            <option value="published_at">дате</option>
+                            <option value="price">цене</option>
+                            <option value="rating">рейтингу</option>
+                            <option value="popular">популярности</option>
                         </select>
-                        <a href="#" class="icon icon-arrow-down active"></a>
-                        <a href="#" class="icon icon-arrow-up"></a>
+                        <a href="javascript:void(0)" class="icon icon-arrow-down m-l-10 active sort-direction" data-value="desc" rel="nofollow" title="По убыванию" data-toggle="tooltip"></a>
+                        <a href="javascript:void(0)" class="icon icon-arrow-up sort-direction" data-value="asc" rel="nofollow" title="По возростанию" data-toggle="tooltip"></a>
                     </div>
                 </div>
             </div>
@@ -72,19 +73,22 @@
                         </div>
                         <div class="filters-col__select visible-xs">
                             <label>На странице: </label>
-                            <select class="selectpicker" data-style="select--wd select--wd--sm" data-width="60">
-                                <option>12</option>
-                                <option>24</option>
-                                <option>36</option>
+                            <select class="selectpicker onpage" name="onpage" data-style="select--wd select--wd--sm" data-width="60">
+                                <option value="12">12</option>
+                                <option value="24">24</option>
+                                <option value="36">36</option>
                             </select>
                         </div>
                         <div class="filters-col__select visible-xs">
                             <label>Сортировать по: </label>
-                            <select class="selectpicker" data-style="select--wd select--wd--sm" data-width="100">
-                                <option>дате</option>
-                                <option>цене</option>
-                                <option>рейтингу</option>
+                            <select class="selectpicker sortby" name="sortby" data-style="select--wd select--wd--sm" data-width="100">
+                                <option value="published_at">дате</option>
+                                <option value="price">цене</option>
+                                <option value="rating">рейтингу</option>
+                                <option value="popular">популярности</option>
                             </select>
+                            <a href="javascript:void(0)" class="icon icon-arrow-down m-l-10 active sort-direction" data-value="desc" rel="nofollow" title="По убыванию" data-toggle="tooltip"></a>
+                            <a href="javascript:void(0)" class="icon icon-arrow-up sort-direction" data-value="asc" rel="nofollow" title="По возростанию" data-toggle="tooltip"></a>
                         </div>
                         <div class="filters-col__collapse open">
                             <h4 class="filters-col__collapse__title text-uppercase">Категория</h4>
@@ -330,4 +334,37 @@
     <script src="{{ asset('vendor/isotope/isotope.pkgd.min.js') }}"></script>
     <script src="{{ asset('vendor/nouislider/nouislider.min.js') }}"></script>
     <script src="{{ asset('vendor/imagesloaded/imagesloaded.pkgd.min.js') }}"></script>
+
+    <script type="text/javascript">
+        var url = '{{ Request::getUri() }}';
+
+        $('.sort-direction').on('click', function (e) {
+            $.ajax({
+                url: url,
+                dataType: "json",
+                type: "POST",
+                data: {sortby},
+                async: true,
+                beforeSend: function (request) {
+                    return request.setRequestHeader('X-CSRF-Token', $j("meta[name='csrf-token']").attr('content'));
+                },
+                success: function(response) {
+                    if(response.success){
+                        $form.trigger('reset');
+                        $j('#success-message').show().find('.infobox__text').text(response.message);
+                    } else {
+                        $form.find('.has-error').removeClass('has-error');
+                        $form.find('.help-block.error').text('');
+                        $j.each(response.errors, function(index, value) {
+                            var errorDiv = '.' + index + '_error';
+                            $form.find(errorDiv).parent().addClass('has-error');
+                            $form.find(errorDiv).empty().append(value);
+                        });
+                        $j('#error-message').show().find('.infobox__text').text(response.message);
+                    }
+                }
+            });
+        });
+    </script>
+
 @endpush

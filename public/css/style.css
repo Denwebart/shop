@@ -15086,6 +15086,9 @@ article .entry-content .banner::before {
     font-size: 10px;
     vertical-align: middle;
 }
+.filters-row__select .icon:hover {
+    color: #212121;
+}
 
 @media (min-width: 768px) and (max-width: 1199px) {
     .filters-row .col-2 {
@@ -15273,6 +15276,13 @@ body.boxed .products-col {
 
     .outer #filtersCol .filters-col__collapse__title {
         text-align: left;
+    }
+    .filters-row__select .icon {
+        color: rgba(255, 255, 255, 0.7) !important;
+    }
+    .filters-row__select .icon:hover,
+    .filters-row__select .icon.active {
+        color: rgba(255, 255, 255, 1.0) !important;
     }
 
     .filters-row__select {
