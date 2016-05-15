@@ -75,12 +75,12 @@
                         if(response.success){
                             $j('#modalAddToWishlist .loading').hide();
                             $j('#modalAddToWishlist .error').hide();
-                            $j('#modalAddToWishlist .success').show().find('.text').text(response.message);
+                            $j('#modalAddToWishlist .success').show().find('.text').html(response.message);
                             $j('#wishlist').html(response.wishlistHtml);
                         } else {
                             $j('#modalAddToWishlist .loading').hide();
                             $j('#modalAddToWishlist .sussess').hide();
-                            $j('#modalAddToWishlist .error').show().find('.text').text(response.message);
+                            $j('#modalAddToWishlist .error').show().find('.text').html(response.message);
                         }
                     }
                 });

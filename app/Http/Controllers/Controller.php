@@ -24,6 +24,6 @@ class Controller extends BaseController
 		\View::share('courseUSD', $course->getCourse());
 		\View::share('menuWidget', new Menu());
 		\View::share('cartWidget', new Cart());
-		\View::share('wishlistWidget', new Wishlist());
+		\View::share('wishlistWidget', new Wishlist($course, $settings));
 	}
 }

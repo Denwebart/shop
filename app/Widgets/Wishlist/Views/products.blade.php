@@ -5,6 +5,8 @@
  */
 ?>
 
+{{ var_dump(\Cookie::get('wishlist')) }}
+
 @if(count($products))
     <ul>
         @foreach($products as $key => $item)
