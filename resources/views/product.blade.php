@@ -244,7 +244,7 @@
                 <li>
                     <a href="#reviews" role="tab" data-toggle="tab" class="text-uppercase">
                         Отзывы
-                        <span class="count">({{ count($productReviews) }})</span>
+                        (<span class="count reviews-count">{{ count($productReviews) }}</span>)
                     </a>
                 </li>
                 <li><a href="#sizing-guide" role="tab" data-toggle="tab" class="text-uppercase">Таблица размеров</a></li>
@@ -277,149 +277,58 @@
                     </table>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="reviews">
-                    @if(count($productReviews))
-                        <div class="row">
-                            <div class="col-sm-5 col-md-4 col-lg-3">
-                                <h3 class="text-uppercase">Отзывы ({{ count($productReviews) }})</h3>
-                                <div class="rating-extended row">
-                                    <div class="col-lg-12">
-                                        <h1 class="rating-extended__num pull-left">{{ $page->rating }}</h1>
-                                        <div class="rating product-rating"></div>
-                                        <div>
-                                            <span class="icon icon-man"></span>
-                                            Отзывов: {{ count($productReviews) }}
-                                        </div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                    <div class="col-lg-12">
-                                        <div class="progress">
-                                            <span class="rating-extended__label">5 звезд</span>
-                                            @if($page->ratingInfo[5])
-                                                <div class="progress-bar progress-bar-five" role="progressbar" aria-valuenow="{{ count($productReviews) }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (100 * $page->ratingInfo[5]) / $page->ratingInfo['sum'] }}%">
-                                                    <span class="rating-extended__reviews-count">
-                                                        {{ $page->ratingInfo[5] }}
-                                                    </span>
-                                                </div>
-                                            @endif
-                                        </div>
-                                        <div class="clearfix"></div>
-                                        <div class="progress">
-                                            <span class="rating-extended__label">4 звезды</span>
-                                            @if($page->ratingInfo[4])
-                                                <div class="progress-bar progress-bar-four" role="progressbar" aria-valuenow="{{ count($productReviews) }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (100 * $page->ratingInfo[4]) / $page->ratingInfo['sum'] }}%">
-                                                    <span class="rating-extended__reviews-count">
-                                                        {{ $page->ratingInfo[4] }}
-                                                    </span>
-                                                </div>
-                                            @endif
-                                        </div>
-                                        <div class="clearfix"></div>
-                                        <div class="progress">
-                                            <span class="rating-extended__label">3 звезды</span>
-                                            @if($page->ratingInfo[3])
-                                                <div class="progress-bar progress-bar-three" role="progressbar" aria-valuenow="{{ count($productReviews) }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (100 * $page->ratingInfo[3]) / $page->ratingInfo['sum'] }}%">
-                                                    <span class="rating-extended__reviews-count">
-                                                        {{ $page->ratingInfo[3] }}
-                                                    </span>
-                                                </div>
-                                            @endif
-                                        </div>
-                                        <div class="clearfix"></div>
-                                        <div class="progress">
-                                            <span class="rating-extended__label">2 звезды</span>
-                                            @if($page->ratingInfo[2])
-                                                <div class="progress-bar progress-bar-two" role="progressbar" aria-valuenow="{{ count($productReviews) }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (100 * $page->ratingInfo[2]) / $page->ratingInfo['sum'] }}%">
-                                                    <span class="rating-extended__reviews-count">
-                                                        {{ $page->ratingInfo[2] }}
-                                                    </span>
-                                                </div>
-                                            @endif
-                                        </div>
-                                        <div class="clearfix"></div>
-                                        <div class="progress">
-                                            <span class="rating-extended__label">1 звезда</span>
-                                            @if($page->ratingInfo[1])
-                                                <div class="progress-bar progress-bar-one" role="progressbar" aria-valuenow="{{ count($productReviews) }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (100 * $page->ratingInfo[1]) / $page->ratingInfo['sum'] }}%">
-                                                    <span class="rating-extended__reviews-count">
-                                                        {{ $page->ratingInfo[1] }}
-                                                    </span>
-                                                </div>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="divider divider--md"></div>
-                            </div>
-                            <div class="col-sm-7 col-md-8 col-lg-9">
-                                <div class="count">
-                                    Показано {{ count($productReviews) }} из {{ count($productReviews) }}
-                                </div>
-
-                                @foreach($productReviews as $review)
-                                    <div class="review">
-                                        <div class="rating">
-                                            @include('parts.starRating', ['rating' => $review->rating])
-                                        </div>
-                                        {{--<h5 class="review__title">Очень понравился!</h5>--}}
-                                        <div class="review__content">
-                                            {{ $review->text }}
-                                        </div>
-                                        <div class="review__meta">
-                                            @if($review->user)
-                                                {{ \App\Models\User::$roles[$review->user->role] }}
-                                                @if(\Auth::check())
-                                                    <a href="{{ route('admin.users.show', ['id' => $review->user->id]) }}">
-                                                        <strong>{{ $review->user->login }}</strong>
-                                                    </a>,
-                                                @else
-                                                    <strong>{{ $review->user->login }}</strong>,
-                                                @endif
-                                            @else
-                                                <strong>{{ $review->user_name }}</strong>,
-                                            @endif
-                                            {{ \App\Helpers\Date::format($review->created_at) }}
-                                        </div>
-                                        <div class="review__comments">
-                                            <a href="#">Комментарии ({{ count($review->publishedChildren) }})</a>
-                                        </div>
-                                        <div class="review__helpful">
-                                            <span class="m-r-10">Этот отзыв был полезен?</span>
-                                            <a href="#" class="like" data-id="{{ $review->id }}">
-                                                Да
-                                                <span class="count">({{ $review->like }})</span>
-                                            </a>
-                                            <a href="#" class="dislike" data-id="{{ $review->id }}">
-                                                Нет
-                                                <span class="count">({{ $review->dislike }})</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    @else
-                        <p>Оставьте первым свой отзыв!</p>
-                    @endif
+                    <div id="comments">
+                        @include('parts.comments')
+                    </div>
                     <div class="divider divider--xs"></div>
                     <div class="row">
                         <div class="col-sm-5 col-md-4 col-lg-3">
 
                         </div>
                         <div class="col-sm-7 col-md-8 col-lg-9">
-                            <form action="#" class="contact-form">
+                            {!! Form::open(['url' => route('comment.add', ['product_id' => $page->id]), 'id' => 'comment-form', 'class' => 'contact-form']) !!}
+
+                                {!! csrf_field() !!}
+
+                                {!! Form::hidden('parent_id', 0) !!}
+
                                 <h4>Оставить отзыв</h4>
 
-                                <label>Имя<span class="required">*</span></label>
-                                <input type="text" class="input--wd input--wd--full">
-                                <label>Заголовок<span class="required">*</span></label>
-                                <input type="text" class="input--wd input--wd--full">
-                                <label>Отзыв<span class="required">*</span></label>
-                                <textarea class="textarea--wd input--wd--full"></textarea>
-                                <div class="divider divider--xs"></div>
-                                <button type="submit" class="btn btn--wd text-uppercase wave">
-                                    Отправить
-                                </button>
-                            </form>
+                                <div id="success-message">
+                                    @include('parts.message', ['class' => 'success', 'icon' => 'icon-mail-fill'])
+                                </div>
+
+                                <div id="error-message">
+                                    @include('parts.message', ['class' => 'error'])
+                                </div>
+
+                                <div class="input-group input-group--wd">
+                                    {!! Form::text('user_name', null, ['id' => 'user_name', 'class' => 'input--full']) !!}
+                                    <span class="input-group__bar"></span>
+                                    <label>Имя <span class="required">*</span></label>
+                                    <span class="help-block error user_name_error">
+                                        {{ $errors->first('user_name') }}
+                                    </span>
+                                </div>
+                                <div class="input-group input-group--wd">
+                                    {!! Form::text('user_email', null, ['id' => 'user_email', 'class' => 'input--full']) !!}
+                                    <span class="input-group__bar"></span>
+                                    <label>Ваш email-адрес <span class="required">*</span></label>
+                                    <span class="help-block error user_email_error">
+                                        {{ $errors->first('user_email') }}
+                                    </span>
+                                </div>
+                                <div class="input-group input-group--wd">
+                                    {!! Form::textarea('text', null, ['id' => 'text', 'class' => 'input--full']) !!}
+                                    <span class="input-group__bar"></span>
+                                    <label>Отзыв <span class="required">*</span></label>
+                                    <span class="help-block error text_error">
+                                        {{ $errors->first('text') }}
+                                    </span>
+                                </div>
+
+                                {!! Form::submit('Отправить', ['class' => 'btn btn--wd text-uppercase wave']) !!}
+                            {!! Form::close() !!}
                         </div>
                     </div>
                 </div>
@@ -1034,7 +943,49 @@
 
 
             }));
-        })
+        });
+
+        jQuery(function($j) {
+
+            $j('#comment-form').on('submit', function(event){
+                event.preventDefault ? event.preventDefault() : event.returnValue = false;
+
+                var $form = $j(this),
+                        formData = $form.serialize(),
+                        url = $j(this).attr('action');
+
+                $j.ajax({
+                    url: url,
+                    dataType: "json",
+                    type: "POST",
+                    data: formData,
+                    async: true,
+                    beforeSend: function (request) {
+                        return request.setRequestHeader('X-CSRF-Token', $j("meta[name='csrf-token']").attr('content'));
+                    },
+                    success: function(response) {
+                        $form.find('.has-error').removeClass('has-error');
+                        $form.find('.help-block.error').text('');
+                        $j('#success-message').hide().find('.infobox__text').text('');
+                        $j('#error-message').hide().find('.infobox__text').text('');
+
+                        if(response.success){
+                            $form.trigger('reset');
+                            $j('#success-message').show().find('.infobox__text').text(response.message);
+                            $j('#comments').html(response.commentsHtml);
+                            $j('.reviews-count').html(response.commentsCount);
+                        } else {
+                            $j.each(response.errors, function(index, value) {
+                                var errorDiv = '.' + index + '_error';
+                                $form.find(errorDiv).parent().addClass('has-error');
+                                $form.find(errorDiv).empty().append(value);
+                            });
+                            $j('#error-message').show().find('.infobox__text').text(response.message);
+                        }
+                    }
+                });
+            });
+        });
     </script>
 
 @endpush

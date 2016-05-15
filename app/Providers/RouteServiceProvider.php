@@ -32,13 +32,13 @@ class RouteServiceProvider extends ServiceProvider
 	    $router->bind('page', function($alias) {
 		     $page = Page::whereAlias($alias)
 			    ->whereIsPublished(1)
-			    ->where('published_at', '<', Carbon::now())
+			    ->where('published_at', '<=', Carbon::now())
 			    ->first();
 
 		    if(is_null($page)) {
 			    $page = Product::whereAlias($alias)
 				->whereIsPublished(1)
-				->where('published_at', '<', Carbon::now())
+				->where('published_at', '<=', Carbon::now())
 				->firstOrFail();
 		    }
 

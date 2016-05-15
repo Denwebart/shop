@@ -226,7 +226,7 @@ class Product extends Model
 	{
 		return $this->hasMany('App\Models\ProductReview', 'product_id')
 			->whereIsPublished(1)
-			->where('published_at', '<', Carbon::now());
+			->where('published_at', '<=', Carbon::now());
 	}
 
 	public function getTitle()
@@ -288,7 +288,7 @@ class Product extends Model
 	{
 		$reviewsRating = ProductReview::whereParentId(0)
 			->whereIsPublished(1)
-			->where('published_at', '<', Carbon::now())
+			->where('published_at', '<=', Carbon::now())
 			->select(\DB::raw('rating, COUNT(*) as count'))
 			->groupBy('rating')
 			->get();

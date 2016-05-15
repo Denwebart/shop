@@ -109,7 +109,6 @@
     <script type="text/javascript">
         jQuery(function($j) {
 
-            // Ajax for our form
             $j('#contact-form').on('submit', function(event){
                 event.preventDefault ? event.preventDefault() : event.returnValue = false;
 
@@ -127,12 +126,15 @@
                         return request.setRequestHeader('X-CSRF-Token', $j("meta[name='csrf-token']").attr('content'));
                     },
                     success: function(response) {
+                        $form.find('.has-error').removeClass('has-error');
+                        $form.find('.help-block.error').text('');
+                        $j('#success-message').hide().find('.infobox__text').text('');
+                        $j('#error-message').hide().find('.infobox__text').text('');
+
                         if(response.success){
                             $form.trigger('reset');
                             $j('#success-message').show().find('.infobox__text').text(response.message);
                         } else {
-                            $form.find('.has-error').removeClass('has-error');
-                            $form.find('.help-block.error').text('');
                             $j.each(response.errors, function(index, value) {
                                 var errorDiv = '.' + index + '_error';
                                 $form.find(errorDiv).parent().addClass('has-error');

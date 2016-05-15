@@ -87,7 +87,7 @@ class ProductReview extends Model
 	 */
 	protected static $rules = [
 		'user_id' => 'required_without_all:user_name,user_email|integer',
-		'product_id' => 'integer',
+		'product_id' => 'required|integer',
 		'user_name' => 'required_without:user_id|max:50|regex:/^[A-Za-zА-Яа-яЁёЇїІіЄє \-\']+$/u',
 		'user_email' => 'required_without:user_id|email|max:100',
 		'rating' => 'integer',
@@ -171,6 +171,6 @@ class ProductReview extends Model
 	{
 		return $this->hasMany('App\Models\ProductReview', 'parent_id')
 			->whereIsPublished(1)
-			->where('published_at', '<', Carbon::now());
+			->where('published_at', '<=', Carbon::now());
 	}
 }

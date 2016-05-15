@@ -181,7 +181,7 @@ class SiteController extends Controller
 		$subcategoryIds = Page::select(['id', 'parent_id'])
 			->whereParentId($page->id)
 			->whereIsPublished(1)
-			->where('published_at', '<', Carbon::now())
+			->where('published_at', '<=', Carbon::now())
 			->pluck('id');
 
 		$subcategoryIds[] = $page->id;
@@ -189,7 +189,7 @@ class SiteController extends Controller
 		// доделать сортировку по популярности
 		$products = Product::whereIn('category_id', $subcategoryIds)
 			->whereIsPublished(1)
-			->where('published_at', '<', Carbon::now())
+			->where('published_at', '<=', Carbon::now())
 			->with([
 				'category' => function($q) {
 					$q->select(['id', 'parent_id', 'alias', 'is_container']);

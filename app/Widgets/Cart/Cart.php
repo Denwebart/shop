@@ -79,7 +79,7 @@ class Cart extends BaseController
 		if(isset($productsIds)) {
 			$productModels = Product::whereIn('id', $productsIds)
 				->whereIsPublished(1)
-				->where('published_at', '<', Carbon::now())
+				->where('published_at', '<=', Carbon::now())
 				->with([
 					'category' => function($q) {
 						$q->select(['id', 'parent_id', 'alias', 'type']);

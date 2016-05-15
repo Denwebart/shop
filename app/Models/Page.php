@@ -265,7 +265,7 @@ class Page extends Model
 	{
 		return $this->hasMany('App\Models\Product', 'category_id')
 			->whereIsPublished(1)
-			->where('published_at', '<', Carbon::now());
+			->where('published_at', '<=', Carbon::now());
 	}
 	
 	/**
