@@ -111,6 +111,7 @@ class Wishlist extends BaseController
 		if(!array_key_exists($product->id, $products)) {
 			$products[$product->id] = [
 				'product_id' => $product->id,
+				'added_at' => Carbon::now(),
 			];
 
 			$request->session()->put('wishlist', $products);
