@@ -34,6 +34,7 @@ class Wishlist extends BaseController
 
 					return \Response::json([
 						'success' => true,
+						'message' => 'Продукт успешно добавлен в список желаний!',
 						'wishlistHtml' => view('widget.wishlist::wishlist')->with('products', $products)->render(),
 					]);
 				} else {
@@ -91,7 +92,7 @@ class Wishlist extends BaseController
 			}
 		}
 
-		return $products;
+		return array_reverse($products, true);
 	}
 
 	/**

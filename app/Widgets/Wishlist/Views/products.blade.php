@@ -19,7 +19,8 @@
                         <a href="{{ $item['product']->getUrl() }}">
                             {{ $item['product']->title }}
                         </a>
-                        Добавлено:
+                        <br>
+                        Дата добавления:
                         {{ \App\Helpers\Date::getRelative($item['added_at']) }}
                     </div>
                     <div class="shopping-cart__item__info__price">

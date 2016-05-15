@@ -22,7 +22,6 @@
             <div class="modal-content">
                 <button type="button" class="close icon-clear" data-dismiss="modal"></button>
                 <div class="text-center">
-                    <div class="divider divider--xs"></div>
                     <div class="loading">
                         <div class="divider divider--sm"></div>
                         <div class="loader">
@@ -33,8 +32,13 @@
                             <div class="bar"></div>
                         </div>
                     </div>
-                    <p class="success">Продукт успешно добавлен в Ваш список желаний! </p>
-                    <div class="divider divider--xs"></div>
+                    <div class="message success">
+                        <div class="infobox__icon"><span class="icon icon-favorite"></span></div>
+                        <span class="infobox__text text"></span>
+                    </div>
+                    <div class="message error">
+                        <span class="infobox__text text"></span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -56,6 +60,7 @@
                 $j('#modalAddToWishlist').modal("toggle");
                 $j('#modalAddToWishlist .loading').show();
                 $j('#modalAddToWishlist .success').hide();
+                $j('#modalAddToWishlist .error').hide();
 
                 $j.ajax({
                     url: "{{ route('wishlist.add') }}",
@@ -69,8 +74,13 @@
                     success: function(response) {
                         if(response.success){
                             $j('#modalAddToWishlist .loading').hide();
-                            $j('#modalAddToWishlist .success').show();
+                            $j('#modalAddToWishlist .error').hide();
+                            $j('#modalAddToWishlist .success').show().find('.text').text(response.message);
                             $j('#wishlist').html(response.wishlistHtml);
+                        } else {
+                            $j('#modalAddToWishlist .loading').hide();
+                            $j('#modalAddToWishlist .sussess').hide();
+                            $j('#modalAddToWishlist .error').show().find('.text').text(response.message);
                         }
                     }
                 });
