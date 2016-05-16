@@ -15,7 +15,7 @@
                     <div class="rating product-rating"></div>
                     <div>
                         <span class="icon icon-man"></span>
-                        Отзывов: {{ count($productReviews) }}
+                        Оценок: {{ $page->ratingInfo['sum'] }}
                     </div>
                 </div>
                 <div class="clearfix"></div>
@@ -85,9 +85,11 @@
 
             @foreach($productReviews as $review)
                 <div class="review">
-                    <div class="rating">
-                        @include('parts.starRating', ['rating' => $review->rating])
-                    </div>
+                    @if($review->rating)
+                        <div class="rating">
+                            @include('parts.starRating', ['rating' => $review->rating])
+                        </div>
+                    @endif
                     {{--<h5 class="review__title">Очень понравился!</h5>--}}
                     <div class="review__content">
                         {{ $review->text }}
@@ -96,9 +98,7 @@
                         @if($review->user)
                             {{ \App\Models\User::$roles[$review->user->role] }}
                             @if(\Auth::check())
-                                <a href="{{ route('admin.users.show', ['id' => $review->user->id]) }}">
-                                    <strong>{{ $review->user->login }}</strong>
-                                </a>,
+                                <a href="{{ route('admin.users.show', ['id' => $review->user->id]) }}"><strong>{{ $review->user->login }}</strong></a>,
                             @else
                                 <strong>{{ $review->user->login }}</strong>,
                             @endif
@@ -112,13 +112,13 @@
                     </div>
                     <div class="review__helpful">
                         <span class="m-r-10">Этот отзыв был полезен?</span>
-                        <a href="#" class="like" data-id="{{ $review->id }}">
+                        <a href="#" class="vote like" data-id="{{ $review->id }}" data-vote="{{ \App\Models\ProductReview::LIKE }}">
                             Да
-                            <span class="count">({{ $review->like }})</span>
+                            (<span class="count">{{ $review->like }}</span>)
                         </a>
-                        <a href="#" class="dislike" data-id="{{ $review->id }}">
+                        <a href="#" class="vote dislike" data-id="{{ $review->id }}" data-vote="{{ \App\Models\ProductReview::DISLIKE }}">
                             Нет
-                            <span class="count">({{ $review->dislike }})</span>
+                            (<span class="count">{{ $review->dislike }}</span>)
                         </a>
                     </div>
                 </div>

@@ -288,18 +288,24 @@ class Product extends Model
 	{
 		$reviewsRating = ProductReview::whereParentId(0)
 			->whereIsPublished(1)
+			->where('rating', '!=', 0)
+			->whereNotNull('rating')
 			->where('published_at', '<=', Carbon::now())
 			->select(\DB::raw('rating, COUNT(*) as count'))
 			->groupBy('rating')
 			->get();
 
 		$totalRating = 0;
+		$totalSum = 0;
 		foreach ($reviewsRating as $item) {
 			$this->ratingInfo[$item->rating] = $item->count;
 			$totalRating = $totalRating + ($item->rating * $item->count);
+			$totalSum = $totalSum + $item->count;
 		}
-		$this->ratingInfo['sum'] = count($reviewsRating);
-		$this->ratingInfo['value'] = count($reviewsRating) ? ($totalRating / count($reviewsRating)) : 0;
+		$ratingValue = $totalSum ? ($totalRating / $totalSum) : 0;
+
+		$this->ratingInfo['sum'] = $totalSum;
+		$this->ratingInfo['value'] = round($ratingValue, 2);
 
 		return $this->ratingInfo;
 	}

@@ -53,7 +53,7 @@
                         <div class="input-group input-group--wd">
                             {!! Form::text('name', null, ['id' => 'name', 'class' => 'input--full']) !!}
                             <span class="input-group__bar"></span>
-                            {!! Form::label('name', 'Ваше имя *') !!}
+                            <label>Ваше имя <span class="required">*</span></label>
 
                             <span class="help-block error name_error">
                                 {{ $errors->first('name') }}
@@ -62,8 +62,7 @@
                         <div class="input-group input-group--wd">
                             {!! Form::text('email', null, ['id' => 'email', 'class' => 'input--full']) !!}
                             <span class="input-group__bar"></span>
-                            {!! Form::label('email', 'Ваш email-адрес *') !!}
-
+                            <label>Ваш email-адрес <span class="required">*</span></label>
                             <span class="help-block error email_error">
                                 {{ $errors->first('email') }}
                             </span>
@@ -71,8 +70,7 @@
                         <div class="input-group input-group--wd">
                             {!! Form::text('subject', null, ['id' => 'subject', 'class' => 'input--full']) !!}
                             <span class="input-group__bar"></span>
-                            {!! Form::label('subject', 'Тема') !!}
-
+                            <label>Тема</label>
                             <span class="help-block error subject_error">
                                 {{ $errors->first('subject') }}
                             </span>
@@ -80,7 +78,7 @@
                         <div class="input-group input-group--wd">
                             {!! Form::textarea('message', null, ['id' => 'message', 'class' => 'input--full']) !!}
                             <span class="input-group__bar"></span>
-                            {!! Form::label('message', 'Сообщение *') !!}
+                            <label>Сообщение <span class="required">*</span></label>
 
                             <span class="help-block error message_error">
                                 {{ $errors->first('message') }}

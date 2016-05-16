@@ -1832,7 +1832,8 @@ input[type=checkbox]:checked ~ label .box {
     color: #ffffff;
 }
 
-.review__helpful a:hover {
+.review__helpful a:hover,
+.review__helpful a.active {
     background: #1DA3A0;
 }
 

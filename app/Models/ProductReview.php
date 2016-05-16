@@ -62,6 +62,17 @@ class ProductReview extends Model
 	];
 
 	/**
+	 * Полезен или не полезен отзыв (поля в базе)
+	 */
+	const LIKE    = 'like';
+	const DISLIKE = 'dislike';
+
+	public static $votes = [
+		self::LIKE    => 'Полезен',
+		self::DISLIKE => 'Не полезен',
+	];
+
+	/**
 	 * The attributes that are mass assignable.
 	 *
 	 * @var array

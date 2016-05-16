@@ -169,7 +169,7 @@
                             </span>
                         </div>
                         <div class="pull-right">
-                            <button class="btn btn--wd text-uppercase">Добавить в корзину</button>
+                            <button class="btn btn--wd text-uppercase add-to-cart">Добавить в корзину</button>
                         </div>
                     </div>
                     <div class="divider divider--xs"></div>
@@ -288,9 +288,8 @@
                         <div class="col-sm-7 col-md-8 col-lg-9">
                             {!! Form::open(['url' => route('comment.add', ['product_id' => $page->id]), 'id' => 'comment-form', 'class' => 'contact-form']) !!}
 
-                                {!! csrf_field() !!}
-
                                 {!! Form::hidden('parent_id', 0) !!}
+                                {!! Form::hidden('rating', null, ['id' => 'rating']) !!}
 
                                 <h4>Оставить отзыв</h4>
 
@@ -302,22 +301,37 @@
                                     @include('parts.message', ['class' => 'error'])
                                 </div>
 
-                                <div class="input-group input-group--wd">
-                                    {!! Form::text('user_name', null, ['id' => 'user_name', 'class' => 'input--full']) !!}
-                                    <span class="input-group__bar"></span>
-                                    <label>Имя <span class="required">*</span></label>
-                                    <span class="help-block error user_name_error">
-                                        {{ $errors->first('user_name') }}
-                                    </span>
+                                @if(\Auth::check())
+                                    <div class="input-group m-b-15">
+                                        <a href="{{ route('admin.users.show', ['id' => \Auth::user()->id]) }}">
+                                            <img src="{{ \Auth::user()->getAvatarUrl() }}" alt="{{ \Auth::user()->login }}" class="img-rounded pull-left" width="30">
+                                            <span class="pull-left m-l-10 m-t-5">{{ \Auth::user()->login }}</span>
+                                        </a>
+                                    </div>
+                                @else
+                                    <div class="input-group input-group--wd">
+                                        {!! Form::text('user_name', null, ['id' => 'user_name', 'class' => 'input--full']) !!}
+                                        <span class="input-group__bar"></span>
+                                        <label>Имя <span class="required">*</span></label>
+                                        <span class="help-block error user_name_error">
+                                            {{ $errors->first('user_name') }}
+                                        </span>
+                                    </div>
+                                    <div class="input-group input-group--wd">
+                                        {!! Form::text('user_email', null, ['id' => 'user_email', 'class' => 'input--full']) !!}
+                                        <span class="input-group__bar"></span>
+                                        <label>Ваш email-адрес <span class="required">*</span></label>
+                                        <span class="help-block error user_email_error">
+                                            {{ $errors->first('user_email') }}
+                                        </span>
+                                    </div>
+                                @endif
+
+                                <div class="input-group m-b-15">
+                                    <span class="rating-extended__num product-review-rating-number pull-left">0</span>
+                                    <div class="product-review-rating-input pull-left"></div>
                                 </div>
-                                <div class="input-group input-group--wd">
-                                    {!! Form::text('user_email', null, ['id' => 'user_email', 'class' => 'input--full']) !!}
-                                    <span class="input-group__bar"></span>
-                                    <label>Ваш email-адрес <span class="required">*</span></label>
-                                    <span class="help-block error user_email_error">
-                                        {{ $errors->first('user_email') }}
-                                    </span>
-                                </div>
+
                                 <div class="input-group input-group--wd">
                                     {!! Form::textarea('text', null, ['id' => 'text', 'class' => 'input--full']) !!}
                                     <span class="input-group__bar"></span>
@@ -398,6 +412,7 @@
             </div>
         </div>
     </section>
+
     <section class="content">
         <div class="container">
             <h2 class="text-center text-uppercase">Недавно просмотренные</h2>
@@ -751,18 +766,6 @@
     <script src="{{ asset('vendor/jrate/jRate.min.js') }}"></script>
 
     <script type="text/javascript">
-        // Product Rating
-        $(".product-rating").jRate({
-            rating: '{{ $page->rating }}',
-            precision: 0, // целое число
-            width: 18,
-            height: 18,
-            shapeGap: '2px',
-            startColor: '#F9BC39',
-            endColor: '#F9BC39',
-            readOnly: true
-        });
-
         // Without zoom previews switcher
 
         jQuery(function($j) {
@@ -946,13 +949,51 @@
         });
 
         jQuery(function($j) {
+            // Product Rating
+            $j(".product-rating").jRate({
+                rating: '{{ $page->rating }}',
+                width: 18,
+                height: 18,
+                shapeGap: '2px',
+                startColor: '#F9BC39',
+                endColor: '#F9BC39',
+                readOnly: true
+            });
+
+            // Set product review rating
+            $j(".product-review-rating-input").jRate({
+                width: 18,
+                height: 18,
+                shapeGap: '2px',
+                startColor: '#F9BC39',
+                endColor: '#F9BC39',
+                precision: 1.0,
+                onSet: function (rating) {
+                    $j('#rating').val(rating);
+                    $j('.product-review-rating-number').text(rating);
+                },
+                onChange: function (rating) {
+                    $j('.product-review-rating-number').text(rating);
+                }
+            });
+        });
+
+        // Comments form ajax
+        jQuery(function($j) {
 
             $j('#comment-form').on('submit', function(event){
                 event.preventDefault ? event.preventDefault() : event.returnValue = false;
 
                 var $form = $j(this),
-                        formData = $form.serialize(),
-                        url = $j(this).attr('action');
+                    values = $form.serializeArray(),
+                    url = $j(this).attr('action'),
+                    rating = $j('#rating').val();
+
+                values.push({
+                    name: "rating",
+                    value: rating
+                });
+                formData = jQuery.param(values);
 
                 $j.ajax({
                     url: url,
@@ -981,6 +1022,32 @@
                                 $form.find(errorDiv).empty().append(value);
                             });
                             $j('#error-message').show().find('.infobox__text').text(response.message);
+                        }
+                    }
+                });
+            });
+
+            $j(document).on('click', '.vote', function(event) {
+
+                event.preventDefault ? event.preventDefault() : event.returnValue = false;
+
+                var $button = $j(this),
+                    id = $button.data('id'),
+                    vote = $button.data('vote');
+
+                $j.ajax({
+                    url: '{{ route('comment.vote') }}',
+                    dataType: "json",
+                    type: "POST",
+                    data: {'id': id, 'vote': vote},
+                    async: true,
+                    beforeSend: function (request) {
+                        return request.setRequestHeader('X-CSRF-Token', $j("meta[name='csrf-token']").attr('content'));
+                    },
+                    success: function(response) {
+                        if(response.success){
+                            $button.find('.count').text(response.voteCount);
+                            $button.addClass('active');
                         }
                     }
                 });

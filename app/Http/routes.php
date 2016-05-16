@@ -10,6 +10,7 @@ Route::get('/', 'SiteController@index');
 Route::post('letter/send', ['as' => 'letter.send', 'uses' => 'SiteController@sendLetter']);
 
 Route::post('comment/add/{product_id}', ['as' => 'comment.add', 'uses' => 'CommentsController@add']);
+Route::post('comment/vote', ['as' => 'comment.vote', 'uses' => 'CommentsController@vote']);
 
 Route::get('cart', ['as' => 'cart.index', 'uses' => 'CartController@index']);
 Route::post('cart/add', ['as' => 'cart.add', 'uses' => '\App\Widgets\Cart\Cart@addToCart']);
