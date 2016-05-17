@@ -159,6 +159,7 @@ return [
 	    Barryvdh\Debugbar\ServiceProvider::class,
 	    Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 	    Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
+	    Fitztrev\QueryTracer\Providers\QueryTracerServiceProvider::class,
 
 	    App\Modules\ServiceProvider::class,
 	    App\Widgets\ServiceProvider::class,
