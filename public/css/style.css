@@ -11219,6 +11219,12 @@ form label.error {
 .product-preview__info__link a {
     text-decoration: none;
 }
+.product-preview__info__link a:hover,
+.product-preview__info__link a.active,
+.product-preview__info__link a:hover .icon,
+.product-preview__info__link a.active .icon {
+    color: #212121;
+}
 
 .product-preview__info__link--inline li {
     display: inline-block;

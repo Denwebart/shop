@@ -513,4 +513,19 @@ class Product extends Model
 	{
 		File::deleteDirectory($this->getImagesPath());
 	}
+
+	/**
+	 * Добавлен ли товар в список желаний (есть ли в cookie)
+	 *
+	 * @return bool
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function inWishlist()
+	{
+		$wishlistProducts = \Request::cookie('wishlist', []);
+		return key_exists($this->id, $wishlistProducts) ? true : false;
+	}
+
 }

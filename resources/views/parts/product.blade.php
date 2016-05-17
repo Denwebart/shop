@@ -98,9 +98,11 @@
                 </div>
             @endif
             <div class="product-preview__info__link">
-                <a href="#" class="add-to-wishlist" data-product-id="{{ $item->id }}" rel="nofollow">
+                <a href="#" class="add-to-wishlist @if($item->inWishlist()) active @endif" data-product-id="{{ $item->id }}" rel="nofollow">
                     <span class="icon icon-favorite"></span>
-                    <span class="product-preview__info__link__text dashed-bottom">Добавить в список желаний</span>
+                    <span class="product-preview__info__link__text dashed-bottom">
+                        Добавить в список желаний
+                    </span>
                 </a>
                 <button class="btn btn--wd buy-link">
                     <span class="icon icon-ecommerce"></span>
