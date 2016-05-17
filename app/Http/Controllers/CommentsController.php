@@ -79,8 +79,7 @@ class CommentsController extends Controller
 	public function vote(Request $request)
 	{
 		if($request->ajax()) {
-			$cookieVotes = $request->cookie('votes.productReview', []);
-			var_dump($cookieVotes);die;
+			$cookieVotes = $request->cookie('productReviewVotes', []);
 
 			if(!key_exists($request->get('id'), $cookieVotes)) {
 				$vote = key_exists($request->get('vote'), ProductReview::$votes)
@@ -106,7 +105,7 @@ class CommentsController extends Controller
 						'voteCount' => $productReview->$vote,
 					]);
 
-					return $response->withCookie(cookie()->forever('votes.productReview', $cookieVotes));
+					return $response->withCookie(cookie()->forever('productReviewVotes', $cookieVotes));
 				}
 
 				return \Response::json([
