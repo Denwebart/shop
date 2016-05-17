@@ -175,7 +175,7 @@
                     <div class="divider divider--xs"></div>
                     <ul class="product-links product-links--inline">
                         <li>
-                            <a href="#" class="add-to-wishlist" data-product-id="" rel="nofollow">
+                            <a href="#" class="add-to-wishlist @if($page->inWishlist()) active @endif" data-product-id="{{ $page->id }}" rel="nofollow">
                                 <span class="icon icon-favorite"></span>
                                 <span class="dashed-bottom">Добавить в список желаний</span>
                             </a>

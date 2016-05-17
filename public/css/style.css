@@ -11222,7 +11222,11 @@ form label.error {
 .product-preview__info__link a:hover,
 .product-preview__info__link a.active,
 .product-preview__info__link a:hover .icon,
-.product-preview__info__link a.active .icon {
+.product-preview__info__link a.active .icon,
+.add-to-wishlist:hover,
+.add-to-wishlist.active,
+.add-to-wishlist:hover .icon,
+.add-to-wishlist.active .icon {
     color: #212121;
 }
 
