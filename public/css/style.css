@@ -2454,6 +2454,7 @@ select[multiple].form-group-lg .form-control {
 }
 
 .has-success .help-block,
+.help-block.success,
 .has-success .control-label,
 .has-success .radio,
 .has-success .checkbox,
@@ -2524,6 +2525,7 @@ select[multiple].form-group-lg .form-control {
 }
 
 .has-error .help-block,
+.help-block.error,
 .has-error .control-label,
 .has-error .radio,
 .has-error .checkbox,
@@ -15436,7 +15438,7 @@ body.boxed .products-col {
 }
 
 .review {
-    padding: 20px 0;
+    padding: 20px 0 0;
     margin: 15px 0;
     border-top-width: 1px;
     border-top-style: solid;
@@ -15455,7 +15457,11 @@ body.boxed .products-col {
 }
 
 .review__comments {
-    padding-bottom: 7px;
+    padding-bottom: 0;
+}
+.review__comments .comments {
+    display: none;
+    padding-left: 80px;
 }
 
 .review__helpful {
@@ -15468,6 +15474,9 @@ body.boxed .products-col {
     line-height: 20px;
     border-radius: 3px;
     text-decoration: none;
+}
+.review__helpful .help-block {
+    display: none;
 }
 
 .review .rating {
@@ -17298,8 +17307,14 @@ table.table-total h2 {
 .p-t-30 {
     padding-top: 30px !important;
 }
+.p-b-0 {
+    padding-bottom: 0 !important;
+}
+.p-b-5 {
+    padding-bottom: 5px !important;
+}
 .p-b-20 {
-    padding-bottom: 20px;
+    padding-bottom: 20px !important;
 }
 .m-t-0 {
     margin-top: 0 !important;
@@ -17312,6 +17327,9 @@ table.table-total h2 {
 }
 .m-t-20 {
     margin-top: 20px !important;
+}
+.m-b-0 {
+    margin-bottom: 0 !important;
 }
 .m-b-10 {
     margin-bottom: 10px !important;
@@ -17330,6 +17348,9 @@ table.table-total h2 {
 }
 .m-r-10 {
     margin-right: 10px !important;
+}
+.m-r-20 {
+    margin-right: 20px !important;
 }
 
 /* Colors */

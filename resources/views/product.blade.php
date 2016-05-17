@@ -1015,6 +1015,10 @@
                             $j('#success-message').show().find('.infobox__text').text(response.message);
                             $j('#comments').html(response.commentsHtml);
                             $j('.reviews-count').html(response.commentsCount);
+
+                            $j('html, body').animate({
+                                scrollTop: $j('#review-' + response.id).offset().top - 100
+                            }, 1000);
                         } else {
                             $j.each(response.errors, function(index, value) {
                                 var errorDiv = '.' + index + '_error';
@@ -1032,6 +1036,7 @@
                 event.preventDefault ? event.preventDefault() : event.returnValue = false;
 
                 var $button = $j(this),
+                    $buttonParent = $button.parent('.review__helpful'),
                     id = $button.data('id'),
                     vote = $button.data('vote');
 
@@ -1048,9 +1053,29 @@
                         if(response.success){
                             $button.find('.count').text(response.voteCount);
                             $button.addClass('active');
+                            $buttonParent.find('.help-block')
+                                    .removeClass('error').addClass('success').text(response.message).show();
+                        } else {
+                            $buttonParent.find('.help-block')
+                                    .removeClass('success').addClass('error').text(response.message).show();
                         }
                     }
                 });
+            });
+
+            $j(document).on('click', '.show-comments', function(event) {
+
+                event.preventDefault ? event.preventDefault() : event.returnValue = false;
+
+                var $button = $j(this),
+                    $commentsContainer = $button.parent('.review__comments').find('.comments'),
+                    parent_id = $button.data('parentId');
+
+                if($commentsContainer.is(':visible')) {
+                    $commentsContainer.hide();
+                } else {
+                    $commentsContainer.show();
+                }
             });
         });
     </script>

@@ -181,7 +181,38 @@ class ProductReview extends Model
 	public function publishedChildren()
 	{
 		return $this->hasMany('App\Models\ProductReview', 'parent_id')
+			->with('user')
 			->whereIsPublished(1)
 			->where('published_at', '<=', Carbon::now());
+	}
+
+	/**
+	 * Ставил ли пользователь like отзыву (есть ли в cookie)
+	 *
+	 * @return bool
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function liked()
+	{
+		$cookieVotes = \Request::cookie('productReviewVotes', []);
+		return key_exists($this->id, $cookieVotes) && $cookieVotes[$this->id]['vote'] == ProductReview::LIKE
+			? true : false;
+	}
+
+	/**
+	 * Ставил ли пользователь dislike отзыву (есть ли в cookie)
+	 *
+	 * @return bool
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function disliked()
+	{
+		$cookieVotes = \Request::cookie('productReviewVotes', []);
+		return key_exists($this->id, $cookieVotes) && $cookieVotes[$this->id]['vote'] == ProductReview::DISLIKE
+			? true : false;
 	}
 }

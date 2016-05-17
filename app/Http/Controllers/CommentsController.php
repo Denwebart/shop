@@ -46,7 +46,7 @@ class CommentsController extends Controller
 				]);
 			}
 
-			ProductReview::create($data);
+			$review = ProductReview::create($data);
 
 			$product = Product::whereId($product_id)->first();
 			$product->ratingInfo = $product->getRating();
@@ -55,6 +55,7 @@ class CommentsController extends Controller
 
 			return \Response::json([
 				'success' => true,
+				'id' => $review->id,
 				'message' => $data['parent_id']
 					? 'Ваш комментарий успешно сохранен!'
 					: 'Ваш отзыв успешно сохранен!',
