@@ -12,7 +12,8 @@
         "laravelcollective/html": "5.2.*",
         "intervention/image": "^2.3",
         "rap2hpoutre/laravel-log-viewer": "^0.6.0",
-        "barryvdh/laravel-debugbar": "^2.2"
+        "barryvdh/laravel-debugbar": "^2.2",
+        "fitztrev/query-tracer": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
