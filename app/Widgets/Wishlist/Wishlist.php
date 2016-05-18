@@ -12,7 +12,6 @@ use Carbon\Carbon;
 use Illuminate\Routing\Controller as BaseController;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cookie;
 
 class Wishlist extends BaseController
 {
@@ -60,25 +59,15 @@ class Wishlist extends BaseController
 			$products = $request->cookie('wishlist', []);
 			unset($products[$request->get('id')]);
 
-			$products = $this->getWishlist($products);
-//			var_dump($products);
+			$productsHtml = $this->getWishlist($products);
 
-//			$response = \Response::json([
-//				'success' => true,
-//				'wishlistProductsHtml' => view('widget.wishlist::products')->with('products', $products)->render(),
-//				'wishlistHtml' => view('widget.wishlist::wishlist')->with('products', $products)->render(),
-//			]);
-
-//			return $response->withCookie(cookie()->forever('wishlist', $products));
-
-//			var_dump(\Cookie::forget('wishlist'));
-//			dd(\Cookie::forever('wishlist', $products));
-
-			return response()->json([
+			$response = \Response::json([
 				'success' => true,
-				'wishlistProductsHtml' => view('widget.wishlist::products')->with('products', $products)->render(),
-				'wishlistHtml' => view('widget.wishlist::wishlist')->with('products', $products)->render(),
-			])->withCookie(cookie()->forever('wishlist', $products));
+				'wishlistProductsHtml' => view('widget.wishlist::products')->with('products', $productsHtml)->render(),
+				'wishlistHtml' => view('widget.wishlist::wishlist')->with('products', $productsHtml)->render(),
+			]);
+
+			return $response->withCookie(cookie()->forever('wishlist', $products));
 		}
 	}
 

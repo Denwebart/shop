@@ -73,6 +73,7 @@
                     },
                     success: function(response) {
                         if(response.success){
+                            $button.addClass('active');
                             $j('#modalAddToWishlist .loading').hide();
                             $j('#modalAddToWishlist .error').hide();
                             $j('#modalAddToWishlist .success').show().find('.text').html(response.message);
