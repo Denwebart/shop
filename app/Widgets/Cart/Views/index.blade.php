@@ -25,7 +25,7 @@
                 @endif
 
                 <div class="cart-products">
-                    @include('widget.cart::cartProducts')
+                    @include('widget.cart::products')
                 </div>
             </div>
         </div>

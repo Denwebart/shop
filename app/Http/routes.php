@@ -15,6 +15,7 @@ Route::post('comment/vote', ['as' => 'comment.vote', 'uses' => 'CommentsControll
 Route::get('cart', ['as' => 'cart.index', 'uses' => 'CartController@index']);
 Route::post('cart/add', ['as' => 'cart.add', 'uses' => '\App\Widgets\Cart\Cart@addToCart']);
 Route::post('cart/remove', ['as' => 'cart.remove', 'uses' => '\App\Widgets\Cart\Cart@removeFromCart']);
+Route::post('cart/quantity', ['as' => 'cart.quantity', 'uses' => '\App\Widgets\Cart\Cart@changeQuantity']);
 
 Route::get('wishlist', ['as' => 'wishlist.index', 'uses' => 'WishlistController@index']);
 Route::post('wishlist/add', ['as' => 'wishlist.add', 'uses' => '\App\Widgets\Wishlist\Wishlist@addToWishlist']);

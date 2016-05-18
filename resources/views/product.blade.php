@@ -169,7 +169,9 @@
                             </span>
                         </div>
                         <div class="pull-right">
-                            <button class="btn btn--wd text-uppercase add-to-cart">Добавить в корзину</button>
+                            <button class="btn btn--wd text-uppercase add-to-cart" data-product-id="{{ $page->id }}">
+                                Добавить в корзину
+                            </button>
                         </div>
                     </div>
                     <div class="divider divider--xs"></div>

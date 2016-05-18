@@ -1895,68 +1895,6 @@ jQuery(function($j) {
 });
 
 
-
-// bootstrap minus and plus
-
-jQuery(function($j) {
-
-    "use strict";
-    
-    $j('.btn-number').click(function(e) {
-        e.preventDefault();
-        var type = $j(this).attr('data-type');
-        var input = $j(this).closest('.input-group-qty').find('input.input-qty');
-        var currentVal = parseInt(input.val());
-        if (!isNaN(currentVal)) {
-            if (type == 'minus') {
-			if (currentVal > input.attr('min')) {
-                    input.val(currentVal - 1).change();
-                }
-                if (parseInt(input.val()) == input.attr('min')) {
-                    $j(this).attr('disabled', true);
-                }
-
-            } else if (type == 'plus') {
-
-                if (currentVal < input.attr('max')) {
-                    input.val(currentVal + 1).change();
-                }
-                if (parseInt(input.val()) == input.attr('max')) {
-                    $j(this).attr('disabled', true);
-                }
-            }
-        } else {
-            input.val(0);
-        }
-    });
-    $j('.input-number').focusin(function() {
-        $j(this).data('oldValue', $j(this).val());
-    });
-    $j('.input-number').change(function() {
-
-        var minValue = parseInt($j(this).attr('min'));
-        var maxValue = parseInt($j(this).attr('max'));
-        var valueCurrent = parseInt($j(this).val());
-
-        var name = $j(this).attr('name');
-        if (valueCurrent >= minValue) {
-            $j(this).closest('.input-group-qty').find(".btn-number[data-type='minus']").removeAttr('disabled')
-        } else {
-            alert('Sorry, the minimum value was reached');
-            $j(this).val($j(this).data('oldValue'));
-        }
-        if (valueCurrent <= maxValue) {
-            $j(this).closest('.input-group-qty').find(".btn-number[data-type='plus']").removeAttr('disabled')
-        } else {
-            alert('Sorry, the maximum value was reached');
-            $j(this).val($j(this).data('oldValue'));
-        }
-
-
-    });
-	
-});
-
 // landing category
 
 jQuery(function($j) {

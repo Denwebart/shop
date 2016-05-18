@@ -7,7 +7,7 @@
 
 @if(count($cart['products']))
     <div class="shopping-cart__top text-uppercase">
-        Корзина (<span class="count-cart-items">{{ count($cart['products']) }}</span>)
+        Корзина (<span class="count-cart-items">{{ $cart['count'] }}</span>)
     </div>
     <ul>
         @foreach($cart['products'] as $key => $item)
@@ -26,15 +26,15 @@
                     {{--<div class="shopping-cart__item__info__option">Цвет: Голубой</div>--}}
                     {{--<div class="shopping-cart__item__info__option">Размер: 42-46</div>--}}
                     <div class="shopping-cart__item__info__price">
-                        {{ \App\Helpers\Str::priceFormat($item['product']->price) }}
+                        {{ \App\Helpers\Str::priceFormat($item['product']->getPrice() * $item['quantity']) }}
                     </div>
                     <div class="shopping-cart__item__info__qty">
                         <div class="input-group-qty pull-left">
                             <span class="pull-left m-r-5">Кол-во: </span>
-                            <input type="text" name="quantity" class="input-number input--wd input-qty pull-left" value="1" min="1" max="100">
+                            <input type="text" name="quantity" class="input-number input--wd input-qty pull-left" value="{{ $item['quantity'] }}" min="1" max="100">
                             <span class="pull-left btn-number-container">
                                 <button type="button" class="btn btn-number btn-number--plus" data-type="plus" data-field="quantity">+</button>
-                                <button type="button" class="btn btn-number btn-number--minus" disabled="disabled" data-type="minus" data-field="quantity">&#8211;</button>
+                                <button type="button" class="btn btn-number btn-number--minus" @if($item['quantity'] <= 1) disabled="disabled" @endif data-type="minus" data-field="quantity">&#8211;</button>
                             </span>
                         </div>
                     </div>

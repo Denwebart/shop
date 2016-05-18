@@ -10,11 +10,11 @@
         <a href="#" class="btn dropdown-toggle btn--links--dropdown header__cart__button header__dropdowns__button" data-toggle="dropdown" title="Корзина" data-toggle="tooltip">
             <span class="icon icon-bag-alt"></span>
             <span class="badge badge--menu count-cart-items @if(!count($cart['products'])) hidden @endif">
-                {{ count($cart['products']) }}
+                {{ $cart['count'] }}
             </span>
         </a>
         <div class="dropdown-menu animated fadeIn shopping-cart cart-products" role="menu">
-            @include('widget.cart::cartProducts')
+            @include('widget.cart::products')
         </div>
     </div>
 </div>
@@ -27,11 +27,16 @@
             <div class="modal-content">
                 <button type="button" class="close icon-clear" data-dismiss="modal"></button>
                 <div class="text-center">
-                    <div class="divider divider--xs"></div>
-                    <p>Продукт успешно добавлен в корзину!</p>
-                    <div class="divider divider--xs"></div>
-                    <a href="{{ route('cart.index') }}" class="btn btn--wd">Посмотреть корзину</a>
-                    <div class="divider divider--xs"></div>
+                    <div class="message success">
+                        <div class="infobox__icon"><span class="icon icon icon-bag-alt"></span></div>
+                        <span class="infobox__text text"></span>
+
+                        <div class="divider divider--xs"></div>
+                        <a href="{{ route('cart.index') }}" class="btn btn--wd">Посмотреть корзину</a>
+                    </div>
+                    <div class="message error">
+                        <span class="infobox__text text"></span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -47,9 +52,12 @@
             $j(document).on('click', '.add-to-cart', function(e){
                 e.preventDefault();
                 var $button = $j(this),
-                    productId = $j(this).data('productId');
+                    productId = $button.data('productId');
 
                 $button.addClass('btn--wait');
+                $j('#modalAddToCart .success').hide();
+                $j('#modalAddToCart .error').hide();
+
                 $j.ajax({
                     url: "{{ route('cart.add') }}",
                     dataType: "json",
@@ -63,7 +71,13 @@
                         if(response.success){
                             $button.removeClass('btn--wait');
                             $j('#modalAddToCart').modal("toggle");
+                            $j('#modalAddToCart .error').hide();
+                            $j('#modalAddToCart .success').show().find('.text').html(response.message);
                             $j('#cart').html(response.cartHtml);
+                        } else {
+                            $j('#modalAddToCart').modal("toggle");
+                            $j('#modalAddToCart .sussess').hide();
+                            $j('#modalAddToCart .error').show().find('.text').html(response.message);
                         }
                     }
                 });
@@ -74,8 +88,8 @@
                 e.stopPropagation();
 
                 var $button = $j(this),
-                    productId = $j(this).data('productId'),
-                    productKey = $j(this).data('productKey');
+                    productId = $button.data('productId'),
+                    productKey = $button.data('productKey');
 
                 $j.ajax({
                     url: "{{ route('cart.remove') }}",
@@ -98,6 +112,85 @@
                     }
                 });
             });
+        });
+
+        // bootstrap minus and plus
+        jQuery(function($j) {
+
+            "use strict";
+
+            function changeQuantityAjax(productKey, quantity) {
+                $j.ajax({
+                    url: "{{ route('cart.quantity') }}",
+                    dataType: "json",
+                    type: "POST",
+                    data: {'key': productKey, 'quantity': quantity},
+                    async: true,
+                    beforeSend: function (request) {
+                        return request.setRequestHeader('X-CSRF-Token', $j("meta[name='csrf-token']").attr('content'));
+                    },
+                    success: function(response) {
+                        if(response.success){
+                            $j('.cart-products').html(response.cartProductsHtml);
+                            $j('.count-cart-items').text(response.productsCount);
+                        }
+                    }
+                });
+            }
+
+            $j(document).on('click', '.btn-number', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var productKey = $j(this).data('productKey'),
+                    productId = $j(this).data('productId');
+
+                var type = $j(this).attr('data-type');
+                var input = $j(this).closest('.input-group-qty').find('input.input-qty');
+                var currentVal = parseInt(input.val());
+                if (!isNaN(currentVal)) {
+                    if (type == 'minus') {
+                        if (currentVal > input.attr('min')) {
+                            input.val(currentVal - 1).change();
+                            changeQuantityAjax(productKey, currentVal - 1);
+                        }
+                        if (parseInt(input.val()) == input.attr('min')) {
+                            $j(this).attr('disabled', true);
+                        }
+                    } else if (type == 'plus') {
+                        if (currentVal < input.attr('max')) {
+                            input.val(currentVal + 1).change();
+                            changeQuantityAjax(productKey, currentVal + 1);
+                        }
+                        if (parseInt(input.val()) == input.attr('max')) {
+                            $j(this).attr('disabled', true);
+                        }
+                    }
+                } else {
+                    input.val(0);
+                }
+            });
+            $j(document).focusin('.input-number', function() {
+                $j(this).data('oldValue', $j(this).val());
+            });
+            $j(document).change('.input-number', function(e) {
+                e.stopPropagation();
+                var minValue = parseInt($j(this).attr('min'));
+                var maxValue = parseInt($j(this).attr('max'));
+                var valueCurrent = parseInt($j(this).val());
+
+                var name = $j(this).attr('name');
+                if (valueCurrent >= minValue) {
+                    $j(this).closest('.input-group-qty').find(".btn-number[data-type='minus']").removeAttr('disabled')
+                } else {
+                    $j(this).val($j(this).data('oldValue'));
+                }
+                if (valueCurrent <= maxValue) {
+                    $j(this).closest('.input-group-qty').find(".btn-number[data-type='plus']").removeAttr('disabled')
+                } else {
+                    $j(this).val($j(this).data('oldValue'));
+                }
+            });
+
         });
 
     </script>

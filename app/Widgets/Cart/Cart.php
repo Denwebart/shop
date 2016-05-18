@@ -18,6 +18,7 @@ class Cart extends BaseController
 	protected $cart = [
 		'products' => [],
 		'total_price' => 0,
+		'count' => 0,
 	];
 
 	public function show()
@@ -41,6 +42,7 @@ class Cart extends BaseController
 				
 				return \Response::json([
 					'success' => true,
+					'message' => 'Продукт успешно добавлен в корзину!',
 					'cartHtml' => view('widget.cart::cart')->with('cart', $cart)->render(),
 				]);
 			}
@@ -62,8 +64,8 @@ class Cart extends BaseController
 
 			return \Response::json([
 				'success' => true,
-				'cartProductsHtml' => view('widget.cart::cartProducts')->with('cart', $cart)->render(),
-				'productsCount' => count($cart['products']),
+				'cartProductsHtml' => view('widget.cart::products')->with('cart', $cart)->render(),
+				'productsCount' => $cart['count'],
 			]);
 		}
 	}
@@ -90,7 +92,8 @@ class Cart extends BaseController
 				foreach($cart['products'] as $key => $item) {
 					if($productModel->id == $item['product_id']) {
 						$cart['products'][$key]['product'] = $productModel;
-						$cart['total_price'] = $cart['total_price'] + $productModel->getPrice();
+						$cart['total_price'] = $cart['total_price'] + ($productModel->getPrice() * $item['quantity']);
+						$cart['count'] = $cart['count'] + $item['quantity'];
 					}
 				}
 			}
@@ -105,6 +108,8 @@ class Cart extends BaseController
 	 * @param Request $request
 	 * @param $product
 	 * @param int $quantity
+	 * @return bool
+	 *
 	 * @author     It Hill (it-hill.com@yandex.ua)
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
@@ -113,13 +118,23 @@ class Cart extends BaseController
 		// доделать добавление с разными параметрами (цвет, размер)
 		$cart = $request->session()->get('cart', $this->cart);
 
+		$options = $request->has('options') ? $request->get('options') : [];
+
+		foreach($cart['products'] as $key => $cartProduct) {
+			if($cartProduct['product_id'] == $product->id && $cartProduct['options'] == $options) {
+				$cart['products'][$key]['quantity'] = $cartProduct['quantity'] + 1;
+				$request->session()->put('cart', $cart);
+				return true;
+			}
+		}
+
 		$cart['products'][] = [
 			'product_id' => $product->id,
 			'quantity' => $quantity,
 			'options' => [],
 		];
-
 		$request->session()->put('cart', $cart);
+		return true;
 	}
 
 	/**
@@ -136,5 +151,35 @@ class Cart extends BaseController
 		unset($cart['products'][$request->get('key')]);
 
 		$request->session()->put('cart', $cart);
+	}
+
+	/**
+	 * Change product quantity in cart session
+	 *
+	 * @param Request $request
+	 * @return bool|\Illuminate\Http\JsonResponse
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	protected function changeQuantity(Request $request)
+	{
+		$cart = $request->session()->get('cart', $this->cart);
+		
+		foreach($cart['products'] as $key => $cartProduct) {
+			if($key == $request->get('key')) {
+				$cart['products'][$key]['quantity'] = $request->get('quantity');
+			}
+		}
+
+		$request->session()->put('cart', $cart);
+
+		$cart = $this->getCart();
+
+		return \Response::json([
+			'success' => true,
+			'cartProductsHtml' => view('widget.cart::products')->with('cart', $cart)->render(),
+			'productsCount' => $cart['count'],
+		]);
 	}
 }
