@@ -4,7 +4,7 @@
  * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
  */
 
-$title = 'Редактирование пользователя "' . $user->login . '"';
+$title = 'Редактирование информации о пользователе "' . $user->login . '"';
 View::share('title', $title);
 ?>
 
@@ -17,7 +17,8 @@ View::share('title', $title);
             <ul class="breadcrumb m-b-10">
                 <li><a href="{{ route('admin.index') }}">Главная</a></li>
                 <li><a href="{{ route('admin.users.index') }}">Пользователи</a></li>
-                <li>{{ $title }}</li>
+                <li><a href="{{ route('admin.users.show', ['id' => $user->id]) }}">{{ $user->login }}</a></li>
+                <li>Редактирование</li>
             </ul>
         </div>
         <div class="col-sm-6 col-md-6 col-xs-12">

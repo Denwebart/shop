@@ -331,7 +331,7 @@
 
                                 <div class="input-group m-b-15">
                                     <span class="rating-extended__num product-review-rating-number pull-left">0</span>
-                                    <div class="product-review-rating-input pull-left"></div>
+                                    <div id="product-review-rating-input" class="product-review-rating-input pull-left"></div>
                                 </div>
 
                                 <div class="input-group input-group--wd">
@@ -952,7 +952,7 @@
 
         jQuery(function($j) {
             // Product Rating
-            $j(".product-rating").jRate({
+            var productRatingOptions = {
                 rating: '{{ $page->rating }}',
                 width: 18,
                 height: 18,
@@ -960,10 +960,11 @@
                 startColor: '#F9BC39',
                 endColor: '#F9BC39',
                 readOnly: true
-            });
+            };
+            var productRating = $j(".product-rating").jRate(productRatingOptions);
 
             // Set product review rating
-            $j(".product-review-rating-input").jRate({
+            var ratingInputOptions = {
                 width: 18,
                 height: 18,
                 shapeGap: '2px',
@@ -977,12 +978,10 @@
                 onChange: function (rating) {
                     $j('.product-review-rating-number').text(rating);
                 }
-            });
-        });
+            };
+            var ratingInput = $j("#product-review-rating-input").jRate(ratingInputOptions);
 
-        // Comments form ajax
-        jQuery(function($j) {
-
+            // Comments form ajax
             $j('#comment-form').on('submit', function(event){
                 event.preventDefault ? event.preventDefault() : event.returnValue = false;
 
@@ -1014,9 +1013,17 @@
 
                         if(response.success){
                             $form.trigger('reset');
+                            ratingInput.setRating(0);
+                            $j('#rating').val(0)
+                            $j('.product-review-rating-number').text('0');
+
                             $j('#success-message').show().find('.infobox__text').text(response.message);
                             $j('#comments').html(response.commentsHtml);
                             $j('.reviews-count').html(response.commentsCount);
+
+                            productRating.setRating(response.newProductRating);
+                            productRating = $j('.rating-in-comments').jRate(productRatingOptions);
+                            productRating.setRating(response.newProductRating);
 
                             $j('html, body').animate({
                                 scrollTop: $j('#review-' + response.id).offset().top - 100

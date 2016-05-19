@@ -286,7 +286,8 @@ class Product extends Model
 	 */
 	public function getRating()
 	{
-		$reviewsRating = ProductReview::whereParentId(0)
+		$reviewsRating = ProductReview::whereProductId($this->id)
+			->whereParentId(0)
 			->whereIsPublished(1)
 			->where('rating', '!=', 0)
 			->whereNotNull('rating')

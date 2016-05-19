@@ -205,7 +205,7 @@ View::share('title', $title);
                                     @if($call->user)
                                         <img src="{{ $call->user->getAvatarUrl() }}" class="img-circle" alt="{{ $call->user->login }}" title="Ответил {{ $call->user->login }}" data-toggle="tooltip" data-placement="right">
                                     @else
-                                        <div class="empty" title="Никто не звонил" data-toggle="tooltip" data-placement="right"></div>
+                                        <div class="empty"></div>
                                     @endif
                                 </div>
                                 <p class="inbox-item-author">{{ $call->name }}</p>

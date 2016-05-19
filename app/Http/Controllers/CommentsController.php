@@ -60,6 +60,7 @@ class CommentsController extends Controller
 					? 'Ваш комментарий успешно сохранен!'
 					: 'Ваш отзыв успешно сохранен!',
 				'commentsCount' => count($productReviews),
+				'newProductRating' => $product->rating,
 				'commentsHtml' => view('parts.comments')
 					->with('page', $product)
 					->with('productReviews', $productReviews)

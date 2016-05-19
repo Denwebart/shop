@@ -11641,10 +11641,12 @@ form label.error {
 
 .rating span {
     padding-right: 1px;
+    color: #F9BC39;
 }
 
 .rating .empty-star {
     opacity: 0.5;
+    color: #9a9a9a;
 }
 
 .price-box {

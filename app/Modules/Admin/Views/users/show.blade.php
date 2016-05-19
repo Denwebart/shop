@@ -17,7 +17,7 @@ View::share('title', $title);
             <ul class="breadcrumb">
                 <li><a href="{{ route('admin.index') }}">Главная</a></li>
                 <li><a href="{{ route('admin.users.index') }}">Пользователи</a></li>
-                <li>{{ $title }}</li>
+                <li>{{ $user->login }}</li>
             </ul>
         </div>
     </div>
