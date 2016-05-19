@@ -129,6 +129,10 @@
                         $j('#success-message').hide().find('.infobox__text').text('');
                         $j('#error-message').hide().find('.infobox__text').text('');
 
+                        $j('html, body').animate({
+                            scrollTop: $j('#contact-form').offset().top - 100
+                        }, 1000);
+
                         if(response.success){
                             $form.trigger('reset');
                             $j('#success-message').show().find('.infobox__text').text(response.message);

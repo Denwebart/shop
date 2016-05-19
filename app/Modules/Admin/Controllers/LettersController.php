@@ -10,6 +10,7 @@ namespace App\Modules\Admin\Controllers;
 
 use App\Models\Letter;
 use App\Models\Page;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Input;
@@ -24,7 +25,7 @@ class LettersController extends Controller
      */
     public function index()
     {
-	    $letters = Letter::paginate(10);
+	    $letters = Letter::orderBy('created_at', 'DESC')->paginate(10);
 
         return view('admin::letters.index', compact('letters'));
     }
@@ -38,6 +39,10 @@ class LettersController extends Controller
     public function show($id)
     {
 	    $letter = Letter::findOrFail($id);
+	    if(is_null($letter->updated_at)) {
+		    $letter->updated_at = Carbon::now();
+		    $letter->save();   
+	    }
 
 	    return view('admin::letters.show', compact('letter'));
     }
@@ -54,7 +59,7 @@ class LettersController extends Controller
 
 		    if(Letter::destroy($id)){
 
-			    $letters = Letter::paginate(10);
+			    $letters = Letter::orderBy('created_at', 'DESC')->paginate(10);
 
 			    return \Response::json([
 				    'success' => true,

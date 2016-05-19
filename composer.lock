@@ -682,20 +682,21 @@
         },
         {
             "name": "fitztrev/query-tracer",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fitztrev/query-tracer.git",
-                "reference": "70269747c871f5e4208482a77b1840772fb569b0"
+                "reference": "af4acb1066100bb7dfcef9237df343bbcd8784af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fitztrev/query-tracer/zipball/70269747c871f5e4208482a77b1840772fb569b0",
-                "reference": "70269747c871f5e4208482a77b1840772fb569b0",
+                "url": "https://api.github.com/repos/fitztrev/query-tracer/zipball/af4acb1066100bb7dfcef9237df343bbcd8784af",
+                "reference": "af4acb1066100bb7dfcef9237df343bbcd8784af",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.6.4"
+                "laravel/framework": "^5.2",
+                "php": ">=5.5.9"
             },
             "require-dev": {
                 "illuminate/database": "5.2.*",
@@ -719,7 +720,7 @@
                 "eloquent",
                 "laravel"
             ],
-            "time": "2016-05-09 03:18:15"
+            "time": "2016-05-18 11:31:07"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -2307,16 +2308,16 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.1.1",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "1289d16209491b584839022f29257ad859b8532d"
+                "reference": "dff51f72b0706335131b00a7f49606168c582594"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/1289d16209491b584839022f29257ad859b8532d",
-                "reference": "1289d16209491b584839022f29257ad859b8532d",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/dff51f72b0706335131b00a7f49606168c582594",
+                "reference": "dff51f72b0706335131b00a7f49606168c582594",
                 "shasum": ""
             },
             "require": {
@@ -2328,7 +2329,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1-dev"
+                    "dev-master": "1.2-dev"
                 }
             },
             "autoload": {
@@ -2362,20 +2363,20 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-01-20 09:13:37"
+            "time": "2016-05-18 14:26:46"
         },
         {
             "name": "symfony/polyfill-php56",
-            "version": "v1.1.1",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php56.git",
-                "reference": "4d891fff050101a53a4caabb03277284942d1ad9"
+                "reference": "3edf57a8fbf9a927533344cef65ad7e1cf31030a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php56/zipball/4d891fff050101a53a4caabb03277284942d1ad9",
-                "reference": "4d891fff050101a53a4caabb03277284942d1ad9",
+                "url": "https://api.github.com/repos/symfony/polyfill-php56/zipball/3edf57a8fbf9a927533344cef65ad7e1cf31030a",
+                "reference": "3edf57a8fbf9a927533344cef65ad7e1cf31030a",
                 "shasum": ""
             },
             "require": {
@@ -2385,7 +2386,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1-dev"
+                    "dev-master": "1.2-dev"
                 }
             },
             "autoload": {
@@ -2418,20 +2419,20 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-01-20 09:13:37"
+            "time": "2016-05-18 14:26:46"
         },
         {
             "name": "symfony/polyfill-util",
-            "version": "v1.1.1",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-util.git",
-                "reference": "8de62801aa12bc4dfcf85eef5d21981ae7bb3cc4"
+                "reference": "ef830ce3d218e622b221d6bfad42c751d974bf99"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-util/zipball/8de62801aa12bc4dfcf85eef5d21981ae7bb3cc4",
-                "reference": "8de62801aa12bc4dfcf85eef5d21981ae7bb3cc4",
+                "url": "https://api.github.com/repos/symfony/polyfill-util/zipball/ef830ce3d218e622b221d6bfad42c751d974bf99",
+                "reference": "ef830ce3d218e622b221d6bfad42c751d974bf99",
                 "shasum": ""
             },
             "require": {
@@ -2440,7 +2441,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1-dev"
+                    "dev-master": "1.2-dev"
                 }
             },
             "autoload": {
@@ -2470,7 +2471,7 @@
                 "polyfill",
                 "shim"
             ],
-            "time": "2016-01-20 09:13:37"
+            "time": "2016-05-18 14:26:46"
         },
         {
             "name": "symfony/process",

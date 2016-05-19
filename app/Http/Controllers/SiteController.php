@@ -261,6 +261,7 @@ class SiteController extends Controller
 	{
 		if($request->ajax()) {
 			$data = $request->all();
+			$data['updated_at'] = null;
 			$validator = \Validator::make($data, Letter::rules());
 
 			if($validator->fails()) {

@@ -41,6 +41,7 @@ class Letter extends Model
 		'email',
 		'subject',
 		'message',
+		'updated_at',
 	];
 
 	/**
