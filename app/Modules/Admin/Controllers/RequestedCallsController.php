@@ -25,7 +25,7 @@ class RequestedCallsController extends Controller
      */
     public function index()
     {
-	    $calls = RequestedCall::with(['user'])->paginate(10);
+	    $calls = $this->getCalls();
 
         return view('admin::requestedcalls.index', compact('calls'));
     }
@@ -95,7 +95,7 @@ class RequestedCallsController extends Controller
 
 			if(RequestedCall::destroy($id)){
 
-				$calls = RequestedCall::paginate(10);
+				$calls = $this->getCalls();
 
 				return \Response::json([
 					'success' => true,
@@ -111,5 +111,19 @@ class RequestedCallsController extends Controller
 				]);
 			}
 		}
+	}
+
+	/**
+	 * Get list of requested calls
+	 *
+	 * @return mixed
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	protected function getCalls()
+	{
+		return RequestedCall::with('user')
+			->orderBy('created_at', 'DESC')
+			->paginate(10);
 	}
 }

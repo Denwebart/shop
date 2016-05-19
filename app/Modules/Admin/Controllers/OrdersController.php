@@ -24,7 +24,7 @@ class OrdersController extends Controller
      */
     public function index()
     {
-	    $orders = Order::with(['user', 'customer', 'groupedProducts'])->paginate(10);
+	    $orders = $this->getOrders();
 
         return view('admin::orders.index', compact('orders'));
     }
@@ -205,5 +205,19 @@ class OrdersController extends Controller
 				'message' => 'Статус оплаты изменён.'
 			]);
 		}
+	}
+	
+	/**
+	 * Get list of orders
+	 *
+	 * @return mixed
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	protected function getOrders()
+	{
+		return Order::with(['user', 'customer', 'groupedProducts'])
+			->orderBy('created_at', 'DESC')
+			->paginate(10);
 	}
 }

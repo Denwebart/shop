@@ -10,6 +10,7 @@
 namespace App\Modules\Admin\Controllers;
 
 use App\Models\Review;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 
@@ -22,8 +23,7 @@ class ReviewsController extends Controller
 	 */
 	public function index()
 	{
-		$reviews = Review::select(['id', 'is_published', 'user_name', 'user_email', 'user_avatar', 'published_at'])
-			->paginate(10);
+		$reviews = $this->getReviews();
 
 		return view('admin::reviews.index', compact('reviews'));
 	}
@@ -53,6 +53,11 @@ class ReviewsController extends Controller
 	{
 		$review = new Review();
 		$data = $request->except('image');
+		if ($data['is_published'] && is_null($review->published_at)) {
+			$data['published_at'] = Carbon::now();
+		} elseif (!$data['is_published']) {
+			$data['published_at'] = null;
+		}
 
 		$validator = \Validator::make($data, Review::rules());
 
@@ -103,6 +108,11 @@ class ReviewsController extends Controller
 	{
 		$review = Review::findOrFail($id);
 		$data = $request->except('user_avatar');
+		if ($data['is_published'] && is_null($review->published_at)) {
+			$data['published_at'] = Carbon::now();
+		} elseif (!$data['is_published']) {
+			$data['published_at'] = null;
+		}
 
 		$validator = \Validator::make($data, Review::rules());
 
@@ -138,8 +148,7 @@ class ReviewsController extends Controller
 			$review = Review::find($id);
 			$review->delete();
 
-			$reviews = Review::select(['id', 'is_published', 'user_name', 'user_email', 'user_avatar', 'published_at'])
-				->paginate(10);
+			$reviews = $this->getReviews();
 
 			return \Response::json([
 				'success' => true,
@@ -149,5 +158,19 @@ class ReviewsController extends Controller
 				'itemsTable'      => view('admin::reviews.table')->with('reviews', $reviews)->render(),
 			]);
 		}
+	}
+	
+	/**
+	 * Get list of shop reviews
+	 *
+	 * @return mixed
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	protected function getReviews()
+	{
+		return Review::select(['id', 'is_published', 'user_name', 'user_email', 'user_avatar', 'published_at'])
+			->orderBy('created_at', 'DESC')
+			->paginate(10);
 	}
 }

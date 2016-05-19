@@ -21,8 +21,7 @@ class UsersController extends Controller
 	 */
 	public function index()
 	{
-		$users = User::select('id', 'login', 'email', 'role', 'phone', 'firstname', 'lastname', 'description', 'avatar', 'is_active', 'created_at')
-			->paginate(10);
+		$users = $this->getUsers();
 
 		return view('admin::users.index', compact('users'));
 	}
@@ -51,7 +50,6 @@ class UsersController extends Controller
 	{
 		$user = new User();
 		$data = $request->except('avatar');
-		$data['password'] = bcrypt($data['password']);
 
 		$validator = \Validator::make($data, User::rules());
 
@@ -62,6 +60,9 @@ class UsersController extends Controller
 				->withInput()
 				->with('errorMessage', 'Информация о пользователе не сохранена. Исправьте ошибки валидации.');
 		} else {
+			$data['password'] = bcrypt($data['password']);
+			$data['password_confirmation'] = bcrypt($data['password_confirmation']);
+
 			$user->fill($data);
 			$user->save();
 
@@ -115,14 +116,9 @@ class UsersController extends Controller
 	{
 		$user = User::findOrFail($id);
 		$data = $request->except('avatar');
-		if($data['password']) {
-			$data['password'] = bcrypt($data['password']);
-		} else {
-			unset($data['password']);
-		}
 
 		$rules = User::rules($user->id);
-		$rules['password'] = 'max:255|confirmed';
+		$rules['password'] = 'min:6|max:255|confirmed';
 		$validator = \Validator::make($data, $rules);
 		
 		if ($validator->fails())
@@ -132,6 +128,13 @@ class UsersController extends Controller
 				->withInput()
 				->with('errorMessage', 'Информация о пользователе не сохранена. Исправьте ошибки валидации.');
 		} else {
+			if($data['password']) {
+				$data['password'] = bcrypt($data['password']);
+				$data['password_confirmation'] = bcrypt($data['password_confirmation']);
+			} else {
+				unset($data['password']);
+			}
+
 			$user->fill($data);
 			$user->setImage($request);
 			$user->save();
@@ -158,8 +161,7 @@ class UsersController extends Controller
 			if(!$user->isAdmin() || $user->id == \Auth::user()->id) {
 				$user->delete();
 
-				$users = User::select('id', 'login', 'email', 'role', 'phone', 'firstname', 'lastname', 'description', 'avatar', 'is_active', 'created_at')
-					->paginate(10);
+				$users = $this->getUsers();
 
 				return \Response::json([
 					'success' => true,
@@ -175,6 +177,26 @@ class UsersController extends Controller
 				]);
 			}
 		}
+	}
+
+	/**
+	 * Get list of users
+	 *
+	 * @return mixed
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	protected function getUsers()
+	{
+		return User::select('id', 'login', 'email', 'role', 'phone', 'firstname', 'lastname', 'description', 'avatar', 'is_active', 'created_at')
+			->orderBy(\DB::raw('CASE role 
+						WHEN 1 THEN 1
+                        WHEN 2 THEN 2
+                        WHEN 3 THEN 3 
+                        WHEN 0 THEN 4 
+                        END'))
+			->orderBy('created_at', 'ASC')
+			->paginate(10);
 	}
 
 }

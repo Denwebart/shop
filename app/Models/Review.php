@@ -24,7 +24,7 @@ use Intervention\Image\Facades\Image;
  * @property string $user_email
  * @property string $user_avatar
  * @property string $text
- * @property string $published_at
+ * @property \Carbon\Carbon $published_at
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Review whereId($value)

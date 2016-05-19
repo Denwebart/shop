@@ -24,9 +24,7 @@ class PagesController extends Controller
      */
     public function index()
     {
-	    $pages = Page::select(['id', 'parent_id', 'alias', 'type', 'is_container', 'is_published', 'title', 'menu_title', 'published_at'])
-		    ->with('parent')
-		    ->paginate(10);
+	    $pages = $this->getPages();
 
         return view('admin::pages.index', compact('pages'));
     }
@@ -166,9 +164,7 @@ class PagesController extends Controller
 		    if($page->canBeDeleted()) {
 			   $page->delete();
 			    
-			    $pages = Page::select(['id', 'parent_id', 'alias', 'type', 'is_container', 'is_published', 'title', 'menu_title', 'published_at'])
-				    ->with('parent')
-				    ->paginate(10);
+			    $pages = $this->getPages();
 
 			    return \Response::json([
 				    'success' => true,
@@ -185,4 +181,19 @@ class PagesController extends Controller
 		    }
 	    }
     }
+	
+	/**
+	 * Get list of pages
+	 *
+	 * @return mixed
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	protected function getPages()
+	{
+		return Page::select(['id', 'parent_id', 'alias', 'type', 'is_container', 'is_published', 'title', 'menu_title', 'published_at'])
+			->with('parent')
+			->orderBy('created_at', 'DESC')
+			->paginate(10);
+	}
 }

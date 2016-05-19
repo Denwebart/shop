@@ -23,9 +23,7 @@ class ProductsReviewsController extends Controller
      */
     public function index()
     {
-	    $productsReviews = ProductReview::select(['id', 'parent_id', 'user_id', 'product_id', 'rating', 'like', 'dislike', 'user_name', 'user_email', 'is_published', 'created_at', 'published_at'])
-		    ->with('user', 'product')
-		    ->paginate(10);
+	    $productsReviews = $this->getReviews();
 
         return view('admin::productsReviews.index', compact('productsReviews'));
     }
@@ -97,9 +95,7 @@ class ProductsReviewsController extends Controller
 
 		    if(ProductReview::destroy($id)){
 
-			    $productsReviews = ProductReview::select(['id', 'parent_id', 'user_id', 'product_id', 'rating', 'like', 'dislike', 'user_name', 'user_email', 'is_published', 'created_at', 'published_at'])
-				    ->with('user', 'product')
-				    ->paginate(10);
+			    $productsReviews = $this->getReviews();
 
 			    return \Response::json([
 				    'success' => true,
@@ -116,4 +112,19 @@ class ProductsReviewsController extends Controller
 		    }
 	    }
     }
+
+	/**
+	 * Get list of products reviews
+	 *
+	 * @return mixed
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	protected function getReviews()
+	{
+		return ProductReview::select(['id', 'parent_id', 'user_id', 'product_id', 'rating', 'like', 'dislike', 'user_name', 'user_email', 'is_published', 'created_at', 'published_at'])
+			->with('user', 'product')
+			->orderBy('created_at', 'DESC')
+			->paginate(10);
+	}
 }

@@ -23,9 +23,7 @@ class ProductsController extends Controller
      */
     public function index()
     {
-	    $products = Product::select(['id', 'vendor_code', 'category_id', 'is_published', 'title', 'price', 'image', 'image_alt', 'published_at'])
-		    ->with('category', 'images')
-		    ->paginate(10);
+	    $products = $this->getProducts();
 
         return view('admin::products.index', compact('products'));
     }
@@ -151,9 +149,7 @@ class ProductsController extends Controller
 
 		    if(Product::destroy($id)){
 			
-			    $products = Product::select(['id', 'vendor_code', 'category_id', 'is_published', 'title', 'price', 'image', 'image_alt', 'published_at'])
-				    ->with('category', 'images')
-				    ->paginate(10);
+			    $products = $this->getProducts();
 
 			    return \Response::json([
 				    'success' => true,
@@ -170,4 +166,19 @@ class ProductsController extends Controller
 		    }
 	    }
     }
+
+	/**
+	 * Get list of products
+	 *
+	 * @return mixed
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	protected function getProducts()
+	{
+		return Product::select(['id', 'vendor_code', 'category_id', 'is_published', 'title', 'price', 'image', 'image_alt', 'published_at'])
+			->with('category', 'images')
+			->orderBy('created_at', 'DESC')
+			->paginate(10);
+	}
 }

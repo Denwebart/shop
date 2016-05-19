@@ -105,7 +105,7 @@ class User extends Authenticatable
 	protected static $rules = [
 		'login' => 'required|unique:users,login,:id|max:50|regex:/^[A-Za-z0-9\-\_]+$/u',
 		'email' => 'required|email|max:255',
-		'password' => 'required|max:255|confirmed',
+		'password' => 'required|min:6|max:255|confirmed',
 		'role' => 'integer',
 		'firstname' => 'max:50|regex:/^[A-Za-zА-Яа-яЁёЇїІіЄє \-\']+$/u',
 		'lastname' => 'max:50|regex:/^[A-Za-zА-Яа-яЁёЇїІіЄє \-\']+$/u',
