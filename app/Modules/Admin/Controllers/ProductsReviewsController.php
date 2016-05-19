@@ -37,6 +37,8 @@ class ProductsReviewsController extends Controller
     public function edit($id)
     {
 	    $productReview = ProductReview::findOrFail($id);
+	    $productReview->updated_at = Carbon::now();
+	    $productReview->save();
 
 	    $backUrl = \Request::has('back_url') ? urldecode(\Request::get('back_url')) : URL::previous();
 
@@ -54,6 +56,8 @@ class ProductsReviewsController extends Controller
     {
 	    $review = ProductReview::findOrFail($id);
 	    $data = $request->all();
+	    $data['product_id'] = $review->product_id;
+	    $data['updated_at'] = Carbon::now();
 
 	    if ($data['is_published'] && is_null($review->published_at)) {
 		    $data['published_at'] = Carbon::now();
@@ -122,7 +126,7 @@ class ProductsReviewsController extends Controller
 	 */
 	protected function getReviews()
 	{
-		return ProductReview::select(['id', 'parent_id', 'user_id', 'product_id', 'rating', 'like', 'dislike', 'user_name', 'user_email', 'is_published', 'created_at', 'published_at'])
+		return ProductReview::select(['id', 'parent_id', 'user_id', 'product_id', 'rating', 'like', 'dislike', 'user_name', 'user_email', 'is_published', 'created_at', 'updated_at', 'published_at'])
 			->with('user', 'product')
 			->orderBy('created_at', 'DESC')
 			->paginate(10);

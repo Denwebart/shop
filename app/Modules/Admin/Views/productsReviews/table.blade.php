@@ -24,7 +24,7 @@
     </thead>
     <tbody>
         @foreach($productsReviews as $productReview)
-            <tr @if(!$productReview->is_published) class="not-published" @endif>
+            <tr class="@if(!$productReview->is_published) not-published @endif @if(!$productReview->updated_at) bg-muted @endif">
                 <td>{{ $productReview->id }}</td>
                 <td>
                     @if($productReview->parent_id)

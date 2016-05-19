@@ -159,36 +159,45 @@
                         <a href="{{ route('admin.orders.index') }}" class="waves-effect @if(Request::is('admin/orders*')) active @endif">
                             <i class="fa fa-shopping-cart"></i>
                             <span>Заказы</span>
-                            <span class="label label-success pull-right">7</span>
+                            @if($badge->countNewOrders)
+                                <span class="label label-success pull-right">{{ $badge->countNewOrders }}</span>
+                            @endif
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('admin.calls.index') }}" class="waves-effect @if(Request::is('admin/calls*')) active @endif">
                             <i class="fa fa-phone"></i>
                             <span>Звонки</span>
-                            <span class="label label-info pull-right">7</span>
+                            @if($badge->countNewCalls)
+                                <span class="label label-info pull-right">{{ $badge->countNewCalls }}</span>
+                            @endif
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('admin.letters.index') }}" class="waves-effect @if(Request::is('admin/letters*')) active @endif">
                             <i class="fa fa-envelope"></i>
                             <span>Письма</span>
-                            <span class="label label-warning pull-right">7</span>
+                            @if($badge->countNewLetters)
+                                <span class="label label-warning pull-right">{{ $badge->countNewLetters }}</span>
+                            @endif
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('admin.reviews.index') }}" class="waves-effect @if(Request::is('admin/reviews*')) active @endif">
                             <i class="fa fa-comments"></i>
                             <span>Отзывы к товарам</span>
-                            <span class="label label-danger pull-right">7</span>
+                            @if($badge->countNewProductReviews)
+                                <span class="label label-pink pull-right">{{ $badge->countNewProductReviews }}</span>
+                            @endif
                         </a>
                     </li>
-
                     <li>
                         <a href="{{ route('admin.shop_reviews.index') }}" class="waves-effect @if(Request::is('admin/shop_reviews*')) active @endif">
                             <i class="fa fa-comment"></i>
                             <span>Отзывы о магазине</span>
-                            <span class="label label-danger pull-right">7</span>
+                            @if($badge->countNewReviews)
+                                <span class="label label-purple pull-right">{{ $badge->countNewReviews }}</span>
+                            @endif
                         </a>
                     </li>
 

@@ -91,6 +91,8 @@ class ReviewsController extends Controller
 	public function edit($id)
 	{
 		$review = Review::findOrFail($id);
+		$review->updated_at = Carbon::now();
+		$review->save();
 
 		$backUrl = \Request::has('back_url') ? urldecode(\Request::get('back_url')) : URL::previous();
 
@@ -169,7 +171,7 @@ class ReviewsController extends Controller
 	 */
 	protected function getReviews()
 	{
-		return Review::select(['id', 'is_published', 'user_name', 'user_email', 'user_avatar', 'published_at'])
+		return Review::select(['id', 'is_published', 'user_name', 'user_email', 'user_avatar', 'published_at', 'updated_at'])
 			->orderBy('created_at', 'DESC')
 			->paginate(10);
 	}

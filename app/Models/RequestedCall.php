@@ -48,8 +48,8 @@ class RequestedCall extends Model
 	
 	public static $statuses = [
 		self::STATUS_NONE       => '-',
-		self::STATUS_PHONED     => 'Дозвонились',
-		self::STATUS_NOT_PHONED => 'Не дозвонились',
+		self::STATUS_PHONED     => 'Решено',
+		self::STATUS_NOT_PHONED => 'Не решено',
 	];
 
 	/**

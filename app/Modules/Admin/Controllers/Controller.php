@@ -8,6 +8,7 @@
 
 namespace App\Modules\Admin\Controllers;
 
+use App\Modules\Admin\Widgets\Badge;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -18,8 +19,10 @@ class Controller extends BaseController
 {
 	use AuthorizesRequests, AuthorizesResources, DispatchesJobs, ValidatesRequests;
 
-	public function __construct()
+	public function __construct(Badge $badge)
 	{
+		\View::share('badge', $badge);
+		
 		$this->middleware(['auth']);
 	}
 }

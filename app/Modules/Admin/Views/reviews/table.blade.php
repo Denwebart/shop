@@ -19,7 +19,7 @@
     </thead>
     <tbody>
         @foreach($reviews as $review)
-            <tr @if(!$review->is_published) class="not-published" @endif>
+            <tr class="@if(!$review->is_published) not-published @endif @if(!$review->updated_at) bg-muted @endif">
                 <td>{{ $review->id }}</td>
                 <td>{{ $review->user_name }}</td>
                 <td>{{ $review->user_email }}</td>

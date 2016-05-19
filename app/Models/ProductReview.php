@@ -49,6 +49,7 @@ use Illuminate\Database\Eloquent\Model;
 class ProductReview extends Model
 {
 	protected $table = 'products_reviews';
+	public $timestamps = false;
 
 	/**
 	 * Статус публикации (значение поля is_published)
@@ -88,6 +89,7 @@ class ProductReview extends Model
 		'dislike',
 		'is_published',
 		'published_at',
+		'updated_at',
 	];
 
 	/**
@@ -125,6 +127,16 @@ class ProductReview extends Model
 			}
 		}
 		return $rules;
+	}
+
+	public static function boot()
+	{
+		parent::boot();
+
+		static::creating(function($model)
+		{
+			$model->created_at = Carbon::now();
+        });
 	}
 
 	/**
