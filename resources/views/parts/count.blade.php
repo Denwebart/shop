@@ -5,8 +5,10 @@
  */
 ?>
 
-Показано
-<span class="on-page">{{ count($models) }}</span>
 @if(count($models))
-    из <span class="total">{{ $models->total() }}</span>
+    Показано
+    <span class="on-page">{{ count($models) }}</span>
+    @if(count($models))
+        из <span class="total">{{ $models->total() }}</span>
+    @endif
 @endif

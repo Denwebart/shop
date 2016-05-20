@@ -16,7 +16,7 @@ View::share('title', $title);
         <div class="col-sm-6 col-md-6 col-xs-12 hidden-xs">
             <ul class="breadcrumb m-b-10">
                 <li><a href="{{ route('admin.index') }}">Главная</a></li>
-                <li><a href="{{ route('admin.slider.index') }}">Слайдер</a></li>
+                <li><a href="{{ route('admin.slider.index') }}">Слайды на главной странице</a></li>
                 <li>{{ $title }}</li>
             </ul>
         </div>

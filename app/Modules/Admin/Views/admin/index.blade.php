@@ -144,40 +144,51 @@ View::share('title', $title);
                 </h4>
 
                 <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Покупатель</th>
-                                <th></th>
-                                <th>Сумма</th>
-                                <th>Дата заказа</th>
-                                <th>Статус</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($orders as $order)
-                                <tr @if(!$order->status) class="bg-muted" @endif>
-                                    <td>{{ $order->id }}</td>
-                                    <td>{{ $order->customer->username }}</td>
-                                    <td>{{ $order->customer->getPhone() }}</td>
-                                    <td>{{ $order->getTotalPrice() }}</td>
-                                    <td>{{ \App\Helpers\Date::format($order->created_at) }}</td>
-                                    <td>
-                                        <span class="label  @if($order->status) label-{{ \App\Models\Order::$statusesClass[$order->status] }} @endif">
-                                            {{ \App\Models\Order::$statuses[$order->status] }}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('admin.orders.show', ['id' => $order->id]) }}"  title="Просмотреть" data-toggle="tooltip">
-                                            <i class="fa fa-eye fa-lg"></i>
-                                        </a>
-                                    </td>
+                    @if(count($orders))
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Покупатель</th>
+                                    <th></th>
+                                    <th>Сумма</th>
+                                    <th>Дата заказа</th>
+                                    <th>Статус</th>
+                                    <th></th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach($orders as $order)
+                                    <tr @if(!$order->status) class="bg-muted" @endif>
+                                        <td>{{ $order->id }}</td>
+                                        <td>{{ $order->customer->username }}</td>
+                                        <td>{{ $order->customer->getPhone() }}</td>
+                                        <td>{{ $order->getTotalPrice() }}</td>
+                                        <td>{{ \App\Helpers\Date::format($order->created_at) }}</td>
+                                        <td>
+                                            <span class="label  @if($order->status) label-{{ \App\Models\Order::$statusesClass[$order->status] }} @endif">
+                                                {{ \App\Models\Order::$statuses[$order->status] }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('admin.orders.show', ['id' => $order->id]) }}"  title="Просмотреть" data-toggle="tooltip">
+                                                <i class="fa fa-eye fa-lg"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @else
+                        <div class="background-icon mini m-t-80 m-b-100">
+                            <p>Заказов нет</p>
+                            <a href="{{ route('admin.orders.create') }}">
+                                <i class="fa fa-shopping-cart"></i>
+                                <i class="fa fa-plus lower"></i>
+                                <span class="m-t-10">добавить заказ</span>
+                            </a>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div><!-- end col -->
@@ -221,7 +232,10 @@ View::share('title', $title);
                             </div>
                         </a>
                     @empty
-                        Звонков нет
+                        <div class="background-icon mini m-t-80">
+                            <p>Звонков нет</p>
+                            <i class="fa fa-phone"></i>
+                        </div>
                     @endforelse
                 </div>
             </div>

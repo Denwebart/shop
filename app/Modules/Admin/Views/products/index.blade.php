@@ -46,7 +46,7 @@ View::share('title', $title);
 
     <div class="row">
         <div class="col-lg-12">
-            <div class="card-box">
+            <div class="white-bg @if(count($products)) card-box @endif">
                 <div id="table-container" class="table-responsive m-b-20">
                     @include('admin::products.table')
                 </div>

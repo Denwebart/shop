@@ -5,85 +5,92 @@
  */
 ?>
 
-<table class="table">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th></th>
-        <th>К товару</th>
-        <th>Имя</th>
-        <th>Email</th>
-        <th>Рейтинг</th>
-        <th>Полезен</th>
-        <th>Не полезен</th>
-        <th>Статус публикации</th>
-        <th>Оставлен</th>
-        <th>Дата публикации</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-        @foreach($productsReviews as $productReview)
-            <tr class="@if(!$productReview->is_published) not-published @endif @if(!$productReview->updated_at) bg-muted @endif">
-                <td>{{ $productReview->id }}</td>
-                <td>
-                    @if($productReview->parent_id)
-                        <i class="fa fa-level-down" title="Комментарий к отзыву" data-toggle="tooltip"></i>
-                    @else
-                        <i class="fa fa-comment" title="Отзыв к товару" data-toggle="tooltip"></i>
-                    @endif
-                </td>
-                <td>
-                    @if($productReview->product)
-                        {{ $productReview->product->title }}
-                    @endif
-                </td>
-                <td>
-                    @if($productReview->user)
-                        <a href="{{ route('admin.users.show', ['id' => $productReview->user->id]) }}">
-                            {{ $productReview->user->login }}
+@if(count($productsReviews))
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th></th>
+            <th>К товару</th>
+            <th>Имя</th>
+            <th>Email</th>
+            <th>Рейтинг</th>
+            <th>Полезен</th>
+            <th>Не полезен</th>
+            <th>Статус публикации</th>
+            <th>Оставлен</th>
+            <th>Дата публикации</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+            @foreach($productsReviews as $productReview)
+                <tr class="@if(!$productReview->is_published) not-published @endif @if(!$productReview->updated_at) bg-muted @endif">
+                    <td>{{ $productReview->id }}</td>
+                    <td>
+                        @if($productReview->parent_id)
+                            <i class="fa fa-level-down" title="Комментарий к отзыву" data-toggle="tooltip"></i>
+                        @else
+                            <i class="fa fa-comment" title="Отзыв к товару" data-toggle="tooltip"></i>
+                        @endif
+                    </td>
+                    <td>
+                        @if($productReview->product)
+                            {{ $productReview->product->title }}
+                        @endif
+                    </td>
+                    <td>
+                        @if($productReview->user)
+                            <a href="{{ route('admin.users.show', ['id' => $productReview->user->id]) }}">
+                                {{ $productReview->user->login }}
+                            </a>
+                        @else
+                            {{ $productReview->user_name }}
+                        @endif
+                    </td>
+                    <td>
+                        @if($productReview->user)
+                            {{ $productReview->user->email }}
+                        @else
+                            {{ $productReview->user_email }}
+                        @endif
+                    </td>
+                    <td>{{ $productReview->rating }}</td>
+                    <td>{{ $productReview->like }}</td>
+                    <td>{{ $productReview->dislike }}</td>
+                    <td>
+                        <span class="label @if($productReview->is_published) label-success @else label-danger @endif">
+                            {{ \App\Models\ProductReview::$is_published[$productReview->is_published] }}
+                        </span>
+                    </td>
+                    <td>{{ \App\Helpers\Date::format($productReview->created_at) }}</td>
+                    <td>{{ \App\Helpers\Date::format($productReview->published_at) }}</td>
+                    <td>
+                        @if($productReview->parent_id == 0)
+                            <a href="#" title="Ответить" data-toggle="tooltip">
+                                <i class="fa fa-reply"></i>
+                            </a>
+                        @endif
+                    </td>
+                    <td>
+                        <a href="{{ route('admin.reviews.edit', ['id' => $productReview->id]) }}" title="Редактировать" data-toggle="tooltip" class="m-r-15">
+                            <i class="fa fa-pencil fa-lg"></i>
                         </a>
-                    @else
-                        {{ $productReview->user_name }}
-                    @endif
-                </td>
-                <td>
-                    @if($productReview->user)
-                        {{ $productReview->user->email }}
-                    @else
-                        {{ $productReview->user_email }}
-                    @endif
-                </td>
-                <td>{{ $productReview->rating }}</td>
-                <td>{{ $productReview->like }}</td>
-                <td>{{ $productReview->dislike }}</td>
-                <td>
-                    <span class="label @if($productReview->is_published) label-success @else label-danger @endif">
-                        {{ \App\Models\ProductReview::$is_published[$productReview->is_published] }}
-                    </span>
-                </td>
-                <td>{{ \App\Helpers\Date::format($productReview->created_at) }}</td>
-                <td>{{ \App\Helpers\Date::format($productReview->published_at) }}</td>
-                <td>
-                    @if($productReview->parent_id == 0)
-                        <a href="#" title="Ответить" data-toggle="tooltip">
-                            <i class="fa fa-reply"></i>
-                        </a>
-                    @endif
-                </td>
-                <td>
-                    <a href="{{ route('admin.reviews.edit', ['id' => $productReview->id]) }}" title="Редактировать" data-toggle="tooltip" class="m-r-15">
-                        <i class="fa fa-pencil fa-lg"></i>
-                    </a>
 
-                    <a href="javascript:void(0)" class="button-delete" title="Удалить" data-toggle="tooltip" data-item-id="{{ $productReview->id }}" data-item-title="{{ $productReview->user ? $productReview->user->login : $productReview->user_name }}@if($productReview->product) к товару &#34;{{ $productReview->product->title }}&#34;@endif">
-                        <i class="fa fa-trash fa-lg"></i>
-                    </a>
-                </td>
-            </tr>
-        @endforeach
-    </tbody>
-</table>
+                        <a href="javascript:void(0)" class="button-delete" title="Удалить" data-toggle="tooltip" data-item-id="{{ $productReview->id }}" data-item-title="{{ $productReview->user ? $productReview->user->login : $productReview->user_name }}@if($productReview->product) к товару &#34;{{ $productReview->product->title }}&#34;@endif">
+                            <i class="fa fa-trash fa-lg"></i>
+                        </a>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+@else
+    <div class="background-icon">
+        <p>Отзывов нет</p>
+        <i class="fa fa-comments"></i>
+    </div>
+@endif
 
 @push('styles')
     <link href="{{ asset('backend/plugins/bootstrap-sweetalert/sweet-alert.css') }}" rel="stylesheet" type="text/css" />
@@ -124,6 +131,9 @@
                                 $('.count-container').html(response.itemsCount);
                                 $('.pagination-container').html(response.itemsPagination);
                                 $('#table-container').html(response.itemsTable);
+                                if(!response.itemsCount) {
+                                    $('.white-bg').removeClass('card-box');
+                                }
                             } else {
                                 Command: toastr["warning"](response.message);
                             }

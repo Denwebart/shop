@@ -43,7 +43,7 @@
                 {!! Form::file('user_avatar', ['id' => 'user_avatar', 'class' => 'dropify', 'data-default-file' => $review->getUserAvatarUrl(false), 'data-max-file-size' => '3M']) !!}
                 <span class="help-block @if($errors->has('user_avatar')) hidden @endif">
                     <small>
-                        Фотография клиента до 3 мегабайт.
+                        Вес изображения не должен превышать 3 мегабайта.
                     </small>
                 </span>
                 @if ($errors->has('user_avatar'))
@@ -74,7 +74,7 @@
                 <div class="col-md-4">
                     {!! Form::hidden('is_published', 0) !!}
                     {!! Form::checkbox('is_published', 1, $review->is_published, ['id' => 'is_published', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
-                    {!! Form::label('is_published', 'Опубликована', ['class' => 'control-label m-l-5']) !!}
+                    {!! Form::label('is_published', 'Опубликован', ['class' => 'control-label m-l-5']) !!}
                 </div>
                 <div class="col-md-6">
                     @if(!$review->published_at)

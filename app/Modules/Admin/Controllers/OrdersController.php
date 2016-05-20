@@ -102,7 +102,28 @@ class OrdersController extends Controller
      */
     public function destroy($id)
     {
-	    dd('удаление заказа с id ' . $id);
+	    if(\Request::ajax()) {
+
+		    if(!Auth::user()->isAdmin()) {
+			    return \Response::json([
+				    'success' => false,
+				    'message' => 'Заказ не удалён. У вас недостаточно прав.',
+			    ]);
+		    }
+
+		    $order = Order::find($id);
+		    $order->delete();
+
+		    $orders = $this->getOrders();
+
+		    return \Response::json([
+			    'success' => true,
+			    'message' => 'Заказ успешно удалён.',
+			    'itemsCount'      => view('parts.count')->with('models', $orders)->render(),
+			    'itemsPagination' => view('parts.pagination')->with('models', $orders)->render(),
+			    'itemsTable'      => view('admin::orders.table')->with('orders', $orders)->render(),
+		    ]);
+	    }
     }
 
 	/**

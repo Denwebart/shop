@@ -4,45 +4,55 @@
  * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
  */
 ?>
+@if(count($reviews))
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Имя клиента</th>
+            <th>Email</th>
+            <th>Аватарка</th>
+            <th>Статус публикации</th>
+            <th>Дата публикации</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+            @foreach($reviews as $review)
+                <tr class="@if(!$review->is_published) not-published @endif @if(!$review->updated_at) bg-muted @endif">
+                    <td>{{ $review->id }}</td>
+                    <td>{{ $review->user_name }}</td>
+                    <td>{{ $review->user_email }}</td>
+                    <td><img src="{{ $review->getUserAvatarUrl() }}" class="img-circle" width="40px" alt="{{ $review->user_name }}"></td>
+                    <td>
+                        <span class="label @if($review->is_published) label-success @else label-danger @endif">
+                            {{ \App\Models\Review::$is_published[$review->is_published] }}
+                        </span>
+                    </td>
+                    <td>{{ \App\Helpers\Date::format($review->published_at) }}</td>
 
-<table class="table">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Имя клиента</th>
-        <th>Email</th>
-        <th>Аватарка</th>
-        <th>Статус публикации</th>
-        <th>Дата публикации</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-        @foreach($reviews as $review)
-            <tr class="@if(!$review->is_published) not-published @endif @if(!$review->updated_at) bg-muted @endif">
-                <td>{{ $review->id }}</td>
-                <td>{{ $review->user_name }}</td>
-                <td>{{ $review->user_email }}</td>
-                <td><img src="{{ $review->getUserAvatarUrl() }}" class="img-circle" width="40px" alt="{{ $review->user_name }}"></td>
-                <td>
-                    <span class="label @if($review->is_published) label-success @else label-danger @endif">
-                        {{ \App\Models\Review::$is_published[$review->is_published] }}
-                    </span>
-                </td>
-                <td>{{ \App\Helpers\Date::format($review->published_at) }}</td>
-
-                <td>
-                    <a href="{{ route('admin.shop_reviews.edit', ['id' => $review->id]) }}" title="Редактировать" data-toggle="tooltip" class="m-r-15">
-                        <i class="fa fa-pencil fa-lg"></i>
-                    </a>
+                    <td>
+                        <a href="{{ route('admin.shop_reviews.edit', ['id' => $review->id]) }}" title="Редактировать" data-toggle="tooltip" class="m-r-15">
+                            <i class="fa fa-pencil fa-lg"></i>
+                        </a>
                         <a href="javascript:void(0)" class="button-delete" title="Удалить" data-toggle="tooltip" data-item-id="{{ $review->id }}" data-item-title="{{ $review->user_name }}">
                             <i class="fa fa-trash fa-lg"></i>
                         </a>
-                </td>
-            </tr>
-        @endforeach
-    </tbody>
-</table>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+@else
+    <div class="background-icon">
+        <p>Отзывов нет</p>
+        <a href="{{ route('admin.shop_reviews.create') }}">
+            <i class="fa fa-comment"></i>
+            <i class="fa fa-plus lower"></i>
+            <span>добавить отзыв</span>
+        </a>
+    </div>
+@endif
 
 @push('styles')
     <link href="{{ asset('backend/plugins/bootstrap-sweetalert/sweet-alert.css') }}" rel="stylesheet" type="text/css" />
@@ -83,6 +93,9 @@
                                 $('.count-container').html(response.itemsCount);
                                 $('.pagination-container').html(response.itemsPagination);
                                 $('#table-container').html(response.itemsTable);
+                                if(!response.itemsCount) {
+                                    $('.white-bg').removeClass('card-box');
+                                }
                             } else {
                                 Command: toastr["warning"](response.message);
                             }

@@ -226,6 +226,9 @@ a:focus {
 .m-t-40 {
   margin-top: 40px !important;
 }
+.m-t-80 {
+    margin-top: 80px !important;
+}
 .m-b-0 {
   margin-bottom: 0px !important;
 }
@@ -246,6 +249,9 @@ a:focus {
 }
 .m-b-30 {
   margin-bottom: 30px !important;
+}
+.m-b-100 {
+    margin-bottom: 100px !important;
 }
 .w-xs {
   min-width: 80px;
@@ -354,6 +360,59 @@ a:focus {
 .table .customer .name {
   margin-right: 15px;
 }
+#table-container {
+    overflow-x: visible;
+}
+.card-box #table-container {
+    overflow-x: auto;
+}
+/* background icon */
+.background-icon {
+    text-align: center;
+    margin-top: 50px;
+    margin-right: 100px;
+}
+
+.background-icon p,
+.background-icon span {
+    font-size: 22px;
+    display: block;
+    font-weight: 300;
+}
+.background-icon i {
+    font-size: 200px;
+    color: #797979;
+    opacity: 0.3;
+}
+.background-icon i.lower {
+    font-size: 140px;
+    position: relative;
+    top: -10px;
+    margin-left: 20px;
+}
+.background-icon span,
+.background-icon a i {
+    color: #71B6F9;
+    opacity: 0.7;
+}
+/* background icon (mini) */
+.background-icon.mini {
+    margin-top: 0;
+    margin-right: 0;
+}
+.background-icon.mini p,
+.background-icon.mini span {
+    font-size: 18px;
+}
+.background-icon.mini i {
+    font-size: 50px;
+}
+.background-icon.mini i.lower {
+    font-size: 40px;
+    top: -5px;
+    margin-left: 10px;
+}
+
 /* products of the order */
 .products-list {
     list-style: none;
