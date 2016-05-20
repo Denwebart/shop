@@ -5,14 +5,16 @@
  */
 ?>
 
-<!-- Slider section -->
-<section class="content">
-    <div class="container">
-        @if(isset($title))
-            <h2 class="text-center text-uppercase">{{ $title }}</h2>
-        @endif
-        <div class="row product-carousel mobile-special-arrows animated-arrows product-grid four-in-row">
-            @each('parts.product', $items, 'item')
+@if(count($items))
+    <!-- Slider section -->
+    <section class="content">
+        <div class="container">
+            @if(isset($title))
+                <h2 class="text-center text-uppercase">{{ $title }}</h2>
+            @endif
+            <div class="row product-carousel mobile-special-arrows animated-arrows product-grid four-in-row">
+                @each('parts.product', $items, 'item')
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+@endif

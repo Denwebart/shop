@@ -4,16 +4,18 @@
 
 {!! $slider->show() !!}
 
-<!-- 12 items -->
-<section class="content">
-    <div class="container">
-        <h2 class="text-center text-uppercase">Лидеры продаж</h2>
+@if(count($bestSellers))
+    <!-- 12 items -->
+    <section class="content">
+        <div class="container">
+            <h2 class="text-center text-uppercase">Лидеры продаж</h2>
 
-        <div class="products-grid products-listing products-col four-in-row">
-            @each('parts.product', $bestSellers, 'item')
+            <div class="products-grid products-listing products-col four-in-row">
+                @each('parts.product', $bestSellers, 'item')
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+@endif
 
 <!-- Content section -->
 <section class="content">
