@@ -132,6 +132,7 @@ class Cart extends BaseController
 			'product_id' => $product->id,
 			'quantity' => $quantity,
 			'options' => [],
+			'product' => [],
 		];
 		$request->session()->put('cart', $cart);
 		return true;

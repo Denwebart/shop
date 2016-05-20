@@ -91,13 +91,13 @@
                 e.preventDefault();
 
                 var $button = $j(this),
-                    productId = $j(this).data('productId');
+                    productKey = $j(this).data('productKey');
 
                 $j.ajax({
                     url: "{{ route('wishlist.remove') }}",
                     dataType: "json",
                     type: "POST",
-                    data: {'id': productId},
+                    data: {'key': productKey},
                     async: true,
                     beforeSend: function (request) {
                         return request.setRequestHeader('X-CSRF-Token', $j("meta[name='csrf-token']").attr('content'));

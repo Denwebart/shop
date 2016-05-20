@@ -720,6 +720,10 @@ a.bg-danger:hover {
     background-color: #e4b9b9;
 }
 
+.bg-muted {
+    background-color: #F4F4F4;
+}
+
 .page-header {
     padding-bottom: 9px;
     margin: 40px 0 20px;

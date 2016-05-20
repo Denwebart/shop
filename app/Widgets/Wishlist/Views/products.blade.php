@@ -8,26 +8,37 @@
 @if(count($products))
     <ul>
         @foreach($products as $key => $item)
-            <li class='shopping-cart__item'>
+            <li class="shopping-cart__item @if(!$item['product']) bg-muted @endif">
                 <div class="shopping-cart__item__image pull-left">
-                    <a href="{{ $item['product']->getUrl() }}">
-                        <img src="{{ $item['product']->getImageUrl('mini') }}" alt="{{ $item['product']->image_alt }}"/>
-                    </a>
+                    @if($item['product'])
+                        <a href="{{ $item['product']->getUrl() }}">
+                            <img src="{{ $item['product']->getImageUrl('mini') }}" alt="{{ $item['product']->image_alt }}"/>
+                        </a>
+                    @else
+                        <img src="{{ asset('images/product-default-image.jpg') }}" alt="Нет изображения"/>
+                    @endif
                 </div>
                 <div class="shopping-cart__item__info">
                     <div class="shopping-cart__item__info__title">
-                        <a href="{{ $item['product']->getUrl() }}">
-                            {{ $item['product']->title }}
-                        </a>
-                        <br>
-                        Дата добавления:
-                        {{ \App\Helpers\Date::getRelative($item['added_at']) }}
+                        @if($item['product'])
+                            <a href="{{ $item['product']->getUrl() }}">
+                                {{ $item['product']->title }}
+                            </a>
+                        @else
+                            <span class="text-danger text-uppercase">Товар был удален с сайта.</span>
+                        @endif
+                        <div class="m-t-10">
+                            Дата добавления:
+                            {{ \App\Helpers\Date::getRelative($item['added_at']) }}
+                        </div>
                     </div>
-                    <div class="shopping-cart__item__info__price">
-                        {{ \App\Helpers\Str::priceFormat($item['product']->price) }}
-                    </div>
+                    @if($item['product'])
+                        <div class="shopping-cart__item__info__price">
+                            {{ \App\Helpers\Str::priceFormat($item['product']->price) }}
+                        </div>
+                    @endif
                     <div class="shopping-cart__item__info__delete">
-                        <a href="#" class="icon icon-clear remove-from-wishlist" data-product-id="{{ $item['product']->id }}"></a>
+                        <a href="#" class="icon icon-clear remove-from-wishlist" data-product-key="{{ $key }}"></a>
                     </div>
                 </div>
             </li>

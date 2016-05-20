@@ -21,7 +21,7 @@ class Wishlist extends BaseController
 
 		return view('widget.wishlist::wishlist', compact('products'));
 	}
-	
+
 	public function addToWishlist(Request $request)
 	{
 		if($request->ajax()) {
@@ -57,7 +57,7 @@ class Wishlist extends BaseController
 		if($request->ajax()) {
 
 			$products = $request->cookie('wishlist', []);
-			unset($products[$request->get('id')]);
+			unset($products[$request->get('key')]);
 
 			$productsHtml = $this->getWishlist($products);
 
@@ -117,6 +117,7 @@ class Wishlist extends BaseController
 			$products[$product->id] = [
 				'product_id' => $product->id,
 				'added_at' => Carbon::now(),
+				'product' => null,
 			];
 			return $products;
 		}
