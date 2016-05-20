@@ -11,7 +11,7 @@
         <div class="container">
             <div class="row staggered-animation-container">
                 @if(isset($title))
-                    <h2 class="text-center text-uppercase">{{ $title }}</h2>
+                    <h3 class="text-center text-uppercase">{{ $title }}</h3>
                 @endif
                 @foreach($items as $item)
                     <div class="testimonials">

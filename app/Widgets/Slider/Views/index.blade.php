@@ -17,9 +17,9 @@
                                 <li class="hover-squared">
                                     <img src="{{ $item->getImageUrl() }}" alt="{{ $item->image_alt }}"/>
                                     <div class="single-slider__text {{ \App\Models\Slider::$textAlignClasses[$item->text_align] }}">
-                                        @if($item->title) <h2>{{ $item->title }}</h2> @endif
-                                        @if($item->text_1) <h3>{{ $item->text_1 }}</h3> @endif
-                                        @if($item->text_2) <h4>{{ $item->text_2 }}</h4> @endif
+                                        @if($item->title) <p class="line-1">{{ $item->title }}</p> @endif
+                                        @if($item->text_1) <p class="line-2">{{ $item->text_1 }}</p> @endif
+                                        @if($item->text_2) <p class="line-3">{{ $item->text_2 }}</p> @endif
                                         @if($item->button_link)
                                             <a href="{{ $item->button_link }}" class="btn btn--wd btn--lg text-uppercase">
                                                 {{ $item->button_text or 'Подробнее' }}

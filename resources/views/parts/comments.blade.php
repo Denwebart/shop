@@ -11,7 +11,7 @@
             <h3 class="text-uppercase">Отзывы ({{ count($productReviews) }})</h3>
             <div class="rating-extended row">
                 <div class="col-lg-12">
-                    <h1 class="rating-extended__num pull-left">{{ $page->rating }}</h1>
+                    <div class="rating-extended__num pull-left">{{ $page->rating }}</div>
                     <div class="rating product-rating rating-in-comments"></div>
                     <div>
                         <span class="icon icon-man"></span>
