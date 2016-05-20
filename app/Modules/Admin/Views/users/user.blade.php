@@ -27,7 +27,13 @@
         </a>
 
         <p class="text-muted font-13 m-b-30">
-            {{ $user->description or 'Расскажите немного о себе' }}
+            @if($user->description)
+                {{ $user->description }}
+            @else
+                @if(Auth::check() && Auth::user()->is($user))
+                    Расскажите немного о себе
+                @endif
+            @endif
         </p>
 
         <div class="text-left">

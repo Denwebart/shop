@@ -189,9 +189,17 @@ class User extends Authenticatable
 	}
 
 	/**
-	 * 
+	 * @param $user
 	 * @return bool
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
+	public function is($user)
+	{
+		return $this->id == $user->id ? true : false;
+	}
+
 	public function isAdmin()
 	{
 		return $this->role == self::ROLE_ADMIN ? true : false;
