@@ -39,7 +39,7 @@
 
                 <div class="col-md-6">
                     {!! Form::open(['url' => route('letter.send'), 'id' => 'contact-form', 'class' => 'contact-form']) !!}
-                        {!! csrf_field() !!}
+
                         <h3 class="text-uppercase text-center">Отправить сообщение</h3>
 
                         <div id="success-message">

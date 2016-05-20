@@ -14,6 +14,7 @@ use App\Helpers\Settings;
 use App\Models\Letter;
 use App\Models\Page;
 use App\Models\Product;
+use App\Models\RequestedCall;
 use App\Models\Setting;
 use App\Widgets\Carousel\Carousel;
 use App\Widgets\Reviews\Reviews;
@@ -277,6 +278,42 @@ class SiteController extends Controller
 			return \Response::json([
 				'success' => true,
 				'message' => 'Ваше письмо успешно отправлено!',
+			]);
+		}
+	}
+
+	/**
+	 * Requesting call
+	 *
+	 * @param Request $request
+	 * @return \Illuminate\Http\JsonResponse
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function requestCall(Request $request)
+	{
+		if($request->ajax()) {
+			$data = $request->all();
+			$messages = [
+				'name.required' => 'Введите Ваше имя',
+				'phone.required' => 'Введите Ваш номер телефона'
+			];
+			$validator = \Validator::make($data, RequestedCall::rules(), $messages);
+
+			if($validator->fails()) {
+				return \Response::json([
+					'success' => false,
+					'message' => 'Запрос не отправлен. Исправьте ошибки валидации.',
+					'errors' => $validator->errors()
+				]);
+			}
+
+			RequestedCall::create($data);
+
+			return \Response::json([
+				'success' => true,
+				'message' => 'Ваш запрос успешно отправлен! Менеджер свяжется с вами в течение рабочего дня call-центра.',
 			]);
 		}
 	}

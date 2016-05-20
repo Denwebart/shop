@@ -210,6 +210,15 @@
                 </div>
             </div>
         </div>
+        <div class="footer__subscribe">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        @include('parts.requestCall')
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="footer__settings visible-xs">
             <div class="container text-center">
                 <div class="dropdown pull-left">

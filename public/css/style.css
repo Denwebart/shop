@@ -8268,7 +8268,7 @@ body.fullwidth .footer .container > .navbar-collapse {
 
 .footer__column-links {
     position: relative;
-    padding: 45px 0 35px;
+    padding: 45px 0 25px;
 }
 
 @media (max-width: 767px) {
@@ -10150,6 +10150,36 @@ label.label--inline {
 
 .subscribe-form {
     position: relative;
+}
+.subscribe-form .form-group {
+    margin-bottom: 0;
+}
+.subscribe-form .form-elements,
+.subscribe-form .description {
+    display: inline-block;
+}
+@media (min-width: 992px) {
+    .subscribe-form .form-elements,
+    .subscribe-form .description {
+        float: left;
+    }
+}
+@media (max-width: 991px) {
+    .subscribe-form {
+        text-align: center;
+    }
+    .subscribe-form .description {
+        margin-top: 10px;
+    }
+}
+@media (max-width: 767px) {
+    .subscribe-form .form-elements,
+    .subscribe-form .description {
+        width: 100%;
+    }
+    .subscribe-form .form-group {
+        width: 50%;
+    }
 }
 
 .subscribe-form__label {
@@ -17354,6 +17384,9 @@ table.table-total h2 {
 }
 .m-l-10 {
     margin-left: 10px !important;
+}
+.m-l-20 {
+    margin-left: 20px !important;
 }
 .m-r-5 {
     margin-right: 5px !important;

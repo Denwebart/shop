@@ -9,6 +9,8 @@ Route::get('/', 'SiteController@index');
 
 Route::post('letter/send', ['as' => 'letter.send', 'uses' => 'SiteController@sendLetter']);
 
+Route::post('call/request', ['as' => 'call.request', 'uses' => 'SiteController@requestCall']);
+
 Route::post('comment/add/{product_id}', ['as' => 'comment.add', 'uses' => 'CommentsController@add']);
 Route::post('comment/vote', ['as' => 'comment.vote', 'uses' => 'CommentsController@vote']);
 

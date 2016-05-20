@@ -567,8 +567,12 @@
     color: #ffffff;
 }
 
-.footer__subscribe a {
+.footer__subscribe {
+    background-color: #303639;
     color: #ffffff;
+}
+.footer__subscribe .description {
+    color: #bbc2c6;
 }
 
 .footer__subscribe--variant2 {
