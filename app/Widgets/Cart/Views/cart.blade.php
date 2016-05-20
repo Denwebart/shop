@@ -15,6 +15,26 @@
         </a>
         <div class="dropdown-menu animated fadeIn shopping-cart cart-products" role="menu">
             @include('widget.cart::products')
+
+            @if(count($cart['products']))
+                <div class="shopping-cart__bottom">
+                    <div class="pull-left">
+                        Всего:
+                        <span class="shopping-cart__total">
+                            <span class="total-price">
+                                {{ \App\Helpers\Str::priceFormat($cart['total_price']) }}
+                            </span>
+                        </span>
+                    </div>
+                    @if($cart['total_price'])
+                        <div class="pull-right">
+                            <a href="{{ route('cart.index') }}" class="btn btn--wd text-uppercase">
+                                Оформить заказ
+                            </a>
+                        </div>
+                    @endif
+                </div>
+            @endif
         </div>
     </div>
 </div>
@@ -88,14 +108,14 @@
                 e.stopPropagation();
 
                 var $button = $j(this),
-                    productId = $button.data('productId'),
                     productKey = $button.data('productKey');
 
                 $j.ajax({
                     url: "{{ route('cart.remove') }}",
                     dataType: "json",
                     type: "POST",
-                    data: {'id': productId, 'key': productKey},
+                    data: {
+                        'key': productKey},
                     async: true,
                     beforeSend: function (request) {
                         return request.setRequestHeader('X-CSRF-Token', $j("meta[name='csrf-token']").attr('content'));
