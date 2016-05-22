@@ -115,7 +115,11 @@ class SiteController extends Controller
 	 */
 	protected function getPage($request, $settings, $page)
 	{
-		return view('page', compact('page'));
+		$childrenPages = $page->is_container
+			? $page->publishedChildren()->orderBy('published_at', 'DESC')->paginate(10)
+			: [];
+
+		return view('page', compact('page', 'childrenPages'));
 	}
 
 	/**

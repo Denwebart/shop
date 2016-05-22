@@ -26,6 +26,47 @@
                 @endif
 
                 {!! $page->content !!}
+
+                @if($page->is_container)
+                    <div class="count-container">
+                        @include('parts.count', ['models' => $childrenPages])
+                    </div>
+
+                    <div class="pages-container">
+                        @foreach($childrenPages as $child)
+                            <div class="card card--padding m-t-10 m-b-20">
+                                <div class="row">
+                                    <div class="col-sm-7 col-md-8">
+                                        <h3 class="text-uppercase">{{ $child->getTitle() }}</h3>
+                                    </div>
+                                    <div class="col-sm-5 col-md-4">
+                                        <span class="pull-right">
+                                            <i class="icon icon-clock"></i>
+                                            {{ \App\Helpers\Date::format($child->published_at) }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        @if($child->image)
+                                            <img src="{{ $child->getImageUrl() }}" alt="{{ $child->image_alt }}">
+                                        @endif
+                                        {!! $child->introtext ? $child->introtext : \App\Helpers\Str::closeTags(\App\Helpers\Str::limit($child->content, 500)) !!}
+                                        <div class="divider divider--sm"></div>
+                                        <a style="animation-delay: 0.5s;" href="{{ $child->getUrl() }}" class="btn btn--wd animation animated fadeInUp pull-right" data-animation="fadeInUp" data-animation-delay="0.5s">
+                                            Подрбнее
+                                            <i class="icon icon-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <div class="pagination-container text-center">
+                        @include('parts.pagination', ['models' => $childrenPages])
+                    </div>
+                @endif
             </div>
             <div class="col-md-3">
                 <div class="row">

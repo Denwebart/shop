@@ -15,16 +15,12 @@
 
     <div class="form-group pull-left">
         {!! Form::text('name', null, ['id' => 'name', 'class' => 'subscribe-form__input input--wd', 'placeholder' => 'Имя *']) !!}
-        <span class="help-block error name_error">
-            {{ $errors->first('name') }}
-        </span>
+        <span class="help-block error name_error"></span>
     </div>
 
     <div class="form-group pull-left">
         {!! Form::text('phone', null, ['id' => 'phone', 'class' => 'subscribe-form__input input--wd', 'placeholder' => 'Номер телефона *']) !!}
-        <span class="help-block error phone_error">
-            {{ $errors->first('phone') }}
-        </span>
+        <span class="help-block error phone_error"></span>
     </div>
 
     <button type="submit" class="btn btn--wd text-uppercase wave pull-left">

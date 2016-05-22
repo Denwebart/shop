@@ -517,8 +517,8 @@ class Page extends Model
 				File::delete($imagePath . 'watermark.png');
 			}
 			
-			if ($image->width() > 760) {
-				$image->resize(760, null, function ($constraint) {
+			if ($image->width() > 800) {
+				$image->resize(800, null, function ($constraint) {
 					$constraint->aspectRatio();
 				})->save($imagePath . $fileName);
 			} else {

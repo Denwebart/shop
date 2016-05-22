@@ -8,6 +8,7 @@
 
 namespace App\Modules\Admin\Controllers;
 
+use App\Helpers\Translit;
 use App\Models\Page;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -58,6 +59,8 @@ class PagesController extends Controller
 	    $page = new Page();
 	    $data = $request->except('image');
 	    $data = array_merge($data, $page->setData($data));
+	    $pageTitle = $data['menu_title'] ? $data['menu_title'] : $data['title'];
+	    $data['alias'] = Translit::generateAlias($pageTitle, $data['alias']);
 
 	    $validator = \Validator::make($data, Page::rules());
 
@@ -65,7 +68,7 @@ class PagesController extends Controller
 	    {
 		    return redirect(route('admin.pages.create', ['back_url' => urlencode($request->get('backUrl'))]))
 			    ->withErrors($validator->errors())
-			    ->withInput()
+			    ->withInput($data)
 			    ->with('errorMessage', 'Страница не сохранена. Исправьте ошибки валидации.');
 	    } else {
 		    $page->fill($data);
@@ -121,6 +124,12 @@ class PagesController extends Controller
 	    $page = Page::findOrFail($id);
 	    $data = $request->except('image');
 	    $data = array_merge($data, $page->setData($data));
+	    $pageTitle = $data['menu_title'] ? $data['menu_title'] : $data['title'];
+	    if(!$page->isMain()) {
+		    $data['alias'] = Translit::generateAlias($pageTitle, $data['alias']);
+	    } else {
+		    $data['alias'] = '/';
+	    }
 
 	    $rules = Page::rules($page->id);
 	    $messages = [];

@@ -8477,6 +8477,9 @@ body.fullwidth .footer .container > .navbar-collapse {
     padding-top: 30px;
     padding-bottom: 20px;
 }
+.content img {
+    max-width: 100%;
+}
 
 @media (max-width: 767px) {
     .content {
@@ -17391,6 +17394,9 @@ table.table-total h2 {
 }
 .m-b-15 {
     margin-bottom: 15px !important;
+}
+.m-b-20 {
+    margin-bottom: 20px !important;
 }
 .m-l-5 {
     margin-left: 5px !important;
