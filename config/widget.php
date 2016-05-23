@@ -12,5 +12,6 @@ return [
 		'reviews',
 		'cart',
 		'wishlist',
+		'viewed',
 	],
 ];

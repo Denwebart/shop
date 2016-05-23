@@ -19,6 +19,7 @@ use App\Models\Setting;
 use App\Widgets\Carousel\Carousel;
 use App\Widgets\Reviews\Reviews;
 use App\Widgets\Slider\Slider;
+use App\Widgets\Viewed\Viewed;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -221,7 +222,10 @@ class SiteController extends Controller
 		$page->ratingInfo = $page->getRating();
 		$page->rating = $page->ratingInfo['value'];
 		$productReviews = $page->getReviews();
-		return view('product', compact('page', 'productReviews'));
+
+		$viewed = new Viewed();
+
+		return view('product', compact('page', 'productReviews', 'viewed'));
 	}
 
 	/**
