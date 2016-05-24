@@ -8,11 +8,13 @@
 @if(count($menuItems))
     <ul>
         @foreach($menuItems as $item)
-            <li @if(\Request::is($item->page->getUrl()) || \Request::url() == url($item->page->alias)) class="active" @endif>
-                <a href="{{ $item->page->getUrl() }}">
-                    {{ $item->page->getTitle() }}
-                </a>
-            </li>
+            @if($item->page)
+                <li @if(\Request::is($item->page->getUrl()) || \Request::url() == url($item->page->alias)) class="active" @endif>
+                    <a href="{{ $item->page->getUrl() }}">
+                        {{ $item->page->getTitle() }}
+                    </a>
+                </li>
+            @endif
         @endforeach
     </ul>
 @endif

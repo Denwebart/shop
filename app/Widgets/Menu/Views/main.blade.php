@@ -6,9 +6,11 @@
 ?>
 
 @foreach($menuItems as $itemId => $item)
-    <li @if(\Request::is($item->page->getUrl()) || \Request::url() == url($item->page->alias)) class="active" @endif>
-        <a href="{{ $item->page->getUrl() }}">
-            <span class="link-name">{{ $item->page->getTitle() }}</span>
-        </a>
-    </li>
+    @if($item->page)
+        <li @if(\Request::is($item->page->getUrl()) || \Request::url() == url($item->page->alias)) class="active" @endif>
+            <a href="{{ $item->page->getUrl() }}">
+                <span class="link-name">{{ $item->page->getTitle() }}</span>
+            </a>
+        </li>
+    @endif
 @endforeach

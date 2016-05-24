@@ -150,11 +150,14 @@ class Menu extends Model
 	public static function getMenuItems($type = null)
 	{
 		$query = self::whereParentId(0)
+			->has('page')
 			->with([
 				'page' => function($query) {
 					$query->select('id', 'alias', 'type', 'is_container', 'parent_id', 'title', 'menu_title');
 				},
-				'children',
+				'children' => function($query) {
+					$query->has('page');
+				},
 				'children.page' => function($query) {
 					$query->select('id', 'alias', 'type', 'is_container', 'parent_id', 'title', 'menu_title');
 				},
