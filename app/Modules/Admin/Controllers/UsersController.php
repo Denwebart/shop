@@ -196,7 +196,7 @@ class UsersController extends Controller
                         WHEN 0 THEN 4 
                         END'))
 			->orderBy('created_at', 'ASC')
-			->paginate(10);
+			->paginate(12);
 	}
 
 }

@@ -180,6 +180,6 @@ class ProductsController extends Controller
 		return Product::select(['id', 'vendor_code', 'category_id', 'is_published', 'title', 'price', 'image', 'image_alt', 'published_at'])
 			->with('category', 'images')
 			->orderBy('created_at', 'DESC')
-			->paginate(10);
+			->paginate(20);
 	}
 }

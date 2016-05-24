@@ -24,8 +24,7 @@ class SliderController extends Controller
      */
     public function index()
     {
-	    $sliders = Slider::select(['id', 'image', 'title', 'text_1', 'text_2', 'is_published', 'button_text'])
-	    ->paginate(10);
+	    $sliders = $this->getSlides();
 
         return view('admin::slider.index', compact('sliders'));
     }
@@ -157,8 +156,7 @@ class SliderController extends Controller
 		    $slider = Slider::find($id);
 		    $slider->delete();
 			    
-		    $sliders = Slider::select(['id', 'image', 'title', 'text_1', 'text_2', 'is_published', 'button_text'])
-				    ->paginate(10);
+		    $sliders = $this->getSlides();
 
 		    return \Response::json([
 			    'success' => true,
@@ -170,4 +168,17 @@ class SliderController extends Controller
 
 	    }
     }
+
+	/**
+	 * Get list of slides
+	 *
+	 * @return mixed
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	protected function getSlides()
+	{
+		return Slider::select(['id', 'image', 'title', 'text_1', 'text_2', 'is_published', 'button_text'])
+			->paginate(10);
+	}
 }

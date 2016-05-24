@@ -173,6 +173,6 @@ class ReviewsController extends Controller
 	{
 		return Review::select(['id', 'is_published', 'user_name', 'user_email', 'user_avatar', 'published_at', 'updated_at'])
 			->orderBy('created_at', 'DESC')
-			->paginate(10);
+			->paginate(20);
 	}
 }

@@ -86,6 +86,6 @@ class LettersController extends Controller
 	 */
 	protected function getLetters()
 	{
-		return Letter::orderBy('created_at', 'DESC')->paginate(10);
+		return Letter::orderBy('created_at', 'DESC')->paginate(20);
 	}
 }

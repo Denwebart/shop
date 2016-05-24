@@ -129,6 +129,6 @@ class ProductsReviewsController extends Controller
 		return ProductReview::select(['id', 'parent_id', 'user_id', 'product_id', 'rating', 'like', 'dislike', 'user_name', 'user_email', 'is_published', 'created_at', 'updated_at', 'published_at'])
 			->with('user', 'product')
 			->orderBy('created_at', 'DESC')
-			->paginate(10);
+			->paginate(20);
 	}
 }

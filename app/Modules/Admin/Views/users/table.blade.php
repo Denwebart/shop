@@ -7,7 +7,7 @@
 
 <div class="row">
     @foreach($users as $user)
-        <div class="col-md-4">
+        <div class="col-md-4 col-sm-6">
             @include('admin::users.user')
         </div> <!-- end col -->
     @endforeach

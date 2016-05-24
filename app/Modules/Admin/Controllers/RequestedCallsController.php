@@ -124,6 +124,6 @@ class RequestedCallsController extends Controller
 	{
 		return RequestedCall::with('user')
 			->orderBy('created_at', 'DESC')
-			->paginate(10);
+			->paginate(20);
 	}
 }

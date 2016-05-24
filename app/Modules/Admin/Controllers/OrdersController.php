@@ -239,6 +239,6 @@ class OrdersController extends Controller
 	{
 		return Order::with(['user', 'customer', 'groupedProducts'])
 			->orderBy('created_at', 'DESC')
-			->paginate(10);
+			->paginate(20);
 	}
 }

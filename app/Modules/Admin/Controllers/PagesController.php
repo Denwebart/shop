@@ -203,6 +203,6 @@ class PagesController extends Controller
 		return Page::select(['id', 'parent_id', 'alias', 'type', 'is_container', 'is_published', 'title', 'menu_title', 'published_at'])
 			->with('parent', 'children', 'products')
 			->orderBy('created_at', 'DESC')
-			->paginate(10);
+			->paginate(20);
 	}
 }
