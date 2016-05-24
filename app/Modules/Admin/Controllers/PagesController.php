@@ -201,7 +201,7 @@ class PagesController extends Controller
 	protected function getPages()
 	{
 		return Page::select(['id', 'parent_id', 'alias', 'type', 'is_container', 'is_published', 'title', 'menu_title', 'published_at'])
-			->with('parent')
+			->with('parent', 'children', 'products')
 			->orderBy('created_at', 'DESC')
 			->paginate(10);
 	}

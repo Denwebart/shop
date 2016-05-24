@@ -184,6 +184,13 @@ class Page extends Model
 				$page->content = '';
 			}
 		});
+
+		static::deleting(function($product) {
+			$product->children()->delete();
+			$product->products()->delete();
+			$product->menus()->delete();
+			$product->deleteImagesFolder();
+		});
 	}
 
 	/**
@@ -238,6 +245,19 @@ class Page extends Model
 		return $this->hasMany('App\Models\Page', 'parent_id')
 			->whereIsPublished(1)
 			->where('published_at', '<', date('Y-m-d H:i:s'));
+	}
+
+	/**
+	 * Все пункты меню
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function menus()
+	{
+		return $this->hasMany('App\Models\Menu', 'page_id');
 	}
 
 	/**
@@ -485,6 +505,18 @@ class Page extends Model
 	}
 
 	/**
+	 * Get image path
+	 *
+	 * @return mixed
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function getImagesPath()
+	{
+		return public_path() . $this->imagePath . $this->id . '/';
+	}
+
+	/**
 	 * Image uploading
 	 *
 	 * @param Request $request
@@ -498,7 +530,7 @@ class Page extends Model
 		$postImage = $request->file('image');
 		if (isset($postImage)) {
 			$fileName = Translit::generateFileName($postImage->getClientOriginalName());
-			$imagePath = public_path() . $this->imagePath . $this->id . '/';
+			$imagePath = $this->getImagesPath();;
 			$image = Image::make($postImage->getRealPath());
 			File::exists($imagePath) or File::makeDirectory($imagePath, 0755, true);
 
@@ -544,11 +576,24 @@ class Page extends Model
 	 */
 	public function deleteImage()
 	{
-		$imagePath = public_path() . $this->imagePath . $this->id . '/';
+		$prefixes = ['', 'origin_'];
 		// delete old image
-		if(File::exists($imagePath . $this->image)) {
-			File::delete($imagePath . $this->image);
+		foreach ($prefixes as $prefix) {
+			if(File::exists($this->getImagesPath() . $prefix . $this->image)) {
+				File::delete($this->getImagesPath() . $prefix . $this->image);
+			}
 		}
 		$this->image = null;
+	}
+
+	/**
+	 * Delete image folder
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function deleteImagesFolder()
+	{
+		File::deleteDirectory($this->getImagesPath());
 	}
 }

@@ -53,7 +53,7 @@
                         <i class="fa fa-pencil fa-lg"></i>
                     </a>
                     @if($page->canBeDeleted())
-                        <a href="javascript:void(0)" class="button-delete" title="Удалить" data-toggle="tooltip" data-item-id="{{ $page->id }}" data-item-title="{{ $page->getTitle() }}">
+                        <a href="javascript:void(0)" class="button-delete" title="Удалить" data-toggle="tooltip" data-item-id="{{ $page->id }}" data-item-title="{{ $page->getTitle() }}" data-count-children="{{ count($page->children) }}" data-count-products="{{ count($page->products) }}" data-count-menus="{{ count($page->menus) }}">
                             <i class="fa fa-trash fa-lg"></i>
                         </a>
                     @endif
@@ -74,12 +74,27 @@
             "use strict";
 
             $('#table-container').on('click', '.button-delete', function (e) {
-                var itemId = $(this).data('itemId');
-                var itemTitle = $(this).data('itemTitle');
+                var itemId = $(this).data('itemId'),
+                    itemTitle = $(this).data('itemTitle'),
+                    countProducts = $(this).data('countProducts'),
+                    countChildren = $(this).data('countChildren'),
+                    countMenus = $(this).data('countMenus');
+
+                var text = '';
+                if(countMenus) {
+                    text = text + '\n Страница будет удалена из меню.';
+                }
+                if(countProducts) {
+                    text = text + '\n Все продукты в этом каталоге (' + countProducts + ' шт.) будут удалены.';
+                }
+                if(countChildren) {
+                    text = text + '\n Все вложенные страницы (' + countChildren + ' шт.) будут удалены.';
+                }
+
                 sweetAlert(
                 {
                     title: "Удалить страницу?",
-                    text: 'Вы точно хотите удалить страницу "'+ itemTitle +'"?',
+                    text: 'Вы точно хотите удалить страницу "'+ itemTitle +'"?' + text,
                     type: "error",
                     showCancelButton: true,
                     cancelButtonText: 'Отмена',

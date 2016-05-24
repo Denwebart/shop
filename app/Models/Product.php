@@ -121,7 +121,7 @@ class Product extends Model
 		'category_id' => 'required|integer',
 		'user_id' => 'integer',
 		'alias' => 'unique:products,alias,:id|max:500|regex:/^[A-Za-z0-9\-]+$/u',
-		'vendor_code' => 'required|unique:products,vendor_code,:id|max:50|regex:/^[А-Яа-яA-Za-z0-9\-]+$/u',
+		'vendor_code' => 'required|unique:products,vendor_code,:id|max:50|regex:/^[А-Яа-яA-Za-z0-9 \-]+$/u',
 		'is_published' => 'boolean',
 		'title' => 'required|max:250',
 		'price' => 'required|numeric|between:0,9999999999.99',
@@ -163,6 +163,7 @@ class Product extends Model
 			if(trim(strip_tags($product->content)) == '') {
 				$product->content = '';
 			}
+			$product->vendor_code = trim($product->vendor_code);
 		});
 		static::deleting(function($product) {
 			$product->images()->delete();
@@ -361,18 +362,6 @@ class Product extends Model
 	}
 
 	/**
-	 * Get image path
-	 *
-	 * @return mixed
-	 * @author     It Hill (it-hill.com@yandex.ua)
-	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
-	 */
-	public function getImagesPath()
-	{
-		return public_path() . $this->imagePath . $this->id . '/';
-	}
-
-	/**
 	 * @return mixed
 	 */
 	public function getPrice()
@@ -400,6 +389,18 @@ class Product extends Model
 		$data['user_id'] = $this->user_id ? $this->user_id : Auth::user()->id;
 
 		return $data;
+	}
+
+	/**
+	 * Get image path
+	 *
+	 * @return mixed
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function getImagesPath()
+	{
+		return public_path() . $this->imagePath . $this->id . '/';
 	}
 
 	/**
