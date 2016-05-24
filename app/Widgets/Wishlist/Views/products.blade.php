@@ -5,7 +5,11 @@
  */
 ?>
 
-@if(count($products))
+@if((is_object($products) && $products->total()) || (isset($products['total']) && $products['total']))
+    <div class="count-container">
+        @include('parts.count', ['models' => $products])
+    </div>
+
     <ul>
         @foreach($products as $key => $item)
             <li class="shopping-cart__item @if(!$item['product']) bg-muted @endif">
@@ -44,6 +48,10 @@
             </li>
         @endforeach
     </ul>
+
+    <div class="pagination-container text-center">
+        @include('parts.pagination', ['models' => $products])
+    </div>
 @else
     <div class="align-center m-t-5">
         Список желаний пуст.

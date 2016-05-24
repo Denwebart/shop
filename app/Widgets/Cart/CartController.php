@@ -7,10 +7,10 @@
  */
 
 
-namespace App\Http\Controllers;
+namespace App\Widgets\Cart;
 
+use App\Http\Controllers\Controller;
 use App\Models\Page;
-use App\Widgets\Cart\Cart;
 
 class CartController extends Controller
 {
