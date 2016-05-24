@@ -61,7 +61,7 @@
                 <div class="pull-left">
                     <div class="currency-info">
                         <ul>
-                            <li class="currency-info__item"><span>$ USD:</span> {{ $courseUSD }} руб.</li>
+                            <li class="currency-info__item"><span>1$ = </span>{{ $courseUSD }} руб.</li>
                         </ul>
                     </div>
                 </div>

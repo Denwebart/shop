@@ -50,8 +50,8 @@ class Menu extends Model
 	public static $types = [
 		self::TYPE_PRODUCT      => 'Главное меню',
 		self::TYPE_MAIN         => 'Верхнее меню',
-		self::TYPE_BOTTOM_LEFT  => 'Нижнее меню (справа)',
-		self::TYPE_BOTTOM_RIGHT => 'Нижнее меню (слева)',
+		self::TYPE_BOTTOM_LEFT  => 'Нижнее меню (слева)',
+		self::TYPE_BOTTOM_RIGHT => 'Нижнее меню (справа)',
 		self::TYPE_INFO         => 'Информационное меню',
 	];
 

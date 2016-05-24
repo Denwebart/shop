@@ -682,16 +682,16 @@
         },
         {
             "name": "fitztrev/query-tracer",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fitztrev/query-tracer.git",
-                "reference": "af4acb1066100bb7dfcef9237df343bbcd8784af"
+                "reference": "351fff26cec4962e414864fd9c376923a94ace28"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fitztrev/query-tracer/zipball/af4acb1066100bb7dfcef9237df343bbcd8784af",
-                "reference": "af4acb1066100bb7dfcef9237df343bbcd8784af",
+                "url": "https://api.github.com/repos/fitztrev/query-tracer/zipball/351fff26cec4962e414864fd9c376923a94ace28",
+                "reference": "351fff26cec4962e414864fd9c376923a94ace28",
                 "shasum": ""
             },
             "require": {
@@ -720,7 +720,7 @@
                 "eloquent",
                 "laravel"
             ],
-            "time": "2016-05-18 11:31:07"
+            "time": "2016-05-22 13:30:05"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -2925,16 +2925,16 @@
         },
         {
             "name": "mockery/mockery",
-            "version": "0.9.4",
+            "version": "0.9.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/padraic/mockery.git",
-                "reference": "70bba85e4aabc9449626651f48b9018ede04f86b"
+                "reference": "4db079511a283e5aba1b3c2fb19037c645e70fc2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/padraic/mockery/zipball/70bba85e4aabc9449626651f48b9018ede04f86b",
-                "reference": "70bba85e4aabc9449626651f48b9018ede04f86b",
+                "url": "https://api.github.com/repos/padraic/mockery/zipball/4db079511a283e5aba1b3c2fb19037c645e70fc2",
+                "reference": "4db079511a283e5aba1b3c2fb19037c645e70fc2",
                 "shasum": ""
             },
             "require": {
@@ -2986,7 +2986,7 @@
                 "test double",
                 "testing"
             ],
-            "time": "2015-04-02 19:54:00"
+            "time": "2016-05-22 21:52:33"
         },
         {
             "name": "phpspec/prophecy",

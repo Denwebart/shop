@@ -272,11 +272,13 @@
 }
 
 .navbar.navbar-wd .nav > li > a:focus,
-.navbar.navbar-wd .nav > li > a:hover {
+.navbar.navbar-wd .nav > li > a:hover,
+.navbar.navbar-wd .nav > li.active > a {
     background-color: transparent;
 }
 
-.navbar.navbar-wd .nav > li > a:hover {
+.navbar.navbar-wd .nav > li > a:hover,
+.navbar.navbar-wd .nav > li.active > a {
     color: #d57a68;
 }
 
