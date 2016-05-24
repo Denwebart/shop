@@ -13,28 +13,8 @@
                 {{ $cart['count'] }}
             </span>
         </a>
-        <div class="dropdown-menu animated fadeIn shopping-cart cart-products" role="menu">
-            @include('widget.cart::products')
-
-            @if(count($cart['products']))
-                <div class="shopping-cart__bottom">
-                    <div class="pull-left">
-                        Всего:
-                        <span class="shopping-cart__total">
-                            <span class="total-price">
-                                {{ \App\Helpers\Str::priceFormat($cart['total_price']) }}
-                            </span>
-                        </span>
-                    </div>
-                    @if($cart['total_price'])
-                        <div class="pull-right">
-                            <a href="{{ route('cart.index') }}" class="btn btn--wd text-uppercase">
-                                Оформить заказ
-                            </a>
-                        </div>
-                    @endif
-                </div>
-            @endif
+        <div class="dropdown-menu animated fadeIn shopping-cart cart-products cart-products-widget" role="menu">
+            @include('widget.cart::productsWidget')
         </div>
     </div>
 </div>
@@ -122,7 +102,8 @@
                     },
                     success: function(response) {
                         if(response.success){
-                            $j('.cart-products').html(response.cartProductsHtml);
+                            $j('.cart-products-widget').html(response.productsWidgetHtml);
+                            $j('.cart-products-table').html(response.productsTableHtml);
                             if(response.productsCount) {
                                 $j('.count-cart-items').text(response.productsCount);
                             } else {
@@ -151,8 +132,13 @@
                     },
                     success: function(response) {
                         if(response.success){
-                            $j('.cart-products').html(response.cartProductsHtml);
-                            $j('.count-cart-items').text(response.productsCount);
+                            $j('.cart-products-widget').html(response.productsWidgetHtml);
+                            $j('.cart-products-table').html(response.productsTableHtml);
+                            if(response.productsCount) {
+                                $j('.count-cart-items').text(response.productsCount);
+                            } else {
+                                $j('.count-cart-items').hide();
+                            }
                         }
                     }
                 });

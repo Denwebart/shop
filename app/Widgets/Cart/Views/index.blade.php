@@ -24,28 +24,8 @@
                     <h2 class="text-uppercase">{{ $page->title }}</h2>
                 @endif
 
-                <div class="cart-products">
-                    @include('widget.cart::products')
-
-                    @if(count($cart['products']))
-                        <div class="shopping-cart__bottom">
-                            <div class="pull-left">
-                                Всего:
-                                <span class="shopping-cart__total">
-                                    <span class="total-price">
-                                        {{ \App\Helpers\Str::priceFormat($cart['total_price']) }}
-                                    </span>
-                                </span>
-                            </div>
-                            @if($cart['total_price'])
-                                <div class="pull-right">
-                                    <a href="{{ route('cart.index') }}" class="btn btn--wd text-uppercase">
-                                        Оформить заказ
-                                    </a>
-                                </div>
-                            @endif
-                        </div>
-                    @endif
+                <div class="cart-products cart-products-table">
+                    @include('widget.cart::productsTable')
                 </div>
             </div>
         </div>

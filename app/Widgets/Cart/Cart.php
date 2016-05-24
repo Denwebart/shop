@@ -64,7 +64,8 @@ class Cart extends BaseController
 
 			return \Response::json([
 				'success' => true,
-				'cartProductsHtml' => view('widget.cart::products')->with('cart', $cart)->render(),
+				'productsWidgetHtml' => view('widget.cart::productsWidget')->with('cart', $cart)->render(),
+				'productsTableHtml' => view('widget.cart::productsTable')->with('cart', $cart)->render(),
 				'productsCount' => $cart['count'],
 			]);
 		}
@@ -149,7 +150,7 @@ class Cart extends BaseController
 	{
 		// доделать добавление с разными параметрами (цвет, размер)
 		$cart = $request->session()->get('cart', $this->cart);
-		unset($cart['products'][$request->get('key')]);
+		array_splice($cart['products'], $request->get('key'), 1);
 
 		$request->session()->put('cart', $cart);
 	}
@@ -179,7 +180,8 @@ class Cart extends BaseController
 
 		return \Response::json([
 			'success' => true,
-			'cartProductsHtml' => view('widget.cart::products')->with('cart', $cart)->render(),
+			'productsWidgetHtml' => view('widget.cart::productsWidget')->with('cart', $cart)->render(),
+			'productsTableHtml' => view('widget.cart::productsTable')->with('cart', $cart)->render(),
 			'productsCount' => $cart['count'],
 		]);
 	}
