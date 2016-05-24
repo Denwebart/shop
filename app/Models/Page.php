@@ -528,9 +528,9 @@ class Page extends Model
 	public function setImage(Request $request)
 	{
 		$postImage = $request->file('image');
+		$imagePath = $this->getImagesPath();
 		if (isset($postImage)) {
 			$fileName = Translit::generateFileName($postImage->getClientOriginalName());
-			$imagePath = $this->getImagesPath();;
 			$image = Image::make($postImage->getRealPath());
 			File::exists($imagePath) or File::makeDirectory($imagePath, 0755, true);
 
@@ -562,6 +562,9 @@ class Page extends Model
 		} else {
 			if($request->get('deleteImage')) {
 				$this->deleteImage();
+				if(!File::exists($imagePath . 'images')) {
+					$this->deleteImagesFolder();
+				}
 				return true;
 			}
 			return false;
