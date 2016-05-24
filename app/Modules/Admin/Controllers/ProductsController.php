@@ -36,6 +36,7 @@ class ProductsController extends Controller
     public function create()
     {
 	    $product = new Product();
+	    $product->is_published = Product::PUBLISHED;
 
 	    $backUrl = \Request::has('back_url') ? urldecode(\Request::get('back_url')) : URL::previous();
 
