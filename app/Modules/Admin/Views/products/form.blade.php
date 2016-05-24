@@ -16,8 +16,8 @@
         <div class="form-group @if($errors->has('category_id')) has-error @endif">
             {!! Form::label('category_id', 'Категория', ['class' => 'col-md-2 control-label']) !!}
             <div class="col-md-10">
-                {!! Form::select('category_id', \App\Models\Page::getCategory(\App\Models\Page::TYPE_CATALOG, false), $product->category_id, ['id' => 'category_id', 'class' => 'form-control']) !!}
-                @if ($errors->has('category_id'))
+                {!! Form::select('category_id', \App\Models\Page::getCategory(\App\Models\Page::TYPE_CATALOG), $product->category_id, ['id' => 'category_id', 'class' => 'form-control']) !!}
+                @if($errors->has('category_id'))
                     <span class="help-block error">
                         <strong>{{ $errors->first('category_id') }}</strong>
                     </span>
@@ -68,16 +68,16 @@
                     {!! Form::text('price', $product->price, ['id' => 'price', 'class' => 'form-control']) !!}
                     <span class="input-group-addon">руб.</span>
                 </div>
+                <span class="help-block @if($errors->has('price')) hidden @endif">
+                    <small>
+                        Цена только в рублях. Например: 1000 или 1000.00
+                    </small>
+                </span>
                 @if ($errors->has('price'))
                     <span class="help-block error">
                         <strong>{{ $errors->first('price') }}</strong>
                     </span>
                 @endif
-                <span class="help-block @if($errors->has('image')) hidden @endif">
-                    <small>
-                        Цена только в рублях. Например: 1000 или 1000.00
-                    </small>
-                </span>
             </div>
         </div>
         <div class="form-group">
@@ -227,7 +227,13 @@
     <div class="col-md-7 col-sm-12 col-xs-12">
         <div class="form-group @if($errors->has('content')) has-error @endif">
             <div class="col-md-12">
-                {!! Form::label('content', 'Текст страницы', ['class' => 'control-label m-b-5']) !!}
+                {!! Form::label('content', 'Описание товара', ['class' => 'control-label m-b-5']) !!}
+                <span class="help-block">
+                    <small>
+                        Отображается во вкладке "Описание" на странице товара.
+                    </small>
+                </span>
+
                 {!! Form::textarea('content', $product->content, ['id' => 'content', 'class' => 'form-control editor', 'rows' => 10]) !!}
 
                 @if ($errors->has('content'))
@@ -242,7 +248,13 @@
     <div class="col-md-5 col-sm-12 col-xs-12">
         <div class="form-group @if($errors->has('introtext')) has-error @endif">
             <div class="col-md-12">
-                {!! Form::label('introtext', 'Краткое описание страницы', ['class' => 'control-label m-b-5']) !!}
+                {!! Form::label('introtext', 'Краткое описание товара', ['class' => 'control-label m-b-5']) !!}
+                <span class="help-block">
+                    <small>
+                        Отображается под ценой на странице товара, выводится в каталоге.
+                    </small>
+                </span>
+
                 {!! Form::textarea('introtext', $product->introtext, ['id' => 'introtext', 'class' => 'form-control editor', 'rows' => 10]) !!}
 
                 @if ($errors->has('introtext'))

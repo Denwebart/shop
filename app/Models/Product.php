@@ -118,7 +118,7 @@ class Product extends Model
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
 	protected static $rules = [
-		'category_id' => 'required|integer',
+		'category_id' => 'required|integer|not_in:0',
 		'user_id' => 'integer',
 		'alias' => 'unique:products,alias,:id|max:500|regex:/^[A-Za-z0-9\-]+$/u',
 		'vendor_code' => 'required|unique:products,vendor_code,:id|max:50|regex:/^[А-Яа-яA-Za-z0-9 \-]+$/u',
