@@ -16,6 +16,10 @@ use Illuminate\Http\Request;
 
 class Wishlist extends BaseController
 {
+	protected $onPage = 15;
+	protected $maxItems = 45;
+
+
 	public function show()
 	{
 		$request = new Request();
@@ -70,9 +74,28 @@ class Wishlist extends BaseController
 				'wishlistProductsHtml' => view('widget.wishlist::products')->with('products', $productsHtml)->render(),
 				'wishlistHtml' => view('widget.wishlist::wishlist')->with('products', $productsHtml)->render(),
 				'pageUrl' => $productsHtml->url($productsHtml->currentPage()),
+				'count' => count($productsHtml),
 			]);
 
 			return $response->withCookie(cookie()->forever('wishlist', $products));
+		}
+	}
+
+	public function removeAll(Request $request)
+	{
+		if($request->ajax()) {
+
+			$products = [];
+			$productsHtml = $this->getWishlist($products, $request);
+
+			$response = \Response::json([
+				'success' => true,
+				'wishlistProductsHtml' => view('widget.wishlist::products')->with('products', $productsHtml)->render(),
+				'wishlistHtml' => view('widget.wishlist::wishlist')->with('products', $productsHtml)->render(),
+				'pageUrl' => $productsHtml->url(1),
+			]);
+
+			return $response->withCookie(cookie()->forget('wishlist'));
 		}
 	}
 
@@ -81,7 +104,7 @@ class Wishlist extends BaseController
 		if(is_null($products)) {
 			$products = \Request::cookie('wishlist', []);
 		}
-		
+
 		foreach ($products as $productId => $item) {
 			$productsIds[] = $productId;
 		}
@@ -103,17 +126,15 @@ class Wishlist extends BaseController
 		
 		$products = array_reverse($products, true);
 
-		$onPage = 3;
-
 		$page = $request->get('page', 1);
-		if($request->ajax() && ((count($products) % $onPage) < 1)) {
+		if($request->ajax() && ((count($products) % $this->onPage) < 1)) {
 			$page = $request->get('page') - 1;
 		}
-		$offSet = ($page * $onPage) - $onPage;
+		$offSet = ($page * $this->onPage) - $this->onPage;
 		
-		$itemsForCurrentPage = array_slice($products, $offSet, $onPage, true);
+		$itemsForCurrentPage = array_slice($products, $offSet, $this->onPage, true);
 		
-		$products = new LengthAwarePaginator($itemsForCurrentPage, count($products), $onPage, $page);
+		$products = new LengthAwarePaginator($itemsForCurrentPage, count($products), $this->onPage, $page);
 		$pageUrl = $request->has('url') ? $request->get('url') : $request->url();
 		$params = $request->except(['url', 'key']);
 		if($products->lastPage() != $products->currentPage()) {
@@ -138,12 +159,16 @@ class Wishlist extends BaseController
 		$products = $request->cookie('wishlist', []);
 
 		if(!array_key_exists($product->id, $products)) {
+			if(count($products) >= $this->maxItems) {
+				reset($products);
+				$first = key($products);
+				unset($products[$first]);
+			}
+
 			$products[$product->id] = [
-				'product_id' => $product->id,
-				'added_at' => Carbon::now(),
-				'product' => null,
+				'at' => date('Y-m-d H:i:s'),
 			];
-			
+
 			return $products;
 		}
 

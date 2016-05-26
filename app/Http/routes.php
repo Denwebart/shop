@@ -23,6 +23,7 @@ Route::post('cart/quantity', ['as' => 'cart.quantity', 'uses' => '\App\Widgets\C
 
 Route::get('wishlist', ['as' => 'wishlist.index', 'uses' => '\App\Widgets\Wishlist\WishlistController@index']);
 Route::post('wishlist/add', ['as' => 'wishlist.add', 'uses' => '\App\Widgets\Wishlist\Wishlist@addToWishlist']);
+Route::post('wishlist/remove_all', ['as' => 'wishlist.removeAll', 'uses' => '\App\Widgets\Wishlist\Wishlist@removeAll']);
 Route::post('wishlist/remove', ['as' => 'wishlist.remove', 'uses' => '\App\Widgets\Wishlist\Wishlist@removeFromWishlist']);
 
 Route::get('sitemap.xml', ['as' => 'sitemapXml', 'uses' => 'SiteController@sitemapXml']);
