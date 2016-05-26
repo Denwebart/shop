@@ -9,6 +9,7 @@
 namespace App\Widgets\Wishlist;
 
 use Carbon\Carbon;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Routing\Controller as BaseController;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -17,7 +18,8 @@ class Wishlist extends BaseController
 {
 	public function show()
 	{
-		$products = \Request::cookie('wishlist', []);
+		$request = new Request();
+		$products = $this->getWishlist(null, $request);
 
 		return view('widget.wishlist::wishlist', compact('products'));
 	}
@@ -31,10 +33,12 @@ class Wishlist extends BaseController
 
 				$products = $this->addProduct($request, $product);
 				if($products) {
+					$productsHtml = $this->getWishlist($products, $request);
+
 					$response = \Response::json([
 						'success' => true,
 						'message' => 'Продукт успешно добавлен в <a href="' . route('wishlist.index') . '">список желаний</a>!',
-						'wishlistHtml' => view('widget.wishlist::wishlist')->with('products', $products)->render(),
+						'wishlistHtml' => view('widget.wishlist::wishlist')->with('products', $productsHtml)->render(),
 					]);
 					return $response->withCookie(cookie()->forever('wishlist', $products));
 				} else {
@@ -59,24 +63,25 @@ class Wishlist extends BaseController
 			$products = $request->cookie('wishlist', []);
 			unset($products[$request->get('key')]);
 
-			$productsHtml = $this->getWishlist($products);
+			$productsHtml = $this->getWishlist($products, $request);
 
 			$response = \Response::json([
 				'success' => true,
 				'wishlistProductsHtml' => view('widget.wishlist::products')->with('products', $productsHtml)->render(),
 				'wishlistHtml' => view('widget.wishlist::wishlist')->with('products', $productsHtml)->render(),
+				'pageUrl' => $productsHtml->url($productsHtml->currentPage()),
 			]);
 
 			return $response->withCookie(cookie()->forever('wishlist', $products));
 		}
 	}
 
-	public function getWishlist($products = null)
+	public function getWishlist($products = null, Request $request)
 	{
 		if(is_null($products)) {
 			$products = \Request::cookie('wishlist', []);
 		}
-
+		
 		foreach ($products as $productId => $item) {
 			$productsIds[] = $productId;
 		}
@@ -95,8 +100,27 @@ class Wishlist extends BaseController
 				$products[$productModel->id]['product'] = $productModel;
 			}
 		}
+		
+		$products = array_reverse($products, true);
 
-		return array_reverse($products, true);
+		$onPage = 3;
+
+		$page = $request->get('page', 1);
+		if($request->ajax() && ((count($products) % $onPage) < 1)) {
+			$page = $request->get('page') - 1;
+		}
+		$offSet = ($page * $onPage) - $onPage;
+		
+		$itemsForCurrentPage = array_slice($products, $offSet, $onPage, true);
+		
+		$products = new LengthAwarePaginator($itemsForCurrentPage, count($products), $onPage, $page);
+		$pageUrl = $request->has('url') ? $request->get('url') : $request->url();
+		$params = $request->except(['url', 'key']);
+		if($products->lastPage() != $products->currentPage()) {
+			$params['page'] = $page;
+		}
+		$products->setPath($pageUrl)->appends($params);;
+		return $products;
 	}
 
 	/**
@@ -119,6 +143,7 @@ class Wishlist extends BaseController
 				'added_at' => Carbon::now(),
 				'product' => null,
 			];
+			
 			return $products;
 		}
 

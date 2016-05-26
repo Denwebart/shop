@@ -8,9 +8,11 @@
 <div id="wishlist" class="header__wishlist pull-left">
     <a href="{{ route('wishlist.index') }}" class="btn dropdown-toggle btn--links--dropdown header__wishlist__button header__dropdowns__button" title="Список желаний" data-toggle="tooltip">
         <span class="icon icon-favorite"></span>
-        <span class="badge badge--menu count-wishlist-items @if(!count($products)) hidden @endif">
-            {{ count($products) }}
-        </span>
+        @if(count($products))
+            <span class="badge badge--menu count-wishlist-items">
+                {{ $products->total() }}
+            </span>
+        @endif
     </a>
 </div>
 
@@ -82,30 +84,6 @@
                             $j('#modalAddToWishlist .loading').hide();
                             $j('#modalAddToWishlist .sussess').hide();
                             $j('#modalAddToWishlist .error').show().find('.text').html(response.message);
-                        }
-                    }
-                });
-            });
-
-            $j(document).on('click', '.remove-from-wishlist', function(e){
-                e.preventDefault();
-
-                var $button = $j(this),
-                    productKey = $j(this).data('productKey');
-
-                $j.ajax({
-                    url: "{{ route('wishlist.remove') }}",
-                    dataType: "json",
-                    type: "POST",
-                    data: {'key': productKey},
-                    async: true,
-                    beforeSend: function (request) {
-                        return request.setRequestHeader('X-CSRF-Token', $j("meta[name='csrf-token']").attr('content'));
-                    },
-                    success: function(response) {
-                        if(response.success){
-                            $j('#wishlist').html(response.wishlistHtml);
-                            $j('.wishlist-products').html(response.wishlistProductsHtml);
                         }
                     }
                 });

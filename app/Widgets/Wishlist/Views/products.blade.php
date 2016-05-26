@@ -50,10 +50,47 @@
     </ul>
 
     <div class="pagination-container text-center">
-        @include('parts.pagination', ['models' => $products])
+        {!! $products->links() !!}
     </div>
 @else
     <div class="align-center m-t-5">
         Список желаний пуст.
     </div>
 @endif
+
+@push('scripts')
+    <script type="text/javascript">
+
+        jQuery(function($j) {
+
+            "use strict";
+
+            $j(document).on('click', '.remove-from-wishlist', function(e){
+                e.preventDefault();
+
+                var $button = $j(this),
+                    productKey = $j(this).data('productKey'),
+                    currentPage = "{{ $products->currentPage() }}";
+
+                $j.ajax({
+                    url: "{{ route('wishlist.remove') }}",
+                    dataType: "json",
+                    type: "POST",
+                    data: {'key': productKey, 'page': currentPage, 'url': "{{ \Request::url() }}"},
+                    async: true,
+                    beforeSend: function (request) {
+                        return request.setRequestHeader('X-CSRF-Token', $j("meta[name='csrf-token']").attr('content'));
+                    },
+                    success: function(response) {
+                        if(response.success){
+                            $j('#wishlist').html(response.wishlistHtml);
+                            $j('.wishlist-products').html(response.wishlistProductsHtml);
+                            window.history.pushState({parent: response.pageUrl}, '', response.pageUrl);
+                        }
+                    }
+                });
+            });
+        });
+
+    </script>
+@endpush
