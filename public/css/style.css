@@ -8782,6 +8782,7 @@ body.boxed .content--parallax:before {
     display: block;
 }
 
+.loader-wrapper,
 #loader-wrapper,
 #modalLoader-wrapper {
     position: fixed;
@@ -8791,8 +8792,12 @@ body.boxed .content--parallax:before {
     height: 100%;
     z-index: 10000;
 }
+.loading {
+    opacity: 0.3;
+}
 
-#loader-wrapper.loader-off {
+#loader-wrapper.loader-off,
+.loader-wrapper.loader-off {
     display: none !important;
 }
 
@@ -8921,7 +8926,9 @@ body.boxed .content--parallax:before {
 }
 
 .loaded #loader-wrapper,
-.touch #loader-wrapper {
+.loaded .loader-wrapper,
+.touch #loader-wrapper,
+.touch .loader-wrapper {
     visibility: hidden;
     transform: translateY(-100%);
     transition: all 0.3s 1s ease-out;
@@ -12185,7 +12192,7 @@ form label.error {
 }
 
 .products-isotope {
-    margin-bottom: 50px;
+    margin-bottom: 20px;
 }
 
 .product-category {

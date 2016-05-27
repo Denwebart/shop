@@ -38,7 +38,7 @@
                     </a>
                 </div>
                 <div class="col-sm-8 col-md-8 col-lg-9 col-2">
-                    <div class="filters-row__items">
+                    <div class="filters-row__items count-container">
                         @include('parts.count', ['models' => $products])
                     </div>
 
@@ -46,19 +46,19 @@
 
                     <div class="filters-row__select">
                         <label>На странице: </label>
-                        <select class="selectpicker onpage" name="onpage" data-style="select--wd select--wd--sm" data-width="60">
-                            <option value="12">12</option>
-                            <option value="24">24</option>
-                            <option value="36">36</option>
+                        <select class="selectpicker ajax-sort onpage" name="onpage" data-style="select--wd select--wd--sm" data-width="60">
+                            <option value="12" @if(\Request::get('sortby') == '12') selected @endif>12</option>
+                            <option value="24" @if(\Request::get('sortby') == '24') selected @endif>24</option>
+                            <option value="36" @if(\Request::get('sortby') == '36') selected @endif>36</option>
                         </select>
                     </div>
                     <div class="filters-row__select">
                         <label>Сортировать по: </label>
-                        <select class="selectpicker sortby" name="sortby" data-style="select--wd select--wd--sm" data-width="130">
-                            <option value="published_at">дате</option>
-                            <option value="price">цене</option>
-                            <option value="rating">рейтингу</option>
-                            <option value="popular">популярности</option>
+                        <select class="selectpicker ajax-sort sortby" name="sortby" data-style="select--wd select--wd--sm" data-width="130">
+                            <option value="published_at" @if(\Request::get('sortby') == 'published_at') selected @endif>дате</option>
+                            <option value="price" @if(\Request::get('sortby') == 'price') selected @endif>цене</option>
+                            <option value="rating" @if(\Request::get('sortby') == 'rating') selected @endif>рейтингу</option>
+                            <option value="popular" @if(\Request::get('sortby') == 'popular') selected @endif>популярности</option>
                         </select>
                         <a href="javascript:void(0)" class="icon icon-arrow-down m-l-10 active sort-direction" data-value="desc" rel="nofollow" title="По убыванию" data-toggle="tooltip"></a>
                         <a href="javascript:void(0)" class="icon icon-arrow-up sort-direction" data-value="asc" rel="nofollow" title="По возростанию" data-toggle="tooltip"></a>
@@ -305,12 +305,9 @@
                         </div>
                     </div>
                 </div>
-                <div id="centerCol">
+                <div id="centerCol" class="products-container">
                     @include('parts.productsList')
                 </div>
-            </div>
-            <div id="pagination" class="text-center">
-                @include('parts.pagination', ['models' => $products])
             </div>
         </div>
     </section>
@@ -336,33 +333,60 @@
     <script src="{{ asset('vendor/imagesloaded/imagesloaded.pkgd.min.js') }}"></script>
 
     <script type="text/javascript">
-        var url = '{{ Request::getUri() }}';
+        jQuery(function($j) {
 
-        $('.sort-direction').on('click', function (e) {
-            $.ajax({
-                url: url,
-                dataType: "json",
-                type: "POST",
-                data: {sortby},
-                async: true,
-                beforeSend: function (request) {
-                    return request.setRequestHeader('X-CSRF-Token', $j("meta[name='csrf-token']").attr('content'));
-                },
-                success: function(response) {
-                    if(response.success){
-                        $form.trigger('reset');
-                        $j('#success-message').show().find('.infobox__text').text(response.message);
-                    } else {
-                        $form.find('.has-error').removeClass('has-error');
-                        $form.find('.help-block.error').text('');
-                        $j.each(response.errors, function(index, value) {
-                            var errorDiv = '.' + index + '_error';
-                            $form.find(errorDiv).parent().addClass('has-error');
-                            $form.find(errorDiv).empty().append(value);
-                        });
-                        $j('#error-message').show().find('.infobox__text').text(response.message);
+            "use strict";
+
+            var url = "{!! Request::getUri() !!}";
+            console.log(url);
+
+            $j(document).on('change', '.ajax-sort', function (e) {
+
+                addLoader('.outer');
+
+                var name = $j(this).attr('name'),
+                    value = $j(this).val();
+
+                var data = {};
+                data[name] = value;
+
+                $j.ajax({
+                    url: url,
+                    dataType: "json",
+                    type: "POST",
+                    data: data,
+                    async: true,
+                    beforeSend: function (request) {
+                        return request.setRequestHeader('X-CSRF-Token', $j("meta[name='csrf-token']").attr('content'));
+                    },
+                    success: function (response) {
+
+                        removeLoader('.outer');
+
+                        if(response.success) {
+                            $j('.count-container').html(response.countHtml);
+                            $j('#pagination').html(response.paginationHtml);
+                            $j('.products-container').html(response.productsListHtml);
+                            window.history.pushState({parent: response.pageUrl}, '', response.pageUrl);
+                            url = response.pageUrl;
+                            console.log(url);
+
+                            if ($j('.outer').hasClass('open')) {
+                                $j('.products-isotope.products-col').addClass('no-transition');
+                                $j('.products-col').stop(true,false).animate({marginLeft: '0'}, 0);
+                                var minW =  parseInt($j('.products-col').find('.product-preview-wrapper:first-child').width());
+                                $j('.products-col').stop(true,false).animate({marginLeft: '280px'}, 0,
+                                function() {
+                                    setProductSize($j('.products-col'),minW);
+                                    $j('.products-isotope.products-col').isotope('layout');
+                                });
+                            }
+                            else {
+                                $j('.products-isotope.products-col').addClass('no-transition').isotope('layout');
+                            }
+                        }
                     }
-                }
+                });
             });
         });
     </script>

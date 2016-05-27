@@ -192,18 +192,36 @@ class SiteController extends Controller
 
 		$subcategoryIds[] = $page->id;
 
-		// доделать сортировку по популярности
-		$products = Product::whereIn('category_id', $subcategoryIds)
+		$query = Product::whereIn('category_id', $subcategoryIds)
 			->whereIsPublished(1)
 			->where('published_at', '<=', Carbon::now())
 			->with([
 				'category' => function($q) {
 					$q->select(['id', 'parent_id', 'alias', 'is_container']);
 				}
-			])
-			->paginate(12);
+			]);
 
-		return view('catalog', compact('page', 'products'));
+		if($request->has('sortby')) {
+			$query->orderBy($request->get('sortby'), $request->get('direction', 'DESC'));
+		} else {
+			// доделать по популярности
+//			$query->orderBy('', 'DESC');
+		}
+
+		$limit = $request->has('onpage') ? $request->get('onpage') : 12;
+
+		$products = $query->paginate($limit);
+
+		if(!$request->ajax()) {
+			return view('catalog', compact('page', 'products'));
+		} else {
+			return \Response::json([
+				'success' => true,
+				'productsListHtml' => view('parts.productsList')->with('products', $products)->render(),
+				'countHtml' => view('parts.count')->with('models', $products)->render(),
+				'pageUrl' => $products->url($request->get('page', 1))
+			]);
+		}
 	}
 
 	/**

@@ -47,7 +47,12 @@
     <script src="{{ asset('vendor/modernizr/modernizr.js') }}"></script>
 </head>
 <body>
-
+<div id="loader-wrapper" class="loader-off">
+    <div id="loader"></div>
+</div>
+<div class="loader-wrapper loader-off">
+    <div id="loader"></div>
+</div>
 <div class="wrapper">
     <!-- Header section -->
     <header class="header header--sticky"> <!-- header--sticky -->
@@ -390,6 +395,22 @@
                 });
 
     });	//ready
+
+    function addPageLoader() {
+        $j('body').removeClass('loaded').find('#loader-wrapper').removeClass('loader-off');
+    }
+    function removePageLoader() {
+        $j('body').addClass('loaded').find('#loader-wrapper').addClass('loader-off');
+    }
+
+    function addLoader(hiddenContainerSelector) {
+        $j('body').removeClass('loaded').find('.loader-wrapper').removeClass('loader-off');
+        $j(hiddenContainerSelector).addClass('loading');
+    }
+    function removeLoader(hiddenContainerSelector) {
+        $j('body').addClass('loaded').find('.loader-wrapper').addClass('loader-off');
+        $j(hiddenContainerSelector).removeClass('loading');
+    }
 
 </script>
 </body>

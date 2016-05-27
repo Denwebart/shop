@@ -140,7 +140,7 @@ class Wishlist extends BaseController
 		if($products->lastPage() != $products->currentPage()) {
 			$params['page'] = $page;
 		}
-		$products->setPath($pageUrl)->appends($params);;
+		$products->setPath($pageUrl)->appends($params);
 		return $products;
 	}
 

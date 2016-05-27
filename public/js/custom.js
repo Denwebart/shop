@@ -1539,7 +1539,8 @@ jQuery(function($j) {
 			}
 			else {
 				$j('.products-isotope.products-col').addClass('no-transition').isotope('layout');
-			}	})
+			}	
+    });
 	
 	$j('a.link-grid-view').click(function(e) {
 		var windowW = window.innerWidth || $(window).width();
