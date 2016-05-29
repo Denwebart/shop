@@ -75,7 +75,15 @@ class Product extends Model
 		'sum' => 0,
 		'value' => 0
 	];
+
 	public $rating;
+
+	public static $sortingAttributes = [
+        'published_at',
+		'price',
+		'rating',
+		'popular',
+	];
 
 	/**
 	 * Статус публикации (значение поля is_published)

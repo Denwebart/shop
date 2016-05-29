@@ -28,11 +28,6 @@ Route::post('wishlist/remove', ['as' => 'wishlist.remove', 'uses' => '\App\Widge
 
 Route::get('sitemap.xml', ['as' => 'sitemapXml', 'uses' => 'SiteController@sitemapXml']);
 
-Route::post('{parentOne}/{parentTwo}/{parentThree}/{page}', ['uses' => 'SiteController@pageFourLevel']);
-Route::post('{parentOne}/{parentTwo}/{page}', ['uses' => 'SiteController@pageThreeLevel']);
-Route::post('{parentOne}/{page}', ['uses' => 'SiteController@pageTwoLevel']);
-Route::post('{page}', ['uses' => 'SiteController@pageOneLevel']);
-
 Route::get('{parentOne}/{parentTwo}/{parentThree}/{page}', ['uses' => 'SiteController@pageFourLevel']);
 Route::get('{parentOne}/{parentTwo}/{page}', ['uses' => 'SiteController@pageThreeLevel']);
 Route::get('{parentOne}/{page}', ['uses' => 'SiteController@pageTwoLevel']);

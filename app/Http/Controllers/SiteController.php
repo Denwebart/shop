@@ -183,7 +183,7 @@ class SiteController extends Controller
 	 */
 	protected function getCatalogPage($request, $settings, $page)
 	{
-		// доделать вложенность
+		// доделать вложенность (рекурсивно?)
 		$subcategoryIds = Page::select(['id', 'parent_id'])
 			->whereParentId($page->id)
 			->whereIsPublished(1)
@@ -192,21 +192,38 @@ class SiteController extends Controller
 
 		$subcategoryIds[] = $page->id;
 
-		$query = Product::whereIn('category_id', $subcategoryIds)
-			->whereIsPublished(1)
-			->where('published_at', '<=', Carbon::now())
+		$query = Product::select(\DB::raw('products.id, products.vendor_code, products.category_id, products.alias, products.is_published, products.title, products.price, products.image, products.image_alt, products.published_at, products.introtext, products.content, count(orders_products.id) as `popular`, SUM(products_reviews.rating) as `rating`'))
+			->whereIn('category_id', $subcategoryIds)
+			// sales (popular)
+			->leftJoin('orders_products', 'orders_products.product_id', '=', 'products.id')
+			->groupBy('products.id')
+			// rating
+			->leftJoin('products_reviews', 'products_reviews.product_id', '=', 'products.id')
+			->where(function($q) {
+				$q->where(function ($qu) {
+					$qu->where('products_reviews.is_published', '=', 1)
+						->where('products_reviews.parent_id', '=', 0);
+				})->orWhere('products_reviews.id', '=', null);
+			})
+			->where('products.is_published', '=', 1)
+			->where('products.published_at', '<=', Carbon::now())
 			->with([
 				'category' => function($q) {
 					$q->select(['id', 'parent_id', 'alias', 'is_container']);
-				}
+				},
+				'category.parent' => function($q) {
+					$q->select(['id', 'parent_id', 'alias', 'is_container']);
+				},
 			]);
 
 		if($request->has('sortby')) {
-			$query->orderBy($request->get('sortby'), $request->get('direction', 'DESC'));
+			if(in_array($request->get('sortby'), Product::$sortingAttributes)) {
+				$query->orderBy($request->get('sortby'), $request->get('direction', 'DESC'));
+			}
 		} else {
-			// доделать по популярности
-//			$query->orderBy('', 'DESC');
+			$query->orderBy('popular', 'DESC');
 		}
+		$query->orderBy('published_at', 'DESC');
 
 		$limit = $request->has('onpage') ? $request->get('onpage') : 12;
 
@@ -219,7 +236,7 @@ class SiteController extends Controller
 				'success' => true,
 				'productsListHtml' => view('parts.productsList')->with('products', $products)->render(),
 				'countHtml' => view('parts.count')->with('models', $products)->render(),
-				'pageUrl' => $products->url($request->get('page', 1))
+				'pageUrl' => $products->url($request->get('page', 1)),
 			]);
 		}
 	}

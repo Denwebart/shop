@@ -112,7 +112,7 @@
 
                 var $form = $j(this),
                     formData = $form.serialize(),
-                    url = $j(this).attr('action');
+                    url = $form.attr('action');
 
                 $j.ajax({
                     url: url,

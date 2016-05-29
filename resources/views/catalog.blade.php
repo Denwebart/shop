@@ -24,6 +24,7 @@
 
     <section class="content">
         <div class="container">
+            {!! Form::open(['url' => Request::getUri(), 'id' => 'filters-form']) !!}
             <div class="filters-row row">
                 <div class="col-sm-4 col-md-4 col-lg-3 col-1">
                     <a class="filters-row__view active link-grid-view icon icon-keyboard"></a>
@@ -47,9 +48,9 @@
                     <div class="filters-row__select">
                         <label>На странице: </label>
                         <select class="selectpicker ajax-sort onpage" name="onpage" data-style="select--wd select--wd--sm" data-width="60">
-                            <option value="12" @if(\Request::get('sortby') == '12') selected @endif>12</option>
-                            <option value="24" @if(\Request::get('sortby') == '24') selected @endif>24</option>
-                            <option value="36" @if(\Request::get('sortby') == '36') selected @endif>36</option>
+                            <option value="12" @if(\Request::get('onpage') == '12' || !\Request::has('onpage')) selected @endif>12</option>
+                            <option value="24" @if(\Request::get('onpage') == '24') selected @endif>24</option>
+                            <option value="36" @if(\Request::get('onpage') == '36') selected @endif>36</option>
                         </select>
                     </div>
                     <div class="filters-row__select">
@@ -58,7 +59,7 @@
                             <option value="published_at" @if(\Request::get('sortby') == 'published_at') selected @endif>дате</option>
                             <option value="price" @if(\Request::get('sortby') == 'price') selected @endif>цене</option>
                             <option value="rating" @if(\Request::get('sortby') == 'rating') selected @endif>рейтингу</option>
-                            <option value="popular" @if(\Request::get('sortby') == 'popular') selected @endif>популярности</option>
+                            <option value="popular" @if(\Request::get('sortby') == 'popular' || !\Request::has('sortby')) selected @endif>популярности</option>
                         </select>
                         <a href="javascript:void(0)" class="icon icon-arrow-down m-l-10 active sort-direction" data-value="desc" rel="nofollow" title="По убыванию" data-toggle="tooltip"></a>
                         <a href="javascript:void(0)" class="icon icon-arrow-up sort-direction" data-value="asc" rel="nofollow" title="По возростанию" data-toggle="tooltip"></a>
@@ -73,19 +74,19 @@
                         </div>
                         <div class="filters-col__select visible-xs">
                             <label>На странице: </label>
-                            <select class="selectpicker onpage" name="onpage" data-style="select--wd select--wd--sm" data-width="60">
-                                <option value="12">12</option>
-                                <option value="24">24</option>
-                                <option value="36">36</option>
+                            <select class="selectpicker ajax-sort onpage" name="onpage" data-style="select--wd select--wd--sm" data-width="60">
+                                <option value="12" @if(\Request::get('onpage') == '12' || !\Request::has('onpage')) selected @endif>12</option>
+                                <option value="24" @if(\Request::get('onpage') == '24') selected @endif>24</option>
+                                <option value="36" @if(\Request::get('onpage') == '36') selected @endif>36</option>
                             </select>
                         </div>
                         <div class="filters-col__select visible-xs">
                             <label>Сортировать по: </label>
-                            <select class="selectpicker sortby" name="sortby" data-style="select--wd select--wd--sm" data-width="100">
-                                <option value="published_at">дате</option>
-                                <option value="price">цене</option>
-                                <option value="rating">рейтингу</option>
-                                <option value="popular">популярности</option>
+                            <select class="selectpicker ajax-sort sortby" name="sortby" data-style="select--wd select--wd--sm" data-width="130">
+                                <option value="published_at" @if(\Request::get('sortby') == 'published_at') selected @endif>дате</option>
+                                <option value="price" @if(\Request::get('sortby') == 'price') selected @endif>цене</option>
+                                <option value="rating" @if(\Request::get('sortby') == 'rating') selected @endif>рейтингу</option>
+                                <option value="popular" @if(\Request::get('sortby') == 'popular' || !\Request::has('sortby')) selected @endif>популярности</option>
                             </select>
                             <a href="javascript:void(0)" class="icon icon-arrow-down m-l-10 active sort-direction" data-value="desc" rel="nofollow" title="По убыванию" data-toggle="tooltip"></a>
                             <a href="javascript:void(0)" class="icon icon-arrow-up sort-direction" data-value="asc" rel="nofollow" title="По возростанию" data-toggle="tooltip"></a>
@@ -309,6 +310,7 @@
                     @include('parts.productsList')
                 </div>
             </div>
+            {!! Form::close() !!}
         </div>
     </section>
 
@@ -333,27 +335,310 @@
     <script src="{{ asset('vendor/imagesloaded/imagesloaded.pkgd.min.js') }}"></script>
 
     <script type="text/javascript">
+
+        //Isotope
         jQuery(function($j) {
 
             "use strict";
 
-            var url = "{!! Request::getUri() !!}";
-            console.log(url);
+            var windowW = window.innerWidth || $(window).width();
 
-            $j(document).on('change', '.ajax-sort', function (e) {
+            if ($j('.products-isotope').length){
+                $j('.products-isotope').imagesLoaded(function() {
 
-                addLoader('.outer');
+                    $j('.products-isotope').isotope({
+                        itemSelector: '.product-preview-wrapper',
+                        layoutMode: 'fitRows'
+                    })
 
-                var name = $j(this).attr('name'),
-                    value = $j(this).val();
+                });
+            }
 
+
+            var minW =  parseInt($j('.products-col').find('.product-preview-wrapper:first-child').width());
+            if ($j('.products-isotope').hasClass('two-in-row')){
+                minW = minW-200;
+            }
+
+            if ($j('.products-col').parent().parent().hasClass('open')) {
+
+                if ( $j('html').css('direction').toLowerCase() == 'rtl' ) {
+                    $j('.products-col').stop(true,false).animate({marginRight: '280px'}, 200,
+                            function() {
+                                setProductSize($j('.products-col'),minW);
+                                $j('.products-isotope').isotope().isotope('layout');
+                            });
+
+                }
+                else {
+                    $j('.products-col').stop(true,false).animate({marginLeft: '280px'}, 200,
+                            function() {
+                                setProductSize($j('.products-col'),minW);
+                                $j('.products-isotope').isotope().isotope('layout');
+                            });
+                }
+            }
+
+
+
+            $j('#showFilter').click(function(e) {
+                e.preventDefault();
+
+                var minW =  parseInt($j('.products-col').find('.product-preview-wrapper:first-child').width());
+                if ($j('.products-isotope').hasClass('two-in-row')){
+                    minW = minW-200;
+                }
+                if (!$j('.products-col').parent().parent().hasClass('open')) {
+                    $j('.products-col').parent().parent().addClass('open');
+                    if ( $j('html').css('direction').toLowerCase() == 'rtl' ) {
+                        $j('.products-col').stop(true,false).animate({marginRight: '280px'}, 200,
+                                function() {
+                                    setProductSize($j('.products-col'),minW);
+                                    $j('.products-isotope').isotope().isotope('layout');
+                                });
+
+                    }
+                    else {
+                        $j('.products-col').stop(true,false).animate({marginLeft: '280px'}, 200,
+                                function() {
+                                    setProductSize($j('.products-col'),minW);
+                                    $j('.products-isotope').isotope().isotope('layout');
+                                });
+                    }
+                }
+                else {
+                    $j('.products-col').parent().parent().removeClass('open');
+
+                    $j('.products-col').stop(true,false).animate({marginLeft: '0', marginRight: '0'}, 200,
+                            function() {
+
+                                if ($j('.products-isotope').hasClass('two-in-row')){
+                                    if (windowW > 560) {
+                                        minW = $j('.products-isotope').width()/2;
+                                    } else {
+                                        minW = $j('.products-isotope').width()/1;
+                                    }
+                                } else if ($j('.products-isotope').hasClass('three-in-row')){
+                                    if (windowW > 560) {
+                                        minW = $j('.products-isotope').width()/3;
+                                    } else {
+                                        minW = $j('.products-isotope').width()/1;
+                                    }
+                                } else if ($j('.products-isotope').hasClass('four-in-row')){
+                                    if (windowW > 767) {
+                                        minW = $j('.products-isotope').width()/4;
+                                    } else if (windowW > 560) {
+                                        minW = $j('.products-isotope').width()/3;
+                                    } else {
+                                        minW = $j('.products-isotope').width()/1;
+                                    }
+                                } else if ($j('.products-isotope').hasClass('five-in-row')){
+                                    if (windowW > 991) {
+                                        minW = $j('.products-isotope').width()/5;
+                                    } else if (windowW > 767) {
+                                        minW = $j('.products-isotope').width()/4;
+                                    } else if (windowW > 560) {
+                                        minW = $j('.products-isotope').width()/3;
+                                    } else {
+                                        minW = $j('.products-isotope').width()/1;
+                                    }
+                                } else if ($j('.products-isotope').hasClass('six-in-row')){
+                                    if (windowW > 1199) {
+                                        minW = $j('.products-isotope').width()/6;
+                                    } else if (windowW > 991) {
+                                        minW = $j('.products-isotope').width()/5;
+                                    } else if (windowW > 767) {
+                                        minW = $j('.products-isotope').width()/4;
+                                    } else if (windowW > 560) {
+                                        minW = $j('.products-isotope').width()/3;
+                                    } else {
+                                        minW = $j('.products-isotope').width()/1;
+                                    }
+                                } else if ($j('.products-isotope').hasClass('seven-in-row')){
+                                    if (windowW > 1600) {
+                                        minW = $j('.products-isotope').width()/7;
+                                    } else if (windowW > 1199) {
+                                        minW = $j('.products-isotope').width()/6;
+                                    } else if (windowW > 991) {
+                                        minW = $j('.products-isotope').width()/5;
+                                    } else if (windowW > 767) {
+                                        minW = $j('.products-isotope').width()/4;
+                                    } else if (windowW > 560) {
+                                        minW = $j('.products-isotope').width()/2;
+                                    } else {
+                                        minW = $j('.products-isotope').width()/1;
+                                    }
+                                } else if ($j('.products-isotope').hasClass('eight-in-row')){
+                                    if (windowW > 1600) {
+                                        minW = $j('.products-isotope').width()/8;
+                                    } else if (windowW > 1199) {
+                                        minW = $j('.products-isotope').width()/6;
+                                    } else if (windowW > 991) {
+                                        minW = $j('.products-isotope').width()/5;
+                                    } else if (windowW > 767) {
+                                        minW = $j('.products-isotope').width()/4;
+                                    } else if (windowW > 560) {
+                                        minW = $j('.products-isotope').width()/2;
+                                    } else {
+                                        minW = $j('.products-isotope').width()/1;
+                                    }
+                                }
+
+                                setProductSize($j('.products-col'),minW);
+                                $j('.products-isotope.products-col').isotope().isotope('layout');
+                            });
+                }
+            })
+
+            var prevW = window.innerWidth || $j(window).width();
+
+            $j(window).resize(function() {
+                var currentW = window.innerWidth || $j(window).width();
+
+                if (currentW != prevW) {
+                    // start resize events
+                    if($j('.products-isotope').length) {
+                        if ($j('.products-col').parent().parent().hasClass('open')) {
+                            $j('.products-col').stop(true,false).animate({marginLeft: '0'}, 0);
+                            $j('.products-col').find('.product-preview-wrapper').css("width", "");
+                            var minW =  parseInt($j('.products-col').find('.product-preview-wrapper:first-child').width());
+                            if ($j('.products-isotope').hasClass('two-in-row')){
+                                minW = minW-200;
+                            }
+                            if ( $j('html').css('direction').toLowerCase() == 'rtl' ) {
+                                $j('.products-col').stop(true,false).animate({marginRight: '280px'}, 200,
+                                        function() {
+                                            setProductSize($j('.products-col'),minW);
+                                            $j('.products-isotope').isotope().isotope('layout');
+                                        });
+
+                            }
+                            else {
+                                $j('.products-col').stop(true,false).animate({marginLeft: '280px'}, 200,
+                                        function() {
+                                            setProductSize($j('.products-col'),minW);
+                                            $j('.products-isotope').isotope().isotope('layout');
+                                        });
+                            }
+                        }
+                        else {
+                            $j('.products-col').find('.product-preview-wrapper').css("width", "");
+                            setProductSize($j('.products-col'),minW);
+                            $j('.products-isotope.products-col').isotope().isotope('layout');
+                        }
+                    }
+
+
+                    // end resize events
+                }
+
+                prevW = window.innerWidth || $j(window).width();
+
+            });
+
+        });
+
+        // Isotope Filters (for index-original.html)
+        jQuery(function ($) {
+            "use strict";
+            var hoverfold = $j(".products-isotope");
+            if (hoverfold.length != 0) {
+                var container = hoverfold;
+                var optionSets = $j(".filters-by-category .option-set"),
+                        optionLinks = optionSets.find("a");
+                optionLinks.click(function () {
+                    var thisLink = $(this);
+                    if (thisLink.hasClass("selected")) return false;
+                    var optionSet = thisLink.parents(".option-set");
+                    optionSet.find(".selected").removeClass("selected");
+                    thisLink.addClass("selected");
+                    var options = {},
+                            key = optionSet.attr("data-option-key"),
+                            value = thisLink.attr("data-option-value");
+                    value = value === "false" ? false : value;
+                    options[key] = value;
+                    if (key === "layoutMode" && typeof changeLayoutMode === "function") changeLayoutMode($this, options);
+                    else container.isotope(options);
+                    return false
+                })
+            }
+        });
+
+        // Grid / Row listing view
+        jQuery(function($j) {
+
+            "use strict";
+
+            $j('.products-isotope.products-col').on( 'layoutComplete',  function() {
+                window.setTimeout(function() {
+                    $j('.products-isotope.products-col').removeClass('no-transition');
+                },1000);
+            })
+
+            $j('a.link-row-view').click(function(e) {
+                var windowW = window.innerWidth || $(window).width();
+                e.preventDefault();
+                $j(this).addClass('active');
+                $j('a.link-grid-view').removeClass('active');
+                $j('.products-listing').addClass('row-view');
+                $j('.products-col').find('.product-preview-wrapper').css("width", "");
+                if ($j('.outer').hasClass('open')) {
+                    $j('.products-isotope.products-col').addClass('no-transition');
+                    $j('.products-col').stop(true,false).animate({marginLeft: '0'}, 0);
+                    var minW =  parseInt($j('.products-col').find('.product-preview-wrapper:first-child').width());
+                    $j('.products-col').stop(true,false).animate({marginLeft: '280px'}, 0,
+                            function() {
+                                setProductSize($j('.products-col'),minW);
+                                $j('.products-isotope.products-col').isotope('layout');
+                            });
+                }
+                else {
+                    $j('.products-isotope.products-col').addClass('no-transition').isotope('layout');
+                }
+            });
+
+            $j('a.link-grid-view').click(function(e) {
+                var windowW = window.innerWidth || $(window).width();
+                e.preventDefault();
+                $j(this).addClass('active');
+                $j('a.link-row-view').removeClass('active');
+                $j('.products-listing').removeClass('row-view');
+                $j('.products-col').find('.product-preview-wrapper').css("width", "");
+                if ($j('.outer').hasClass('open')) {
+                    $j('.products-isotope.products-col').addClass('no-transition');
+                    $j('.products-col').stop(true,false).animate({marginLeft: '0'}, 0);
+                    $j('.products-col').find('.product-preview-wrapper').css("width", "");
+                    var minW =  parseInt($j('.products-col').find('.product-preview-wrapper:first-child').width());
+                    if ($j('.products-isotope').hasClass('two-in-row')){
+                        minW = minW-200;
+                    }
+                    $j('.products-col').stop(true,false).animate({marginLeft: '280px'}, 0,
+                            function() {
+                                setProductSize($j('.products-col'),minW);
+                                $j('.products-isotope.products-col').isotope('layout');
+                            });
+                }
+                else {
+                    $j('.products-isotope.products-col').addClass('no-transition').isotope('layout');
+                }
+            });
+        });
+
+        // Ajax-фильтры
+        jQuery(function($j) {
+
+            "use strict";
+
+            var url = "{!! Request::getUri() !!}"
+
+            function sortingAjax(name, value) {
                 var data = {};
                 data[name] = value;
 
                 $j.ajax({
                     url: url,
                     dataType: "json",
-                    type: "POST",
+                    type: "GET",
                     data: data,
                     async: true,
                     beforeSend: function (request) {
@@ -367,26 +652,32 @@
                             $j('.count-container').html(response.countHtml);
                             $j('#pagination').html(response.paginationHtml);
                             $j('.products-container').html(response.productsListHtml);
+
                             window.history.pushState({parent: response.pageUrl}, '', response.pageUrl);
                             url = response.pageUrl;
-                            console.log(url);
-
-                            if ($j('.outer').hasClass('open')) {
-                                $j('.products-isotope.products-col').addClass('no-transition');
-                                $j('.products-col').stop(true,false).animate({marginLeft: '0'}, 0);
-                                var minW =  parseInt($j('.products-col').find('.product-preview-wrapper:first-child').width());
-                                $j('.products-col').stop(true,false).animate({marginLeft: '280px'}, 0,
-                                function() {
-                                    setProductSize($j('.products-col'),minW);
-                                    $j('.products-isotope.products-col').isotope('layout');
-                                });
-                            }
-                            else {
-                                $j('.products-isotope.products-col').addClass('no-transition').isotope('layout');
-                            }
                         }
                     }
                 });
+            }
+
+            $j(document).on('click', '.sort-direction', function (e) {
+
+                addLoader('.outer');
+
+                var name = 'direction',
+                    value = $j(this).data('value');
+
+                sortingAjax(name, value);
+            });
+
+            $j(document).on('change', '.ajax-sort', function (e) {
+
+                addLoader('.outer');
+
+                var name = $j(this).attr('name'),
+                    value = $j(this).val();
+
+                sortingAjax(name, value);
             });
         });
     </script>
