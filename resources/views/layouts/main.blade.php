@@ -86,9 +86,17 @@
                     <button type="button" class="navbar-toggle" id="slide-nav"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
                     <!--  Logo  -->
                     <a class="logo" href="{{ url('/') }}">
-                        <img class="logo-default" src="{{ asset('images/logo.png') }}" alt=""/>
-                        <img class="logo-mobile" src="{{ asset('images/logo-mobile.png') }}" alt=""/>
-                        <img class="logo-transparent" src="{{ asset('images/logo-transparent.png') }}" alt=""/>
+                        @if(isset($siteSettings['logo']))
+                            @if(isset($siteSettings['logo']['main']) && is_object($siteSettings['logo']['main']))
+                                <img class="logo-default" src="{{ asset('images/'. $siteSettings['logo']['main']->value) }}" alt=""/>
+                            @endif
+                            @if(isset($siteSettings['logo']['mobile']) && is_object($siteSettings['logo']['mobile']))
+                                <img class="logo-mobile" src="{{ asset('images/'. $siteSettings['logo']['mobile']->value) }}" alt=""/>
+                            @endif
+                            @if(isset($siteSettings['logo']['transparent']) && is_object($siteSettings['logo']['transparent']))
+                                <img class="logo-transparent" src="{{ asset('images/'. $siteSettings['logo']['transparent']->value) }}" alt=""/>
+                            @endif
+                        @endif
                         @if(isset($siteSettings['siteTitle']) && is_object($siteSettings['siteTitle']))
                             <span class="hidden-xs">
                                 {{ $siteSettings['siteTitle']->value }}
@@ -188,9 +196,11 @@
                 <div class="row">
                     <div class="col-md-3 hidden-xs hidden-sm">
                         <!--  Logo  -->
-                        <a class="logo logo--footer" href="{{ url('/') }}">
-                            <img src="{{ asset('images/logo-transparent.png') }}" alt=""/>
-                        </a>
+                        @if(isset($siteSettings['logo']) && isset($siteSettings['logo']['transparent']) && is_object($siteSettings['logo']['transparent']))
+                            <a class="logo logo--footer" href="{{ url('/') }}">
+                                <img src="{{ asset('images/'. $siteSettings['logo']['transparent']->value) }}" alt=""/>
+                            </a>
+                        @endif
                         <!-- End Logo -->
                         @if(isset($siteSettings['footerText']) && is_object($siteSettings['footerText']))
                             <p>{{ $siteSettings['footerText']->value }}</p>

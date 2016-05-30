@@ -259,6 +259,14 @@
         <div class="form-group @if($errors->has('content')) has-error @endif">
             <div class="col-md-12">
                 {!! Form::label('content', 'Текст страницы', ['class' => 'control-label m-b-5']) !!}
+                @if($page->type == \App\Models\Page::TYPE_CATALOG)
+                    <span class="help-block">
+                        <small>
+                            Отображается вверху страницы, над списком товаров.
+                        </small>
+                    </span>
+                @endif
+
                 {!! Form::textarea('content', $page->content, ['id' => 'content', 'class' => 'form-control editor', 'rows' => 10]) !!}
 
                 @if($errors->has('content'))
@@ -274,6 +282,14 @@
         <div class="form-group @if($errors->has('introtext')) has-error @endif">
             <div class="col-md-12">
                 {!! Form::label('introtext', 'Краткое описание страницы', ['class' => 'control-label m-b-5']) !!}
+                @if($page->type == \App\Models\Page::TYPE_CATALOG)
+                    <span class="help-block">
+                        <small>
+                            Отображается внизу страницы, после списка товаров.
+                        </small>
+                    </span>
+                @endif
+
                 {!! Form::textarea('introtext', $page->introtext, ['id' => 'introtext', 'class' => 'form-control editor', 'rows' => 10]) !!}
 
                 @if($errors->has('introtext'))

@@ -780,6 +780,18 @@ textarea.form-control {
 .input-group-btn .btn-lg {
   padding: 10px 17px;
 }
+/* Form dropify */
+.settings .dropify-wrapper {
+    margin-top: 5px;
+}
+.dark .dropify-wrapper,
+.dark .dropify-wrapper .dropify-preview,
+.dark .dropify-wrapper .dropify-preview .dropify-render img {
+    background-color: #303639 !important;
+}
+.dark .dropify-wrapper:hover {
+    background-image: linear-gradient(-45deg, #202020 25%, transparent 25%, transparent 50%, #202020 50%, #202020 75%, transparent 75%, transparent) !important;
+}
 /* Labels */
 .label {
   font-weight: 500;

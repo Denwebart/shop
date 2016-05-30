@@ -47,6 +47,7 @@ class Setting extends Model
 	const TYPE_TEXT    = 3;
 	const TYPE_STRING  = 4;
 	const TYPE_HTML    = 5;
+	const TYPE_IMAGE   = 6;
 
 	public static $types = [
 		self::TYPE_BOOLEAN => 'Логическое значение',
@@ -54,6 +55,7 @@ class Setting extends Model
 		self::TYPE_TEXT    => 'Длинный текст',
 		self::TYPE_STRING  => 'Короткий текст',
 		self::TYPE_HTML    => 'HTML-код',
+		self::TYPE_IMAGE   => 'Изображение',
 	];
 
 	/**

@@ -12,6 +12,8 @@ use App\Models\Menu;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Illuminate\Support\Facades\File;
+use Intervention\Image\Facades\Image;
 
 class SettingsController extends Controller
 {
@@ -142,6 +144,98 @@ class SettingsController extends Controller
 				return \Response::json([
 					'success' => true,
 					'message' => 'Статус изменен на "' . Setting::$is_active[$setting->is_active] . '".'
+				]);
+			} else {
+				return \Response::json([
+					'success' => false,
+					'message' => 'Произошла ошибка.'
+				]);
+			}
+		}
+	}
+
+	/**
+	 * Upload image
+	 *
+	 * @param Request $request
+	 * @return \Illuminate\Http\JsonResponse
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function uploadImage(Request $request)
+	{
+		if($request->ajax()) {
+			$setting = Setting::findOrFail($request->get('id'));
+
+			$postImage = $request->file('value');
+			$data['value'] = $postImage;
+			$imagePath = public_path('images/');
+
+			if($setting && $setting->type == Setting::TYPE_IMAGE && isset($postImage)) {
+
+				$validator = \Validator::make($data, $setting->getRules());
+
+				if ($validator->fails())
+				{
+					return \Response::json([
+						'success' => false,
+						'error' => $validator->errors()->first('value'),
+						'message' => 'Значение не изменено. Исправьте ошибки валидации.'
+					]);
+				}
+
+				if (File::exists(public_path('images/') . $setting->value)) {
+					File::delete(public_path('images/') . $setting->value);
+				}
+
+				$fileName = str_replace('.', '-', $setting->key) . '.' . pathinfo($postImage->getClientOriginalName(), PATHINFO_EXTENSION);
+				$image = Image::make($postImage->getRealPath());
+
+				$image->save($imagePath . $fileName);
+
+				$setting->value = $fileName;
+				$setting->save();
+
+				return \Response::json([
+					'success' => true,
+					'message' => 'Изобржение загружено.'
+				]);
+			} else {
+				return \Response::json([
+					'success' => false,
+					'message' => 'Произошла ошибка.'
+				]);
+			}
+		}
+	}
+
+	/**
+	 * Delete image
+	 *
+	 * @param Request $request
+	 * @return \Illuminate\Http\JsonResponse
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function deleteImage(Request $request)
+	{
+		if($request->ajax()) {
+			$setting = Setting::findOrFail($request->get('id'));
+
+			if($setting && $setting->type == Setting::TYPE_IMAGE) {
+
+				if (File::exists(public_path('images/') . $setting->value)) {
+					File::delete(public_path('images/') . $setting->value);
+				}
+
+				$setting->value = null;
+				$setting->save();
+
+				return \Response::json([
+					'success' => true,
+					'message' => 'Изобржение уалено.'
 				]);
 			} else {
 				return \Response::json([

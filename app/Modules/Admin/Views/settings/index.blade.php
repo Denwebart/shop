@@ -85,6 +85,31 @@ View::share('title', $title);
                             </div>
                         </div>
                     </div>
+
+                    {!! Form::open(['files' => true]) !!}
+                        @foreach($settings[\App\Models\Setting::CATEGORY_SITE]['logo'] as $key => $setting)
+                            <div class="form-group settings image-container @if($key != 'main') dark @endif" data-image-setting-id="{{ $setting->id }}">
+                                <label class="col-md-3 col-sm-3 control-label">
+                                    {{ $setting->title }}
+                                    @if($setting->description)
+                                        <small>{{ $setting->description }}</small>
+                                    @endif
+                                </label>
+                                <div class="col-md-7 col-sm-7">
+                                    {!! Form::file('logo.' . $key, ['id' => 'logo.' . $key, 'class' => 'dropify', 'data-height' => '100', 'data-default-file' => ($setting->value) ? asset('images/' . $setting->value) : '', 'data-max-file-size' => '3M', 'data-setting-id' => $setting->id]) !!}
+                                    <span class="help-block error">
+                                        <strong class="text"></strong>
+                                    </span>
+                                </div>
+                                <div class="col-md-2 col-sm-2">
+                                    <div class="switchery-demo">
+                                        {!! Form::hidden('is_active', 0) !!}
+                                        {!! Form::checkbox('is_active', 1, $setting->is_active, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small', 'data-id' => $setting->id]) !!}
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    {!! Form::close() !!}
                 </div>
             </div>
 
@@ -222,6 +247,7 @@ View::share('title', $title);
 
 @push('styles')
     <link href="{{ asset('backend/plugins/switchery/switchery.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('backend/plugins/fileuploads/css/dropify.min.css') }}" rel="stylesheet" type="text/css" />
 
     <!-- XEditable Plugin -->
     <link type="text/css" href="{{ asset('backend/plugins/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css') }}" rel="stylesheet">
@@ -232,6 +258,78 @@ View::share('title', $title);
 
 @push('scripts')
     <script src="{{ asset('backend/plugins/switchery/switchery.min.js') }}"></script>
+    <script src="{{ asset('backend/plugins/fileuploads/js/dropify.min.js') }}"></script>
+
+    <script type="text/javascript">
+        // Image Uploader
+        var drEvent = $('.dropify').dropify({
+            messages: {
+                'default': 'Кликните или перетащите файл.',
+                'replace': 'Кликните или перетащите файл для замены.',
+                'remove': 'Удалить',
+                'error': 'Ошибка.'
+            },
+            error: {
+                'fileSize': 'Размер файла слишком большой (максимум 3Мб).'
+            }
+        });
+
+        drEvent.on('dropify.fileReady', function(event, element) {
+            var settingId = $(this).data('settingId');
+            var data = new FormData();
+            data.append("id", settingId);
+            data.append("value", $(this)[0].files[0]);
+            $.ajax({
+                url: "{{ route('admin.settings.uploadImage') }}",
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                type: "POST",
+                data: data,
+                beforeSend: function(request) {
+                    return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+                },
+                success: function(response) {
+                    var $imageContainer = $('[data-image-setting-id="' + settingId + '"]');
+                    $imageContainer.removeClass('has-error');
+                    $imageContainer.find('.error .text').text('');
+
+                    if(response.success){
+                        Command: toastr["success"](response.message);
+                    } else {
+                        Command: toastr["error"](response.message);
+
+                        $imageContainer.addClass('has-error');
+                        $imageContainer.find('.error .text').text(response.error);
+                    }
+                }
+            });
+        });
+
+        drEvent.on('dropify.beforeClear', function(event, element) {
+            var settingId = $(this).data('settingId');
+            $.ajax({
+                url: "{{ route('admin.settings.deleteImage') }}",
+                dataType: "text json",
+                type: "POST",
+                data: {id: settingId},
+                beforeSend: function(request) {
+                    return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+                },
+                success: function(response) {
+                    if(response.success){
+                        Command: toastr["success"](response.message);
+
+                        var $imageContainer = $('[data-image-setting-id="' + settingId + '"]');
+                        $imageContainer.removeClass('has-error');
+                        $imageContainer.find('.error .text').text('');
+                    } else {
+                        Command: toastr["error"](response.message);
+                    }
+                }
+            });
+        });
+    </script>
 
     <!-- XEditable Plugin -->
     <script type="text/javascript" src="{{ asset('backend/plugins/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js') }}"></script>

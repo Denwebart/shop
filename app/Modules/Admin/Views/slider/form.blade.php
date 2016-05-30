@@ -18,7 +18,7 @@
                 {!! Form::file('image', ['id' => 'image', 'class' => 'dropify', 'data-default-file' => $slider->getImageUrl(), 'data-max-file-size' => '10M', 'data-show-remove' => false]) !!}
                 <span class="help-block @if($errors->has('image')) hidden @endif">
                     <small>
-                       Изображение слайда. Минимальная ширина - <strong>750px</strong>.
+                       Изображение слайда. Минимальная ширина - <strong>1140px</strong>.
                     </small>
                 </span>
                 @if ($errors->has('image'))
