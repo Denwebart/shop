@@ -35,21 +35,21 @@ class Wishlist extends BaseController
 			$product = Product::find($request->get('id'));
 			if(is_object($product)) {
 
-				$products = $this->addProduct($request, $product);
-				if($products) {
+				$result = $this->addProduct($request, $product);
+				$products = $result['products'];
+				if($result['new']) {
 					$productsHtml = $this->getWishlist($products, $request);
 
-					$response = \Response::json([
+					return \Response::json([
 						'success' => true,
 						'message' => 'Продукт успешно добавлен в <a href="' . route('wishlist.index') . '">список желаний</a>!',
 						'wishlistHtml' => view('widget.wishlist::wishlist')->with('products', $productsHtml)->render(),
-					]);
-					return $response->withCookie(cookie()->forever('wishlist', $products));
+					])->withCookie(cookie()->forever('wishlist', $products));
 				} else {
 					return \Response::json([
 						'success' => false,
-						'message' => 'Продукт уже добавлен в <a href="' . route('wishlist.index') . '">список желаний</a>.'
-					]);
+						'message' => 'Продукт уже был добавлен в <a href="' . route('wishlist.index') . '">список желаний</a>, мы перенесли его в начало списка.'
+					])->withCookie(cookie()->forever('wishlist', $products));
 				}
 			} else {
 				return \Response::json([
@@ -158,21 +158,23 @@ class Wishlist extends BaseController
 	{
 		$products = $request->cookie('wishlist', []);
 
-		if(!array_key_exists($product->id, $products)) {
+		$isNew = !array_key_exists($product->id, $products);
+		if($isNew) {
 			if(count($products) >= $this->maxItems) {
 				reset($products);
 				$first = key($products);
 				unset($products[$first]);
 			}
-
-			$products[$product->id] = [
-				'at' => date('Y-m-d H:i:s'),
-			];
-
-			return $products;
+		} else {
+			unset($products[$product->id]);
 		}
-
-		return false;
+		$products[$product->id] = [
+			'at' => date('Y-m-d H:i:s'),
+		];
+		return [
+			'products' => $products,
+			'new' => $isNew ? true : false,
+		];
 	}
 
 }
