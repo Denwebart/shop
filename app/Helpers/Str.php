@@ -158,7 +158,7 @@ class Str
 	 */
 	public static function priceFormat($price)
 	{
-		$currency = \Request::cookie('currency', 'USD');
+		$currency = \Request::cookie('currency', 'RUB');
 		$course = \Cache::get('course' . $currency);
 		if($currency == 'USD' && $course) {
 			$price = $price / $course;
