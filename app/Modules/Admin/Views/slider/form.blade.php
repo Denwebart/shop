@@ -133,17 +133,19 @@
         </div>
         <div class="form-group @if($errors->has('text_align')) has-error @endif">
             <div class="switchery-demo m-b-5 m-l-10">
+                <div class="col-md-12">
+                    <strong class="m-l-25">Выравнивание текста</strong>
+                </div>
                 <div class="col-md-2"></div>
-                <div class="col-md-4">
-                    {!! Form::label('text_align', 'Выравнивание текста', ['class' => 'control-label m-l-5']) !!}
-
+                <div class="col-md-8">
                     @foreach(App\Models\Slider::$textAlign as $alignKey => $alignValue)
-                        <div class="clearfix"></div>
-                        {!! $alignValue !!}
-                        {!! Form::radio('text_align', $alignKey, ($slider->text_align == $alignKey), ['class' => 'form-control']) !!}
+                        <div class="radio radio-primary m-t-10 p-t-0">
+                            {!! Form::radio('text_align', $alignKey, ($slider->text_align == $alignKey), ['class' => 'form-control']) !!}
+                            <label for="text_align">{!! $alignValue !!}</label>
+                        </div>
                     @endforeach
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-12">
                     @if ($errors->has('text_align'))
                         <span class="help-block error">
                             <strong>{{ $errors->first('text_align') }}</strong>

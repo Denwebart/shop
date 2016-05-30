@@ -199,6 +199,9 @@ a:focus {
 .m-l-15 {
   margin-left: 15px !important;
 }
+.m-l-25 {
+    margin-left: 25px !important;
+}
 .m-l-45 {
     margin-left: 45px !important;
 }
@@ -688,6 +691,10 @@ a:focus {
 /* Form components */
 textarea.form-control {
   min-height: 50px;
+}
+.radio .form-control {
+    height: 20px;
+    margin-top: 0;
 }
 .form-control {
   background-color: #FFFFFF;

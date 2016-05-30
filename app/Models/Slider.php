@@ -65,8 +65,8 @@ class Slider extends Model
 	const ALIGN_RIGHT  = 2;
 
 	public static $textAlign = [
-		self::ALIGN_CENTER => 'По центру',
 		self::ALIGN_LEFT   => 'По левому краю',
+		self::ALIGN_CENTER => 'По центру',
 		self::ALIGN_RIGHT  => 'По правому краю',
 	];
 
