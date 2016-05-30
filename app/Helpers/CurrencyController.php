@@ -22,7 +22,7 @@ class CurrencyController implements CurrencyRate
 			\Cache::forever('course', $result);
 			return $result;
 		} else {
-			\Cache::get('course', false);
+			return \Cache::get('course', false);
 		}
 	}
 	
