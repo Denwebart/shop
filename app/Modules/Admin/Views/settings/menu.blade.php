@@ -40,21 +40,6 @@
     <!-- Tree view js -->
     <script src="{{ asset('backend/plugins/jstree/jstree.min.js') }}"></script>
     <script type="text/javascript">
-        // Ajax
-        /*
-         function getMenuItems(type) {
-             return $.ajax({
-             url: "{{ route('admin.menus.getJsonMenuItems') }}",
-             dataType: "json",
-             type: "POST",
-             data: {type: type},
-             async: true,
-             beforeSend: function (request) {
-                return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
-             }
-             });
-         }
-         */
         $('.menu-tree').jstree({
             'core' : {
                 'check_callback' : true,
@@ -78,22 +63,8 @@
                 }
             },
             "contextmenu":{
-                "items": function () {
-                    return {
-//                        "Create": {
-//                            "label": "Создать пункт меню",
-//                            "action": function (data) {
-//                                var ref = $.jstree.reference(data.reference);
-//                                sel = ref.get_selected();
-//                                if(!sel.length) { return false; }
-//                                sel = sel[0];
-//                                sel = ref.create_node(sel, {"type":"file"});
-//                                if(sel) {
-//                                    ref.edit(sel);
-//                                }
-//                            },
-//                            "icon" : 'fa fa-plus'
-//                        },
+                "items": function (item) {
+                    var buttons = {
                         "Rename": {
                             "label": "Переименовать пункт меню",
                             "action": function (data) {
@@ -125,10 +96,29 @@
                             "icon" : 'fa fa-share'
                         }
                     };
+                    if(item.type == 'category' || item.type == 'catalog'){
+                        buttons["Create"] = {
+                            "label": "Создать пункт меню",
+                            "action": function (data) {
+                                var ref = $.jstree.reference(data.reference);
+                                sel = ref.get_selected();
+                                if(!sel.length) { return false; }
+                                sel = sel[0];
+                                sel = ref.create_node(sel, {"type":"file"});
+                                if(sel) {
+                                    ref.edit(sel);
+                                }
+                            },
+                            "icon" : 'fa fa-plus'
+                        };
+                    }
+                    console.log(buttons);
+                    return buttons;
                 }
             },
             "plugins" : [ "contextmenu", "dnd", "search", "state", "types", "wholerow" ]
         })
+
         // Rename menu item
         .bind('rename_node.jstree', function(e, data) {
             var $tree = $(this);
