@@ -163,7 +163,7 @@ class Str
 		if($currency == 'USD' && $course) {
 			$price = $price / $course;
 		}
-		$afterPoint = $currency == 'USD' ? 2 : 0;
+		$afterPoint = ($currency == 'USD') ? 2 : 0;
 		if($currency == 'USD' && $course) {
 			$currency = ' $';
 		} else {
