@@ -27,8 +27,8 @@
             {!! Form::open(['url' => Request::getUri(), 'id' => 'filters-form']) !!}
             <div class="filters-row row">
                 <div class="col-sm-4 col-md-4 col-lg-3 col-1">
-                    <a class="filters-row__view active link-grid-view icon icon-keyboard"></a>
-                    <a class="filters-row__view link-row-view icon icon-list"></a>
+                    <a class="filters-row__view link-grid-view icon icon-keyboard @if(\Request::cookie('catalog-view', 'grid') == 'grid') active @endif"></a>
+                    <a class="filters-row__view link-row-view icon icon-list @if(\Request::cookie('catalog-view', 'list') == 'row') active @endif"></a>
                     <a class="btn btn--wd btn--with-icon btn--sm wave" id="showFilter">
                         <span class="icon icon-filter"></span>
                         Фильтры
@@ -48,9 +48,9 @@
                     <div class="filters-row__select">
                         <label>На странице: </label>
                         <select class="selectpicker ajax-sort onpage" name="onpage" data-style="select--wd select--wd--sm" data-width="60">
-                            <option value="12" @if(\Request::get('onpage') == '12' || !\Request::has('onpage')) selected @endif>12</option>
-                            <option value="24" @if(\Request::get('onpage') == '24') selected @endif>24</option>
-                            <option value="36" @if(\Request::get('onpage') == '36') selected @endif>36</option>
+                            <option value="12" @if(\Request::get('onpage') == '12' || \Request::cookie('catalog-onpage', 12) == '12') selected @endif>12</option>
+                            <option value="24" @if(\Request::get('onpage') == '24' || \Request::cookie('catalog-onpage', 12) == '24') selected @endif>24</option>
+                            <option value="36" @if(\Request::get('onpage') == '36' || \Request::cookie('catalog-onpage', 12) == '36') selected @endif>36</option>
                         </select>
                     </div>
                     <div class="filters-row__select">
@@ -75,9 +75,9 @@
                         <div class="filters-col__select visible-xs">
                             <label>На странице: </label>
                             <select class="selectpicker ajax-sort onpage" name="onpage" data-style="select--wd select--wd--sm" data-width="60">
-                                <option value="12" @if(\Request::get('onpage') == '12' || !\Request::has('onpage')) selected @endif>12</option>
-                                <option value="24" @if(\Request::get('onpage') == '24') selected @endif>24</option>
-                                <option value="36" @if(\Request::get('onpage') == '36') selected @endif>36</option>
+                                <option value="12" @if(\Request::get('onpage') == '12' || \Request::cookie('catalog-onpage', 12) == '12') selected @endif>12</option>
+                                <option value="24" @if(\Request::get('onpage') == '24' || \Request::cookie('catalog-onpage', 12) == '24') selected @endif>24</option>
+                                <option value="36" @if(\Request::get('onpage') == '36' || \Request::cookie('catalog-onpage', 12) == '36') selected @endif>36</option>
                             </select>
                         </div>
                         <div class="filters-col__select visible-xs">
@@ -574,6 +574,19 @@
                     $j('.products-isotope.products-col').removeClass('no-transition');
                 },1000);
             })
+            
+            function remember(key, value) {
+                $j.ajax({
+                    url: "{{ URL::route('remember.cookie') }}",
+                    dataType: "json",
+                    type: "POST",
+                    data: {key: key, value: value},
+                    async: true,
+                    beforeSend: function (request) {
+                        return request.setRequestHeader('X-CSRF-Token', $j("meta[name='csrf-token']").attr('content'));
+                    },
+                });
+            }
 
             $j('a.link-row-view').click(function(e) {
                 var windowW = window.innerWidth || $(window).width();
@@ -581,6 +594,9 @@
                 $j(this).addClass('active');
                 $j('a.link-grid-view').removeClass('active');
                 $j('.products-listing').addClass('row-view');
+
+                remember('catalog-view', 'row');
+                
                 $j('.products-col').find('.product-preview-wrapper').css("width", "");
                 if ($j('.outer').hasClass('open')) {
                     $j('.products-isotope.products-col').addClass('no-transition');
@@ -603,6 +619,9 @@
                 $j(this).addClass('active');
                 $j('a.link-row-view').removeClass('active');
                 $j('.products-listing').removeClass('row-view');
+
+                remember('catalog-view', 'grid');
+
                 $j('.products-col').find('.product-preview-wrapper').css("width", "");
                 if ($j('.outer').hasClass('open')) {
                     $j('.products-isotope.products-col').addClass('no-transition');

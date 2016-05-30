@@ -225,7 +225,9 @@ class SiteController extends Controller
 		}
 		$query->orderBy('published_at', 'DESC');
 
-		$limit = $request->has('onpage') ? $request->get('onpage') : 12;
+		$limit = $request->has('onpage')
+			? $request->get('onpage')
+			: $request->cookie('catalog-onpage', 12);
 
 		$products = $query->paginate($limit);
 
@@ -237,7 +239,7 @@ class SiteController extends Controller
 				'productsListHtml' => view('parts.productsList')->with('products', $products)->render(),
 				'countHtml' => view('parts.count')->with('models', $products)->render(),
 				'pageUrl' => $products->url($request->get('page', 1)),
-			]);
+			])->withCookie(cookie()->forever('catalog-onpage', $limit));
 		}
 	}
 
@@ -358,6 +360,24 @@ class SiteController extends Controller
 				'success' => true,
 				'message' => 'Ваш запрос успешно отправлен! Менеджер свяжется с вами в течение рабочего дня call-центра.',
 			]);
+		}
+	}
+
+	/**
+	 * Remember in cookie
+	 *
+	 * @param Request $request
+	 * @return \Illuminate\Http\JsonResponse
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function rememberInCookie(Request $request)
+	{
+		if($request->ajax() && $request->get('key')) {
+			return \Response::json([
+				'success' => true,
+			])->withCookie(cookie()->forever($request->get('key'), $request->get('value')));
 		}
 	}
 }
