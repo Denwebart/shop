@@ -66,7 +66,9 @@
                 <div class="pull-left">
                     <div class="currency-info">
                         <ul>
-                            <li class="currency-info__item"><span>1$ = </span>{{ $courseUSD }} руб.</li>
+                            @if($courseUSD)
+                                <li class="currency-info__item"><span>1$ = </span>{{ $courseUSD }} руб.</li>
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -148,12 +150,14 @@
                                         <span class="currency__item__title">(рублях)</span>
                                     </a>
                                 </li>
-                                <li class="currency__item">
-                                    <a href="#">
-                                        <span class="currency__item__symbol">$</span>
-                                        <span class="currency__item__title">(долларах)</span>
-                                    </a>
-                                </li>
+                                @if($courseUSD)
+                                    <li class="currency__item">
+                                        <a href="#">
+                                            <span class="currency__item__symbol">$</span>
+                                            <span class="currency__item__title">(долларах)</span>
+                                        </a>
+                                    </li>
+                                @endif
                             </ul>
                         </div>
                     </div>
@@ -251,12 +255,14 @@
                                 <span class="currency__item__title">(рублях)</span>
                             </a>
                         </li>
-                        <li class="currency__item">
-                            <a href="#">
-                                <span class="currency__item__symbol">$</span>
-                                <span class="currency__item__title">(долларах)</span>
-                            </a>
-                        </li>
+                        @if($courseUSD)
+                            <li class="currency__item">
+                                <a href="#">
+                                    <span class="currency__item__symbol">$</span>
+                                    <span class="currency__item__title">(долларах)</span>
+                                </a>
+                            </li>
+                        @endif
                     </ul>
                 </div>
             </div>
