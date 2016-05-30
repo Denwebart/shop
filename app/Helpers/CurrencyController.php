@@ -19,10 +19,10 @@ class CurrencyController implements CurrencyRate
 		$xml = $this->getXML();
 		if($xml) {
 			$result = $this->procXML($xml, $currency);
-			\Cache::forever('course', $result);
+			\Cache::forever('course' . $currency, $result);
 			return $result;
 		} else {
-			return \Cache::get('course', false);
+			return \Cache::get('course' . $currency, false);
 		}
 	}
 	

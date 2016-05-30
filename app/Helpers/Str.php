@@ -158,8 +158,17 @@ class Str
 	 */
 	public static function priceFormat($price)
 	{
-		$afterPoint = 0;
-		$currency = ' руб.';
+		$currency = \Request::cookie('currency', 'USD');
+		$course = \Cache::get('course' . $currency);
+		if($currency == 'USD' && $course) {
+			$price = $price / $course;
+		}
+		$afterPoint = $currency == 'USD' ? 2 : 0;
+		if($currency == 'USD' && $course) {
+			$currency = ' $';
+		} else {
+			$currency = ' руб.';
+		}
 		return number_format($price, $afterPoint, '.', ' ') . $currency;
 	}
 }
