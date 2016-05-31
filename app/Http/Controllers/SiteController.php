@@ -16,6 +16,7 @@ use App\Models\Page;
 use App\Models\Product;
 use App\Models\RequestedCall;
 use App\Models\Setting;
+use App\Widgets\Articles\Articles;
 use App\Widgets\Carousel\Carousel;
 use App\Widgets\Reviews\Reviews;
 use App\Widgets\Slider\Slider;
@@ -119,6 +120,8 @@ class SiteController extends Controller
 		$childrenPages = $page->is_container
 			? $page->publishedChildren()->orderBy('published_at', 'DESC')->paginate(10)
 			: [];
+
+		\View::share('articlesWidget', new Articles());
 
 		return view('page', compact('page', 'childrenPages'));
 	}

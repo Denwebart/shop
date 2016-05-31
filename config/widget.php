@@ -13,5 +13,6 @@ return [
 		'cart',
 		'wishlist',
 		'viewed',
+		'articles',
 	],
 ];
