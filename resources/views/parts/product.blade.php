@@ -104,9 +104,9 @@
                         Добавить в список желаний
                     </span>
                 </a>
-                <button class="btn btn--wd buy-link">
+                <button class="btn btn--wd buy-link add-to-cart" data-product-id="{{ $item->id }}">
                     <span class="icon icon-ecommerce"></span>
-                    <span class="product-preview__info__link__text text-uppercase add-to-cart" data-product-id="{{ $item->id }}">
+                    <span class="product-preview__info__link__text text-uppercase">
                         Добавить в корзину
                     </span>
                 </button>

@@ -41,7 +41,7 @@
                             </div>
                             <div class="shopping-cart__item__info__qty">
                                 <div class="input-group-qty pull-left">
-                                    <span class="pull-left m-r-5">Кол-во: </span>
+                                    <span class="pull-left m-r-5 m-t-10">Кол-во: </span>
                                     <input type="text" name="quantity" class="input-number input--wd input-qty pull-left" value="{{ $item['quantity'] }}" min="1" max="100">
                                     <span class="pull-left btn-number-container">
                                         <button type="button" class="btn btn-number btn-number--plus" data-type="plus" data-field="quantity">+</button>

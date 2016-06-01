@@ -19,6 +19,7 @@ Route::post('viewed/add', ['as' => 'viewed.add', 'uses' => '\App\Widgets\Viewed\
 Route::post('remember_cookie', ['as' => 'remember.cookie', 'uses' => 'SiteController@rememberInCookie']);
 
 Route::get('cart', ['as' => 'cart.index', 'uses' => '\App\Widgets\Cart\CartController@index']);
+Route::get('cart/checkout', ['as' => 'cart.checkout', 'uses' => '\App\Widgets\Cart\CartController@checkout']);
 Route::post('cart/add', ['as' => 'cart.add', 'uses' => '\App\Widgets\Cart\Cart@addToCart']);
 Route::post('cart/remove', ['as' => 'cart.remove', 'uses' => '\App\Widgets\Cart\Cart@removeFromCart']);
 Route::post('cart/quantity', ['as' => 'cart.quantity', 'uses' => '\App\Widgets\Cart\Cart@changeQuantity']);

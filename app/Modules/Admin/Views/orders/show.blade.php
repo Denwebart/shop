@@ -166,17 +166,19 @@ View::share('title', $title);
                                     </thead>
                                     <tbody>
                                         @foreach($order->groupedOrderProducts as $key => $orderProducts)
-                                            <tr>
-                                                <td>{{ $key + 1 }}</td>
-                                                <td>
-                                                    <img src="{{ $orderProducts->product->getImageUrl('mini') }}" alt="{{ $orderProducts->product->image_alt }}" width="50">
-                                                    {{ $orderProducts->product->title }}
-                                                    ({{ $orderProducts->product->vendor_code }})
-                                                </td>
-                                                <td>{{ $orderProducts->quantity }}</td>
-                                                <td>{{ \App\Helpers\Str::priceFormat($orderProducts->price) }}</td>
-                                                <td class="text-right">{{ \App\Helpers\Str::priceFormat($orderProducts->total_price) }}</td>
-                                            </tr>
+                                            @if(is_object($orderProducts->product))
+                                                <tr>
+                                                    <td>{{ $key + 1 }}</td>
+                                                    <td>
+                                                        <img src="{{ $orderProducts->product->getImageUrl('mini') }}" alt="{{ $orderProducts->product->image_alt }}" width="50">
+                                                        {{ $orderProducts->product->title }}
+                                                        ({{ $orderProducts->product->vendor_code }})
+                                                    </td>
+                                                    <td>{{ $orderProducts->quantity }}</td>
+                                                    <td>{{ \App\Helpers\Str::priceFormat($orderProducts->price) }}</td>
+                                                    <td class="text-right">{{ \App\Helpers\Str::priceFormat($orderProducts->total_price) }}</td>
+                                                </tr>
+                                            @endif
                                         @endforeach
                                     </tbody>
                                 </table>

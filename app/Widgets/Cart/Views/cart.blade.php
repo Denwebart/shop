@@ -144,6 +144,10 @@
                 });
             }
 
+            $j('.header__dropdowns').on('click', '.input-group-qty input', function(e) {
+                e.stopPropagation();
+            });
+
             $j(document).on('click', '.btn-number', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -175,7 +179,8 @@
                     input.val(0);
                 }
             });
-            $j(document).focusin('.input-number', function() {
+            $j(document).focusin('.input-number', function(e) {
+                e.stopPropagation();
                 $j(this).data('oldValue', $j(this).val());
             });
             $j(document).change('.input-number', function(e) {
@@ -196,7 +201,6 @@
                     $j(this).val($j(this).data('oldValue'));
                 }
             });
-
         });
 
     </script>

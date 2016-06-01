@@ -7627,19 +7627,28 @@ body.fullwidth .header__dropdowns-container {
 .shopping-cart__item__info__price {
     position: absolute;
     top: 9px;
-    right: 0;
+    /*right: 0;*/
+    right: 20px;
 }
 
 .shopping-cart__item__info__qty {
     position: absolute;
-    top: 30px;
-    right: 0;
+    /*top: 30px;*/
+    /*right: 0;*/
+    top: 35px;
+    right: 20px;
+}
+
+.shopping-cart__item__info__qty .input-group-qty {
+    padding-right: 0;
 }
 
 .shopping-cart__item__info__delete {
     position: absolute;
-    top: 55px;
-    right: 0;
+    /*top: 75px;*/
+    /*right: 0;*/
+    top: 11px;
+    right: -5px;
 }
 @media (max-width: 400px) {
     .shopping-cart {

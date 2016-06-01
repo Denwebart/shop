@@ -67,7 +67,7 @@
         </div>
         @if($cart['total_price'])
             <div class="pull-right">
-                <a href="{{ route('cart.index') }}" class="btn btn--wd text-uppercase">
+                <a href="{{ route('cart.checkout') }}" class="btn btn--wd text-uppercase">
                     Оформить заказ
                 </a>
             </div>

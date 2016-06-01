@@ -24,4 +24,19 @@ class CartController extends Controller
 
 		return view('widget.cart::index', compact('page', 'cart'));
 	}
+
+	/**
+	 * Checkout
+	 *
+	 * @return mixed
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function checkout()
+	{
+		$page = new Page();
+		$page->title = 'Оформление заказа';
+
+		return view('widget.cart::checkout', compact('page'));
+	}
 }

@@ -170,9 +170,7 @@
                             <span class="pull-left"> </span>
                             <input type="text" name="quant[1]" class="input-number input--wd input-qty pull-left" value="1" min="1" max="100">
                             <span class="pull-left btn-number-container">
-                                <button type="button" class="btn btn-number btn-number--plus" data-type="plus" data-field="quant[1]">
-                                    +
-                                </button>
+                                <button type="button" class="btn btn-number btn-number--plus" data-type="plus" data-field="quant[1]">+</button>
                                 <button type="button" class="btn btn-number btn-number--minus" disabled="disabled" data-type="minus" data-field="quant[1]"> &#8211;</button>
                             </span>
                         </div>

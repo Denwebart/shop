@@ -15,6 +15,7 @@
             <th>Товары</th>
             <th>Сумма</th>
             <th>Дата заказа</th>
+            <th>Оплата</th>
             <th>Статус</th>
             <th>Менеджер</th>
             <th></th>
@@ -41,6 +42,11 @@
                     <td>{{ $order->getTotalPrice() }}</td>
                     <td>{{ \App\Helpers\Date::format($order->created_at) }}</td>
                     <td>
+                        <span class="label label-{{ \App\Models\Order::$paymentStatusesClass[$order->payment_status] }}">
+                            {{ \App\Models\Order::$paymentStatuses[$order->payment_status] }}
+                        </span>
+                    </td>
+                    <td>
                         @if($order->status != \App\Models\Order::STATUS_NONE)
                             <span class="label @if($order->status) label-{{ \App\Models\Order::$statusesClass[$order->status] }} @endif">
                                 {{ \App\Models\Order::$statuses[$order->status] }}
@@ -50,7 +56,7 @@
                     <td>
                         @if($order->user)
                             <a href="{{ route('admin.users.show', ['id' => $order->user->id]) }}">
-                                <img src="{{ $order->user->getAvatarUrl() }}" class="img-circle" width="40px" alt="{{ $order->user->login }}" title="Принял заказ {{ $order->user->login }}" data-toggle="tooltip" data-placement="right">
+                                <img src="{{ $order->user->getAvatarUrl() }}" class="img-circle" width="26" alt="{{ $order->user->login }}" title="Принял заказ {{ $order->user->login }}" data-toggle="tooltip" data-placement="right">
                                 <span class="m-l-5">{{ $order->user->login }}</span>
                             </a>
                         @else
