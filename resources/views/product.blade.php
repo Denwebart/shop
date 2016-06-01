@@ -14,18 +14,26 @@
             @include('parts.breadcrumbs')
 
             <ul id="productOther" class="product-other pull-right hidden-xs">
-                <li class="product-other__link product-prev">
-                    <a href="product.html">Пальто демисезонное</a>
+                @if(is_object($page->previous))
+                    <li class="product-other__link product-prev">
+                        <a href="{{ $page->previous->getUrl() }}">
+                            {{ $page->previous->getTitle() }}
+                        </a>
                         <span class="product-other__link__image">
-                            <img src='images/5-red.JPG'/>
+                            <img src="{{ $page->previous->getImageUrl() }}" alt="{{ $page->previous->image_alt }}"/>
                         </span>
-                </li>
-                <li class="product-other__link product-next">
-                    <a href="product.html">Элегантное демисезонное пальто</a>
+                    </li>
+                @endif
+                @if(is_object($page->next))
+                    <li class="product-other__link product-next">
+                        <a href="{{ $page->next->getUrl() }}">
+                            {{ $page->next->getTitle() }}
+                        </a>
                         <span class="product-other__link__image">
-                            <img src='images/2-black.JPG'/>
+                            <img src="{{ $page->next->getImageUrl() }}" alt="{{ $page->next->image_alt }}"/>
                         </span>
-                </li>
+                    </li>
+                @endif
             </ul>
         </div>
     </section>

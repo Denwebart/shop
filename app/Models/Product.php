@@ -6,7 +6,6 @@
 
 namespace App\Models;
 
-use App\Helpers\Str;
 use App\Helpers\Translit;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -77,6 +76,8 @@ class Product extends Model
 	];
 
 	public $rating;
+	public $previous;
+	public $next;
 
 	public static $sortingAttributes = [
         'published_at',
@@ -298,9 +299,9 @@ class Product extends Model
 		$reviewsRating = ProductReview::whereProductId($this->id)
 			->whereParentId(0)
 			->whereIsPublished(1)
+			->where('published_at', '<=', Carbon::now())
 			->where('rating', '!=', 0)
 			->whereNotNull('rating')
-			->where('published_at', '<=', Carbon::now())
 			->select(\DB::raw('rating, COUNT(*) as count'))
 			->groupBy('rating')
 			->get();

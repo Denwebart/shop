@@ -36,9 +36,13 @@ class RouteServiceProvider extends ServiceProvider
 			    ->first();
 
 		    if(is_null($page)) {
-			    $page = Product::whereAlias($alias)
+			    $page = Product::select(\DB::raw('products.*, count(orders_products.id) as `sales`'))
+			    ->whereAlias($alias)
 				->whereIsPublished(1)
 				->where('published_at', '<=', Carbon::now())
+			    ->leftJoin('orders_products', 'orders_products.product_id', '=', 'products.id')
+			    ->groupBy('products.id')
+			    ->orderBy('sales', 'DESC')
 				->firstOrFail();
 		    }
 

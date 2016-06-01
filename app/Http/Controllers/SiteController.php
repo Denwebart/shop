@@ -261,8 +261,49 @@ class SiteController extends Controller
 	{
 		$page->ratingInfo = $page->getRating();
 		$page->rating = $page->ratingInfo['value'];
-		$productReviews = $page->getReviews();
 
+		// доделать вложенность (рекурсивно?)
+		if($page->category) {
+			$subcategoryIds = Page::select(['id', 'parent_id'])
+				->whereParentId($page->category->id)
+				->whereIsPublished(1)
+				->where('published_at', '<=', Carbon::now())
+				->pluck('id');
+			$subcategoryIds[] = $page->category->id;
+		}
+
+		$query = Product::select(\DB::raw('id, category_id, alias, is_published, title, image, image_alt, published_at'))
+			->whereIsPublished(1)
+			->where('published_at', '<=', Carbon::now());
+
+		if(isset($subcategoryIds)) {
+			$query = $query->whereIn('category_id', $subcategoryIds);
+		}
+
+//		$page->previous = $queryPrevious->whereIn('products.id', function ($q) use($page) {
+//			$q->select(\DB::raw('products.id, count(orders_products.id) as `popular`'))
+//				->from('products')
+//				->leftJoin('orders_products', 'orders_products.product_id', '=', 'products.id')
+//				->groupBy('products.id')
+//				->orderBy('popular', 'DESC')
+//				->where('popular', '>', $page->sales);
+//		})->first();
+
+		$page->previous = $query->where('products.id', '=', \DB::raw('(SELECT MIN(id) FROM products WHERE id > ' . $page->id . ')'))
+			->first();
+
+		$query = Product::select(\DB::raw('id, category_id, alias, is_published, title, image, image_alt, published_at'))
+			->whereIsPublished(1)
+			->where('published_at', '<=', Carbon::now());
+
+		if(isset($subcategoryIds)) {
+			$query = $query->whereIn('category_id', $subcategoryIds);
+		}
+
+		$page->next = $query->where('products.id', '=', \DB::raw('(SELECT MAX(id) FROM products WHERE id < ' . $page->id . ')'))
+			->first();
+
+		$productReviews = $page->getReviews();
 		$viewed = new Viewed();
 
 		return view('product', compact('page', 'productReviews', 'viewed'));
