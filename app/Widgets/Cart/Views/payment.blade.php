@@ -28,7 +28,7 @@
                         <a href="{{ route('cart.checkout') }}" class="icon checkout-steps__step__icon icon-person active"></a>
                     </div>
                     <div style="animation-delay: 1.0s;" class="checkout-steps__step col-md-4 animation animated fadeInRight" data-animation="fadeInRight" data-animation-delay="1.0s">
-                        <a href="{{ route('cart.payment') }}" class="icon checkout-steps__step__icon icon-money"></a>
+                        <a href="{{ route('cart.payment') }}" class="icon checkout-steps__step__icon icon-money active"></a>
                     </div>
                 </div>
             </div>
@@ -39,8 +39,8 @@
                     <h2 class="text-uppercase align-center">{{ $page->title }}</h2>
                 @endif
 
-                <div class="row step step-3">
-                    {!! Form::open(['url' => route('cart.checkout.addInfo'), 'id' => 'checkout-form']) !!}
+                <div class="row step step-2">
+                    {!! Form::open(['url' => route('cart.checkout.addInfo'), 'id' => 'payment-form']) !!}
                         <div class="col-md-9">
                             <div id="error-message">
                                 @include('parts.message', ['class' => 'error'])
@@ -49,49 +49,32 @@
                             <div class="input-group input-group--wd">
                                 {!! Form::text('customer[user_name]', null, ['id' => 'user_name', 'class' => 'input--full']) !!}
                                 <span class="input-group__bar"></span>
-                                <label>Ваше имя <span class="required">*</span></label>
+                                <label>Номер карты <span class="required">*</span></label>
                                 <span class="help-block error user_name_error">
                                     {{ $errors->first('user_name') }}
                                 </span>
                             </div>
-                            <div class="input-group input-group--wd">
-                                {!! Form::text('customer[phone]', null, ['id' => 'phone', 'class' => 'input--full']) !!}
-                                <span class="input-group__bar"></span>
-                                <label>Ваш телефон <span class="required">*</span></label>
-                                <span class="help-block error phone_error">
-                                    {{ $errors->first('phone') }}
-                                </span>
-                            </div>
-                            <div class="input-group input-group--wd">
-                                {!! Form::select('order[delivery_type]', \App\Models\DeliveryType::getDeliveryTypes(), null, ['id' => 'delivery_type', 'class' => 'selectpicker used', 'data-style' => 'select--wd select--wd--sm select--wd--full']) !!}
-                                <span class="input-group__bar"></span>
-                                <label>Способ доставки <span class="required">*</span></label>
-                                <span class="help-block error delivery_type_error">
-                                    {{ $errors->first('delivery_type') }}
-                                </span>
-                            </div>
-
-                            <div id="address" class="row">
+                            <div class="row">
                                 <div class="col-md-12">
-                                    <h5 class="text-muted text-uppercase">Адрес:</h5>
+                                    <h5 class="text-muted text-uppercase">Срок действия:</h5>
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <div class="input-group input-group--wd">
                                         {!! Form::text('order[city]', null, ['id' => 'city', 'class' => 'input--full']) !!}
                                         <span class="input-group__bar"></span>
-                                        <label>Город</label>
+                                        <label>MM</label>
                                         <span class="help-block error city_error">
                                             {{ $errors->first('city') }}
                                         </span>
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <div class="input-group input-group--wd">
                                         {!! Form::text('order[postcode]', null, ['id' => 'postcode', 'class' => 'input--full']) !!}
                                         <span class="input-group__bar"></span>
-                                        <label>Почтовый индекс</label>
+                                        <label>YY</label>
                                         <span class="help-block error postcode_error">
                                             {{ $errors->first('postcode') }}
                                         </span>
@@ -102,48 +85,44 @@
                                     <div class="input-group input-group--wd">
                                         {!! Form::text('order[street]', null, ['id' => 'street', 'class' => 'input--full']) !!}
                                         <span class="input-group__bar"></span>
-                                        <label>Улица</label>
+                                        <label>Код безопасности</label>
                                         <span class="help-block error street_error">
                                             {{ $errors->first('street') }}
                                         </span>
                                     </div>
                                 </div>
-
-                                <div class="col-md-3">
-                                    <div class="input-group input-group--wd">
-                                        {!! Form::text('order[house_number]', null, ['id' => 'house_number', 'class' => 'input--full']) !!}
-                                        <span class="input-group__bar"></span>
-                                        <label>Дом</label>
-                                        <span class="help-block error house_number_error">
-                                            {{ $errors->first('house_number') }}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <div class="input-group input-group--wd">
-                                        {!! Form::text('order[flat_number]', null, ['id' => 'flat_number', 'class' => 'input--full']) !!}
-                                        <span class="input-group__bar"></span>
-                                        <label>Квартира</label>
-                                        <span class="help-block error flat_number_error">
-                                            {{ $errors->first('flat_number') }}
-                                        </span>
-                                    </div>
-                                </div>
-
                             </div>
 
-                            <div class="input-group input-group--wd">
-                                {!! Form::textarea('comment', null, ['id' => 'comment', 'class' => 'input--full']) !!}
-                                <span class="input-group__bar"></span>
-                                <label>Комментарий к заказу</label>
-                                <span class="help-block error comment_error">
-                                    {{ $errors->first('comment') }}
-                                </span>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h5 class="text-muted text-uppercase">Имя владельца карты:</h5>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="input-group input-group--wd">
+                                        {!! Form::text('order[city]', null, ['id' => 'city', 'class' => 'input--full']) !!}
+                                        <span class="input-group__bar"></span>
+                                        <label>Имя</label>
+                                        <span class="help-block error city_error">
+                                            {{ $errors->first('city') }}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="input-group input-group--wd">
+                                        {!! Form::text('order[postcode]', null, ['id' => 'postcode', 'class' => 'input--full']) !!}
+                                        <span class="input-group__bar"></span>
+                                        <label>Фамилия</label>
+                                        <span class="help-block error postcode_error">
+                                            {{ $errors->first('postcode') }}
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
 
                             <a href="{{ route('cart.index') }}" class="pull-left btn btn--wd text-uppercase">Назад</a>
-                            {!! Form::submit('Перейти к оплате', ['class' => 'pull-right btn btn--wd text-uppercase']) !!}
+                            {!! Form::submit('Оплатить', ['class' => 'pull-right btn btn--wd text-uppercase']) !!}
 
                         </div>
                     {!! Form::close() !!}
@@ -152,7 +131,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </section>

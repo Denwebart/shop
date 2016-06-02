@@ -8583,9 +8583,12 @@ body.fullwidth .footer .container > .navbar-collapse {
 }
 
 .content--fill {
-    padding-top: 40px !important;
+    padding-top: 30px !important;
     padding-bottom: 40px !important;
     margin-top: 40px;
+}
+.content--fill h2 {
+    padding-bottom: 30px;
 }
 
 .content--fill.top-pad-null {

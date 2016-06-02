@@ -28,20 +28,22 @@
                         <a href="{{ route('cart.checkout') }}" class="icon checkout-steps__step__icon icon-person"></a>
                     </div>
                     <div style="animation-delay: 1.0s;" class="checkout-steps__step col-md-4 animation animated fadeInRight" data-animation="fadeInRight" data-animation-delay="1.0s">
-                        <a href="#" class="icon checkout-steps__step__icon icon-money"></a>
+                        <a href="{{ route('cart.payment') }}" class="icon checkout-steps__step__icon icon-money"></a>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
-                @if($page->title)
-                    <h2 class="text-uppercase align-center">{{ $page->title }}</h2>
-                @endif
-
+            @if($page->title)
+                <h2 class="text-uppercase align-center">{{ $page->title }}</h2>
+            @endif
+            <div class="col-md-9">
                 <div class="cart-products cart-products-table">
                     @include('widget.cart::productsTable')
                 </div>
+            </div>
+            <div class="col-md-3">
+                Общая стоимость
             </div>
         </div>
     </div>
@@ -53,13 +55,13 @@
         </h2>
         <div class="row">
             <div class="col-sm-4 animation" data-animation="fadeInUp" data-animation-delay="0.5s">
-                <h5 class="title text-uppercase">
-                    <span class="dropcap custom-color">
-                        {{--1.--}}
-                        <i class="icon icon-bag-alt"></i>
-                    </span>
+                <span class="dropcap custom-color m-r-10">
+                    <i class="icon icon-bag-alt"></i>
+                </span>
+                <h5 class="title text-uppercase m-t-10">
                     Проверьте детали заказа
                 </h5>
+                <div class="clearfix"></div>
                 <p>
                     Проверьте, правильно ли выбран размер и цвет желаемого товара.
                     <br>
@@ -69,13 +71,13 @@
             </div>
             <div class="divider divider--sm visible-xs"></div>
             <div class="col-sm-4 animation" data-animation="fadeInUp" data-animation-delay="0s">
-                <h5 class="title text-uppercase">
-                    <span class="dropcap custom-color">
-                        {{--2.--}}
-                        <i class="icon icon-person"></i>
-                    </span>
+                <span class="dropcap custom-color m-r-10">
+                    <i class="icon icon-person"></i>
+                </span>
+                <h5 class="title text-uppercase m-t-10">
                     Заполнение данные о себе
                 </h5>
+                <div class="clearfix"></div>
                 <p>
                     Заполните данные о себе, правильно указав имя и телефон.
                     Если телефон указан неверно &mdash; заказ будет отменен.
@@ -85,13 +87,13 @@
             </div>
             <div class="divider divider--sm visible-xs"></div>
             <div class="col-sm-4 animation" data-animation="fadeInUp" data-animation-delay="0.5s">
-                <h5 class="title text-uppercase">
-                    <span class="dropcap custom-color">
-                        {{--3.--}}
-                        <i class="icon icon-money"></i>
-                    </span>
+                <span class="dropcap custom-color m-r-10">
+                    <i class="icon icon-money"></i>
+                </span>
+                <h5 class="title text-uppercase m-t-10">
                     Оплатите заказ
                 </h5>
+                <div class="clearfix"></div>
                 <p>
                     Выберите способ оплаты и оплатите товар.
                     Оплата заказа доступна с помощью банковских карт

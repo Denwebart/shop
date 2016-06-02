@@ -24,6 +24,8 @@ Route::post('cart/remove', ['as' => 'cart.remove', 'uses' => '\App\Widgets\Cart\
 Route::post('cart/quantity', ['as' => 'cart.quantity', 'uses' => '\App\Widgets\Cart\Cart@changeQuantity']);
 Route::get('cart/checkout', ['as' => 'cart.checkout', 'uses' => '\App\Widgets\Cart\CartController@getCheckout']);
 Route::post('cart/checkout', ['as' => 'cart.checkout.addInfo', 'uses' => '\App\Widgets\Cart\CartController@postCheckout']);
+Route::get('cart/payment', ['as' => 'cart.payment', 'uses' => '\App\Widgets\Cart\CartController@getPayment']);
+Route::post('cart/payment', ['as' => 'cart.payment.pay', 'uses' => '\App\Widgets\Cart\CartController@postPayment']);
 
 Route::get('wishlist', ['as' => 'wishlist.index', 'uses' => '\App\Widgets\Wishlist\WishlistController@index']);
 Route::post('wishlist/add', ['as' => 'wishlist.add', 'uses' => '\App\Widgets\Wishlist\Wishlist@addToWishlist']);
