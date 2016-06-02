@@ -124,6 +124,9 @@ class Order extends Model
 		'paid_at',
 		'closed_at',
 		'payment_type',
+		'delivery_type',
+		'address',
+		'comment',
 	];
 
 	/**
@@ -196,5 +199,13 @@ class Order extends Model
 	public function getTotalPrice()
 	{
 		return Str::priceFormat($this->total_price);
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getAddress()
+	{
+		return $this->address;
 	}
 }

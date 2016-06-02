@@ -14,11 +14,11 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property integer $id
  * @property integer $user_id
- * @property string $username
+ * @property string $user_name
  * @property string $phone
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereUserId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereUsername($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereUserName($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer wherePhone($value)
  * @mixin \Eloquent
  */
@@ -35,7 +35,7 @@ class Customer extends Model
 	 */
 	protected $fillable = [
 		'user_id',
-		'username',
+		'user_name',
 		'phone',
 	];
 

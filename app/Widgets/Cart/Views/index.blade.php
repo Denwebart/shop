@@ -19,9 +19,24 @@
 <section class="content">
     <div class="container">
         <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div id="checkout-steps" class="row">
+                    <div style="animation-delay: 0.0s;" class="checkout-steps__step col-md-4 animation animated fadeInRight" data-animation="fadeInRight" data-animation-delay="0.0s">
+                        <a href="{{ route('cart.index') }}" class="icon checkout-steps__step__icon icon-bag-alt active"></a>
+                    </div>
+                    <div style="animation-delay: 0.5s;" class="checkout-steps__step col-md-4 animation animated fadeInRight" data-animation="fadeInRight" data-animation-delay="0.5s">
+                        <a href="{{ route('cart.checkout') }}" class="icon checkout-steps__step__icon icon-person"></a>
+                    </div>
+                    <div style="animation-delay: 1.0s;" class="checkout-steps__step col-md-4 animation animated fadeInRight" data-animation="fadeInRight" data-animation-delay="1.0s">
+                        <a href="#" class="icon checkout-steps__step__icon icon-money"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-12">
                 @if($page->title)
-                    <h2 class="text-uppercase">{{ $page->title }}</h2>
+                    <h2 class="text-uppercase align-center">{{ $page->title }}</h2>
                 @endif
 
                 <div class="cart-products cart-products-table">
@@ -34,54 +49,53 @@
 <section class="content content--fill bottom-null">
     <div class="container">
         <h2 class="text-center">
-            Что-нибудь о том, как оформить заказ.
+            Как оформить заказ?
         </h2>
         <div class="row">
             <div class="col-sm-4 animation" data-animation="fadeInUp" data-animation-delay="0.5s">
                 <h5 class="title text-uppercase">
-                    <span class="dropcap custom-color">1.</span>
-                    Далеко за горами живут рыбные тексты.
+                    <span class="dropcap custom-color">
+                        {{--1.--}}
+                        <i class="icon icon-bag-alt"></i>
+                    </span>
+                    Проверьте детали заказа
                 </h5>
                 <p>
-                    Далеко-далеко за словесными горами в стране
-                    гласных и согласных живут рыбные тексты. Вдали
-                    от всех живут они в буквенных домах на берегу
-                    Семантика большого языкового океана. Маленький
-                    ручеек Даль журчит по всей стране и обеспечивает
-                    ее всеми необходимыми правилами. Эта парадигматическая
-                    страна.
+                    Проверьте, правильно ли выбран размер и цвет желаемого товара.
+                    <br>
+                    Проверьте количество выбранных товаров и сумму покупки,
+                    так как в дальнейшем это нельзя будет изменить.
                 </p>
             </div>
             <div class="divider divider--sm visible-xs"></div>
             <div class="col-sm-4 animation" data-animation="fadeInUp" data-animation-delay="0s">
                 <h5 class="title text-uppercase">
-                    <span class="dropcap custom-color">2.</span>
-                    Вдали от всех живут они в буквенных домах.
+                    <span class="dropcap custom-color">
+                        {{--2.--}}
+                        <i class="icon icon-person"></i>
+                    </span>
+                    Заполнение данные о себе
                 </h5>
                 <p>
-                    Далеко-далеко за словесными горами в стране
-                    гласных и согласных живут рыбные тексты. Вдали
-                    от всех живут они в буквенных домах на берегу
-                    Семантика большого языкового океана. Маленький
-                    ручеек Даль журчит по всей стране и обеспечивает
-                    ее всеми необходимыми правилами. Эта парадигматическая
-                    страна.
+                    Заполните данные о себе, правильно указав имя и телефон.
+                    Если телефон указан неверно &mdash; заказ будет отменен.
+                    <br>
+                    Выберите способ доставки, обязательно указав адрес.
                 </p>
             </div>
             <div class="divider divider--sm visible-xs"></div>
             <div class="col-sm-4 animation" data-animation="fadeInUp" data-animation-delay="0.5s">
                 <h5 class="title text-uppercase">
-                    <span class="dropcap custom-color">3.</span>
-                    Маленький ручеек Даль журчит по всей стране.
+                    <span class="dropcap custom-color">
+                        {{--3.--}}
+                        <i class="icon icon-money"></i>
+                    </span>
+                    Оплатите заказ
                 </h5>
                 <p>
-                    Далеко-далеко за словесными горами в стране
-                    гласных и согласных живут рыбные тексты. Вдали
-                    от всех живут они в буквенных домах на берегу
-                    Семантика большого языкового океана. Маленький
-                    ручеек Даль журчит по всей стране и обеспечивает
-                    ее всеми необходимыми правилами. Эта парадигматическая
-                    страна.
+                    Выберите способ оплаты и оплатите товар.
+                    Оплата заказа доступна с помощью банковских карт
+                    популярных международных платёжных систем: VISA, MasterCard, Maestro.
                 </p>
             </div>
         </div>

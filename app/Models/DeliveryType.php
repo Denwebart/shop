@@ -34,4 +34,10 @@ class DeliveryType extends Model
 		'title',
 		'description',
 	];
+
+	public static function getDeliveryTypes()
+	{
+		$result = self::pluck('title', 'id')->toArray();
+		return ['' => '&mdash;'] + $result;
+	}
 }

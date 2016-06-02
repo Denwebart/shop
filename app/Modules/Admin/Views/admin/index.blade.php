@@ -161,7 +161,7 @@ View::share('title', $title);
                                 @foreach($orders as $order)
                                     <tr @if(!$order->status) class="bg-muted" @endif>
                                         <td>{{ $order->id }}</td>
-                                        <td>{{ $order->customer->username }}</td>
+                                        <td>{{ $order->customer->user_name }}</td>
                                         <td>{{ $order->customer->getPhone() }}</td>
                                         <td>{{ $order->getTotalPrice() }}</td>
                                         <td>{{ \App\Helpers\Date::format($order->created_at) }}</td>

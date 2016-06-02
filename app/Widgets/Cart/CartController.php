@@ -10,7 +10,9 @@
 namespace App\Widgets\Cart;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use App\Models\Page;
+use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
@@ -32,11 +34,30 @@ class CartController extends Controller
 	 * @author     It Hill (it-hill.com@yandex.ua)
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
-	public function checkout()
+	public function getCheckout()
 	{
 		$page = new Page();
 		$page->title = 'Оформление заказа';
 
 		return view('widget.cart::checkout', compact('page'));
+	}
+
+	/**
+	 * Checkout
+	 *
+	 * @return mixed
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function postCheckout(Request $request)
+	{
+		if($request->ajax()) {
+			dd($request->all());
+
+			$rules = [];
+
+			$customer = Customer::wherePhone($request->get('phone'))->find();
+
+		}
 	}
 }

@@ -69,7 +69,7 @@ View::share('title', $title);
                                 </div>
                                 <div class="col-md-8 col-sm-9">
                                     @if($order->customer)
-                                        <p>{{ $order->customer->username }}</p>
+                                        <p>{{ $order->customer->user_name }}</p>
                                     @else
                                         -
                                     @endif
@@ -142,7 +142,7 @@ View::share('title', $title);
                                     <p><strong>Адрес доставки:</strong></p>
                                 </div>
                                 <div class="col-md-7 col-sm-9">
-                                    <p>{{ $order->address }}</p>
+                                    <p>{{ $order->getAddress() }}</p>
                                 </div>
                             </div>
                         </div><!-- end col -->

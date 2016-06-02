@@ -54,7 +54,6 @@
                             {!! Form::text('name', null, ['id' => 'name', 'class' => 'input--full']) !!}
                             <span class="input-group__bar"></span>
                             <label>Ваше имя <span class="required">*</span></label>
-
                             <span class="help-block error name_error">
                                 {{ $errors->first('name') }}
                             </span>
@@ -79,7 +78,6 @@
                             {!! Form::textarea('message', null, ['id' => 'message', 'class' => 'input--full']) !!}
                             <span class="input-group__bar"></span>
                             <label>Сообщение <span class="required">*</span></label>
-
                             <span class="help-block error message_error">
                                 {{ $errors->first('message') }}
                             </span>
