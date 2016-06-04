@@ -168,7 +168,7 @@ class SettingsController extends Controller
 		if($request->ajax()) {
 			$setting = Setting::findOrFail($request->get('id'));
 
-			$postImage = $request->file('value');
+			$postImage = $request->file('image');
 			$data['value'] = $postImage;
 			$imagePath = public_path('images/');
 
@@ -181,7 +181,7 @@ class SettingsController extends Controller
 					return \Response::json([
 						'success' => false,
 						'error' => $validator->errors()->first('value'),
-						'message' => 'Значение не изменено. Исправьте ошибки валидации.'
+						'message' => 'Изображение не загружено. Исправьте ошибки валидации.'
 					]);
 				}
 
@@ -235,7 +235,7 @@ class SettingsController extends Controller
 
 				return \Response::json([
 					'success' => true,
-					'message' => 'Изобржение уалено.'
+					'message' => 'Изобржение удалено.'
 				]);
 			} else {
 				return \Response::json([

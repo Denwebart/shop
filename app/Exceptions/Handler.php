@@ -68,9 +68,11 @@ class Handler extends ExceptionHandler
 		    }
 	    }
 
-	    if ($e instanceof ModelNotFoundException)
-	    {
-			$this->error404();
+	    if(!$request->ajax()) {
+		    if ($e instanceof ModelNotFoundException)
+		    {
+				$this->error404();
+		    }
 	    }
 
         return parent::render($request, $e);

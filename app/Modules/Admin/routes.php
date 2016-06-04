@@ -32,6 +32,11 @@ Route::group(['module' => 'Admin', 'prefix' => 'admin', 'middleware' => 'web', '
 
 	Route::resource('users', 'UsersController');
 
+	Route::post('delivery/upload_image/', ['as' => 'admin.deliveryTypes.uploadImage', 'uses' => 'DeliveryTypesController@uploadImage']);
+	Route::post('delivery/delete_image/', ['as' => 'admin.deliveryTypes.deleteImage', 'uses' => 'DeliveryTypesController@deleteImage']);
+	Route::post('delivery/set_is_active/', ['as' => 'admin.deliveryTypes.setIsActive', 'uses' => 'DeliveryTypesController@setIsActive']);
+	Route::put('delivery/set_value/', ['as' => 'admin.deliveryTypes.setValue', 'uses' => 'DeliveryTypesController@setValue']);
+
 	Route::post('settings/upload_image/', ['as' => 'admin.settings.uploadImage', 'uses' => 'SettingsController@uploadImage']);
 	Route::post('settings/delete_image/', ['as' => 'admin.settings.deleteImage', 'uses' => 'SettingsController@deleteImage']);
 	Route::post('settings/set_is_active/', ['as' => 'admin.settings.setIsActive', 'uses' => 'SettingsController@setIsActive']);

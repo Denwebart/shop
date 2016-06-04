@@ -45,7 +45,7 @@ View::share('title', $title);
                         <div class="col-md-2 col-sm-2">
                             <div class="switchery-demo">
                                 {!! Form::hidden('is_active', 0) !!}
-                                {!! Form::checkbox('is_active', 1, $settings[\App\Models\Setting::CATEGORY_SITE]['siteTitle']->is_active, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small', 'data-id' => $settings[\App\Models\Setting::CATEGORY_SITE]['siteTitle']->id]) !!}
+                                {!! Form::checkbox('is_active', 1, $settings[\App\Models\Setting::CATEGORY_SITE]['siteTitle']->is_active, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-url' => route('admin.settings.setIsActive'), 'data-color' => '#3bafda', 'data-size' => 'small', 'data-id' => $settings[\App\Models\Setting::CATEGORY_SITE]['siteTitle']->id]) !!}
                             </div>
                         </div>
                     </div>
@@ -63,7 +63,7 @@ View::share('title', $title);
                         <div class="col-md-2 col-sm-2">
                             <div class="switchery-demo">
                                 {!! Form::hidden('is_active', 0) !!}
-                                {!! Form::checkbox('is_active', 1, $settings[\App\Models\Setting::CATEGORY_SITE]['copyright']->is_active, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small', 'data-id' => $settings[\App\Models\Setting::CATEGORY_SITE]['copyright']->id]) !!}
+                                {!! Form::checkbox('is_active', 1, $settings[\App\Models\Setting::CATEGORY_SITE]['copyright']->is_active, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-url' => route('admin.settings.setIsActive'), 'data-color' => '#3bafda', 'data-size' => 'small', 'data-id' => $settings[\App\Models\Setting::CATEGORY_SITE]['copyright']->id]) !!}
                             </div>
                         </div>
                     </div>
@@ -81,7 +81,7 @@ View::share('title', $title);
                         <div class="col-md-2 col-sm-2">
                             <div class="switchery-demo">
                                 {!! Form::hidden('is_active', 0) !!}
-                                {!! Form::checkbox('is_active', 1, $settings[\App\Models\Setting::CATEGORY_SITE]['footerText']->is_active, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small', 'data-id' => $settings[\App\Models\Setting::CATEGORY_SITE]['footerText']->id]) !!}
+                                {!! Form::checkbox('is_active', 1, $settings[\App\Models\Setting::CATEGORY_SITE]['footerText']->is_active, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-url' => route('admin.settings.setIsActive'), 'data-color' => '#3bafda', 'data-size' => 'small', 'data-id' => $settings[\App\Models\Setting::CATEGORY_SITE]['footerText']->id]) !!}
                             </div>
                         </div>
                     </div>
@@ -96,7 +96,7 @@ View::share('title', $title);
                                     @endif
                                 </label>
                                 <div class="col-md-7 col-sm-7">
-                                    {!! Form::file('logo.' . $key, ['id' => 'logo.' . $key, 'class' => 'dropify', 'data-height' => '100', 'data-default-file' => ($setting->value) ? asset('images/' . $setting->value) : '', 'data-max-file-size' => '3M', 'data-setting-id' => $setting->id]) !!}
+                                    {!! Form::file('logo.' . $key, ['id' => 'logo.' . $key, 'class' => 'dropify', 'data-height' => '100', 'data-default-file' => ($setting->value) ? asset('images/' . $setting->value) : '', 'data-max-file-size' => '3M', 'data-setting-id' => $setting->id, 'data-delete-url' => route('admin.settings.deleteImage'), 'data-upload-url' => route('admin.settings.uploadImage')]) !!}
                                     <span class="help-block error">
                                         <strong class="text"></strong>
                                     </span>
@@ -104,7 +104,7 @@ View::share('title', $title);
                                 <div class="col-md-2 col-sm-2">
                                     <div class="switchery-demo">
                                         {!! Form::hidden('is_active', 0) !!}
-                                        {!! Form::checkbox('is_active', 1, $setting->is_active, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small', 'data-id' => $setting->id]) !!}
+                                        {!! Form::checkbox('is_active', 1, $setting->is_active, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-url' => route('admin.settings.setIsActive'), 'data-color' => '#3bafda', 'data-size' => 'small', 'data-id' => $setting->id]) !!}
                                     </div>
                                 </div>
                             </div>
@@ -136,7 +136,7 @@ View::share('title', $title);
                             <div class="col-md-2 col-sm-2">
                                 <div class="switchery-demo">
                                     {!! Form::hidden('is_active', 0) !!}
-                                    {!! Form::checkbox('is_active', 1, $setting->is_active, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small', 'data-id' => $setting->id]) !!}
+                                    {!! Form::checkbox('is_active', 1, $setting->is_active, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-url' => route('admin.settings.setIsActive'), 'data-color' => '#3bafda', 'data-size' => 'small', 'data-id' => $setting->id]) !!}
                                 </div>
                             </div>
                         </div>
@@ -168,7 +168,7 @@ View::share('title', $title);
                             <div class="col-md-2 col-sm-2">
                                 <div class="switchery-demo">
                                     {!! Form::hidden('is_active', 0) !!}
-                                    {!! Form::checkbox('is_active', 1, $setting->is_active, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small', 'data-id' => $setting->id]) !!}
+                                    {!! Form::checkbox('is_active', 1, $setting->is_active, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-url' => route('admin.settings.setIsActive'), 'data-color' => '#3bafda', 'data-size' => 'small', 'data-id' => $setting->id]) !!}
                                 </div>
                             </div>
                         </div>
@@ -193,12 +193,16 @@ View::share('title', $title);
                             <div class="col-md-2 col-sm-2">
                                 <div class="switchery-demo">
                                     {!! Form::hidden('is_active', 0) !!}
-                                    {!! Form::checkbox('is_active', 1, $setting->is_active, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small', 'data-id' => $setting->id]) !!}
+                                    {!! Form::checkbox('is_active', 1, $setting->is_active, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-url' => route('admin.settings.setIsActive'), 'data-color' => '#3bafda', 'data-size' => 'small', 'data-id' => $setting->id]) !!}
                                 </div>
                             </div>
                         </div>
                     @endforeach
                 </div>
+            </div>
+
+            <div class="card-box">
+                @include('admin::deliveryTypes.edit')
             </div>
         </div>
         <div class="col-lg-6">
@@ -248,10 +252,11 @@ View::share('title', $title);
         drEvent.on('dropify.fileReady', function(event, element) {
             var settingId = $(this).data('settingId');
             var data = new FormData();
+            var url = $(this).data('uploadUrl') ? $(this).data('uploadUrl') : "{{ route('admin.settings.uploadImage') }}";
             data.append("id", settingId);
-            data.append("value", $(this)[0].files[0]);
+            data.append("image", $(this)[0].files[0]);
             $.ajax({
-                url: "{{ route('admin.settings.uploadImage') }}",
+                url: url,
                 dataType: "json",
                 processData: false,
                 contentType: false,
@@ -279,8 +284,9 @@ View::share('title', $title);
 
         drEvent.on('dropify.beforeClear', function(event, element) {
             var settingId = $(this).data('settingId');
+            var url = $(this).data('deleteUrl') ? $(this).data('deleteUrl') : "{{ route('admin.settings.deleteImage') }}";
             $.ajax({
-                url: "{{ route('admin.settings.deleteImage') }}",
+                url: url,
                 dataType: "text json",
                 type: "POST",
                 data: {id: settingId},
@@ -316,7 +322,7 @@ View::share('title', $title);
             return params;
         };
 
-        // Text
+        // Edit settings
         $('.editable-text').editable({
             url: "{{ route('admin.settings.setValue') }}",
             mode: 'inline',
@@ -346,8 +352,9 @@ View::share('title', $title);
             } else {
                 var isActive = 0;
             }
+            var url = $(this).data('url') ? $(this).data('url') : "{{ route('admin.settings.setIsActive') }}";
             $.ajax({
-                url: "{{ route('admin.settings.setIsActive') }}",
+                url: url,
                 dataType: "text json",
                 type: "POST",
                 data: {id: $(this).data('id'), 'is_active': isActive},
@@ -364,4 +371,6 @@ View::share('title', $title);
             });
         });
     </script>
+
+    @stack('deliveryScripts')
 @endpush

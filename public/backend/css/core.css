@@ -744,8 +744,8 @@ textarea.form-control {
     text-align: left;
 }
 .form-horizontal.form-editable .control-label i {
-    width: 20px;
-    margin-right: 5px;
+    /*width: 20px;*/
+    /*margin-right: 5px;*/
 }
 .form-horizontal.form-editable .control-label small {
     display: block;
