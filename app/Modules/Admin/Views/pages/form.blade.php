@@ -97,7 +97,7 @@
                                 <strong>{{ $errors->first('is_catalog') }}</strong>
                             </span>
                         @endif
-                    </div>
+                    </div>`
                 </div>
             @endif
 

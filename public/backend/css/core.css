@@ -181,6 +181,9 @@ a:focus {
 .m-0 {
   margin: 0px !important;
 }
+.m-r-0 {
+    margin-right: 0 !important;
+}
 .m-r-5 {
   margin-right: 5px !important;
 }
@@ -189,6 +192,9 @@ a:focus {
 }
 .m-r-15 {
   margin-right: 15px !important;
+}
+.m-l-0 {
+    margin-left: 0 !important;
 }
 .m-l-5 {
   margin-left: 5px !important;
@@ -204,6 +210,9 @@ a:focus {
 }
 .m-l-45 {
     margin-left: 45px !important;
+}
+.m-t-3 {
+    margin-top: 3px !important;
 }
 .m-t-5 {
   margin-top: 5px !important;
@@ -222,6 +231,9 @@ a:focus {
 }
 .m-t-20 {
   margin-top: 20px !important;
+}
+.m-t-25 {
+    margin-top: 25px !important;
 }
 .m-t-30 {
   margin-top: 30px !important;

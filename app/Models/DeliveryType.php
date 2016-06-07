@@ -6,8 +6,11 @@
 
 namespace App\Models;
 
+use App\Helpers\Translit;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Intervention\Image\Facades\Image;
 
 /**
  * App\Models\DeliveryType
@@ -61,10 +64,11 @@ class DeliveryType extends Model
 	 * @author     It Hill (it-hill.com@yandex.ua)
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
-	protected static $rules = [
+	public static $rules = [
 		'is_active' => 'boolean',
 		'title' => 'required|max:50',
 		'description' => 'max:250',
+		'image' => 'image|max:3072'
 	];
 
 	/**
@@ -113,7 +117,49 @@ class DeliveryType extends Model
 	{
 		return public_path() . $this->imagePath . $this->id . '/';
 	}
+	
+	/**
+	 * Image uploading
+	 *
+	 * @param Request $request
+	 * @return bool
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function setImage(Request $request)
+	{
+		// доделать ресайз (в зависимости от дизайна)
+		$postImage = $request->file('image');
+		if($postImage) {
+			$data['image'] = $postImage;
+			$imagePath = $this->getImagesPath();
 
+			$validator = \Validator::make($data, $this->getRules('image'));
+
+			if ($validator->fails())
+			{
+				return \Response::json([
+					'success' => false,
+					'error' => $validator->errors()->first('image'),
+					'message' => 'Изображение не загружено. Исправьте ошибки валидации.'
+				]);
+			}
+
+			$this->deleteImage();
+
+			$fileName = Translit::generateFileName($postImage->getClientOriginalName());
+			$image = Image::make($postImage->getRealPath());
+			File::exists($imagePath) or File::makeDirectory($imagePath, 0755, true);
+
+			$image->save($imagePath . $fileName);
+			$this->image = $fileName;
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	/**
 	 * Delete image with folder
 	 *

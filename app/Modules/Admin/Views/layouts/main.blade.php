@@ -378,6 +378,21 @@
 <!-- Dashboard init -->
 <script src="{{ asset('backend/pages/jquery.dashboard.js') }}"></script>
 
+<script type="text/javascript">
+    // Dropify options
+    var dropifyOptions = {
+        messages: {
+            'default': 'Кликните или перетащите файл.',
+            'replace': 'Кликните или перетащите файл для замены.',
+            'remove': 'Удалить',
+            'error': 'Ошибка.'
+        },
+        error: {
+            'fileSize': 'Размер файла слишком большой (максимум 3Мб).'
+        }
+    };
+</script>
+
 @stack('scripts')
 
 <!-- Toastr js -->

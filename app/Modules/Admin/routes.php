@@ -36,6 +36,7 @@ Route::group(['module' => 'Admin', 'prefix' => 'admin', 'middleware' => 'web', '
 	Route::post('delivery/delete_image/', ['as' => 'admin.deliveryTypes.deleteImage', 'uses' => 'DeliveryTypesController@deleteImage']);
 	Route::post('delivery/set_is_active/', ['as' => 'admin.deliveryTypes.setIsActive', 'uses' => 'DeliveryTypesController@setIsActive']);
 	Route::put('delivery/set_value/', ['as' => 'admin.deliveryTypes.setValue', 'uses' => 'DeliveryTypesController@setValue']);
+	Route::post('delivery/add/', ['as' => 'admin.deliveryTypes.add', 'uses' => 'DeliveryTypesController@add']);
 
 	Route::post('settings/upload_image/', ['as' => 'admin.settings.uploadImage', 'uses' => 'SettingsController@uploadImage']);
 	Route::post('settings/delete_image/', ['as' => 'admin.settings.deleteImage', 'uses' => 'SettingsController@deleteImage']);

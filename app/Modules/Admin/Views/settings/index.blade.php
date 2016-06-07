@@ -96,7 +96,7 @@ View::share('title', $title);
                                     @endif
                                 </label>
                                 <div class="col-md-7 col-sm-7">
-                                    {!! Form::file('logo.' . $key, ['id' => 'logo.' . $key, 'class' => 'dropify', 'data-height' => '100', 'data-default-file' => ($setting->value) ? asset('images/' . $setting->value) : '', 'data-max-file-size' => '3M', 'data-setting-id' => $setting->id, 'data-delete-url' => route('admin.settings.deleteImage'), 'data-upload-url' => route('admin.settings.uploadImage')]) !!}
+                                    {!! Form::file('logo.' . $key, ['id' => 'logo.' . $key, 'class' => 'dropify-ajax', 'data-height' => '100', 'data-default-file' => ($setting->value) ? asset('images/' . $setting->value) : '', 'data-max-file-size' => '3M', 'data-setting-id' => $setting->id, 'data-delete-url' => route('admin.settings.deleteImage'), 'data-upload-url' => route('admin.settings.uploadImage')]) !!}
                                     <span class="help-block error">
                                         <strong class="text"></strong>
                                     </span>
@@ -202,7 +202,7 @@ View::share('title', $title);
             </div>
 
             <div class="card-box">
-                @include('admin::deliveryTypes.edit')
+                @include('admin::deliveryTypes.list')
             </div>
         </div>
         <div class="col-lg-6">
@@ -236,23 +236,14 @@ View::share('title', $title);
     <script src="{{ asset('backend/plugins/fileuploads/js/dropify.min.js') }}"></script>
 
     <script type="text/javascript">
-        // Image Uploader
-        var drEvent = $('.dropify').dropify({
-            messages: {
-                'default': 'Кликните или перетащите файл.',
-                'replace': 'Кликните или перетащите файл для замены.',
-                'remove': 'Удалить',
-                'error': 'Ошибка.'
-            },
-            error: {
-                'fileSize': 'Размер файла слишком большой (максимум 3Мб).'
-            }
-        });
 
-        drEvent.on('dropify.fileReady', function(event, element) {
+        // Image Uploader
+        var dropifyAjax = $('.dropify-ajax').dropify(dropifyOptions);
+
+        dropifyAjax.on('dropify.fileReady', function(event, element) {
             var settingId = $(this).data('settingId');
-            var data = new FormData();
             var url = $(this).data('uploadUrl') ? $(this).data('uploadUrl') : "{{ route('admin.settings.uploadImage') }}";
+            var data = new FormData();
             data.append("id", settingId);
             data.append("image", $(this)[0].files[0]);
             $.ajax({
@@ -282,7 +273,7 @@ View::share('title', $title);
             });
         });
 
-        drEvent.on('dropify.beforeClear', function(event, element) {
+        dropifyAjax.on('dropify.beforeClear', function(event, element) {
             var settingId = $(this).data('settingId');
             var url = $(this).data('deleteUrl') ? $(this).data('deleteUrl') : "{{ route('admin.settings.deleteImage') }}";
             $.ajax({
@@ -306,6 +297,7 @@ View::share('title', $title);
                 }
             });
         });
+
     </script>
 
     <!-- XEditable Plugin -->
@@ -371,6 +363,4 @@ View::share('title', $title);
             });
         });
     </script>
-
-    @stack('deliveryScripts')
 @endpush

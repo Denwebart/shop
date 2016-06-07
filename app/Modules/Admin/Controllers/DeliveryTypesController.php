@@ -8,14 +8,53 @@
 
 namespace App\Modules\Admin\Controllers;
 
-use App\Helpers\Translit;
 use App\Models\DeliveryType;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
-use Intervention\Image\Facades\Image;
 
 class DeliveryTypesController extends Controller
 {
+
+	/**
+	 * Add new
+	 *
+	 * @param Request $request
+	 * @return \Illuminate\Http\JsonResponse
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function add(Request $request)
+	{
+		if($request->ajax()) {
+			$data = $request->all();
+
+			$validator = \Validator::make($data, DeliveryType::$rules);
+
+			if ($validator->fails())
+			{
+				return \Response::json([
+					'success' => false,
+					'errors' => $validator->errors(),
+					'message' => 'Значение не добавлено. Исправьте ошибки валидации.'
+				]);
+			} else {
+				$deliveryType = DeliveryType::create($data);
+				$deliveryType->setImage($request);
+				$deliveryType->save();
+
+				return \Response::json([
+					'success' => true,
+					'message' => 'Значение добавлено.',
+					'itemHtml' => view('admin::deliveryTypes.item', compact('deliveryType'))->render(),
+				]);
+			}
+
+			return \Response::json([
+				'success' => false,
+				'message' => 'Произошла ошибка.'
+			]);
+		}
+	}
 
 	/**
 	 * Set value
@@ -108,33 +147,8 @@ class DeliveryTypesController extends Controller
 		if($request->ajax()) {
 			$deliveryType = DeliveryType::findOrFail($request->get('id'));
 
-			// доделать ресайз (в зависимости от дизайна)
-			$postImage = $request->file('image');
-			$data['image'] = $postImage;
-			$imagePath = $deliveryType->getImagesPath();
-
 			if($deliveryType) {
-
-				$validator = \Validator::make($data, ['image' => 'image|max:3072',]);
-
-				if ($validator->fails())
-				{
-					return \Response::json([
-						'success' => false,
-						'error' => $validator->errors()->first('image'),
-						'message' => 'Изображение не загружено. Исправьте ошибки валидации.'
-					]);
-				}
-
-				$deliveryType->deleteImage();
-
-				$fileName = Translit::generateFileName($postImage->getClientOriginalName());
-				$image = Image::make($postImage->getRealPath());
-				File::exists($imagePath) or File::makeDirectory($imagePath, 0755, true);
-
-				$image->save($imagePath . $fileName);
-
-				$deliveryType->image = $fileName;
+				$deliveryType->setImage($request);
 				$deliveryType->save();
 
 				return \Response::json([
