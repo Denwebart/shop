@@ -7551,7 +7551,7 @@ body.fullwidth .header__dropdowns-container {
     margin: 0 -18px;
     border-top-width: 1px;
     border-top-style: solid;
-    font-size: 0.923em;
+    font-size: 1em;
     line-height: 39px;
 }
 
@@ -7615,7 +7615,7 @@ body.fullwidth .header__dropdowns-container {
 
 .shopping-cart__item__info {
     overflow: hidden;
-    padding: 0 90px 0 15px;
+    padding: 0 130px 0 15px;
 }
 
 .shopping-cart__item__info__title {
@@ -7669,6 +7669,13 @@ body.fullwidth .header__dropdowns-container {
         margin-top: 10px;
     }
 }
+.cart-products-table ul {
+    padding: 0;
+}
+.cart-products-table .shopping-cart__item {
+    font-size: 1em;
+}
+
 /* Checkout steps */
 #checkout-steps {
     margin-bottom: 30px;

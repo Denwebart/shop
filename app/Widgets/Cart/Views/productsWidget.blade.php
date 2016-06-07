@@ -28,6 +28,7 @@
                             @if($item['product'])
                                 <a href="{{ $item['product']->getUrl() }}">
                                     {{ $item['product']->title }}
+                                    ({{ $item['product']->vendor_code }})
                                 </a>
                             @else
                                 <span class="text-danger text-uppercase">Товар был удален с сайта.</span>

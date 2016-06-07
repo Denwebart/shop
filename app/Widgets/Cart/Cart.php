@@ -87,7 +87,7 @@ class Cart extends BaseController
 					'category' => function($q) {
 						$q->select(['id', 'parent_id', 'alias', 'type']);
 					}
-				])->get(['id', 'category_id', 'alias', 'title', 'image', 'image_alt', 'price']);
+				])->get(['id', 'category_id', 'alias', 'title', 'image', 'image_alt', 'price', 'vendor_code']);
 
 			foreach($productModels as $productModel) {
 				foreach($cart['products'] as $key => $item) {

@@ -18,32 +18,31 @@
 <!-- Content section -->
 <section class="content">
     <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div id="checkout-steps" class="row">
-                    <div style="animation-delay: 0.0s;" class="checkout-steps__step col-md-4 animation animated fadeInRight" data-animation="fadeInRight" data-animation-delay="0.0s">
-                        <a href="{{ route('cart.index') }}" class="icon checkout-steps__step__icon icon-bag-alt active"></a>
-                    </div>
-                    <div style="animation-delay: 0.5s;" class="checkout-steps__step col-md-4 animation animated fadeInRight" data-animation="fadeInRight" data-animation-delay="0.5s">
-                        <a href="{{ route('cart.checkout') }}" class="icon checkout-steps__step__icon icon-person"></a>
-                    </div>
-                    <div style="animation-delay: 1.0s;" class="checkout-steps__step col-md-4 animation animated fadeInRight" data-animation="fadeInRight" data-animation-delay="1.0s">
-                        <a href="{{ route('cart.payment') }}" class="icon checkout-steps__step__icon icon-money"></a>
+        @if(isset($cart['count']) && $cart['count'])
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div id="checkout-steps" class="row">
+                        <div style="animation-delay: 0.0s;" class="checkout-steps__step col-md-4 animation animated fadeInRight" data-animation="fadeInRight" data-animation-delay="0.0s">
+                            <a href="{{ route('cart.index') }}" class="icon checkout-steps__step__icon icon-bag-alt active"></a>
+                        </div>
+                        <div style="animation-delay: 0.5s;" class="checkout-steps__step col-md-4 animation animated fadeInRight" data-animation="fadeInRight" data-animation-delay="0.5s">
+                            <a href="{{ route('cart.checkout') }}" class="icon checkout-steps__step__icon icon-person"></a>
+                        </div>
+                        <div style="animation-delay: 1.0s;" class="checkout-steps__step col-md-4 animation animated fadeInRight" data-animation="fadeInRight" data-animation-delay="1.0s">
+                            <a href="{{ route('cart.payment') }}" class="icon checkout-steps__step__icon icon-money"></a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @endif
         <div class="row">
             @if($page->title)
                 <h2 class="text-uppercase align-center">{{ $page->title }}</h2>
             @endif
-            <div class="col-md-9">
+            <div class="col-md-8 col-md-offset-2">
                 <div class="cart-products cart-products-table">
                     @include('widget.cart::productsTable')
                 </div>
-            </div>
-            <div class="col-md-3">
-                Общая стоимость
             </div>
         </div>
     </div>

@@ -6,9 +6,6 @@
 ?>
 
 @if(count($cart['products']))
-    <div class="shopping-cart__top text-uppercase">
-        Корзина (<span class="count-cart-items">{{ $cart['count'] }}</span>)
-    </div>
     <ul>
         @foreach($cart['products'] as $key => $item)
             <li class="shopping-cart__item @if(!$item['product']) bg-muted @endif">
@@ -26,6 +23,7 @@
                         @if($item['product'])
                             <a href="{{ $item['product']->getUrl() }}">
                                 {{ $item['product']->title }}
+                                ({{ $item['product']->vendor_code }})
                             </a>
                         @else
                             <span class="text-danger text-uppercase">Товар был удален с сайта.</span>
@@ -39,7 +37,7 @@
                         </div>
                         <div class="shopping-cart__item__info__qty">
                             <div class="input-group-qty pull-left">
-                                <span class="pull-left m-r-5">Кол-во: </span>
+                                <span class="pull-left m-r-5 m-t-10">Кол-во: </span>
                                 <input type="text" name="quantity" class="input-number input--wd input-qty pull-left" value="{{ $item['quantity'] }}" min="1" max="100">
                                 <span class="pull-left btn-number-container">
                                     <button type="button" class="btn btn-number btn-number--plus" data-type="plus" data-field="quantity">+</button>
@@ -57,14 +55,25 @@
     </ul>
 
     <div class="shopping-cart__bottom">
-        <div class="pull-left">
-            Всего:
+        <div class="pull-left m-b-10">
+            Товаров в корзине:
+            <span class="shopping-cart__count">
+                <span class="cart-count">
+                    {{ $cart['count'] }}
+                </span>
+            </span>
+        </div>
+        <div class="pull-right m-b-10">
+            Общая сумма заказа:
             <span class="shopping-cart__total">
                 <span class="total-price">
                     {{ \App\Helpers\Str::priceFormat($cart['total_price']) }}
                 </span>
             </span>
         </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="shopping-cart__bottom">
         @if($cart['total_price'])
             <div class="pull-right">
                 <a href="{{ route('cart.checkout') }}" class="btn btn--wd text-uppercase">
