@@ -522,7 +522,7 @@ a:focus {
 /* Switchery demo */
 .switchery-demo {
     display: inline-block;
-    width: 100%;
+    /*width: 100%;*/
 }
 .switchery-demo label {
     cursor: pointer;

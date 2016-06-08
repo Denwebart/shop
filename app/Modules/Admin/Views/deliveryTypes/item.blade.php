@@ -5,7 +5,7 @@
  */
 ?>
 
-<div class="form-group">
+<div class="delivery-type form-group" data-delivery-id="{{ $deliveryType->id }}">
 	<div class="col-md-6 col-sm-6 control-label">
 		<a href="#" class="editable-text" data-value="{{ $deliveryType->title }}" data-name="title" data-type="text" data-pk="{{ $deliveryType->id }}" data-url="{{ route('admin.deliveryTypes.setValue') }}">{{ $deliveryType->title }}</a>
 		<small class="m-t-10">
@@ -19,9 +19,12 @@
         </span>
 	</div>
 	<div class="col-md-2 col-sm-2">
-		<div class="switchery-demo">
+		<div class="switchery-demo pull-left">
 			{!! Form::hidden('is_active', 0) !!}
 			{!! Form::checkbox('is_active', 1, $deliveryType->is_active, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-url' => route('admin.deliveryTypes.setIsActive'), 'data-color' => '#3bafda', 'data-size' => 'small', 'data-id' => $deliveryType->id]) !!}
 		</div>
+        <a href="javascript:void(0)" class="remove-delivery pull-right" data-id="{{ $deliveryType->id }}" data-title="{{ $deliveryType->title }}" title="Удалить" data-toggle="tooltip">
+            <i class="fa fa-remove fa-lg m-t-10"></i>
+        </a>
 	</div>
 </div>

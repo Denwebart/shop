@@ -69,77 +69,114 @@
 
 <div class="clearfix"></div>
 
+@push('styles')
+    <link href="{{ asset('backend/plugins/bootstrap-sweetalert/sweet-alert.css') }}" rel="stylesheet" type="text/css" />
+@endpush
+
 @push('scripts')
+    <script src="{{ asset('backend/plugins/bootstrap-sweetalert/sweet-alert.min.js') }}"></script>
     <script type="text/javascript">
+        !function ($) {
+            "use strict";
 
-        // Open form
-        $(".show-delivery-types-form").on('click', function() {
-            var $form = $("#delivery-types-form");
-            if($form.is(':visible')) {
-                $form.hide();
-            } else {
-                $form.show();
-            }
-        });
-
-        var dropify = $('.dropify').dropify(dropifyOptions);
-
-        $('.button-save-delivery').on('click', function(){
-            $("#delivery-types-form").submit();
-        });
-
-        $('#delivery-types-form').on('submit', function(event){
-            event.preventDefault ? event.preventDefault() : event.returnValue = false;
-
-//            var $form = $(this),
-//                formData = $form.serialize(),
-//                url = $form.attr('action');
-
-            var $form = $(this),
-                formData = new FormData(),
-                params   = $form.serializeArray(),
-                image    = $form.find('[name="image"]')[0].files[0],
-                url = $form.attr('action');
-
-            $.each(params, function(i, val) {
-                formData.append(val.name, val.value);
-            });
-            if(image) {
-                formData.append('image', image);
-            }
-
-            $.ajax({
-                url: url,
-                dataType: "json",
-                processData: false,
-                contentType: false,
-                type: "POST",
-                data: formData,
-                beforeSend: function (request) {
-                    return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
-                },
-                success: function(response) {
-                    $form.find('.has-error').removeClass('has-error');
-                    $form.find('.help-block.error').text('');
-
-                    if(response.success){
-                        $form.trigger('reset');
-                        Command: toastr["success"](response.message);
-                        $('#delivery-types-container').append(response.itemHtml);
-
-                        // доделать навешивание dropify и switchery после добавления нового
-                        dropifyAjax = $('.dropify-ajax').dropify(dropifyOptions);
-                    } else {
-                        $.each(response.errors, function(index, value) {
-                            var errorDiv = '.' + index + '_error';
-                            $form.find(errorDiv).parent().addClass('has-error');
-                            $form.find(errorDiv).empty().append(value);
-                        });
-                        Command: toastr["error"](response.message);
-                    }
+            // Open form
+            $(".show-delivery-types-form").on('click', function() {
+                var $form = $("#delivery-types-form");
+                if($form.is(':visible')) {
+                    $form.hide();
+                } else {
+                    $form.show();
                 }
             });
-        });
 
+            var dropify = $('.dropify').dropify(dropifyOptions);
+
+            $('.button-save-delivery').on('click', function(){
+                $("#delivery-types-form").submit();
+            });
+
+            $('#delivery-types-form').on('submit', function(event){
+                event.preventDefault ? event.preventDefault() : event.returnValue = false;
+
+                var $form = $(this),
+                        formData = new FormData(),
+                        params   = $form.serializeArray(),
+                        image    = $form.find('[name="image"]')[0].files[0],
+                        url = $form.attr('action');
+
+                $.each(params, function(i, val) {
+                    formData.append(val.name, val.value);
+                });
+                if(image) {
+                    formData.append('image', image);
+                }
+
+                $.ajax({
+                    url: url,
+                    dataType: "json",
+                    processData: false,
+                    contentType: false,
+                    type: "POST",
+                    data: formData,
+                    beforeSend: function (request) {
+                        return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+                    },
+                    success: function(response) {
+                        $form.find('.has-error').removeClass('has-error');
+                        $form.find('.help-block.error').text('');
+
+                        if(response.success){
+                            $form.trigger('reset');
+                            Command: toastr["success"](response.message);
+                            $('#delivery-types-container').append(response.itemHtml);
+
+                            // доделать навешивание dropify и switchery после добавления нового
+                            dropifyAjax = $('.dropify-ajax').dropify(dropifyOptions);
+                        } else {
+                            $.each(response.errors, function(index, value) {
+                                var errorDiv = '.' + index + '_error';
+                                $form.find(errorDiv).parent().addClass('has-error');
+                                $form.find(errorDiv).empty().append(value);
+                            });
+                            Command: toastr["error"](response.message);
+                        }
+                    }
+                });
+            });
+
+            $(document).on('click', '.remove-delivery', function() {
+                var itemId = $(this).data('id'),
+                    itemTitle = $(this).data('title');
+
+                sweetAlert(
+                    {
+                        title: "Удалить способ доставки?",
+                        text: 'Вы точно хотите удалить способ доставки "'+ itemTitle +'"?',
+                        type: "error",
+                        showCancelButton: true,
+                        cancelButtonText: 'Отмена',
+                        confirmButtonClass: 'btn-danger waves-effect waves-light',
+                        confirmButtonText: 'Удалить'
+                    }, function(){
+                        $.ajax({
+                            url: "{{ route('admin.deliveryTypes.remove') }}",
+                            dataType: "json",
+                            type: "POST",
+                            data: {id: itemId},
+                            beforeSend: function (request) {
+                                return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+                            },
+                            success: function(response) {
+                                if(response.success){
+                                    Command: toastr["success"](response.message);
+                                    $('#delivery-types-container').find("[data-delivery-id='" + itemId + "']").remove();
+                                } else {
+                                    Command: toastr["error"](response.message);
+                                }
+                            }
+                        });
+                    });
+            });
+        }(window.jQuery);
     </script>
 @endpush

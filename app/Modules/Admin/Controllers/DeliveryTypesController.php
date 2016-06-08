@@ -13,7 +13,6 @@ use Illuminate\Http\Request;
 
 class DeliveryTypesController extends Controller
 {
-
 	/**
 	 * Add new
 	 *
@@ -52,6 +51,34 @@ class DeliveryTypesController extends Controller
 			return \Response::json([
 				'success' => false,
 				'message' => 'Произошла ошибка.'
+			]);
+		}
+	}
+
+	/**
+	 * Delete delivery type
+	 *
+	 * @param Request $request
+	 * @return \Illuminate\Http\JsonResponse
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function remove(Request $request)
+	{
+		if($request->ajax()) {
+
+			if (DeliveryType::destroy($request->get('id')))
+			{
+				return \Response::json([
+					'success' => true,
+					'message' => 'Способ доставки успешно удалён.'
+				]);
+			} 
+
+			return \Response::json([
+				'success' => false,
+				'message' => 'Произошла ошибка. Способ доставки не удалён.',
 			]);
 		}
 	}
