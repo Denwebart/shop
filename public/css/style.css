@@ -3688,6 +3688,9 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     font-size: 0;
     white-space: nowrap;
 }
+#checkout-form .input-group-btn {
+    font-size: inherit;
+}
 
 .input-group-btn > .btn {
     position: relative;
@@ -7669,11 +7672,20 @@ body.fullwidth .header__dropdowns-container {
         margin-top: 10px;
     }
 }
+.wishlist-products ul,
 .cart-products-table ul {
     padding: 0;
 }
 .cart-products-table .shopping-cart__item {
     font-size: 1em;
+}
+.cart-products-table .shopping-cart__item__info__price,
+.cart-products-table .shopping-cart__item__info__qty {
+    right: 30px;
+}
+.wishlist-products .shopping-cart__item__info__delete,
+.cart-products-table .shopping-cart__item__info__delete {
+    right: 0;
 }
 
 /* Checkout steps */
@@ -10151,15 +10163,19 @@ button.pull-right,
     font-weight: normal;
     position: absolute;
     pointer-events: none;
-    left: 0;
+    left: 5px; /* 0 */
     top: 10px;
     transition: all 0.2s ease;
+    z-index: 888;
 }
 
 .input-group input:focus ~ label,
 .input-group input.used ~ label,
 .input-group textarea:focus ~ label,
 .input-group textarea.used ~ label,
+/*.input-group .bootstrap-select:hover ~ label,*/
+/*.input-group .bootstrap-select.open ~ label,*/
+.input-group .bootstrap-select.used ~ label,
 .input-group select:focus ~ label,
 .input-group select.used ~ label {
     top: -20px;

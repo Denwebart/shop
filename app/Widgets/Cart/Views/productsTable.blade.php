@@ -76,7 +76,7 @@
     <div class="shopping-cart__bottom">
         @if($cart['total_price'])
             <div class="pull-right">
-                <a href="{{ route('cart.checkout') }}" class="btn btn--wd text-uppercase">
+                <a href="#" class="btn btn--wd text-uppercase change-step" data-step="{{ \App\Widgets\Cart\CartController::STEP_CHECKOUT }}">
                     Оформить заказ
                 </a>
             </div>

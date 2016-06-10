@@ -18,32 +18,8 @@
 <!-- Content section -->
 <section class="content">
     <div class="container">
-        @if(isset($cart['count']) && $cart['count'])
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    <div id="checkout-steps" class="row">
-                        <div style="animation-delay: 0.0s;" class="checkout-steps__step col-md-4 animation animated fadeInRight" data-animation="fadeInRight" data-animation-delay="0.0s">
-                            <a href="{{ route('cart.index') }}" class="icon checkout-steps__step__icon icon-bag-alt active"></a>
-                        </div>
-                        <div style="animation-delay: 0.5s;" class="checkout-steps__step col-md-4 animation animated fadeInRight" data-animation="fadeInRight" data-animation-delay="0.5s">
-                            <a href="{{ route('cart.checkout') }}" class="icon checkout-steps__step__icon icon-person"></a>
-                        </div>
-                        <div style="animation-delay: 1.0s;" class="checkout-steps__step col-md-4 animation animated fadeInRight" data-animation="fadeInRight" data-animation-delay="1.0s">
-                            <a href="{{ route('cart.payment') }}" class="icon checkout-steps__step__icon icon-money"></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endif
-        <div class="row">
-            @if($page->title)
-                <h2 class="text-uppercase align-center">{{ $page->title }}</h2>
-            @endif
-            <div class="col-md-8 col-md-offset-2">
-                <div class="cart-products cart-products-table">
-                    @include('widget.cart::productsTable')
-                </div>
-            </div>
+        <div id="step-content">
+            @include('widget.cart::stepCart')
         </div>
     </div>
 </section>
@@ -105,3 +81,51 @@
 </section>
 <!-- End Content section -->
 @endsection
+
+@push('scripts')
+<script type="text/javascript">
+    jQuery(function($j) {
+
+        $j(document).on('click', '.change-step', function(e){
+            e.preventDefault();
+            var step = $j(this).data('step');
+
+            $j.ajax({
+                url: "{{ route('cart.getStep') }}",
+                dataType: "json",
+                type: "POST",
+                data: {step: step},
+                async: true,
+                beforeSend: function (request) {
+                    return request.setRequestHeader('X-CSRF-Token', $j("meta[name='csrf-token']").attr('content'));
+                },
+                success: function(response) {
+                    $j('#step-content').html(response.stepContent);
+
+                    if ($j('.selectpicker').length) {
+                        $j('.selectpicker').selectpicker({
+                            showSubtext: true
+                        });
+                    }
+
+                    $j('.selectpicker').on('change', function(){
+                        var selected = $j(this).find("option:selected").val();
+                        if (selected)
+                            $j(this).addClass('used');
+                        else
+                            $j(this).removeClass('used');
+                    });
+
+                    $j('.input-group--wd > input, .input-group--wd > textarea, .input-group--wd > .bootstrap-select ').blur(function() {
+                        var $this = $j(this);
+                        if ($this.val())
+                            $this.addClass('used');
+                        else
+                            $this.removeClass('used');
+                    });
+                }
+            });
+        });
+    });
+</script>
+@endpush

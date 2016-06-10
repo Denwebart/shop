@@ -464,6 +464,14 @@ jQuery(function($j) {
             showSubtext: true
         });
     }
+
+    $j('.selectpicker').on('change', function(){
+        var selected = $j(this).find("option:selected").val();
+        if (selected)
+            $j(this).addClass('used');
+        else
+            $j(this).removeClass('used');
+    });
 })
 
 // Show rev slider when page loaded
@@ -1865,7 +1873,7 @@ jQuery(function($j) {
       $this.removeClass('used');
   });
   
- });
+});
  
 // Remove Loader
 

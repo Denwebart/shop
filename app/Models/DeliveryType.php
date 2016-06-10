@@ -90,8 +90,7 @@ class DeliveryType extends Model
 
 	public static function getDeliveryTypes()
 	{
-		$result = self::pluck('title', 'id')->toArray();
-		return ['' => '&mdash;'] + $result;
+		return self::whereIsActive(1)->pluck('title', 'id')->toArray();
 	}
 
 	/**

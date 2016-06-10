@@ -43,7 +43,7 @@ class Cart extends BaseController
 				return \Response::json([
 					'success' => true,
 					'message' => 'Продукт успешно добавлен в корзину!',
-					'cartHtml' => view('widget.cart::cart')->with('cart', $cart)->render(),
+					'cartHtml' => view('widget.cart::cart', compact('cart'))->render(),
 				]);
 			}
 

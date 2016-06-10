@@ -19,13 +19,12 @@ Route::post('viewed/add', ['as' => 'viewed.add', 'uses' => '\App\Widgets\Viewed\
 Route::post('remember_cookie', ['as' => 'remember.cookie', 'uses' => 'SiteController@rememberInCookie']);
 
 Route::get('cart', ['as' => 'cart.index', 'uses' => '\App\Widgets\Cart\CartController@index']);
+Route::post('cart/step', ['as' => 'cart.getStep', 'uses' => '\App\Widgets\Cart\CartController@getStep']);
+Route::post('cart/checkout', ['as' => 'cart.postCheckout', 'uses' => '\App\Widgets\Cart\CartController@postCheckout']);
+Route::post('cart/payment', ['as' => 'cart.postPayment', 'uses' => '\App\Widgets\Cart\CartController@postPayment']);
 Route::post('cart/add', ['as' => 'cart.add', 'uses' => '\App\Widgets\Cart\Cart@addToCart']);
 Route::post('cart/remove', ['as' => 'cart.remove', 'uses' => '\App\Widgets\Cart\Cart@removeFromCart']);
 Route::post('cart/quantity', ['as' => 'cart.quantity', 'uses' => '\App\Widgets\Cart\Cart@changeQuantity']);
-Route::get('cart/checkout', ['as' => 'cart.checkout', 'uses' => '\App\Widgets\Cart\CartController@getCheckout']);
-Route::post('cart/checkout', ['as' => 'cart.checkout.addInfo', 'uses' => '\App\Widgets\Cart\CartController@postCheckout']);
-Route::get('cart/payment', ['as' => 'cart.payment', 'uses' => '\App\Widgets\Cart\CartController@getPayment']);
-Route::post('cart/payment', ['as' => 'cart.payment.pay', 'uses' => '\App\Widgets\Cart\CartController@postPayment']);
 
 Route::get('wishlist', ['as' => 'wishlist.index', 'uses' => '\App\Widgets\Wishlist\WishlistController@index']);
 Route::post('wishlist/add', ['as' => 'wishlist.add', 'uses' => '\App\Widgets\Wishlist\Wishlist@addToWishlist']);
