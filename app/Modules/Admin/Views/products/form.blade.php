@@ -111,10 +111,10 @@
                         <div class="files-list">
                             @foreach($product->images as $image)
                                 <div class="file-box">
-{{--                                    {!! Form::file('image['. $image->id .']', ['id' => 'image['. $image->id .']', 'class' => 'img-responsive img-thumbnail dropify', 'data-default-file' => $image->getImageUrl(), 'data-max-file-size' => '3M']) !!}--}}
-                                    <a href="javascript:void(0)">
-                                        <img src="{{ $image->getImageUrl() }}" class="img-responsive img-thumbnail" alt="">
-                                    </a>
+                                    {!! Form::file('image['. $image->id .']', ['id' => 'image['. $image->id .']', 'class' => 'img-responsive img-thumbnail dropify-more', 'data-default-file' => $image->getImageUrl(), 'data-max-file-size' => '3M', 'data-height' => '100']) !!}
+                                    {{--<a href="javascript:void(0)">--}}
+                                        {{--<img src="{{ $image->getImageUrl() }}" class="img-responsive img-thumbnail" alt="">--}}
+                                    {{--</a>--}}
                                 </div>
                             @endforeach
 
@@ -302,9 +302,9 @@
         $('.dropify-more').dropify({
             messages: {
                 'default': '+',
-                'replace': 'Кликните или перетащите файл для замены.',
+                'replace': '',
                 'remove': 'x',
-                'error': '!'
+                'error': 'Ошибка!'
             },
             error: {
                 'fileSize': 'Размер файла слишком большой (максимум 3Мб).'

@@ -91,45 +91,26 @@
                             <a href="javascript:void(0)" class="icon icon-arrow-down m-l-10 active sort-direction" data-value="desc" rel="nofollow" title="По убыванию" data-toggle="tooltip"></a>
                             <a href="javascript:void(0)" class="icon icon-arrow-up sort-direction" data-value="asc" rel="nofollow" title="По возростанию" data-toggle="tooltip"></a>
                         </div>
-                        <div class="filters-col__collapse open">
-                            <h4 class="filters-col__collapse__title text-uppercase">Категория</h4>
-                            <div class="filters-col__collapse__content">
-                                <ul class="filter-list">
-                                    <li class="checkbox-group">
-                                        <input type="checkbox" id="checkBox21">
-                                        <label for="checkBox1">
-                                            <span class="check"></span>
-                                            <span class="box"></span>
-                                            Пальто (22)
-                                        </label>
-                                    </li>
-                                    <li class="checkbox-group">
-                                        <input type="checkbox" id="checkBox22">
-                                        <label for="checkBox2">
-                                            <span class="check"></span>
-                                            <span class="box"></span>
-                                            Плащи (18)
-                                        </label>
-                                    </li>
-                                    <li class="checkbox-group">
-                                        <input type="checkbox" id="checkBox23">
-                                        <label for="checkBox3">
-                                            <span class="check"></span>
-                                            <span class="box"></span>
-                                            Куртки (11)
-                                        </label>
-                                    </li>
-                                    <li class="checkbox-group">
-                                        <input type="checkbox" id="checkBox25">
-                                        <label for="checkBox5">
-                                            <span class="check"></span>
-                                            <span class="box"></span>
-                                            Шубы (12)
-                                        </label>
-                                    </li>
-                                </ul>
+                        @if(count($subcategories))
+                            <div class="filters-col__collapse open">
+                                <h4 class="filters-col__collapse__title text-uppercase">Категория</h4>
+                                <div class="filters-col__collapse__content">
+                                    <ul class="filter-list">
+                                        @foreach($subcategories as $subcategory)
+                                            <li class="checkbox-group">
+                                                <input name="subcat[{{ $subcategory->id }}]" value="{{ $subcategory->alias }}" type="checkbox" id="subcategory_{{ $subcategory->id }}" class="ajax-checkbox">
+                                                <label for="subcategory_{{ $subcategory->id }}">
+                                                    <span class="check"></span>
+                                                    <span class="box"></span>
+                                                    {{ $subcategory->getTitle() }}
+                                                    ({{ count($subcategory->products) }})
+                                                </label>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
+                        @endif
                         <div class="filters-col__collapse open">
                             <h4 class="filters-col__collapse__title text-uppercase">Бренд</h4>
                             <div class="filters-col__collapse__content">
@@ -690,6 +671,16 @@
             });
 
             $j(document).on('change', '.ajax-sort', function (e) {
+
+                addLoader('.outer');
+
+                var name = $j(this).attr('name'),
+                    value = $j(this).val();
+
+                sortingAjax(name, value);
+            });
+
+            $j(document).on('change', '.ajax-checkbox', function (e) {
 
                 addLoader('.outer');
 

@@ -6,9 +6,7 @@
  * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
  */
 
-
 namespace App\Http\Controllers;
-
 
 use App\Helpers\Settings;
 use App\Models\Letter;
@@ -187,11 +185,16 @@ class SiteController extends Controller
 	protected function getCatalogPage($request, $settings, $page)
 	{
 		// доделать вложенность (рекурсивно?)
-		$subcategoryIds = Page::select(['id', 'parent_id'])
-			->whereParentId($page->id)
-			->whereIsPublished(1)
-			->where('published_at', '<=', Carbon::now())
-			->pluck('id');
+		$subcategories = $page->publishedChildren()
+			->has('products')
+			->with([
+				'products' => function($q) {
+					$q->select('id', 'category_id');
+				}
+			])
+			->get(['id', 'parent_id', 'menu_title', 'title', 'alias']);
+
+		$subcategoryIds = $subcategories->pluck('id');
 
 		$subcategoryIds[] = $page->id;
 
@@ -235,11 +238,11 @@ class SiteController extends Controller
 		$products = $query->paginate($limit);
 
 		if(!$request->ajax()) {
-			return view('catalog', compact('page', 'products'));
+			return view('catalog', compact('page', 'products', 'subcategories'));
 		} else {
 			return \Response::json([
 				'success' => true,
-				'productsListHtml' => view('parts.productsList')->with('products', $products)->render(),
+				'productsListHtml' => view('parts.productsList', compact('products'))->render(),
 				'countHtml' => view('parts.count')->with('models', $products)->render(),
 				'pageUrl' => $products->url($request->get('page', 1)),
 			])->withCookie(cookie()->forever('catalog-onpage', $limit));
