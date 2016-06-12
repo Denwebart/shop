@@ -326,12 +326,10 @@
 
             if ($j('.products-isotope').length){
                 $j('.products-isotope').imagesLoaded(function() {
-
                     $j('.products-isotope').isotope({
                         itemSelector: '.product-preview-wrapper',
                         layoutMode: 'fitRows'
                     })
-
                 });
             }
 
@@ -342,21 +340,19 @@
             }
 
             if ($j('.products-col').parent().parent().hasClass('open')) {
-
                 if ( $j('html').css('direction').toLowerCase() == 'rtl' ) {
                     $j('.products-col').stop(true,false).animate({marginRight: '280px'}, 200,
-                            function() {
-                                setProductSize($j('.products-col'),minW);
-                                $j('.products-isotope').isotope().isotope('layout');
-                            });
-
+                    function() {
+                        setProductSize($j('.products-col'),minW);
+                        $j('.products-isotope').isotope().isotope('layout');
+                    });
                 }
                 else {
                     $j('.products-col').stop(true,false).animate({marginLeft: '280px'}, 200,
-                            function() {
-                                setProductSize($j('.products-col'),minW);
-                                $j('.products-isotope').isotope().isotope('layout');
-                            });
+                    function() {
+                        setProductSize($j('.products-col'),minW);
+                        $j('.products-isotope').isotope().isotope('layout');
+                    });
                 }
             }
 
@@ -371,103 +367,101 @@
                     $j('.products-col').parent().parent().addClass('open');
                     if ( $j('html').css('direction').toLowerCase() == 'rtl' ) {
                         $j('.products-col').stop(true,false).animate({marginRight: '280px'}, 200,
-                                function() {
-                                    setProductSize($j('.products-col'),minW);
-                                    $j('.products-isotope').isotope().isotope('layout');
-                                });
-
+                        function() {
+                            setProductSize($j('.products-col'),minW);
+                            $j('.products-isotope').isotope().isotope('layout');
+                        });
                     }
                     else {
                         $j('.products-col').stop(true,false).animate({marginLeft: '280px'}, 200,
-                                function() {
-                                    setProductSize($j('.products-col'),minW);
-                                    $j('.products-isotope').isotope().isotope('layout');
-                                });
+                        function() {
+                            setProductSize($j('.products-col'),minW);
+                            $j('.products-isotope').isotope().isotope('layout');
+                        });
                     }
                 }
                 else {
                     $j('.products-col').parent().parent().removeClass('open');
 
                     $j('.products-col').stop(true,false).animate({marginLeft: '0', marginRight: '0'}, 200,
-                            function() {
-
-                                if ($j('.products-isotope').hasClass('two-in-row')){
-                                    if (windowW > 560) {
-                                        minW = $j('.products-isotope').width()/2;
-                                    } else {
-                                        minW = $j('.products-isotope').width()/1;
-                                    }
-                                } else if ($j('.products-isotope').hasClass('three-in-row')){
-                                    if (windowW > 560) {
-                                        minW = $j('.products-isotope').width()/3;
-                                    } else {
-                                        minW = $j('.products-isotope').width()/1;
-                                    }
-                                } else if ($j('.products-isotope').hasClass('four-in-row')){
-                                    if (windowW > 767) {
-                                        minW = $j('.products-isotope').width()/4;
-                                    } else if (windowW > 560) {
-                                        minW = $j('.products-isotope').width()/3;
-                                    } else {
-                                        minW = $j('.products-isotope').width()/1;
-                                    }
-                                } else if ($j('.products-isotope').hasClass('five-in-row')){
-                                    if (windowW > 991) {
-                                        minW = $j('.products-isotope').width()/5;
-                                    } else if (windowW > 767) {
-                                        minW = $j('.products-isotope').width()/4;
-                                    } else if (windowW > 560) {
-                                        minW = $j('.products-isotope').width()/3;
-                                    } else {
-                                        minW = $j('.products-isotope').width()/1;
-                                    }
-                                } else if ($j('.products-isotope').hasClass('six-in-row')){
-                                    if (windowW > 1199) {
-                                        minW = $j('.products-isotope').width()/6;
-                                    } else if (windowW > 991) {
-                                        minW = $j('.products-isotope').width()/5;
-                                    } else if (windowW > 767) {
-                                        minW = $j('.products-isotope').width()/4;
-                                    } else if (windowW > 560) {
-                                        minW = $j('.products-isotope').width()/3;
-                                    } else {
-                                        minW = $j('.products-isotope').width()/1;
-                                    }
-                                } else if ($j('.products-isotope').hasClass('seven-in-row')){
-                                    if (windowW > 1600) {
-                                        minW = $j('.products-isotope').width()/7;
-                                    } else if (windowW > 1199) {
-                                        minW = $j('.products-isotope').width()/6;
-                                    } else if (windowW > 991) {
-                                        minW = $j('.products-isotope').width()/5;
-                                    } else if (windowW > 767) {
-                                        minW = $j('.products-isotope').width()/4;
-                                    } else if (windowW > 560) {
-                                        minW = $j('.products-isotope').width()/2;
-                                    } else {
-                                        minW = $j('.products-isotope').width()/1;
-                                    }
-                                } else if ($j('.products-isotope').hasClass('eight-in-row')){
-                                    if (windowW > 1600) {
-                                        minW = $j('.products-isotope').width()/8;
-                                    } else if (windowW > 1199) {
-                                        minW = $j('.products-isotope').width()/6;
-                                    } else if (windowW > 991) {
-                                        minW = $j('.products-isotope').width()/5;
-                                    } else if (windowW > 767) {
-                                        minW = $j('.products-isotope').width()/4;
-                                    } else if (windowW > 560) {
-                                        minW = $j('.products-isotope').width()/2;
-                                    } else {
-                                        minW = $j('.products-isotope').width()/1;
-                                    }
+                        function() {
+                            if ($j('.products-isotope').hasClass('two-in-row')){
+                                if (windowW > 560) {
+                                    minW = $j('.products-isotope').width()/2;
+                                } else {
+                                    minW = $j('.products-isotope').width()/1;
                                 }
+                            } else if ($j('.products-isotope').hasClass('three-in-row')){
+                                if (windowW > 560) {
+                                    minW = $j('.products-isotope').width()/3;
+                                } else {
+                                    minW = $j('.products-isotope').width()/1;
+                                }
+                            } else if ($j('.products-isotope').hasClass('four-in-row')){
+                                if (windowW > 767) {
+                                    minW = $j('.products-isotope').width()/4;
+                                } else if (windowW > 560) {
+                                    minW = $j('.products-isotope').width()/3;
+                                } else {
+                                    minW = $j('.products-isotope').width()/1;
+                                }
+                            } else if ($j('.products-isotope').hasClass('five-in-row')){
+                                if (windowW > 991) {
+                                    minW = $j('.products-isotope').width()/5;
+                                } else if (windowW > 767) {
+                                    minW = $j('.products-isotope').width()/4;
+                                } else if (windowW > 560) {
+                                    minW = $j('.products-isotope').width()/3;
+                                } else {
+                                    minW = $j('.products-isotope').width()/1;
+                                }
+                            } else if ($j('.products-isotope').hasClass('six-in-row')){
+                                if (windowW > 1199) {
+                                    minW = $j('.products-isotope').width()/6;
+                                } else if (windowW > 991) {
+                                    minW = $j('.products-isotope').width()/5;
+                                } else if (windowW > 767) {
+                                    minW = $j('.products-isotope').width()/4;
+                                } else if (windowW > 560) {
+                                    minW = $j('.products-isotope').width()/3;
+                                } else {
+                                    minW = $j('.products-isotope').width()/1;
+                                }
+                            } else if ($j('.products-isotope').hasClass('seven-in-row')){
+                                if (windowW > 1600) {
+                                    minW = $j('.products-isotope').width()/7;
+                                } else if (windowW > 1199) {
+                                    minW = $j('.products-isotope').width()/6;
+                                } else if (windowW > 991) {
+                                    minW = $j('.products-isotope').width()/5;
+                                } else if (windowW > 767) {
+                                    minW = $j('.products-isotope').width()/4;
+                                } else if (windowW > 560) {
+                                    minW = $j('.products-isotope').width()/2;
+                                } else {
+                                    minW = $j('.products-isotope').width()/1;
+                                }
+                            } else if ($j('.products-isotope').hasClass('eight-in-row')){
+                                if (windowW > 1600) {
+                                    minW = $j('.products-isotope').width()/8;
+                                } else if (windowW > 1199) {
+                                    minW = $j('.products-isotope').width()/6;
+                                } else if (windowW > 991) {
+                                    minW = $j('.products-isotope').width()/5;
+                                } else if (windowW > 767) {
+                                    minW = $j('.products-isotope').width()/4;
+                                } else if (windowW > 560) {
+                                    minW = $j('.products-isotope').width()/2;
+                                } else {
+                                    minW = $j('.products-isotope').width()/1;
+                                }
+                            }
 
-                                setProductSize($j('.products-col'),minW);
-                                $j('.products-isotope.products-col').isotope().isotope('layout');
-                            });
+                            setProductSize($j('.products-col'),minW);
+                            $j('.products-isotope.products-col').isotope().isotope('layout');
+                        });
                 }
-            })
+            });
 
             var prevW = window.innerWidth || $j(window).width();
 
@@ -486,18 +480,17 @@
                             }
                             if ( $j('html').css('direction').toLowerCase() == 'rtl' ) {
                                 $j('.products-col').stop(true,false).animate({marginRight: '280px'}, 200,
-                                        function() {
-                                            setProductSize($j('.products-col'),minW);
-                                            $j('.products-isotope').isotope().isotope('layout');
-                                        });
-
+                                function() {
+                                    setProductSize($j('.products-col'),minW);
+                                    $j('.products-isotope').isotope().isotope('layout');
+                                });
                             }
                             else {
                                 $j('.products-col').stop(true,false).animate({marginLeft: '280px'}, 200,
-                                        function() {
-                                            setProductSize($j('.products-col'),minW);
-                                            $j('.products-isotope').isotope().isotope('layout');
-                                        });
+                                function() {
+                                    setProductSize($j('.products-col'),minW);
+                                    $j('.products-isotope').isotope().isotope('layout');
+                                });
                             }
                         }
                         else {
@@ -506,7 +499,6 @@
                             $j('.products-isotope.products-col').isotope().isotope('layout');
                         }
                     }
-
 
                     // end resize events
                 }
@@ -552,7 +544,7 @@
                 window.setTimeout(function() {
                     $j('.products-isotope.products-col').removeClass('no-transition');
                 },1000);
-            })
+            });
             
             function remember(key, value) {
                 $j.ajax({
@@ -632,12 +624,15 @@
                 var priceSlider = document.getElementById('priceSlider');
 
                 noUiSlider.create(priceSlider, {
-                    start: [0, '{{ round($products->max('price')) }}'],
+                    start: [
+                        '{{ \Request::get("price", ['start' => 0])['start'] }}',
+                        '{{ \Request::get("price", ['end' => $maxPrice])['end'] }}'
+                    ],
                     connect: true,
                     step: 1,
                     range: {
                         'min': 0,
-                        'max': {{ round($products->max('price')) }}
+                        'max': {{ $maxPrice }}
                     }
                 });
                 var tipHandles = priceSlider.getElementsByClassName('noUi-handle'),
@@ -701,34 +696,21 @@
 
             // направление сортировки
             $j(document).on('click', '.sort-direction', function (e) {
-
                 addLoader('.outer');
-
-                var name = 'direction',
-                    value = $j(this).data('value');
-
-                sortingAjax(name, value);
+                sortingAjax('direction', $j(this).data('value'));
             });
 
             // сортировка
             $j(document).on('change', '.ajax-sort', function (e) {
-
                 addLoader('.outer');
-
-                var name = $j(this).attr('name'),
-                    value = $j(this).val();
-
-                sortingAjax(name, value);
+                sortingAjax($j(this).attr('name'), $j(this).val());
             });
 
             // фильтры (checkbox)
             $j(document).on('change', '.ajax-checkbox', function (e) {
-
                 addLoader('.outer');
-
                 var name = $j(this).attr('name');
                 var value = '';
-
                 $j.each($j('[name="'+ name +'"]'), function(index, element) {
                     if($j(element).is(':checked')) {
                         if(value) {
@@ -738,14 +720,12 @@
                         }
                     }
                 });
-
                 sortingAjax(name, value);
             });
 
             // цена
             priceSlider.noUiSlider.on('change', function(sliderValue) {
                 addLoader('.outer');
-
                 sortingAjax('price', {'start': sliderValue[0], 'end': sliderValue[1]});
             });
         });

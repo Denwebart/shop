@@ -231,9 +231,19 @@ class SiteController extends Controller
 		// цена
 		if($request->has('price') && $request->get('price')) {
 			$price = $request->get('price');
-			$query->where('products.price', '>', $price['start'])
-				->where('products.price', '<', $price['end']);
+			$query->where('products.price', '>=', $price['start'])
+				->where('products.price', '<=', $price['end']);
 		}
+		// максимальная цена
+		$subcat = $subcategories->pluck('id');
+		$subcat[] = $page->id;
+		$maxPrice = Product::select(['id', 'price'])
+			->whereIn('category_id', $subcat)
+			->where('products.is_published', '=', 1)
+			->where('products.published_at', '<=', Carbon::now())
+			->orderBy('price', 'DESC')
+			->first();
+		$maxPrice = is_object($maxPrice) ? $maxPrice->price : 0;
 
 		// сортировка
 		if($request->has('sortby')) {
@@ -241,7 +251,7 @@ class SiteController extends Controller
 				$query->orderBy($request->get('sortby'), $request->get('direction', 'DESC'));
 			}
 		} else {
-			$query->orderBy('popular', 'DESC');
+			$query->orderBy('popular', $request->get('direction', 'DESC'));
 		}
 		$query->orderBy('published_at', 'DESC');
 
@@ -253,7 +263,7 @@ class SiteController extends Controller
 		$products = $query->paginate($limit);
 
 		if(!$request->ajax()) {
-			return view('catalog', compact('page', 'products', 'subcategories'));
+			return view('catalog', compact('page', 'products', 'subcategories', 'maxPrice'));
 		} else {
 			return \Response::json([
 				'success' => true,
