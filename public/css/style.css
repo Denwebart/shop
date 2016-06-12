@@ -15257,6 +15257,7 @@ article .entry-content .banner::before {
 .products-col {
     width: auto;
     position: relative;
+    z-index: 1;
 }
 
 body.boxed .products-col {
@@ -15303,6 +15304,7 @@ body.boxed .products-col {
 
 .open .filters-col {
     position: relative;
+    z-index: 999;
 }
 
 .filters-col__close {

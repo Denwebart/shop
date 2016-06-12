@@ -317,6 +317,17 @@
 
     <script type="text/javascript">
 
+        // Filter collapse
+        jQuery(function($j) {
+
+            "use strict";
+
+            $j('.filters-col__collapse__title').click(function(e) {
+                e.preventDefault;
+                $j(this).parent('.filters-col__collapse').toggleClass('open');
+            })
+        });
+
         //Isotope
         jQuery(function($j) {
 
@@ -629,7 +640,7 @@
                         '{{ \Request::get("price", ['end' => $maxPrice])['end'] }}'
                     ],
                     connect: true,
-                    step: 1,
+                    step: 100,
                     range: {
                         'min': 0,
                         'max': {{ $maxPrice }}

@@ -612,21 +612,6 @@ jQuery(function($j) {
 
 });
 
-// Filter collapse
-
-jQuery(function($j) {
-
-    "use strict";
-
-
-    $j('.filters-col__collapse__title').click(function(e) {
-        e.preventDefault;
-        $j(this).parent('.filters-col__collapse').toggleClass('open');
-    })
-
-
-});
-
 // Box collapse - shopping cart
 
 jQuery(function($j) {
