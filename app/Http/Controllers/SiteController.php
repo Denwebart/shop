@@ -194,12 +194,7 @@ class SiteController extends Controller
 			])
 			->get(['id', 'parent_id', 'menu_title', 'title', 'alias']);
 
-		$subcategoryIds = $subcategories->pluck('id');
-
-		$subcategoryIds[] = $page->id;
-
 		$query = Product::select(\DB::raw('products.id, products.vendor_code, products.category_id, products.alias, products.is_published, products.title, products.price, products.image, products.image_alt, products.published_at, products.introtext, products.content, count(orders_products.id) as `popular`, SUM(products_reviews.rating) as `rating`'))
-			->whereIn('category_id', $subcategoryIds)
 			// sales (popular)
 			->leftJoin('orders_products', 'orders_products.product_id', '=', 'products.id')
 			->groupBy('products.id')
@@ -222,6 +217,25 @@ class SiteController extends Controller
 				},
 			]);
 
+		// покатегория
+		if($request->has('subcat') && $request->get('subcat')) {
+			$subcategoryIds = $page->publishedChildren()
+				->whereIn('alias', explode(',', $request->get('subcat')))
+				->pluck('id');
+		} else {
+			$subcategoryIds = $subcategories->pluck('id');
+			$subcategoryIds[] = $page->id;
+		}
+		$query->whereIn('category_id', $subcategoryIds);
+
+		// цена
+		if($request->has('price') && $request->get('price')) {
+			$price = $request->get('price');
+			$query->where('products.price', '>', $price['start'])
+				->where('products.price', '<', $price['end']);
+		}
+
+		// сортировка
 		if($request->has('sortby')) {
 			if(in_array($request->get('sortby'), Product::$sortingAttributes)) {
 				$query->orderBy($request->get('sortby'), $request->get('direction', 'DESC'));
@@ -231,6 +245,7 @@ class SiteController extends Controller
 		}
 		$query->orderBy('published_at', 'DESC');
 
+		// кол-во на странице
 		$limit = $request->has('onpage')
 			? $request->get('onpage')
 			: $request->cookie('catalog-onpage', 12);

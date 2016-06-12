@@ -98,7 +98,7 @@
                                     <ul class="filter-list">
                                         @foreach($subcategories as $subcategory)
                                             <li class="checkbox-group">
-                                                <input name="subcat[{{ $subcategory->id }}]" value="{{ $subcategory->alias }}" type="checkbox" id="subcategory_{{ $subcategory->id }}" class="ajax-checkbox">
+                                                <input name="subcat" data-value="{{ $subcategory->alias }}" type="checkbox" id="subcategory_{{ $subcategory->id }}" class="ajax-checkbox">
                                                 <label for="subcategory_{{ $subcategory->id }}">
                                                     <span class="check"></span>
                                                     <span class="box"></span>
@@ -111,6 +111,35 @@
                                 </div>
                             </div>
                         @endif
+                        <div class="filters-col__collapse open">
+                            <h4 class="filters-col__collapse__title text-uppercase">Цена</h4>
+                            <div class="filters-col__collapse__content">
+                                <div id="priceSlider" class="price-slider"></div>
+                            </div>
+                        </div>
+                        <div class="filters-col__collapse open">
+                            <h4 class="filters-col__collapse__title text-uppercase">Цена</h4>
+                            <div class="filters-col__collapse__content">
+                                <ul class="filter-list">
+                                    <li class="checkbox-group">
+                                        <input type="checkbox" id="checkBox7">
+                                        <label for="checkBox7">
+                                            <span class="check"></span>
+                                            <span class="box"></span>
+                                            0 руб. - 10 000 руб.
+                                        </label>
+                                    </li>
+                                    <li class="checkbox-group">
+                                        <input type="checkbox" id="checkBox8">
+                                        <label for="checkBox8">
+                                            <span class="check"></span>
+                                            <span class="box"></span>
+                                            10 000 руб. - 20 000 руб.
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                         <div class="filters-col__collapse open">
                             <h4 class="filters-col__collapse__title text-uppercase">Бренд</h4>
                             <div class="filters-col__collapse__content">
@@ -156,35 +185,6 @@
                                         </label>
                                     </li>
                                 </ul>
-                            </div>
-                        </div>
-                        <div class="filters-col__collapse open">
-                            <h4 class="filters-col__collapse__title text-uppercase">Цена</h4>
-                            <div class="filters-col__collapse__content">
-                                <ul class="filter-list">
-                                    <li class="checkbox-group">
-                                        <input type="checkbox" id="checkBox7">
-                                        <label for="checkBox7">
-                                            <span class="check"></span>
-                                            <span class="box"></span>
-                                            0 руб. - 10 000 руб.
-                                        </label>
-                                    </li>
-                                    <li class="checkbox-group">
-                                        <input type="checkbox" id="checkBox8">
-                                        <label for="checkBox8">
-                                            <span class="check"></span>
-                                            <span class="box"></span>
-                                            10 000 руб. - 20 000 руб.
-                                        </label>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="filters-col__collapse open">
-                            <h4 class="filters-col__collapse__title text-uppercase">Цена</h4>
-                            <div class="filters-col__collapse__content">
-                                <div id="priceSlider" class="price-slider"></div>
                             </div>
                         </div>
                         <div class="filters-col__collapse open">
@@ -359,8 +359,6 @@
                             });
                 }
             }
-
-
 
             $j('#showFilter').click(function(e) {
                 e.preventDefault();
@@ -624,6 +622,47 @@
             });
         });
 
+        // Price Slider initialize
+        jQuery(function($j) {
+
+            "use strict";
+
+            if ($j('.price-slider').length) {
+
+                var priceSlider = document.getElementById('priceSlider');
+
+                noUiSlider.create(priceSlider, {
+                    start: [0, '{{ round($products->max('price')) }}'],
+                    connect: true,
+                    step: 1,
+                    range: {
+                        'min': 0,
+                        'max': {{ round($products->max('price')) }}
+                    }
+                });
+                var tipHandles = priceSlider.getElementsByClassName('noUi-handle'),
+                        tooltips = [];
+
+                // Add divs to the slider handles.
+                for ( var i = 0; i < tipHandles.length; i++ ){
+                    tooltips[i] = document.createElement('div');
+                    tipHandles[i].appendChild(tooltips[i]);
+                }
+
+                tooltips[0].className += 'tooltip top';
+                tooltips[0].innerHTML = '<div class="tooltip-inner"><span></span><div class="tooltip-arrow"></div></div>';
+                tooltips[0] = tooltips[0].getElementsByTagName('span')[0];
+                tooltips[1].className += 'tooltip top';
+                tooltips[1].innerHTML = '<div class="tooltip-inner"><span></span><div class="tooltip-arrow"></div></div>';
+                tooltips[1] = tooltips[1].getElementsByTagName('span')[0];
+
+                // When the slider changes, write the value to the tooltips.
+                priceSlider.noUiSlider.on('update', function( values, handle ){
+                    tooltips[handle].innerHTML = Math.round(values[handle]);
+                });
+            }
+        });
+
         // Ajax-фильтры
         jQuery(function($j) {
 
@@ -660,6 +699,7 @@
                 });
             }
 
+            // направление сортировки
             $j(document).on('click', '.sort-direction', function (e) {
 
                 addLoader('.outer');
@@ -670,6 +710,7 @@
                 sortingAjax(name, value);
             });
 
+            // сортировка
             $j(document).on('change', '.ajax-sort', function (e) {
 
                 addLoader('.outer');
@@ -680,14 +721,32 @@
                 sortingAjax(name, value);
             });
 
+            // фильтры (checkbox)
             $j(document).on('change', '.ajax-checkbox', function (e) {
 
                 addLoader('.outer');
 
-                var name = $j(this).attr('name'),
-                    value = $j(this).val();
+                var name = $j(this).attr('name');
+                var value = '';
+
+                $j.each($j('[name="'+ name +'"]'), function(index, element) {
+                    if($j(element).is(':checked')) {
+                        if(value) {
+                            value = value + ',' + $j(element).data('value');
+                        } else {
+                            value = $j(element).data('value');
+                        }
+                    }
+                });
 
                 sortingAjax(name, value);
+            });
+
+            // цена
+            priceSlider.noUiSlider.on('change', function(sliderValue) {
+                addLoader('.outer');
+
+                sortingAjax('price', {'start': sliderValue[0], 'end': sliderValue[1]});
             });
         });
     </script>

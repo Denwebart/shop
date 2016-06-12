@@ -209,50 +209,6 @@ jQuery(function($j) {
 
 });
 
-
-// Price Slider initialize
-
-jQuery(function($j) {
-
-    "use strict";
-	
-	if ($j('.price-slider').length) {
-	
-	var priceSlider = document.getElementById('priceSlider');
-
-	noUiSlider.create(priceSlider, {
-		start: [5000, 14000],
-		connect: true,
-		step: 1,
-		range: {
-			'min': 0,
-			'max': 20000
-		}
-	});
-	var tipHandles = priceSlider.getElementsByClassName('noUi-handle'),
-		tooltips = [];
-
-	// Add divs to the slider handles.
-	for ( var i = 0; i < tipHandles.length; i++ ){
-		tooltips[i] = document.createElement('div');
-		tipHandles[i].appendChild(tooltips[i]);
-	}
-
-	tooltips[0].className += 'tooltip top';
-	tooltips[0].innerHTML = '<div class="tooltip-inner"><span></span><div class="tooltip-arrow"></div></div>';
-	tooltips[0] = tooltips[0].getElementsByTagName('span')[0];
-	tooltips[1].className += 'tooltip top';
-	tooltips[1].innerHTML = '<div class="tooltip-inner"><span></span><div class="tooltip-arrow"></div></div>';
-	tooltips[1] = tooltips[1].getElementsByTagName('span')[0];
-
-	// When the slider changes, write the value to the tooltips.
-	priceSlider.noUiSlider.on('update', function( values, handle ){
-		tooltips[handle].innerHTML = Math.round(values[handle]);
-	});
-	}
-
-});
-
 // Back to top button
 
 jQuery(function($j) {
