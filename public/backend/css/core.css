@@ -463,6 +463,9 @@ a:focus {
   padding: 0px 5px;
   display: inline-block;
 }
+.card-box.tab-content {
+    box-shadow: none;
+}
 /* Grid page */
 .grid-structure .grid-container {
   background-color: #f4f8fb;

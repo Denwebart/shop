@@ -31,4 +31,14 @@ class Property extends Model
 	protected $fillable = [
 		'title',
 	];
+
+	/**
+	 * Values
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function values()
+	{
+		return $this->hasMany('App\Models\PropertyValue', 'property_id');
+	}
 }

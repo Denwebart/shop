@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ProductPropertyValue extends Model
 {
-	protected $table = 'products_properties_values';
+	protected $table = 'products_property_values';
 
 	public $timestamps = false;
 

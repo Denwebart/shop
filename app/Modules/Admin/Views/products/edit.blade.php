@@ -40,13 +40,26 @@ View::share('title', $title);
 
     <div class="row">
         <div class="col-lg-12">
-            <div class="card-box">
-                {!! Form::model($product, ['route' => ['admin.products.update', $product->id], 'class' => 'form-horizontal', 'id' => 'main-form', 'files' => true]) !!}
-                    {!! Form::hidden('_method', 'PUT') !!}
+            <ul class="nav nav-tabs nav-justified">
+                <li role="presentation" class="active">
+                    <a href="#product-info" role="tab" data-toggle="tab">Основная информация</a>
+                </li>
+                <li role="presentation">
+                    <a href="#product-property" role="tab" data-toggle="tab">Характеристики товара</a>
+                </li>
+            </ul>
+            <div class="tab-content card-box">
+                <div role="tabpanel" class="tab-pane fade in active" id="product-info">
+                    {!! Form::model($product, ['route' => ['admin.products.update', $product->id], 'class' => 'form-horizontal', 'id' => 'main-form', 'files' => true]) !!}
+                        {!! Form::hidden('_method', 'PUT') !!}
 
-                    @include('admin::products.form')
+                        @include('admin::products.form')
 
-                {!! Form::close() !!}
+                    {!! Form::close() !!}
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="product-property">
+                    @include('admin::productProperties.index', ['productProperties' => $product->getProperties()])
+                </div>
             </div>
         </div><!-- end col -->
     </div>

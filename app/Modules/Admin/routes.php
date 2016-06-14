@@ -39,6 +39,10 @@ Route::group(['module' => 'Admin', 'prefix' => 'admin', 'middleware' => 'web', '
 	Route::post('delivery/add/', ['as' => 'admin.deliveryTypes.add', 'uses' => 'DeliveryTypesController@add']);
 	Route::post('delivery/remove/', ['as' => 'admin.deliveryTypes.remove', 'uses' => 'DeliveryTypesController@remove']);
 
+	Route::post('product_properties/set_value/', ['as' => 'admin.productProperties.setValue', 'uses' => 'ProductPropertiesController@setValue']);
+	Route::post('product_properties/add/', ['as' => 'admin.productProperties.add', 'uses' => 'ProductPropertiesController@add']);
+	Route::post('product_properties/remove/', ['as' => 'admin.productProperties.remove', 'uses' => 'ProductPropertiesController@remove']);
+
 	Route::post('settings/upload_image/', ['as' => 'admin.settings.uploadImage', 'uses' => 'SettingsController@uploadImage']);
 	Route::post('settings/delete_image/', ['as' => 'admin.settings.deleteImage', 'uses' => 'SettingsController@deleteImage']);
 	Route::post('settings/set_is_active/', ['as' => 'admin.settings.setIsActive', 'uses' => 'SettingsController@setIsActive']);

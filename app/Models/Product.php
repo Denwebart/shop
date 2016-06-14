@@ -239,6 +239,31 @@ class Product extends Model
 			->where('published_at', '<=', Carbon::now());
 	}
 
+	/**
+	 * @return mixed
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+//	public function getGroupedProperties()
+//	{
+//		$productPropertyValues = $this->belongsToMany('App\Models\PropertyValue', 'products_property_values')
+//			->leftJoin('properties', 'property_values.property_id', '=', 'properties.id')->get();
+//
+//		foreach ($productPropertyValues as $item) {
+//
+//		}
+//		return
+//	}
+
+    public function getProperties()
+    {
+	    return Property::with(['values' => function ($q) {
+		    $q->leftJoin('products_property_values', 'products_property_values.property_value_id', '=', 'property_values.id')
+			    ->where('products_property_values.product_id', '=', $this->id);
+	    }])->get();
+    }
+
 	public function getTitle()
 	{
 		return $this->title;

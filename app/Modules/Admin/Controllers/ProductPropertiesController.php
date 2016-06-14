@@ -1,6 +1,6 @@
 <?php
 /**
- * Class DeliveryTypesController
+ * Class ProductPropertiesController
  *
  * @author     It Hill (it-hill.com@yandex.ua)
  * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
@@ -11,7 +11,7 @@ namespace App\Modules\Admin\Controllers;
 use App\Models\DeliveryType;
 use Illuminate\Http\Request;
 
-class DeliveryTypesController extends Controller
+class ProductPropertiesController extends Controller
 {
 	/**
 	 * Add new
