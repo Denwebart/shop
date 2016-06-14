@@ -98,7 +98,7 @@
                                     <ul class="filter-list">
                                         @foreach($subcategories as $subcategory)
                                             <li class="checkbox-group">
-                                                <input name="subcat" data-value="{{ $subcategory->alias }}" type="checkbox" id="subcategory_{{ $subcategory->id }}" class="ajax-checkbox">
+                                                <input name="subcat" data-value="{{ $subcategory->alias }}" type="checkbox" @if(in_array($subcategory->alias, explode(',', \Request::get('subcat')))) checked @endif id="subcategory_{{ $subcategory->id }}" class="ajax-checkbox">
                                                 <label for="subcategory_{{ $subcategory->id }}">
                                                     <span class="check"></span>
                                                     <span class="box"></span>
