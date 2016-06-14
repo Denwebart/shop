@@ -237,13 +237,12 @@ class SiteController extends Controller
 		// максимальная цена
 		$subcat = $subcategories->pluck('id');
 		$subcat[] = $page->id;
-		$maxPrice = Product::select(['id', 'price'])
+		$rangePrice = Product::select(['id', 'price'])
 			->whereIn('category_id', $subcat)
 			->where('products.is_published', '=', 1)
 			->where('products.published_at', '<=', Carbon::now())
 			->orderBy('price', 'DESC')
-			->first();
-		$maxPrice = is_object($maxPrice) ? $maxPrice->price : 0;
+			->get();
 
 		// сортировка
 		if($request->has('sortby')) {
@@ -263,7 +262,7 @@ class SiteController extends Controller
 		$products = $query->paginate($limit);
 
 		if(!$request->ajax()) {
-			return view('catalog', compact('page', 'products', 'subcategories', 'maxPrice'));
+			return view('catalog', compact('page', 'products', 'subcategories', 'rangePrice'));
 		} else {
 			return \Response::json([
 				'success' => true,

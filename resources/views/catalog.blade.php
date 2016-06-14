@@ -140,53 +140,25 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="filters-col__collapse open">
-                            <h4 class="filters-col__collapse__title text-uppercase">Бренд</h4>
-                            <div class="filters-col__collapse__content">
-                                <ul class="filter-list">
-                                    <li class="checkbox-group">
-                                        <input type="checkbox" id="checkBox1">
-                                        <label for="checkBox1">
-                                            <span class="check"></span>
-                                            <span class="box"></span>
-                                            Mango (2)
-                                        </label>
-                                    </li>
-                                    <li class="checkbox-group">
-                                        <input type="checkbox" id="checkBox2">
-                                        <label for="checkBox2">
-                                            <span class="check"></span>
-                                            <span class="box"></span>
-                                            Vero Moda (8)
-                                        </label>
-                                    </li>
-                                    <li class="checkbox-group">
-                                        <input type="checkbox" id="checkBox3">
-                                        <label for="checkBox3">
-                                            <span class="check"></span>
-                                            <span class="box"></span>
-                                            H.E. by Mango (11)
-                                        </label>
-                                    </li>
-                                    <li class="checkbox-group">
-                                        <input type="checkbox" id="checkBox5">
-                                        <label for="checkBox5">
-                                            <span class="check"></span>
-                                            <span class="box"></span>
-                                            Gant (12)
-                                        </label>
-                                    </li>
-                                    <li class="checkbox-group">
-                                        <input type="checkbox" id="checkBox6">
-                                        <label for="checkBox6">
-                                            <span class="check"></span>
-                                            <span class="box"></span>
-                                            L.B.D (2)
-                                        </label>
-                                    </li>
-                                </ul>
+                        @foreach(\App\Models\Property::get() as $property)
+                            <div class="filters-col__collapse open">
+                                <h4 class="filters-col__collapse__title text-uppercase">{{ $property->title }}</h4>
+                                <div class="filters-col__collapse__content">
+                                    <ul class="filter-list">
+                                        @foreach($property->values as $value)
+                                            <li class="checkbox-group">
+                                                <input type="checkbox" id="checkBox1">
+                                                <label for="checkBox1">
+                                                    <span class="check"></span>
+                                                    <span class="box"></span>
+                                                    {{ $value->value }}
+                                                </label>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
+                        @endforeach
                         <div class="filters-col__collapse open">
                             <h4 class="filters-col__collapse__title text-uppercase">Цвет</h4>
                             <div class="filters-col__collapse__content">
@@ -636,14 +608,14 @@
 
                 noUiSlider.create(priceSlider, {
                     start: [
-                        '{{ \Request::get("price", ['start' => 0])['start'] }}',
-                        '{{ \Request::get("price", ['end' => $maxPrice])['end'] }}'
+                        '{{ \Request::get("price", ['start' => $rangePrice->min('price')])['start'] }}',
+                        '{{ \Request::get("price", ['end' => $rangePrice->max('price')])['end'] }}'
                     ],
                     connect: true,
                     step: 100,
                     range: {
                         'min': 0,
-                        'max': {{ $maxPrice }}
+                        'max': {{ $rangePrice->max('price') }}
                     }
                 });
                 var tipHandles = priceSlider.getElementsByClassName('noUi-handle'),
