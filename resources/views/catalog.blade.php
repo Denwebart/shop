@@ -673,6 +673,10 @@
                             window.history.pushState({parent: response.pageUrl}, '', response.pageUrl);
                             url = response.pageUrl;
                         }
+                    },
+                    error: function (response) {
+                        removeLoader('.outer');
+                        alert('Произошла ошибка: неверный запрос. Перезагрузите станицу и попробуйте еще раз.');
                     }
                 });
             }

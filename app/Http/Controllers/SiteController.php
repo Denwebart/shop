@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Settings;
+use App\Helpers\Str;
 use App\Models\Letter;
 use App\Models\Page;
 use App\Models\Product;
@@ -309,7 +310,6 @@ class SiteController extends Controller
 			? $request->get('onpage')
 			: $request->cookie('catalog-onpage', 12);
 
-//		dd($query->toSql());
 		$products = $query->paginate($limit);
 
 		if(!$request->ajax()) {

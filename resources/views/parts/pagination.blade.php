@@ -5,6 +5,7 @@
  */
 
 $data = isset($data) ? $data : (Request::all() ? Request::all() : []);
+$data = array_filter($data);
 ?>
 
 {!! $models->appends($data)->links() !!}
