@@ -147,8 +147,8 @@
                                     <ul class="filter-list">
                                         @foreach($property->values as $value)
                                             <li class="checkbox-group">
-                                                <input type="checkbox" id="checkBox1">
-                                                <label for="checkBox1">
+                                                <input name="{{ $property->title }}" data-value="{{ $value->value }}" type="checkbox" @if(in_array($value->value, explode(',', \Request::get($property->title)))) checked @endif id="property_value_{{ $value->id }}" class="ajax-checkbox">
+                                                <label for="property_value_{{ $value->id }}">
                                                     <span class="check"></span>
                                                     <span class="box"></span>
                                                     {{ $value->value }}

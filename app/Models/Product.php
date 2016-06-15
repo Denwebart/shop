@@ -245,16 +245,10 @@ class Product extends Model
 	 * @author     It Hill (it-hill.com@yandex.ua)
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
-//	public function getGroupedProperties()
-//	{
-//		$productPropertyValues = $this->belongsToMany('App\Models\PropertyValue', 'products_property_values')
-//			->leftJoin('properties', 'property_values.property_id', '=', 'properties.id')->get();
-//
-//		foreach ($productPropertyValues as $item) {
-//
-//		}
-//		return
-//	}
+	public function productProperties()
+	{
+		return $this->belongsToMany('App\Models\PropertyValue', 'products_property_values');
+	}
 
     public function getProperties()
     {

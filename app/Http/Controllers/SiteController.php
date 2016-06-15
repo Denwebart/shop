@@ -12,6 +12,7 @@ use App\Helpers\Settings;
 use App\Models\Letter;
 use App\Models\Page;
 use App\Models\Product;
+use App\Models\Property;
 use App\Models\RequestedCall;
 use App\Models\Setting;
 use App\Widgets\Articles\Articles;
@@ -234,7 +235,7 @@ class SiteController extends Controller
 			$query->where('products.price', '>=', $price['start'])
 				->where('products.price', '<=', $price['end']);
 		}
-		// максимальная цена
+		// максимальная/минимальная цена
 		$subcat = $subcategories->pluck('id');
 		$subcat[] = $page->id;
 		$rangePrice = Product::select(['id', 'price'])
@@ -243,6 +244,55 @@ class SiteController extends Controller
 			->where('products.published_at', '<=', Carbon::now())
 			->orderBy('price', 'DESC')
 			->get();
+
+		// фильтрация по характеристикам (properties)
+		if($request->all()) {
+			$properties = Property::whereIn('title', array_flip($request->except('price')))->get();
+		}
+
+		if(isset($properties)) {
+			/*
+			select products.*, count(orders_products.id) as `popular`, SUM(products_reviews.rating) as `rating` from `products`
+			left join `orders_products` on `orders_products`.`product_id` = `products`.`id`
+			left join `products_reviews` on `products_reviews`.`product_id` = `products`.`id`
+			where ((`products_reviews`.`is_published` = 1 and `products_reviews`.`parent_id` = 0) or `products_reviews`.`id` is null)
+			and `products`.`is_published` = 1 and `category_id` in (4, 12, 13)
+						and exists (
+							select * from `property_values`
+			    inner join `products_property_values` on `property_values`.`id` = `products_property_values`.`property_value_id`
+			    where `products_property_values`.`product_id` = `products`.`id`
+						and (`property_values`.`property_id` = 1 and `property_values`.`value` = 'Красный')
+						and (`property_values`.`property_id` = 2 and `property_values`.`value` = 'ДолькиБанана')
+			)
+			group by `products`.`id` order by `popular` desc, `published_at` desc
+			*/
+
+			foreach ($properties as $property) {
+				$query->whereHas('productProperties', function ($qu) use($properties, $request, $property) {
+					if($request->has($property->title)) {
+						$propertyValues = explode(',', $request->get($property->title));
+						$qu->where(function ($q) use($property, $propertyValues) {
+							$q->where('property_values.property_id', '=', $property->id);
+							$i = 0;
+							foreach ($propertyValues as $value) {
+								if(!$i) {
+									$q->where('property_values.value', '=', $value);
+								} else {
+									$q->orWhere('property_values.value', '=', $value);
+								}
+								$i++;
+							}
+						});
+					}
+				});
+			}
+
+			/* или */
+//			$query->leftJoin('products_property_values', 'products_property_values.product_id', '=', 'products.id')
+//				->leftJoin('property_values', 'property_values.id', '=', 'products_property_values.property_value_id')
+//				->leftJoin('properties', 'properties.id', '=', 'property_values.property_id');
+
+		}
 
 		// сортировка
 		if($request->has('sortby')) {
@@ -259,6 +309,7 @@ class SiteController extends Controller
 			? $request->get('onpage')
 			: $request->cookie('catalog-onpage', 12);
 
+//		dd($query->toSql());
 		$products = $query->paginate($limit);
 
 		if(!$request->ajax()) {
