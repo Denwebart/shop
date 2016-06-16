@@ -11,14 +11,15 @@ class ServiceProvider extends  \Illuminate\Support\ServiceProvider
 	public function boot()
 	{
 		$widgets = config("widget.widgets");
-		while (list(,$widget) = each($widgets)) {
-			if(is_dir(__DIR__.'/'.$widget.'/Views')) {
-				$this->loadViewsFrom(__DIR__.'/'.$widget.'/Views', 'widget.' . $widget);
+		while(list(,$widget) = each($widgets)) {
+			if(is_dir(__DIR__. '/' . $widget . '/Views')) {
+				$this->loadViewsFrom(__DIR__. '/'. ucfirst($widget) . '/Views', 'widget.' . $widget);
 			}
 		}
 	}
 	
-	public function register(){
+	public function register()
+	{
 		
 	}
 }
