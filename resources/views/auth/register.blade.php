@@ -1,9 +1,18 @@
+<?php
+/**
+ * @author     It Hill (it-hill.com@yandex.ua)
+ * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+ */
+$title = 'Регистрация';
+View::share('title', $title);
+?>
+
 @extends('layouts.login')
 
 @section('content')
     <div class="m-t-40 card-box">
         <div class="text-center">
-            <h4 class="text-uppercase font-bold m-b-0">Регистрация</h4>
+            <h4 class="text-uppercase font-bold m-b-0">{{ $title }}</h4>
         </div>
         <div class="panel-body">
             <form method="POST" class="form-horizontal m-t-20" action="{{ url('/register') }}">

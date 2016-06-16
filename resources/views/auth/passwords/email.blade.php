@@ -1,3 +1,12 @@
+<?php
+/**
+ * @author     It Hill (it-hill.com@yandex.ua)
+ * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+ */
+$title = 'Восстановление пароля';
+View::share('title', $title);
+?>
+
 @extends('layouts.login')
 
 <!-- Main Content -->
@@ -12,7 +21,7 @@
             </div>
         @else
             <div class="text-center">
-                <h4 class="text-uppercase font-bold m-b-0">Восстановление пароля</h4>
+                <h4 class="text-uppercase font-bold m-b-0">{{ $title }}</h4>
 
                 <p class="text-muted m-b-0 font-13 m-t-20">
                     Введите Ваш email-адрес для получения письма со ссылкой для смены пароля.
@@ -41,6 +50,15 @@
                             <button class="btn btn-custom btn-bordred btn-block waves-effect waves-light" type="submit">
                                 Отправить письмо
                             </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-t-30 m-b-0">
+                        <div class="col-sm-12">
+                            <a href="{{ url('login') }}" class="text-muted">
+                                <i class="fa fa-sign-out m-r-5"></i>
+                                Вход
+                            </a>
                         </div>
                     </div>
 

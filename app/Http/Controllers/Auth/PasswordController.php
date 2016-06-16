@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\Settings;
 use App\Http\Controllers\Controller;
+use App\Models\Setting;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
 class PasswordController extends Controller
@@ -24,8 +26,9 @@ class PasswordController extends Controller
      * Create a new password controller instance.
      *
      */
-    public function __construct()
+    public function __construct(Settings $settings)
     {
+	    \View::share('siteSettings', $settings->getCategory(Setting::CATEGORY_SITE));
         $this->middleware('guest');
     }
 }

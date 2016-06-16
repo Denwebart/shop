@@ -3,10 +3,20 @@
 <head>
     <!-- Basic -->
     <meta charset="utf-8">
+    <meta name="robots" content="@if(isset($siteSettings['meta']) && isset($siteSettings['meta']['robots']) && is_object($siteSettings['meta']['robots'])) {{ $siteSettings['meta']['robots']->value }} @else noindex,nofollow @endif">
     <title>{{ $page->getMetaTitle() }}</title>
     <meta name="description" content="{{ $page->getMetaDesc() }}">
     <meta name="keywords" content="{{ $page->getMetaKey() }}"/>
-    <meta name="author" content="it-hill.com">
+
+    @if(isset($siteSettings['meta']))
+        @if(isset($siteSettings['meta']['author']) && is_object($siteSettings['meta']['author']))
+            <meta name="author" lang="ru" content="{{ $siteSettings['meta']['author']->value }}">
+        @endif
+        @if(isset($siteSettings['meta']['copyright']) && is_object($siteSettings['meta']['copyright']))
+            <meta name="copyright" lang="ru" content="{{ $siteSettings['meta']['copyright']->value }}" />
+        @endif
+    @endif
+
     <meta name="csrf-token" content="{!! csrf_token() !!}">
 
     <link rel="shortcut icon" href="{{ asset('images/favicons/favicon.ico') }}">
@@ -137,10 +147,10 @@
                         <div class="dropdown">
                             <a href="#" class="btn dropdown-toggle btn--links--dropdown header__dropdowns__button" data-toggle="dropdown" aria-expanded="false">
                                 <span class="header__dropdowns__button__text">Цены в: </span>
-                                            <span class="header__dropdowns__button__symbol">
-                                                <span class="currency__item__symbol">₽</span>
-                                                <span class="currency__item__title">(рублях)</span>
-                                            </span>
+                                <span class="header__dropdowns__button__symbol">
+                                    <span class="currency__item__symbol">₽</span>
+                                    <span class="currency__item__title">(рублях)</span>
+                                </span>
                                 <span class="caret caret--dots"></span>
                             </a>
                             <ul class="dropdown-menu animated fadeIn" role="menu">

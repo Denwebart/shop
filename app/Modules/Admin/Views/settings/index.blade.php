@@ -110,6 +110,33 @@ View::share('title', $title);
                             </div>
                         @endforeach
                     {!! Form::close() !!}
+
+                    <!-- Мета-данные -->
+                    <h4 class="header-title m-t-0 m-b-10"><b>Мета-теги</b></h4>
+                    <p class="text-muted font-13 m-b-15">
+                        Предназначены исключительно для поисковых систем.
+                        Не отображаются на странице сайта.
+                    </p>
+                    <div class="form-horizontal form-editable">
+                        @foreach($settings[\App\Models\Setting::CATEGORY_SITE]['meta'] as $key => $setting)
+                            <div class="form-group">
+                                <label class="col-md-3 col-sm-3 control-label" title="{{ $setting->description }}" data-toggle="tooltip">
+                                    {{ $setting->title }}
+                                </label>
+                                <div class="col-md-7 col-sm-7">
+                                    <a href="#" class="editable-text" data-value="{{ $setting->value }}" data-type="text" data-pk="{{ $setting->id }}">
+                                        {{ $setting->value }}
+                                    </a>
+                                </div>
+                                <div class="col-md-2 col-sm-2">
+                                    <div class="switchery-demo">
+                                        {!! Form::hidden('is_active', 0) !!}
+                                        {!! Form::checkbox('is_active', 1, $setting->is_active, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-url' => route('admin.settings.setIsActive'), 'data-color' => '#3bafda', 'data-size' => 'small', 'data-id' => $setting->id]) !!}
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
 
