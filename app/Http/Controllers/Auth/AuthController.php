@@ -39,7 +39,7 @@ class AuthController extends Controller
     public function __construct(Settings $settings)
     {
 	    \View::share('siteSettings', $settings->getCategory(Setting::CATEGORY_SITE));
-        $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
+        $this->middleware($this->guestMiddleware(), ['except' => ['logout', 'getLogout']]);
     }
 
     /**
