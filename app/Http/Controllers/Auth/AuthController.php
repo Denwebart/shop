@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\Settings;
+use App\Models\Setting;
 use App\Models\User;
 use Validator;
 use App\Http\Controllers\Controller;
@@ -34,8 +36,9 @@ class AuthController extends Controller
      * Create a new authentication controller instance.
      *
      */
-    public function __construct()
+    public function __construct(Settings $settings)
     {
+	    \View::share('siteSettings', $settings->getCategory(Setting::CATEGORY_SITE));
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
     }
 

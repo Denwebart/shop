@@ -45,8 +45,18 @@
 <div class="wrapper-page">
 
     <div class="text-center">
-        <a href="index.html" class="logo"><span>Admin<span>to</span></span></a>
-        <h5 class="text-muted m-t-0 font-600">Интернет-магазин верхней одежды</h5>
+        <a href="{{ url('/') }}" class="logo">
+            @if(isset($siteSettings['logo']))
+                @if(isset($siteSettings['logo']['main']) && is_object($siteSettings['logo']['main']))
+                    <img class="logo-default" src="{{ asset('images/'. $siteSettings['logo']['main']->value) }}" alt=""/>
+                @endif
+            @endif
+        </a>
+        @if(isset($siteSettings['siteTitle']) && is_object($siteSettings['siteTitle']))
+            <h5 class="text-muted m-t-0 font-600">
+                {{ $siteSettings['siteTitle']->value }}
+            </h5>
+        @endif
     </div>
 
     @yield('content')
