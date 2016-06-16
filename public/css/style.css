@@ -15457,6 +15457,14 @@ body.boxed .products-col {
     .filters-col__select label {
         width: 110px;
     }
+
+    .outer #filtersCol .filters-col__select .icon {
+        color: #ffffff;
+        opacity: 0.5;
+    }
+    .outer #filtersCol .filters-col__select .icon.active {
+        opacity: 1.0;
+    }
 }
 
 .filters-by-category ul {

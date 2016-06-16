@@ -61,8 +61,8 @@
                             <option value="rating" @if(\Request::get('sortby') == 'rating') selected @endif>рейтингу</option>
                             <option value="popular" @if(\Request::get('sortby') == 'popular' || !\Request::has('sortby')) selected @endif>популярности</option>
                         </select>
-                        <a href="javascript:void(0)" class="icon icon-arrow-down m-l-10 active sort-direction" data-value="desc" rel="nofollow" title="По убыванию" data-toggle="tooltip"></a>
-                        <a href="javascript:void(0)" class="icon icon-arrow-up sort-direction" data-value="asc" rel="nofollow" title="По возростанию" data-toggle="tooltip"></a>
+                        <a href="javascript:void(0)" class="icon icon-arrow-down m-l-10 @if(\Request::get('direction') == 'desc' || !\Request::has('direction')) active @endif sort-direction" data-value="desc" rel="nofollow" title="По убыванию" data-toggle="tooltip"></a>
+                        <a href="javascript:void(0)" class="icon icon-arrow-up @if(\Request::get('direction') == 'asc') active @endif sort-direction" data-value="asc" rel="nofollow" title="По возростанию" data-toggle="tooltip"></a>
                     </div>
                 </div>
             </div>
@@ -88,8 +88,11 @@
                                 <option value="rating" @if(\Request::get('sortby') == 'rating') selected @endif>рейтингу</option>
                                 <option value="popular" @if(\Request::get('sortby') == 'popular' || !\Request::has('sortby')) selected @endif>популярности</option>
                             </select>
-                            <a href="javascript:void(0)" class="icon icon-arrow-down m-l-10 active sort-direction" data-value="desc" rel="nofollow" title="По убыванию" data-toggle="tooltip"></a>
-                            <a href="javascript:void(0)" class="icon icon-arrow-up sort-direction" data-value="asc" rel="nofollow" title="По возростанию" data-toggle="tooltip"></a>
+                            <a href="javascript:void(0)" class="icon icon-arrow-down m-l-10 @if(\Request::get('direction') == 'desc' || !\Request::has('direction')) active @endif sort-direction" data-value="desc" rel="nofollow" title="По убыванию" data-toggle="tooltip"></a>
+                            <a href="javascript:void(0)" class="icon icon-arrow-up @if(\Request::get('direction') == 'asc') active @endif sort-direction" data-value="asc" rel="nofollow" title="По возростанию" data-toggle="tooltip"></a>
+                        </div>
+                        <div class="filters-col__collapse open">
+                            <a href="#" class="reset-filters">Сбросить фильтры</a>
                         </div>
                         @if(count($subcategories))
                             <div class="filters-col__collapse open">
@@ -683,8 +686,11 @@
 
             // направление сортировки
             $j(document).on('click', '.sort-direction', function (e) {
+                var value = $j(this).data('value');
                 addLoader('.outer');
-                sortingAjax('direction', $j(this).data('value'));
+                sortingAjax('direction', value);
+                $j('.sort-direction').removeClass('active');
+                $j('.sort-direction[data-value="'+ value +'"]').addClass('active');
             });
 
             // сортировка
@@ -714,6 +720,13 @@
             priceSlider.noUiSlider.on('change', function(sliderValue) {
                 addLoader('.outer');
                 sortingAjax('price', {'start': sliderValue[0], 'end': sliderValue[1]});
+            });
+
+            // Сброс фильтров
+            $j(document).on('click', '.reset-filters', function (e) {
+                addLoader('.outer');
+                sortingAjax('reset-filters', true);
+                //очистка чекбоксов
             });
         });
     </script>

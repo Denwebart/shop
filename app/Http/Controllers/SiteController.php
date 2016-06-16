@@ -219,6 +219,12 @@ class SiteController extends Controller
 				},
 			]);
 
+		// сброс фильтров
+		if($request->has('reset-filters') && $request->get('reset-filters')) {
+			$url = url($request->decodedPath());
+			dd($url);
+		}
+
 		// покатегория
 		if($request->has('subcat') && $request->get('subcat')) {
 			$subcategoryIds = $page->publishedChildren()
@@ -319,7 +325,7 @@ class SiteController extends Controller
 				'success' => true,
 				'productsListHtml' => view('parts.productsList', compact('products'))->render(),
 				'countHtml' => view('parts.count')->with('models', $products)->render(),
-				'pageUrl' => $products->url($request->get('page', 1)),
+				'pageUrl' => isset($url) ? $url : $products->url($request->get('page', 1)),
 			])->withCookie(cookie()->forever('catalog-onpage', $limit));
 		}
 	}
