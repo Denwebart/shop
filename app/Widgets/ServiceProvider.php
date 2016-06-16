@@ -12,7 +12,7 @@ class ServiceProvider extends  \Illuminate\Support\ServiceProvider
 	{
 		$widgets = config("widget.widgets");
 		while(list(,$widget) = each($widgets)) {
-			if(is_dir(__DIR__. '/' . $widget . '/Views')) {
+			if(is_dir(__DIR__. '/' . ucfirst($widget) . '/Views')) {
 				$this->loadViewsFrom(__DIR__. '/'. ucfirst($widget) . '/Views', 'widget.' . $widget);
 			}
 		}
