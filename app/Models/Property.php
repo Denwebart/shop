@@ -24,6 +24,19 @@ class Property extends Model
 	public $timestamps = false;
 
 	/**
+	 * Тип (значение поля type)
+	 */
+	const TYPE_CHECKBOX = 0;
+	const TYPE_COLOR    = 1;
+	const TYPE_BUTTON   = 2;
+
+	public static $types = [
+		self::TYPE_CHECKBOX => 'Стандартная',
+		self::TYPE_COLOR    => 'Цвет',
+		self::TYPE_BUTTON   => 'Кнопка',
+	];
+
+	/**
 	 * The attributes that are mass assignable.
 	 *
 	 * @var array

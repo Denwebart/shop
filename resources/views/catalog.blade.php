@@ -151,60 +151,44 @@
                             <div class="filters-col__collapse open">
                                 <h4 class="filters-col__collapse__title text-uppercase">{{ $property->title }}</h4>
                                 <div class="filters-col__collapse__content">
-                                    <ul class="filter-list">
-                                        @foreach($property->values as $value)
-                                            <li class="checkbox-group">
-                                                <input name="{{ $property->title }}" data-value="{{ $value->value }}" type="checkbox" @if(in_array($value->value, explode(',', \Request::get($property->title)))) checked @endif id="property_value_{{ $value->id }}" class="ajax-checkbox">
-                                                <label for="property_value_{{ $value->id }}">
-                                                    <span class="check"></span>
-                                                    <span class="box"></span>
-                                                    {{ $value->value }}
-                                                </label>
-                                            </li>
-                                        @endforeach
-                                    </ul>
+                                    @if($property->type == \App\Models\Property::TYPE_COLOR)
+                                        <ul class="filter-list">
+                                            @foreach($property->values as $value)
+                                                <li>
+                                                    <a href="#" data-property="{{ $property->title }}" data-value="{{ $value->value }}" class="ajax-filter-link @if(in_array($value->value, explode(',', \Request::get($property->title)))) active @endif">
+                                                        <span class="color-icon color" style="background: {{ $value->additional_value or '#ffffff' }}"></span>
+                                                        {{ $value->value }}
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @elseif($property->type == \App\Models\Property::TYPE_BUTTON)
+                                        <ul class="tags-list">
+                                            @foreach($property->values as $value)
+                                                <li>
+                                                    <a href="#" data-property="{{ $property->title }}" data-value="{{ $value->value }}" class="ajax-filter-link @if(in_array($value->value, explode(',', \Request::get($property->title)))) active @endif">
+                                                        {{ $value->value }}
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        <ul class="filter-list">
+                                            @foreach($property->values as $value)
+                                                <li class="checkbox-group">
+                                                    <input name="{{ $property->title }}" data-value="{{ $value->value }}" type="checkbox" @if(in_array($value->value, explode(',', \Request::get($property->title)))) checked @endif id="property_value_{{ $value->id }}" class="ajax-checkbox">
+                                                    <label for="property_value_{{ $value->id }}">
+                                                        <span class="check"></span>
+                                                        <span class="box"></span>
+                                                        {{ $value->value }}
+                                                    </label>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @endif
                                 </div>
                             </div>
                         @endforeach
-                        <div class="filters-col__collapse open">
-                            <h4 class="filters-col__collapse__title text-uppercase">Цвет</h4>
-                            <div class="filters-col__collapse__content">
-                                <ul class="filter-list">
-                                    <li>
-                                        <a href="#">
-                                            <span class="color-icon">
-                                                <img src="/images/colors/blue.png" alt=""/>
-                                            </span>
-                                            Синий (9)
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="color-icon">
-                                                <img src="/images/colors/red.png" alt=""/>
-                                            </span>
-                                            Красный (2)
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="color-icon">
-                                                <img src="/images/colors/yellow.png" alt=""/>
-                                            </span>
-                                            Желтый (7)
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="color-icon">
-                                                <img src="/images/colors/grey.png" alt=""/>
-                                            </span>
-                                            Серый (1)
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
                         {{--<div class="filters-col__collapse open">--}}
                             {{--<h4 class="filters-col__collapse__title text-uppercase">Размер</h4>--}}
                             {{--<div class="filters-col__collapse__content">--}}
@@ -252,18 +236,18 @@
                                 {{--</ul>--}}
                             {{--</div>--}}
                         {{--</div>--}}
-                        <div class="filters-col__collapse open">
-                            <h4 class="filters-col__collapse__title text-uppercase">Теги</h4>
-                            <div class="filters-col__collapse__content">
-                                <ul class="tags-list">
-                                    <li><a href="#">Новое</a></li>
-                                    <li><a href="#">Рекомендуем</a></li>
-                                    <li><a href="#">Акция</a></li>
-                                    <li><a href="#">Распродажа</a></li>
-                                    <li><a href="#">Скидки</a></li>
-                                </ul>
-                            </div>
-                        </div>
+                        {{--<div class="filters-col__collapse open">--}}
+                            {{--<h4 class="filters-col__collapse__title text-uppercase">Теги</h4>--}}
+                            {{--<div class="filters-col__collapse__content">--}}
+                                {{--<ul class="tags-list">--}}
+                                    {{--<li><a href="#">Новое</a></li>--}}
+                                    {{--<li><a href="#">Рекомендуем</a></li>--}}
+                                    {{--<li><a href="#">Акция</a></li>--}}
+                                    {{--<li><a href="#">Распродажа</a></li>--}}
+                                    {{--<li><a href="#">Скидки</a></li>--}}
+                                {{--</ul>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
                     </div>
                 </div>
                 <div id="centerCol" class="products-container">
@@ -723,7 +707,27 @@
                 });
                 sortingAjax(name, value);
                 $j('.reset-filters').addClass('active');
-            });
+            })
+
+            // фильтры (link)
+            $j(document).on('click', '.ajax-filter-link', function (e) {
+                e.preventDefault();
+                addLoader('.outer');
+                var name = $j(this).data('property');
+                var value = '';
+                $j(this).toggleClass('active');
+                $j.each($j('[data-property="'+ name +'"]'), function(index, element) {
+                    if($j(element).hasClass('active')) {
+                        if(value) {
+                            value = value + ',' + $j(element).data('value');
+                        } else {
+                            value = $j(element).data('value');
+                        }
+                    }
+                });
+                sortingAjax(name, value);
+                $j('.reset-filters').addClass('active');
+            })
 
             // цена
             priceSlider.noUiSlider.on('change', function(sliderValue) {

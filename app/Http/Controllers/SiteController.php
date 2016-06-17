@@ -253,8 +253,9 @@ class SiteController extends Controller
 			->get();
 
 		// фильтрация по характеристикам (properties)
-		if($request->all() && !$request->get('reset-filters')) {
-			$properties = Property::whereIn('title', array_flip($request->except('price')))->get();
+		$postProperties = array_filter($request->except(['price', 'page', 'subcat']));
+		if($postProperties && !$request->get('reset-filters')) {
+			$properties = Property::whereIn('title', array_flip($postProperties))->get();
 		}
 		if(isset($properties)) {
 			foreach ($properties as $property) {

@@ -1364,6 +1364,7 @@ input[type=checkbox]:checked ~ label .box {
     border-color: #d3d3d3;
 }
 
+.tags-list li a.active,
 .tags-list li a:hover {
     background: #0689BC;
     background: -moz-linear-gradient(top,  #0689BC 0%, #034580 100%);

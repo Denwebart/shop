@@ -12813,6 +12813,9 @@ body.modal-open {
     text-align: center;
     vertical-align: text-top;
 }
+.active .color-icon {
+    border: 2px solid #212121;
+}
 
 .color-icon img {
     width: 100%;
@@ -15411,6 +15414,11 @@ body.boxed .products-col {
     font-size: 0.8em;
     margin: 0 8px 0 0 !important;
     text-decoration: none;
+}
+.filter-list a:hover,
+.filter-list a.active {
+    color: #212121;
+    text-decoration: underline;
 }
 
 #showFilterMobile {
