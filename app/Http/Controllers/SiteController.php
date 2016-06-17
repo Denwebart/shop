@@ -220,13 +220,12 @@ class SiteController extends Controller
 			]);
 
 		// сброс фильтров
-		if($request->has('reset-filters') && $request->get('reset-filters')) {
+		if($request->get('reset-filters')) {
 			$url = url($request->decodedPath());
-			dd($url);
 		}
 
 		// покатегория
-		if($request->has('subcat') && $request->get('subcat')) {
+		if($request->has('subcat') && $request->get('subcat') && !$request->get('reset-filters')) {
 			$subcategoryIds = $page->publishedChildren()
 				->whereIn('alias', explode(',', $request->get('subcat')))
 				->pluck('id');
@@ -237,11 +236,12 @@ class SiteController extends Controller
 		$query->whereIn('category_id', $subcategoryIds);
 
 		// цена
-		if($request->has('price') && $request->get('price')) {
+		if($request->has('price') && $request->get('price') && !$request->get('reset-filters')) {
 			$price = $request->get('price');
 			$query->where('products.price', '>=', $price['start'])
 				->where('products.price', '<=', $price['end']);
 		}
+
 		// максимальная/минимальная цена
 		$subcat = $subcategories->pluck('id');
 		$subcat[] = $page->id;
@@ -253,27 +253,10 @@ class SiteController extends Controller
 			->get();
 
 		// фильтрация по характеристикам (properties)
-		if($request->all()) {
+		if($request->all() && !$request->get('reset-filters')) {
 			$properties = Property::whereIn('title', array_flip($request->except('price')))->get();
 		}
-
 		if(isset($properties)) {
-			/*
-			select products.*, count(orders_products.id) as `popular`, SUM(products_reviews.rating) as `rating` from `products`
-			left join `orders_products` on `orders_products`.`product_id` = `products`.`id`
-			left join `products_reviews` on `products_reviews`.`product_id` = `products`.`id`
-			where ((`products_reviews`.`is_published` = 1 and `products_reviews`.`parent_id` = 0) or `products_reviews`.`id` is null)
-			and `products`.`is_published` = 1 and `category_id` in (4, 12, 13)
-						and exists (
-							select * from `property_values`
-			    inner join `products_property_values` on `property_values`.`id` = `products_property_values`.`property_value_id`
-			    where `products_property_values`.`product_id` = `products`.`id`
-						and (`property_values`.`property_id` = 1 and `property_values`.`value` = 'Красный')
-						and (`property_values`.`property_id` = 2 and `property_values`.`value` = 'ДолькиБанана')
-			)
-			group by `products`.`id` order by `popular` desc, `published_at` desc
-			*/
-
 			foreach ($properties as $property) {
 				$query->whereHas('productProperties', function ($qu) use($properties, $request, $property) {
 					if($request->has($property->title)) {
@@ -293,26 +276,20 @@ class SiteController extends Controller
 					}
 				});
 			}
-
-			/* или */
-//			$query->leftJoin('products_property_values', 'products_property_values.product_id', '=', 'products.id')
-//				->leftJoin('property_values', 'property_values.id', '=', 'products_property_values.property_value_id')
-//				->leftJoin('properties', 'properties.id', '=', 'property_values.property_id');
-
 		}
 
 		// сортировка
-		if($request->has('sortby')) {
-			if(in_array($request->get('sortby'), Product::$sortingAttributes)) {
-				$query->orderBy($request->get('sortby'), $request->get('direction', 'DESC'));
-			}
+		if($request->has('sortby') && !$request->get('reset-filters') && in_array($request->get('sortby'), Product::$sortingAttributes)) {
+			$sortby = $request->get('sortby');
 		} else {
-			$query->orderBy('popular', $request->get('direction', 'DESC'));
+			$sortby = $request->cookie('sortby', 'popular');
 		}
+		$direction = $request->has('direction') ? $request->get('direction') : $request->cookie('direction', 'DESC');
+		$query->orderBy($sortby, $direction);
 		$query->orderBy('published_at', 'DESC');
 
 		// кол-во на странице
-		$limit = $request->has('onpage')
+		$limit = ($request->has('onpage') && !$request->get('reset-filters'))
 			? $request->get('onpage')
 			: $request->cookie('catalog-onpage', 12);
 
@@ -326,7 +303,9 @@ class SiteController extends Controller
 				'productsListHtml' => view('parts.productsList', compact('products'))->render(),
 				'countHtml' => view('parts.count')->with('models', $products)->render(),
 				'pageUrl' => isset($url) ? $url : $products->url($request->get('page', 1)),
-			])->withCookie(cookie()->forever('catalog-onpage', $limit));
+			])->withCookie(cookie()->forever('catalog-onpage', $limit))
+				->withCookie(cookie()->forever('sortby', $sortby))
+				->withCookie(cookie()->forever('direction', $direction));
 		}
 	}
 

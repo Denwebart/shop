@@ -56,13 +56,13 @@
                     <div class="filters-row__select">
                         <label>Сортировать по: </label>
                         <select class="selectpicker ajax-sort sortby" name="sortby" data-style="select--wd select--wd--sm" data-width="130">
-                            <option value="published_at" @if(\Request::get('sortby') == 'published_at') selected @endif>дате</option>
-                            <option value="price" @if(\Request::get('sortby') == 'price') selected @endif>цене</option>
-                            <option value="rating" @if(\Request::get('sortby') == 'rating') selected @endif>рейтингу</option>
-                            <option value="popular" @if(\Request::get('sortby') == 'popular' || !\Request::has('sortby')) selected @endif>популярности</option>
+                            <option value="published_at" @if(\Request::get('sortby') == 'published_at' || \Request::cookie('sortby', 'popular') == 'published_at') selected @endif>дате</option>
+                            <option value="price" @if(\Request::get('sortby') == 'price' || \Request::cookie('sortby', 'popular') == 'price') selected @endif>цене</option>
+                            <option value="rating" @if(\Request::get('sortby') == 'rating' || \Request::cookie('sortby', 'popular') == 'rating') selected @endif>рейтингу</option>
+                            <option value="popular" @if(\Request::get('sortby') == 'popular' || \Request::cookie('sortby', 'popular') == 'popular') selected @endif>популярности</option>
                         </select>
-                        <a href="javascript:void(0)" class="icon icon-arrow-down m-l-10 @if(\Request::get('direction') == 'desc' || !\Request::has('direction')) active @endif sort-direction" data-value="desc" rel="nofollow" title="По убыванию" data-toggle="tooltip"></a>
-                        <a href="javascript:void(0)" class="icon icon-arrow-up @if(\Request::get('direction') == 'asc') active @endif sort-direction" data-value="asc" rel="nofollow" title="По возростанию" data-toggle="tooltip"></a>
+                        <a href="javascript:void(0)" class="icon icon-arrow-down m-l-10 @if(\Request::get('direction') == 'desc' || \Request::cookie('direction', 'desc') == 'desc') active @endif sort-direction" data-value="desc" rel="nofollow" title="По убыванию" data-toggle="tooltip"></a>
+                        <a href="javascript:void(0)" class="icon icon-arrow-up @if(\Request::get('direction') == 'asc' || \Request::cookie('direction', 'desc') == 'asc') active @endif sort-direction" data-value="asc" rel="nofollow" title="По возрастанию" data-toggle="tooltip"></a>
                     </div>
                 </div>
             </div>
@@ -72,6 +72,9 @@
                         <div class="filters-col__close" id="filtersColClose">
                             <a href="#" class="icon icon-clear"></a>
                         </div>
+
+                        <a href="#" class="reset-filters @if(\Request::except(['page', 'onpage', 'sortby', 'direction'])) active @endif m-t-20 m-b-10">Сбросить фильтры</a>
+
                         <div class="filters-col__select visible-xs">
                             <label>На странице: </label>
                             <select class="selectpicker ajax-sort onpage" name="onpage" data-style="select--wd select--wd--sm" data-width="60">
@@ -83,17 +86,15 @@
                         <div class="filters-col__select visible-xs">
                             <label>Сортировать по: </label>
                             <select class="selectpicker ajax-sort sortby" name="sortby" data-style="select--wd select--wd--sm" data-width="130">
-                                <option value="published_at" @if(\Request::get('sortby') == 'published_at') selected @endif>дате</option>
-                                <option value="price" @if(\Request::get('sortby') == 'price') selected @endif>цене</option>
-                                <option value="rating" @if(\Request::get('sortby') == 'rating') selected @endif>рейтингу</option>
-                                <option value="popular" @if(\Request::get('sortby') == 'popular' || !\Request::has('sortby')) selected @endif>популярности</option>
+                                <option value="published_at" @if(\Request::get('sortby') == 'published_at' || \Request::cookie('sortby', 'popular') == 'published_at') selected @endif>дате</option>
+                                <option value="price" @if(\Request::get('sortby') == 'price' || \Request::cookie('sortby', 'popular') == 'price') selected @endif>цене</option>
+                                <option value="rating" @if(\Request::get('sortby') == 'rating' || \Request::cookie('sortby', 'popular') == 'rating') selected @endif>рейтингу</option>
+                                <option value="popular" @if(\Request::get('sortby') == 'popular' || \Request::cookie('sortby', 'popular') == 'popular') selected @endif>популярности</option>
                             </select>
-                            <a href="javascript:void(0)" class="icon icon-arrow-down m-l-10 @if(\Request::get('direction') == 'desc' || !\Request::has('direction')) active @endif sort-direction" data-value="desc" rel="nofollow" title="По убыванию" data-toggle="tooltip"></a>
-                            <a href="javascript:void(0)" class="icon icon-arrow-up @if(\Request::get('direction') == 'asc') active @endif sort-direction" data-value="asc" rel="nofollow" title="По возростанию" data-toggle="tooltip"></a>
+                            <a href="javascript:void(0)" class="icon icon-arrow-down m-l-10 @if(\Request::get('direction') == 'desc' || \Request::cookie('direction', 'desc') == 'desc') active @endif sort-direction" data-value="desc" rel="nofollow" title="По убыванию" data-toggle="tooltip"></a>
+                            <a href="javascript:void(0)" class="icon icon-arrow-up @if(\Request::get('direction') == 'asc' || \Request::cookie('direction', 'desc') == 'asc') active @endif sort-direction" data-value="asc" rel="nofollow" title="По возрастанию" data-toggle="tooltip"></a>
                         </div>
-                        <div class="filters-col__collapse open">
-                            <a href="#" class="reset-filters">Сбросить фильтры</a>
-                        </div>
+
                         @if(count($subcategories))
                             <div class="filters-col__collapse open">
                                 <h4 class="filters-col__collapse__title text-uppercase">Категория</h4>
@@ -655,6 +656,10 @@
                 var data = {};
                 data[name] = value;
 
+                $j('html, body').animate({
+                    scrollTop: $j('#filters-form').offset().top - 150
+                }, 1000);
+
                 $j.ajax({
                     url: url,
                     dataType: "json",
@@ -714,19 +719,39 @@
                     }
                 });
                 sortingAjax(name, value);
+                $j('.reset-filters').show();
             });
 
             // цена
             priceSlider.noUiSlider.on('change', function(sliderValue) {
                 addLoader('.outer');
                 sortingAjax('price', {'start': sliderValue[0], 'end': sliderValue[1]});
+                $j('.reset-filters').show();
             });
 
             // Сброс фильтров
             $j(document).on('click', '.reset-filters', function (e) {
                 addLoader('.outer');
                 sortingAjax('reset-filters', true);
-                //очистка чекбоксов
+
+                //очистка значений
+                $j('.reset-filters').hide();
+
+                $j('.filters-col__collapse').addClass('open')
+                        .find('input.ajax-checkbox').attr('checked', false);
+
+                priceSlider.noUiSlider.updateOptions({
+                    start: [
+                        '{{ $rangePrice->min('price') }}',
+                        '{{ $rangePrice->max('price') }}'
+                    ],
+                    connect: true,
+                    step: 100,
+                    range: {
+                        'min': 0,
+                        'max': {{ $rangePrice->max('price') }}
+                    }
+                });
             });
         });
     </script>
