@@ -8,3 +8,5 @@ Homestead.json
 .env.php
 .env
 /public/uploads
+composer.lock
+_ide_helper.php

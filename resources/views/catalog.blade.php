@@ -205,53 +205,53 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="filters-col__collapse open">
-                            <h4 class="filters-col__collapse__title text-uppercase">Размер</h4>
-                            <div class="filters-col__collapse__content">
-                                <ul class="filter-list">
-                                    <li class="checkbox-group">
-                                        <input type="checkbox" id="checkBox13">
-                                        <label for="checkBox13">
-                                            <span class="check"></span>
-                                            <span class="box"></span>
-                                            42 (XS) (1)
-                                        </label>
-                                    </li>
-                                    <li class="checkbox-group">
-                                        <input type="checkbox" id="checkBox14">
-                                        <label for="checkBox14">
-                                            <span class="check"></span>
-                                            <span class="box"></span>
-                                            44 (S) (4)
-                                        </label>
-                                    </li>
-                                    <li class="checkbox-group">
-                                        <input type="checkbox" id="checkBox15">
-                                        <label for="checkBox15">
-                                            <span class="check"></span>
-                                            <span class="box"></span>
-                                            46 (M) (6)
-                                        </label>
-                                    </li>
-                                    <li class="checkbox-group">
-                                        <input type="checkbox" id="checkBox16">
-                                        <label for="checkBox16">
-                                            <span class="check"></span>
-                                            <span class="box"></span>
-                                            48 (L) (3)
-                                        </label>
-                                    </li>
-                                    <li class="checkbox-group">
-                                        <input type="checkbox" id="checkBox17">
-                                        <label for="checkBox17">
-                                            <span class="check"></span>
-                                            <span class="box"></span>
-                                            50 (XL) (5)
-                                        </label>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                        {{--<div class="filters-col__collapse open">--}}
+                            {{--<h4 class="filters-col__collapse__title text-uppercase">Размер</h4>--}}
+                            {{--<div class="filters-col__collapse__content">--}}
+                                {{--<ul class="filter-list">--}}
+                                    {{--<li class="checkbox-group">--}}
+                                        {{--<input type="checkbox" id="checkBox13">--}}
+                                        {{--<label for="checkBox13">--}}
+                                            {{--<span class="check"></span>--}}
+                                            {{--<span class="box"></span>--}}
+                                            {{--42 (XS) (1)--}}
+                                        {{--</label>--}}
+                                    {{--</li>--}}
+                                    {{--<li class="checkbox-group">--}}
+                                        {{--<input type="checkbox" id="checkBox14">--}}
+                                        {{--<label for="checkBox14">--}}
+                                            {{--<span class="check"></span>--}}
+                                            {{--<span class="box"></span>--}}
+                                            {{--44 (S) (4)--}}
+                                        {{--</label>--}}
+                                    {{--</li>--}}
+                                    {{--<li class="checkbox-group">--}}
+                                        {{--<input type="checkbox" id="checkBox15">--}}
+                                        {{--<label for="checkBox15">--}}
+                                            {{--<span class="check"></span>--}}
+                                            {{--<span class="box"></span>--}}
+                                            {{--46 (M) (6)--}}
+                                        {{--</label>--}}
+                                    {{--</li>--}}
+                                    {{--<li class="checkbox-group">--}}
+                                        {{--<input type="checkbox" id="checkBox16">--}}
+                                        {{--<label for="checkBox16">--}}
+                                            {{--<span class="check"></span>--}}
+                                            {{--<span class="box"></span>--}}
+                                            {{--48 (L) (3)--}}
+                                        {{--</label>--}}
+                                    {{--</li>--}}
+                                    {{--<li class="checkbox-group">--}}
+                                        {{--<input type="checkbox" id="checkBox17">--}}
+                                        {{--<label for="checkBox17">--}}
+                                            {{--<span class="check"></span>--}}
+                                            {{--<span class="box"></span>--}}
+                                            {{--50 (XL) (5)--}}
+                                        {{--</label>--}}
+                                    {{--</li>--}}
+                                {{--</ul>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
                         <div class="filters-col__collapse open">
                             <h4 class="filters-col__collapse__title text-uppercase">Теги</h4>
                             <div class="filters-col__collapse__content">
