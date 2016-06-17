@@ -124,29 +124,29 @@
                                 <div id="priceSlider" class="price-slider"></div>
                             </div>
                         </div>
-                        <div class="filters-col__collapse open">
-                            <h4 class="filters-col__collapse__title text-uppercase">Цена</h4>
-                            <div class="filters-col__collapse__content">
-                                <ul class="filter-list">
-                                    <li class="checkbox-group">
-                                        <input type="checkbox" id="checkBox7">
-                                        <label for="checkBox7">
-                                            <span class="check"></span>
-                                            <span class="box"></span>
-                                            0 руб. - 10 000 руб.
-                                        </label>
-                                    </li>
-                                    <li class="checkbox-group">
-                                        <input type="checkbox" id="checkBox8">
-                                        <label for="checkBox8">
-                                            <span class="check"></span>
-                                            <span class="box"></span>
-                                            10 000 руб. - 20 000 руб.
-                                        </label>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                        {{--<div class="filters-col__collapse open">--}}
+                            {{--<h4 class="filters-col__collapse__title text-uppercase">Цена</h4>--}}
+                            {{--<div class="filters-col__collapse__content">--}}
+                                {{--<ul class="filter-list">--}}
+                                    {{--<li class="checkbox-group">--}}
+                                        {{--<input type="checkbox" id="checkBox7">--}}
+                                        {{--<label for="checkBox7">--}}
+                                            {{--<span class="check"></span>--}}
+                                            {{--<span class="box"></span>--}}
+                                            {{--0 руб. - 10 000 руб.--}}
+                                        {{--</label>--}}
+                                    {{--</li>--}}
+                                    {{--<li class="checkbox-group">--}}
+                                        {{--<input type="checkbox" id="checkBox8">--}}
+                                        {{--<label for="checkBox8">--}}
+                                            {{--<span class="check"></span>--}}
+                                            {{--<span class="box"></span>--}}
+                                            {{--10 000 руб. - 20 000 руб.--}}
+                                        {{--</label>--}}
+                                    {{--</li>--}}
+                                {{--</ul>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
                         @foreach(\App\Models\Property::get() as $property)
                             <div class="filters-col__collapse open">
                                 <h4 class="filters-col__collapse__title text-uppercase">{{ $property->title }}</h4>
