@@ -73,7 +73,10 @@
                             <a href="#" class="icon icon-clear"></a>
                         </div>
 
-                        <a href="#" class="reset-filters @if(\Request::except(['page', 'onpage', 'sortby', 'direction'])) active @endif m-t-20 m-b-10">Сбросить фильтры</a>
+                        <a href="#" class="reset-filters @if(\Request::except(['page', 'onpage', 'sortby', 'direction'])) active @endif m-t-20 m-b-10">
+                            <span>Сбросить фильтры</span>
+                            <i class="icon icon-clear m-l-5 hidden-xs"></i>
+                        </a>
 
                         <div class="filters-col__select visible-xs">
                             <label>На странице: </label>
@@ -719,14 +722,14 @@
                     }
                 });
                 sortingAjax(name, value);
-                $j('.reset-filters').show();
+                $j('.reset-filters').addClass('active');
             });
 
             // цена
             priceSlider.noUiSlider.on('change', function(sliderValue) {
                 addLoader('.outer');
                 sortingAjax('price', {'start': sliderValue[0], 'end': sliderValue[1]});
-                $j('.reset-filters').show();
+                $j('.reset-filters').addClass('active');
             });
 
             // Сброс фильтров
@@ -735,7 +738,7 @@
                 sortingAjax('reset-filters', true);
 
                 //очистка значений
-                $j('.reset-filters').hide();
+                $j('.reset-filters').removeClass('active');
 
                 $j('.filters-col__collapse').addClass('open')
                         .find('input.ajax-checkbox').attr('checked', false);
