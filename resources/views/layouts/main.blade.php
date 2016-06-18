@@ -4,9 +4,9 @@
     <!-- Basic -->
     <meta charset="utf-8">
     <meta name="robots" content="@if(isset($siteSettings['meta']) && isset($siteSettings['meta']['robots']) && is_object($siteSettings['meta']['robots'])) {{ $siteSettings['meta']['robots']->value }} @else noindex,nofollow @endif">
-    <title>{{ $page->getMetaTitle() }}</title>
-    <meta name="description" content="{{ $page->getMetaDesc() }}">
-    <meta name="keywords" content="{{ $page->getMetaKey() }}"/>
+    <title>@if($page->getMetaTitle()) {{ $page->getMetaTitle() }} @elseif(isset($siteSettings['meta']) && isset($siteSettings['meta']['title'])) {{ $siteSettings['meta']['title']->value }} @endif</title>
+    <meta name="description" content="@if($page->getMetaDesc()) {{ $page->getMetaDesc() }} @elseif(isset($siteSettings['meta']) && isset($siteSettings['meta']['description'])) {{ $siteSettings['meta']['description']->value }} @endif">
+    <meta name="keywords" content="@if($page->getMetaKey()) {{ $page->getMetaKey() }} @elseif(isset($siteSettings['meta']) && isset($siteSettings['meta']['keywords'])) {{ $siteSettings['meta']['keywords']->value }} @endif"/>
 
     @if(isset($siteSettings['meta']))
         @if(isset($siteSettings['meta']['author']) && is_object($siteSettings['meta']['author']))

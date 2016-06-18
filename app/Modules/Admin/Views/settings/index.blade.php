@@ -115,7 +115,9 @@ View::share('title', $title);
                     <h4 class="header-title m-t-0 m-b-10"><b>Мета-теги</b></h4>
                     <p class="text-muted font-13 m-b-15">
                         Предназначены исключительно для поисковых систем.
-                        Не отображаются на странице сайта.
+                        Не отображаются на странице сайта. <br>
+                        Мета-теги title, description, keywords будут использованы в том случае,
+                        если мета-данные страницы не будут заполнены.
                     </p>
                     <div class="form-horizontal form-editable">
                         @foreach($settings[\App\Models\Setting::CATEGORY_SITE]['meta'] as $key => $setting)
@@ -124,7 +126,7 @@ View::share('title', $title);
                                     {{ $setting->title }}
                                 </label>
                                 <div class="col-md-7 col-sm-7">
-                                    <a href="#" class="editable-text" data-value="{{ $setting->value }}" data-type="text" data-pk="{{ $setting->id }}">
+                                    <a href="#" class="editable-text" data-value="{{ $setting->value }}" @if($key == 'robots') data-type="text" @else data-type="textarea" @endif data-pk="{{ $setting->id }}">
                                         {{ $setting->value }}
                                     </a>
                                 </div>
