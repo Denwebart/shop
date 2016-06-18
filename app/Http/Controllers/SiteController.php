@@ -369,8 +369,9 @@ class SiteController extends Controller
 
 		$productReviews = $page->getReviews();
 		$viewed = new Viewed();
+		$productProperties = $page->getProperties();
 
-		return view('product', compact('page', 'productReviews', 'viewed'));
+		return view('product', compact('page', 'productReviews', 'viewed', 'productProperties'));
 	}
 
 	/**

@@ -265,22 +265,21 @@
                     <div class="divider divider--xs"></div>
                     <table class="table table-params">
                         <tbody>
-                        <tr>
-                            <td class="text-right"><strong>Сезон</strong></td>
-                            <td>Весна, Осень</td>
-                        </tr>
-                        <tr>
-                            <td class="text-right"><strong>Материал</strong></td>
-                            <td>Плащевка</td>
-                        </tr>
-                        <tr>
-                            <td class="text-right"><strong>Длина</strong></td>
-                            <td>68 см</td>
-                        </tr>
-                        <tr>
-                            <td class="text-right"><strong>Застежка</strong></td>
-                            <td>молния,кнопки</td>
-                        </tr>
+                            @foreach($productProperties as $key => $property)
+                                <tr>
+                                    <td class="text-right">
+                                        <strong>{{ $property->title }}</strong>
+                                    </td>
+                                    <td>
+                                        @foreach($property->values as $key => $value)
+                                            @if($key > 0)
+                                                ,
+                                            @endif
+                                            {{ $value->value }}
+                                        @endforeach
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
