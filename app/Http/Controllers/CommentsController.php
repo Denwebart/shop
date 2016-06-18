@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 use App\Models\Page;
 use App\Models\Product;
 use App\Models\ProductReview;
+use App\Models\Setting;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -31,7 +32,10 @@ class CommentsController extends Controller
 			$data = $request->all();
 			$data['user_id'] = \Auth::check() ? \Auth::user()->id : null;
 			$data['product_id'] = $product_id;
-			$data['is_published'] = ProductReview::PUBLISHED;
+			$premoderation = Setting::whereKey('premoderation.productsReviews')->whereIsActive(1)->first();
+			$data['is_published'] = is_object($premoderation) && $premoderation->value
+				? ProductReview::UNPUBLISHED
+				: ProductReview::PUBLISHED;
 			$data['published_at'] = Carbon::now();
 
 			$validator = \Validator::make($data, ProductReview::rules());
@@ -53,12 +57,14 @@ class CommentsController extends Controller
 			$product->rating = $product->ratingInfo['value'];
 			$productReviews = $product->getReviews();
 
+			$objectTitle = $data['parent_id'] ? 'комментарий' : 'отзыв';
 			return \Response::json([
 				'success' => true,
 				'id' => $review->id,
-				'message' => $data['parent_id']
-					? 'Ваш комментарий успешно сохранен!'
-					: 'Ваш отзыв успешно сохранен!',
+				'message' => $data['is_published']
+					? ('Ваш ' . $objectTitle . ' успешно сохранен!')
+					: ('Ваш ' . $objectTitle . ' успешно отправлен 
+						и будет опубликован на сайте после проверки модератором.'),
 				'commentsCount' => count($productReviews),
 				'newProductRating' => $product->rating,
 				'commentsHtml' => view('parts.comments')

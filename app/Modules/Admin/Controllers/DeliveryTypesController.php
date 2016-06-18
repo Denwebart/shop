@@ -144,7 +144,7 @@ class DeliveryTypesController extends Controller
 			$deliveryType = DeliveryType::findOrFail($request->get('id'));
 
 			if($deliveryType) {
-				$deliveryType->is_active = $request->get('is_active');
+				$deliveryType->is_active = $request->get('value');
 				$deliveryType->save();
 
 				return \Response::json([

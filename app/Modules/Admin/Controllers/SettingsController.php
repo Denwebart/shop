@@ -91,11 +91,17 @@ class SettingsController extends Controller
 	public function setValue(Request $request)
 	{
 		if($request->ajax()) {
-			$setting = Setting::findOrFail($request->get('pk'));
-			$data = $request->all();
-			$data['value'] = trim($request->get('value')) ? trim($request->get('value')) : null;
+			$id = $request->has('pk') ? $request->get('pk') : $request->get('id');
+			$setting = Setting::findOrFail($id);
 
 			if($setting) {
+				$data = $request->all();
+				$data['value'] = ($setting->type == Setting::TYPE_BOOLEAN)
+					? $request->get('value')
+					: (trim($request->get('value'))
+						? trim($request->get('value'))
+						: null);
+
 				$validator = \Validator::make($data, $setting->getRules());
 
 				if ($validator->fails())
@@ -138,7 +144,7 @@ class SettingsController extends Controller
 			$setting = Setting::findOrFail($request->get('id'));
 
 			if($setting) {
-				$setting->is_active = $request->get('is_active');
+				$setting->is_active = $request->get('value');
 				$setting->save();
 
 				return \Response::json([

@@ -231,6 +231,34 @@ View::share('title', $title);
             <div class="card-box">
                 @include('admin::deliveryTypes.list')
             </div>
+
+            <div class="card-box">
+
+                <h4 class="header-title m-t-0 m-b-10"><b>Системные настроки</b></h4>
+
+                <p class="text-muted font-13 m-b-15">
+
+                </p>
+
+                <div class="form-horizontal form-editable">
+                    @foreach($settings[\App\Models\Setting::CATEGORY_SYSTEM]['premoderation'] as $key => $setting)
+                        <div class="form-group">
+                            <label class="col-md-10 col-sm-10 control-label">
+                                {{ $setting->title }}
+                                @if($setting->description)
+                                    <small>{{ $setting->description }}</small>
+                                @endif
+                            </label>
+                            <div class="col-md-2 col-sm-2">
+                                <div class="switchery-demo">
+                                    {!! Form::hidden('value', 0) !!}
+                                    {!! Form::checkbox('value', 1, $setting->value, ['id' => 'value', 'data-plugin' => 'switchery', 'data-url' => route('admin.settings.setValue'), 'data-color' => '#3bafda', 'data-size' => 'small', 'data-id' => $setting->id]) !!}
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
         </div>
         <div class="col-lg-6">
             <div class="card-box">
@@ -364,19 +392,19 @@ View::share('title', $title);
             }
         });
 
-        // Change active ststus
+        // Change active status or boolean value
         $('[data-plugin=switchery]').on('change', function () {
             if($(this).is(':checked')) {
-                var isActive = 1;
+                var value = 1;
             } else {
-                var isActive = 0;
+                var value = 0;
             }
             var url = $(this).data('url') ? $(this).data('url') : "{{ route('admin.settings.setIsActive') }}";
             $.ajax({
                 url: url,
                 dataType: "text json",
                 type: "POST",
-                data: {id: $(this).data('id'), 'is_active': isActive},
+                data: {id: $(this).data('id'), 'value': value},
                 beforeSend: function(request) {
                     return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
                 },

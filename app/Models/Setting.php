@@ -72,12 +72,14 @@ class Setting extends Model
 	/**
 	 * Категория настройки (значение поля category)
 	 */
-	const CATEGORY_SITE = 1;
+	const CATEGORY_SITE         = 1;
 	const CATEGORY_CONTACT_PAGE = 2;
+	const CATEGORY_SYSTEM       = 3;
 
 	public static $categories = [
-		self::CATEGORY_SITE => 'Общие настройки сайта',
+		self::CATEGORY_SITE         => 'Общие настройки сайта',
 		self::CATEGORY_CONTACT_PAGE => 'Настройки для страницы с контактами',
+		self::CATEGORY_SYSTEM       => 'Системные настройки',
 	];
 
 	/**
