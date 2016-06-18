@@ -338,6 +338,10 @@
                                 <div class="input-group m-b-15">
                                     <span class="rating-extended__num product-review-rating-number pull-left">0</span>
                                     <div id="product-review-rating-input" class="product-review-rating-input pull-left"></div>
+                                    <br>
+                                    <small class="help-block">
+                                        Оцените товар, если хотите оставить отзыв о нем.
+                                    </small>
                                 </div>
 
                                 <div class="input-group input-group--wd">

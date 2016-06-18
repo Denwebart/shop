@@ -32,8 +32,8 @@ class CommentsController extends Controller
 			$data = $request->all();
 			$data['user_id'] = \Auth::check() ? \Auth::user()->id : null;
 			$data['product_id'] = $product_id;
-			$premoderation = Setting::whereKey('premoderation.productsReviews')->whereIsActive(1)->first();
-			$data['is_published'] = is_object($premoderation) && $premoderation->value
+			$premoderationModel = Setting::whereKey('premoderation.productsReviews')->whereIsActive(1)->first();
+			$data['is_published'] = (is_object($premoderationModel) && $premoderationModel->value && !\Auth::check())
 				? ProductReview::UNPUBLISHED
 				: ProductReview::PUBLISHED;
 			$data['published_at'] = Carbon::now();
