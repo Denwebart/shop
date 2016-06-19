@@ -80,6 +80,7 @@
                             $j('#modalAddToCart .error').hide();
                             $j('#modalAddToCart .success').show().find('.text').html(response.message);
                             $j('#cart').html(response.cartHtml);
+                            $j('.add-to-cart__quantity').val(1);
                         } else {
                             $j('#modalAddToCart').modal("toggle");
                             $j('#modalAddToCart .sussess').hide();
