@@ -43,7 +43,7 @@
                             <div class="shopping-cart__item__info__qty">
                                 <div class="input-group-qty pull-left">
                                     <span class="pull-left m-r-5 m-t-10">Кол-во: </span>
-                                    <input type="text" name="quantity" class="input-number input--wd input-qty pull-left" value="{{ $item['quantity'] }}" data-old-value="{{ $item['quantity'] or 0 }}" min="1" max="1000" data-product-id="{{ $item['product']->id }}" data-product-key="{{ $key }}">
+                                    <input type="text" name="quantity" class="input-number change-quantity input--wd input-qty pull-left" value="{{ $item['quantity'] }}" data-old-value="{{ $item['quantity'] or 0 }}" min="1" max="1000" data-product-id="{{ $item['product']->id }}" data-product-key="{{ $key }}">
                                     <span class="pull-left btn-number-container">
                                         <button type="button" class="btn btn-number btn-number--plus" data-type="plus" data-field="quantity" data-product-id="{{ $item['product']->id }}" data-product-key="{{ $key }}">+</button>
                                         <button type="button" class="btn btn-number btn-number--minus" @if($item['quantity'] <= 1) disabled="disabled" @endif data-type="minus" data-field="quantity" data-product-id="{{ $item['product']->id }}" data-product-key="{{ $key }}">&#8211;</button>

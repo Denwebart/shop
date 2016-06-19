@@ -35,7 +35,7 @@ class Cart extends BaseController
 
 			$product = Product::find($request->get('id'));
 			if(is_object($product)) {
-				// доделать добавление в корзину
+				// доделать добавление с доп. характеристиками
 				$this->addProduct($request, $product, $request->get('quantity', 1));
 
 				$cart = $this->getCart();

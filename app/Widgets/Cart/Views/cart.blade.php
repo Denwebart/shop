@@ -52,7 +52,13 @@
             $j(document).on('click', '.add-to-cart', function(e){
                 e.preventDefault();
                 var $button = $j(this),
-                    productId = $button.data('productId');
+                    productId = $button.data('productId'),
+                    quantity = $j('[data-cart="quantity"]').val();
+
+                var data = {'id': productId};
+                if(quantity) {
+                    data['quantity'] = quantity;
+                }
 
                 $button.addClass('btn--wait');
                 $j('#modalAddToCart .success').hide();
@@ -62,7 +68,7 @@
                     url: "{{ route('cart.add') }}",
                     dataType: "json",
                     type: "POST",
-                    data: {'id': productId},
+                    data: data,
                     async: true,
                     beforeSend: function (request) {
                         return request.setRequestHeader('X-CSRF-Token', $j("meta[name='csrf-token']").attr('content'));
@@ -162,7 +168,6 @@
                         if (currentVal > input.attr('min')) {
                             var value = currentVal - 1;
                             input.val(value).change();
-                            changeQuantityAjax(productKey, value);
                         }
                         if (parseInt(input.val()) == input.attr('min')) {
                             $j(this).attr('disabled', true);
@@ -171,7 +176,6 @@
                         if (currentVal < input.attr('max')) {
                             var value = currentVal + 1;
                             input.val(value).change();
-                            changeQuantityAjax(productKey, value);
                         }
                         if (parseInt(input.val()) == input.attr('max')) {
                             $j(this).attr('disabled', true);
@@ -192,7 +196,6 @@
                 var valueCurrent = parseInt($j(this).val());
                 var productKey = $j(this).data('productKey'),
                     productId = $j(this).data('productId');
-                console.log(valueCurrent, minValue, maxValue);
 
                 var name = $j(this).attr('name');
                 if (valueCurrent >= minValue) {
@@ -205,6 +208,18 @@
                 } else {
                     $j(this).val($j(this).data('oldValue'));
                 }
+            });
+
+            $j(document).on('change', '.change-quantity', function(e) {
+                e.stopPropagation();
+                var minValue = parseInt($j(this).attr('min'));
+                var maxValue = parseInt($j(this).attr('max'));
+                var valueCurrent = parseInt($j(this).val());
+                var productKey = $j(this).data('productKey'),
+                        productId = $j(this).data('productId');
+
+                var name = $j(this).attr('name');
+
                 if (valueCurrent >= minValue && valueCurrent <= maxValue) {
                     changeQuantityAjax(productKey, valueCurrent);
                 }
