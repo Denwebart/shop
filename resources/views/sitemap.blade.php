@@ -32,7 +32,12 @@
                 <ul>
                     @foreach($sitemapItems as $item)
                         <li>
-                            <a href="{{ $item->getUrl() }}">{{ $item->getTitle() }}</a>
+                            <a href="{{ $item->getUrl() }}">
+                                @if($item->type == \App\Models\Page::TYPE_CATALOG)
+                                    <i class="icon icon-bag-alt"></i>
+                                @endif
+                                <span>{{ $item->getTitle() }}</span>
+                            </a>
                             {{ \App\Helpers\View::getChildrenPages($item) }}
                         </li>
                     @endforeach

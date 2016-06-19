@@ -7,7 +7,9 @@
 
 @if(count($cart['products']))
     <div class="shopping-cart__top text-uppercase">
-        Корзина (<span class="count-cart-items">{{ $cart['count'] }}</span>)
+        <a href="{{ route('cart.index') }}">
+            Корзина (<span class="count-cart-items">{{ $cart['count'] }}</span>)
+        </a>
     </div>
     <ul>
         @php($sum = 0)

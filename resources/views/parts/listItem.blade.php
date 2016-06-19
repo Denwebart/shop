@@ -9,5 +9,5 @@
     @if($item->type == \App\Models\Page::TYPE_CATALOG)
         <i class="icon icon-bag-alt"></i>
     @endif
-    {{ $item->getTitle() }}
+    <span>{{ $item->getTitle() }}</span>
 </a>

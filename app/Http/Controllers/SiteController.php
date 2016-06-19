@@ -336,35 +336,38 @@ class SiteController extends Controller
 			$subcategoryIds[] = $page->category->id;
 		}
 
+		// previous / next
+		//  + 'count(orders_products.id) as `popular`,' + ' SUM(products_reviews.rating) as `rating`'
 		$query = Product::select(\DB::raw('id, category_id, alias, is_published, title, image, image_alt, published_at'))
 			->whereIsPublished(1)
 			->where('published_at', '<=', Carbon::now());
-
 		if(isset($subcategoryIds)) {
 			$query = $query->whereIn('category_id', $subcategoryIds);
 		}
 
-//		$page->previous = $queryPrevious->whereIn('products.id', function ($q) use($page) {
-//			$q->select(\DB::raw('products.id, count(orders_products.id) as `popular`'))
-//				->from('products')
-//				->leftJoin('orders_products', 'orders_products.product_id', '=', 'products.id')
-//				->groupBy('products.id')
-//				->orderBy('popular', 'DESC')
-//				->where('popular', '>', $page->sales);
-//		})->first();
+		if($request->cookie('sortby', 'popular') == 'popular') {
+			// sales (popular)
+			$query->leftJoin('orders_products', 'orders_products.product_id', '=', 'products.id')
+				->groupBy('products.id');
+		}
+		if($request->cookie('sortby', 'popular') == 'rating') {
+			// rating
+			$query->leftJoin('products_reviews', 'products_reviews.product_id', '=', 'products.id')
+				->where(function($q) {
+					$q->where(function ($qu) {
+						$qu->where('products_reviews.is_published', '=', 1)
+							->where('products_reviews.parent_id', '=', 0);
+					})->orWhere('products_reviews.id', '=', null);
+				});
+		}
 
-		$page->previous = $query->where('products.id', '=', \DB::raw('(SELECT MIN(id) FROM products WHERE id > ' . $page->id . ')'))
+		$previousQuery = $query;
+		$nextQuery = $query;
+
+		$page->previous = $previousQuery->where('products.id', '=', \DB::raw('(SELECT MIN(id) FROM products WHERE id > ' . $page->id . ')'))
 			->first();
 
-		$query = Product::select(\DB::raw('id, category_id, alias, is_published, title, image, image_alt, published_at'))
-			->whereIsPublished(1)
-			->where('published_at', '<=', Carbon::now());
-
-		if(isset($subcategoryIds)) {
-			$query = $query->whereIn('category_id', $subcategoryIds);
-		}
-
-		$page->next = $query->where('products.id', '=', \DB::raw('(SELECT MAX(id) FROM products WHERE id < ' . $page->id . ')'))
+		$page->next = $nextQuery->where('products.id', '=', \DB::raw('(SELECT MAX(id) FROM products WHERE id < ' . $page->id . ')'))
 			->first();
 
 		$productReviews = $page->getReviews();
