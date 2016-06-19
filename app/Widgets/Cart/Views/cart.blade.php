@@ -160,16 +160,18 @@
                 if (!isNaN(currentVal)) {
                     if (type == 'minus') {
                         if (currentVal > input.attr('min')) {
-                            input.val(currentVal - 1).change();
-                            changeQuantityAjax(productKey, currentVal - 1);
+                            var value = currentVal - 1;
+                            input.val(value).change();
+                            changeQuantityAjax(productKey, value);
                         }
                         if (parseInt(input.val()) == input.attr('min')) {
                             $j(this).attr('disabled', true);
                         }
                     } else if (type == 'plus') {
                         if (currentVal < input.attr('max')) {
-                            input.val(currentVal + 1).change();
-                            changeQuantityAjax(productKey, currentVal + 1);
+                            var value = currentVal + 1;
+                            input.val(value).change();
+                            changeQuantityAjax(productKey, value);
                         }
                         if (parseInt(input.val()) == input.attr('max')) {
                             $j(this).attr('disabled', true);
@@ -179,15 +181,18 @@
                     input.val(0);
                 }
             });
-            $j(document).focusin('.input-number', function(e) {
+            $j(document).on('focusin', '.input-number', function(e) {
                 e.stopPropagation();
                 $j(this).data('oldValue', $j(this).val());
             });
-            $j(document).change('.input-number', function(e) {
+            $j(document).on('change', '.input-number', function(e) {
                 e.stopPropagation();
                 var minValue = parseInt($j(this).attr('min'));
                 var maxValue = parseInt($j(this).attr('max'));
                 var valueCurrent = parseInt($j(this).val());
+                var productKey = $j(this).data('productKey'),
+                    productId = $j(this).data('productId');
+                console.log(valueCurrent, minValue, maxValue);
 
                 var name = $j(this).attr('name');
                 if (valueCurrent >= minValue) {
@@ -199,6 +204,9 @@
                     $j(this).closest('.input-group-qty').find(".btn-number[data-type='plus']").removeAttr('disabled')
                 } else {
                     $j(this).val($j(this).data('oldValue'));
+                }
+                if (valueCurrent >= minValue && valueCurrent <= maxValue) {
+                    changeQuantityAjax(productKey, valueCurrent);
                 }
             });
         });
