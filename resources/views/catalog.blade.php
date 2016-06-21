@@ -643,9 +643,9 @@
                 var data = {};
                 data[name] = value;
 
-                $j('html, body').animate({
-                    scrollTop: $j('#filters-form').offset().top - 150
-                }, 1000);
+//                $j('html, body').animate({
+//                    scrollTop: $j('#filters-form').offset().top - 150
+//                }, 1000);
 
                 $j.ajax({
                     url: url,

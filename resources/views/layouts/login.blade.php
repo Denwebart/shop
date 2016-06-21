@@ -18,7 +18,7 @@
     <link rel="shortcut icon" href="{{ asset('backend/images/favicon.ico') }}">
 
     <!-- App title -->
-    <title>@if(isset($title)) {{ $title }} - @endifАдминистративная панель магазина</title>
+    <title>@if(isset($title)) {{ $title }} - @endif Административная панель магазина</title>
 
     <!-- App css -->
     <link href="{{ asset('backend/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />

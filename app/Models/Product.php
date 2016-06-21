@@ -75,7 +75,8 @@ class Product extends Model
 		'value' => 0
 	];
 
-	public $rating;
+	public $rating = 0;
+	public $popular = 0; // sales
 	public $previous;
 	public $next;
 
@@ -567,6 +568,74 @@ class Product extends Model
 	{
 		$wishlistProducts = \Request::cookie('wishlist', []);
 		return key_exists($this->id, $wishlistProducts) ? true : false;
+	}
+
+	protected function queryPreviousNext($sortby)
+	{
+		// доделать вложенность (рекурсивно?)
+		if($this->category) {
+			$subcategoryIds = Page::select(['id', 'parent_id'])
+				->whereParentId($this->category->id)
+				->whereIsPublished(1)
+				->where('published_at', '<=', Carbon::now())
+				->pluck('id');
+			$subcategoryIds[] = $this->category->id;
+		}
+
+		$query = Product::select(\DB::raw('products.id, products.category_id, products.alias, products.is_published, products.title, products.image, products.image_alt, products.published_at'))
+			->where('products.is_published', '=', 1)
+			->where('products.published_at', '<=', Carbon::now())
+			->with([
+				'category' => function($q) {
+					$q->select(['id', 'parent_id', 'alias', 'is_container']);
+				},
+				'category.parent' => function($q) {
+					$q->select(['id', 'parent_id', 'alias', 'is_container']);
+				},
+			]);
+		if(isset($subcategoryIds)) {
+			$query = $query->whereIn('products.category_id', $subcategoryIds);
+		}
+
+		if($sortby == 'popular') {
+			// sales (popular)
+			$query->leftJoin('orders_products', 'orders_products.product_id', '=', 'products.id')
+				->addSelect(\DB::raw('COUNT(orders_products.id) as `popular`'));
+		}
+		if($sortby == 'rating') {
+			// rating
+			$query->leftJoin('products_reviews', 'products_reviews.product_id', '=', 'products.id')
+				->where(function($q) {
+					$q->where(function ($qu) {
+						$qu->where('products_reviews.is_published', '=', 1)
+							->where('products_reviews.parent_id', '=', 0)
+							->where('products_reviews.rating', '!=', 0);
+					})->orWhere('products_reviews.id', '=', null);
+				})
+				->addSelect(\DB::raw('(SUM(products_reviews.rating) / COUNT(products_reviews.id)) as `rating`'));
+		}
+		$query->groupBy('products.id')
+			->where('products.id', '!=', $this->id);
+
+		return $query;
+	}
+
+	public function getPrevious($sortby)
+	{
+		return $this->queryPreviousNext($sortby)
+			->where($sortby, '>=', $this->$sortby)
+			->orderBy($sortby, 'ASC')
+			->orderBy('products.published_at', 'ASC')
+			->first();
+	}
+
+	public function getNext($sortby)
+	{
+		return $this->queryPreviousNext($sortby)
+			->where($sortby, '<=', $this->$sortby)
+			->orderBy($sortby, 'DESC')
+			->orderBy('products.published_at', 'DESC')
+			->first();
 	}
 
 }

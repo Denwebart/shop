@@ -196,18 +196,13 @@ class SiteController extends Controller
 			])
 			->get(['id', 'parent_id', 'menu_title', 'title', 'alias']);
 
-		$query = Product::select(\DB::raw('products.id, products.vendor_code, products.category_id, products.alias, products.is_published, products.title, products.price, products.image, products.image_alt, products.published_at, products.introtext, products.content, count(orders_products.id) as `popular`, SUM(products_reviews.rating) as `rating`'))
-			// sales (popular)
-			->leftJoin('orders_products', 'orders_products.product_id', '=', 'products.id')
-			->groupBy('products.id')
-			// rating
-			->leftJoin('products_reviews', 'products_reviews.product_id', '=', 'products.id')
-			->where(function($q) {
-				$q->where(function ($qu) {
-					$qu->where('products_reviews.is_published', '=', 1)
-						->where('products_reviews.parent_id', '=', 0);
-				})->orWhere('products_reviews.id', '=', null);
-			})
+		// сортировка
+		if($request->has('sortby') && !$request->get('reset-filters') && in_array($request->get('sortby'), Product::$sortingAttributes)) {
+			$sortby = $request->get('sortby');
+		} else {
+			$sortby = $request->cookie('sortby', 'popular');
+		}
+		$query = Product::select(\DB::raw('products.id, products.vendor_code, products.category_id, products.alias, products.is_published, products.title, products.price, products.image, products.image_alt, products.published_at, products.introtext, products.content'))
 			->where('products.is_published', '=', 1)
 			->where('products.published_at', '<=', Carbon::now())
 			->with([
@@ -218,6 +213,25 @@ class SiteController extends Controller
 					$q->select(['id', 'parent_id', 'alias', 'is_container']);
 				},
 			]);
+
+		// sort by sales (popular)
+		if($sortby == 'popular') {
+			$query->leftJoin('orders_products', 'orders_products.product_id', '=', 'products.id')
+				->addSelect(\DB::raw('COUNT(orders_products.id) as `popular`'));
+		}
+		// sort by rating
+		if($sortby == 'rating') {
+			$query->leftJoin('products_reviews', 'products_reviews.product_id', '=', 'products.id')
+				->where(function($q) {
+					$q->where(function ($qu) {
+						$qu->where('products_reviews.is_published', '=', 1)
+							->where('products_reviews.parent_id', '=', 0)
+							->where('products_reviews.rating', '!=', 0);
+					})->orWhere('products_reviews.id', '=', null);
+				})
+				->addSelect(\DB::raw('(SUM(products_reviews.rating) / COUNT(products_reviews.id)) as `rating`'));
+		}
+		$query->groupBy('products.id');
 
 		// сброс фильтров
 		if($request->get('reset-filters')) {
@@ -280,14 +294,9 @@ class SiteController extends Controller
 		}
 
 		// сортировка
-		if($request->has('sortby') && !$request->get('reset-filters') && in_array($request->get('sortby'), Product::$sortingAttributes)) {
-			$sortby = $request->get('sortby');
-		} else {
-			$sortby = $request->cookie('sortby', 'popular');
-		}
 		$direction = $request->has('direction') ? $request->get('direction') : $request->cookie('direction', 'DESC');
 		$query->orderBy($sortby, $direction);
-		$query->orderBy('published_at', 'DESC');
+		$query->orderBy('products.published_at', 'DESC');
 
 		// кол-во на странице
 		$limit = ($request->has('onpage') && !$request->get('reset-filters'))
@@ -305,8 +314,8 @@ class SiteController extends Controller
 				'countHtml' => view('parts.count')->with('models', $products)->render(),
 				'pageUrl' => isset($url) ? $url : $products->url($request->get('page', 1)),
 			])->withCookie(cookie()->forever('catalog-onpage', $limit))
-				->withCookie(cookie()->forever('sortby', $sortby))
-				->withCookie(cookie()->forever('direction', $direction));
+				->withCookie(cookie()->forever('sortby', strtolower($sortby)))
+				->withCookie(cookie()->forever('direction', strtolower($direction)));
 		}
 	}
 
@@ -325,50 +334,20 @@ class SiteController extends Controller
 	{
 		$page->ratingInfo = $page->getRating();
 		$page->rating = $page->ratingInfo['value'];
-
-		// доделать вложенность (рекурсивно?)
-		if($page->category) {
-			$subcategoryIds = Page::select(['id', 'parent_id'])
-				->whereParentId($page->category->id)
-				->whereIsPublished(1)
-				->where('published_at', '<=', Carbon::now())
-				->pluck('id');
-			$subcategoryIds[] = $page->category->id;
-		}
+		
+		
+		
+		
 
 		// previous / next
-		//  + 'count(orders_products.id) as `popular`,' + ' SUM(products_reviews.rating) as `rating`'
-		$query = Product::select(\DB::raw('id, category_id, alias, is_published, title, image, image_alt, published_at'))
-			->whereIsPublished(1)
-			->where('published_at', '<=', Carbon::now());
-		if(isset($subcategoryIds)) {
-			$query = $query->whereIn('category_id', $subcategoryIds);
-		}
-
-		if($request->cookie('sortby', 'popular') == 'popular') {
-			// sales (popular)
-			$query->leftJoin('orders_products', 'orders_products.product_id', '=', 'products.id')
-				->groupBy('products.id');
-		}
-		if($request->cookie('sortby', 'popular') == 'rating') {
-			// rating
-			$query->leftJoin('products_reviews', 'products_reviews.product_id', '=', 'products.id')
-				->where(function($q) {
-					$q->where(function ($qu) {
-						$qu->where('products_reviews.is_published', '=', 1)
-							->where('products_reviews.parent_id', '=', 0);
-					})->orWhere('products_reviews.id', '=', null);
-				});
-		}
-
-		$previousQuery = $query;
-		$nextQuery = $query;
-
-		$page->previous = $previousQuery->where('products.id', '=', \DB::raw('(SELECT MIN(id) FROM products WHERE id > ' . $page->id . ')'))
-			->first();
-
-		$page->next = $nextQuery->where('products.id', '=', \DB::raw('(SELECT MAX(id) FROM products WHERE id < ' . $page->id . ')'))
-			->first();
+		$sortby = $request->cookie('sortby', 'popular');
+		$direction = $request->cookie('direction', 'desc');
+		$page->previous = $direction == 'desc'
+			? $page->getPrevious($sortby)
+			: $page->getNext($sortby);
+		$page->next = $direction == 'desc'
+			? $page->getNext($sortby)
+			: $page->getPrevious($sortby);
 
 		$productReviews = $page->getReviews();
 		$viewed = new Viewed();

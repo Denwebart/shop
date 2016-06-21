@@ -45,7 +45,6 @@ class RouteServiceProvider extends ServiceProvider
 			    ->orderBy('sales', 'DESC')
 				->firstOrFail();
 		    }
-
 		    return $page;
 	    });
     }
