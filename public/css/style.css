@@ -8539,8 +8539,8 @@ body.fullwidth .footer .container > .navbar-collapse {
 }
 
 .content {
-    padding-top: 30px;
-    padding-bottom: 20px;
+    padding-top: 20px;
+    padding-bottom: 10px;
 }
 .content img {
     max-width: 100%;

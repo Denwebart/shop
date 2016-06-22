@@ -334,11 +334,8 @@ class SiteController extends Controller
 	{
 		$page->ratingInfo = $page->getRating();
 		$page->rating = $page->ratingInfo['value'];
+//		$page->popular = $page->sales;
 		
-		
-		
-		
-
 		// previous / next
 		$sortby = $request->cookie('sortby', 'popular');
 		$direction = $request->cookie('direction', 'desc');

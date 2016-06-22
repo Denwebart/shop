@@ -18,6 +18,7 @@
                     <li class="product-other__link product-prev">
                         <a href="{{ $page->previous->getUrl() }}">
                             {{ $page->previous->getTitle() }}
+                            {{ $page->previous->popular }}
                         </a>
                         <span class="product-other__link__image">
                             <img src="{{ $page->previous->getImageUrl() }}" alt="{{ $page->previous->image_alt }}"/>
@@ -28,6 +29,7 @@
                     <li class="product-other__link product-next">
                         <a href="{{ $page->next->getUrl() }}">
                             {{ $page->next->getTitle() }}
+                            {{ $page->next->popular }}
                         </a>
                         <span class="product-other__link__image">
                             <img src="{{ $page->next->getImageUrl() }}" alt="{{ $page->next->image_alt }}"/>

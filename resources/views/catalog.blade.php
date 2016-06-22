@@ -667,6 +667,21 @@
 
                             window.history.pushState({parent: response.pageUrl}, '', response.pageUrl);
                             url = response.pageUrl;
+
+                            // стили колонки с фильтрами и центральной
+                            if ($j('.outer').hasClass('open')) {
+                                $j('.products-isotope.products-col').addClass('no-transition');
+                                $j('.products-col').stop(true,false).animate({marginLeft: '0'}, 0);
+                                var minW =  parseInt($j('.products-col').find('.product-preview-wrapper:first-child').width());
+                                $j('.products-col').stop(true,false).animate({marginLeft: '280px'}, 0,
+                                    function() {
+                                        setProductSize($j('.products-col'),minW);
+                                        $j('.products-isotope.products-col').isotope('layout');
+                                    });
+                            }
+                            else {
+                                $j('.products-isotope.products-col').addClass('no-transition').isotope('layout');
+                            }
                         }
                     },
                     error: function (response) {
