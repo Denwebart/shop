@@ -198,28 +198,25 @@
             </div>
         </div>
         <div class="form-group @if($errors->has('is_published')) has-error @endif">
-            <div class="switchery-demo m-b-5">
-                <div class="col-md-2">
-                </div>
-                <div class="col-md-4">
-                    {!! Form::hidden('is_published', 0) !!}
-                    {!! Form::checkbox('is_published', 1, $product->is_published, ['id' => 'is_published', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
-                    {!! Form::label('is_published', 'Опубликован', ['class' => 'control-label m-l-5']) !!}
-                </div>
-                <div class="col-md-6">
-                    @if(!$product->published_at)
-                        (сохраните, чтоб опубликовать)
-                    @else
-                        {{ \App\Helpers\Date::format($product->published_at) }}
-                    @endif
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-4 switchery-demo">
+                {!! Form::hidden('is_published', 0) !!}
+                {!! Form::checkbox('is_published', 1, $product->is_published, ['id' => 'is_published', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
+                {!! Form::label('is_published', 'Опубликован', ['class' => 'control-label m-l-5']) !!}
+            </div>
+            <div class="col-md-6">
+                @if(!$product->published_at)
+                    (сохраните, чтоб опубликовать)
+                @else
+                    {{ \App\Helpers\Date::format($product->published_at) }}
+                @endif
 
-                    @if ($errors->has('is_published'))
-                        <span class="help-block error">
-                            <strong>{{ $errors->first('is_published') }}</strong>
-                        </span>
-                    @endif
-                </div>
-
+                @if ($errors->has('is_published'))
+                    <span class="help-block error">
+                        <strong>{{ $errors->first('is_published') }}</strong>
+                    </span>
+                @endif
             </div>
         </div>
     </div><!-- end col -->

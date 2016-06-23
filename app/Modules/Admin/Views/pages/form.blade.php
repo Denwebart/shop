@@ -79,10 +79,10 @@
         @if($page->canBeDeleted())
             @if(is_null($page->type))
                 <div class="form-group @if($errors->has('is_catalog')) has-error @endif">
-                    <div class="switchery-demo m-b-5">
+                    <div class="m-b-5">
                         <div class="col-md-2">
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 switchery-demo">
                             {!! Form::hidden('is_catalog', 0) !!}
                             {!! Form::checkbox('is_catalog', 1, ($page->type == \App\Models\Page::TYPE_CATALOG), ['id' => 'is_catalog', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
                             {!! Form::label('is_catalog', 'Каталог товаров', ['class' => 'control-label m-l-5']) !!}
@@ -103,31 +103,29 @@
 
             @if($page->type != \App\Models\Page::TYPE_CATALOG)
                 <div class="form-group @if($errors->has('is_container')) has-error @endif">
-                    <div class="switchery-demo m-b-5">
-                        <div class="col-md-2">
-                        </div>
-                        <div class="col-md-4">
-                            @if($page->type == \App\Models\Page::TYPE_CATALOG)
-                                {!! Form::hidden('is_container', 1) !!}
-                                {!! Form::checkbox('is_container', 1, $page->is_container, ['id' => 'is_container', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small', 'disabled' => true]) !!}
-                            @else
-                                {!! Form::hidden('is_container', 0) !!}
-                                {!! Form::checkbox('is_container', 1, $page->is_container, ['id' => 'is_container', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
-                            @endif
-
-                            {!! Form::label('is_container', 'Категория', ['class' => 'control-label m-l-5']) !!}
-                        </div>
-                        <div class="col-md-6">
-                            <span class="help-block m-t-0">
-                                <small>Будет ли содержать вложенные страницы?</small>
-                            </span>
-                        </div>
-                        @if($errors->has('is_container'))
-                            <span class="help-block error">
-                                <strong>{{ $errors->first('is_container') }}</strong>
-                            </span>
-                        @endif
+                    <div class="col-md-2">
                     </div>
+                    <div class="col-md-4 switchery-demo">
+                        @if($page->type == \App\Models\Page::TYPE_CATALOG)
+                            {!! Form::hidden('is_container', 1) !!}
+                            {!! Form::checkbox('is_container', 1, $page->is_container, ['id' => 'is_container', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small', 'disabled' => true]) !!}
+                        @else
+                            {!! Form::hidden('is_container', 0) !!}
+                            {!! Form::checkbox('is_container', 1, $page->is_container, ['id' => 'is_container', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
+                        @endif
+
+                        {!! Form::label('is_container', 'Категория', ['class' => 'control-label m-l-5']) !!}
+                    </div>
+                    <div class="col-md-6">
+                        <span class="help-block m-t-0">
+                            <small>Будет ли содержать вложенные страницы?</small>
+                        </span>
+                    </div>
+                    @if($errors->has('is_container'))
+                        <span class="help-block error">
+                            <strong>{{ $errors->first('is_container') }}</strong>
+                        </span>
+                    @endif
                 </div>
             @endif
         @endif
@@ -207,33 +205,30 @@
             </div>
         </div>
         <div class="form-group @if($errors->has('is_published')) has-error @endif">
-            <div class="switchery-demo m-b-5">
-                <div class="col-md-2">
-                </div>
-                <div class="col-md-4">
-                    @if($page->canBeDeleted())
-                        {!! Form::hidden('is_published', 0) !!}
-                        {!! Form::checkbox('is_published', 1, $page->is_published, ['id' => 'is_published', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
-                    @else
-                        {!! Form::hidden('is_published', 1) !!}
-                        {!! Form::checkbox('is_published', 1, $page->is_published, ['id' => 'is_published', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small', 'disabled' => true]) !!}
-                    @endif
-                    {!! Form::label('is_published', 'Опубликована', ['class' => 'control-label m-l-5']) !!}
-                </div>
-                <div class="col-md-6">
-                    @if(!$page->published_at)
-                        (сохраните, чтоб опубликовать)
-                    @else
-                        {{ \App\Helpers\Date::format($page->published_at) }}
-                    @endif
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-4 switchery-demo">
+                @if($page->canBeDeleted())
+                    {!! Form::hidden('is_published', 0) !!}
+                    {!! Form::checkbox('is_published', 1, $page->is_published, ['id' => 'is_published', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
+                @else
+                    {!! Form::hidden('is_published', 1) !!}
+                    {!! Form::checkbox('is_published', 1, $page->is_published, ['id' => 'is_published', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small', 'disabled' => true]) !!}
+                @endif
+                {!! Form::label('is_published', 'Опубликована', ['class' => 'control-label m-l-5']) !!}
+            </div>
+            <div class="col-md-6">
+                @if(!$page->published_at)
+                    (сохраните, чтоб опубликовать)
+                @else
+                    {{ \App\Helpers\Date::format($page->published_at) }}
+                @endif
 
-                    @if($errors->has('is_published'))
-                        <span class="help-block error">
-                            <strong>{{ $errors->first('is_published') }}</strong>
-                        </span>
-                    @endif
-                </div>
-
+                @if($errors->has('is_published'))
+                    <span class="help-block error">
+                        <strong>{{ $errors->first('is_published') }}</strong>
+                    </span>
+                @endif
             </div>
         </div>
         {{--<div class="form-group">--}}

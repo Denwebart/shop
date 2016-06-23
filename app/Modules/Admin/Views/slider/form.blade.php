@@ -37,55 +37,54 @@
                     </span>
                 @endif
             </div>
-            <div class="form-group @if($errors->has('is_published')) has-error @endif">
-                <div class="switchery-demo m-b-5 m-l-10">
-                    <div class="col-md-4">
-                        {!! Form::hidden('is_published', 0) !!}
-                        {!! Form::checkbox('is_published', 1, $slider->is_published, ['id' => 'is_published', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
-                        {!! Form::label('is_published', 'Опубликован', ['class' => 'control-label m-l-5']) !!}
-                    </div>
-                    <div class="col-md-8">
-                        @if ($errors->has('is_published'))
-                            <span class="help-block error">
-                            <strong>{{ $errors->first('is_published') }}</strong>
-                        </span>
-                        @endif
-                    </div>
-                </div>
-            </div>
-            <div class="form-group @if($errors->has('button_text')) has-error @endif">
-                {!! Form::label('button_text', 'Текст кнопки', ['class' => 'col-md-2 control-label']) !!}
-                <div class="col-md-10">
-                    {!! Form::text('button_text', $slider->button_text, ['id' => 'button_text', 'class' => 'form-control', 'rows' => 3]) !!}
+        </div>
+        <div class="form-group @if($errors->has('button_text')) has-error @endif">
+            {!! Form::label('button_text', 'Текст кнопки', ['class' => 'col-md-2 control-label']) !!}
+            <div class="col-md-10">
+                {!! Form::text('button_text', $slider->button_text, ['id' => 'button_text', 'class' => 'form-control', 'rows' => 3]) !!}
 
-                    <span class="help-block @if($errors->has('button_text')) hidden @endif">
-                    <small>Если текст не заполнен - на кнопке будет будет написано "Подробнее".</small>
+                <span class="help-block @if($errors->has('button_text')) hidden @endif">
+                <small>Если текст не заполнен - на кнопке будет будет написано "Подробнее".</small>
+            </span>
+                @if ($errors->has('button_text'))
+                    <span class="help-block error">
+                    <strong>{{ $errors->first('button_text') }}</strong>
                 </span>
-                    @if ($errors->has('button_text'))
-                        <span class="help-block error">
-                        <strong>{{ $errors->first('button_text') }}</strong>
-                    </span>
-                    @endif
-                </div>
+                @endif
             </div>
-            <div class="form-group @if($errors->has('button_link')) has-error @endif">
-                {!! Form::label('button_link', 'Ссылка для кнопки', ['class' => 'col-md-2 control-label']) !!}
-                <div class="col-md-10">
-                    {!! Form::text('button_link', $slider->button_link, ['id' => 'button_link', 'class' => 'form-control']) !!}
+        </div>
+        <div class="form-group @if($errors->has('button_link')) has-error @endif">
+            {!! Form::label('button_link', 'Ссылка для кнопки', ['class' => 'col-md-2 control-label']) !!}
+            <div class="col-md-10">
+                {!! Form::text('button_link', $slider->button_link, ['id' => 'button_link', 'class' => 'form-control']) !!}
 
-                    <span class="help-block @if($errors->has('button_link')) hidden @endif">
-                    <small>Если ссылка для кнопки не выставлена - кнопка не будет отображена.<br>Пример: http://shop.dev/katalog</small>
+                <span class="help-block @if($errors->has('button_link')) hidden @endif">
+                <small>Если ссылка для кнопки не выставлена - кнопка не будет отображена.<br>Пример: http://shop.dev/katalog</small>
+            </span>
+                @if ($errors->has('button_link'))
+                    <span class="help-block error">
+                    <strong>{{ $errors->first('button_link') }}</strong>
                 </span>
-                    @if ($errors->has('button_link'))
-                        <span class="help-block error">
-                        <strong>{{ $errors->first('button_link') }}</strong>
-                    </span>
-                    @endif
-                </div>
+                @endif
             </div>
         </div>
     </div>
     <div class="col-lg-6 col-sm-12 col-xs-12 m-b-15">
+        <div class="form-group m-t-20 @if($errors->has('is_published')) has-error @endif">
+            <div class="col-md-2"></div>
+            <div class="col-md-4 switchery-demo">
+                {!! Form::hidden('is_published', 0) !!}
+                {!! Form::checkbox('is_published', 1, $slider->is_published, ['id' => 'is_published', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
+                {!! Form::label('is_published', 'Опубликован', ['class' => 'control-label m-l-5']) !!}
+            </div>
+            <div class="col-md-6">
+                @if ($errors->has('is_published'))
+                    <span class="help-block error">
+                    <strong>{{ $errors->first('is_published') }}</strong>
+                </span>
+                @endif
+            </div>
+        </div>
         <div class="form-group @if($errors->has('title')) has-error @endif">
             {!! Form::label('title', 'Заголовок', ['class' => 'col-md-2 control-label']) !!}
             <div class="col-md-10">
