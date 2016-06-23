@@ -28,7 +28,7 @@ View::share('title', $title);
         </div> <!-- end col -->
 
         <div class="col-md-8">
-            <h3>Статистика:</h3>
+            <h3 class="m-t-0">Статистика:</h3>
             Обработанных заказов: {{ count($user->orders) }} <br>
             Обработанных звонков: {{ count($user->requestedCalls) }} <br>
             Комментариев: {{ count($user->comments) }} <br>
