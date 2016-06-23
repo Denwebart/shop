@@ -40,12 +40,21 @@ class SiteController extends Controller
 		$carousel = new Carousel();
 		$review = new Reviews();
 
-		$bestSellers = Product::select(\DB::raw('products.id, products.vendor_code, products.category_id, products.alias, products.is_published, products.title, products.price, products.image, products.image_alt, products.published_at, count(orders_products.product_id) as `boughtTimes`'))
+		$bestSellers = Product::select(\DB::raw('products.id, products.vendor_code, products.category_id, products.alias, products.is_published, products.title, products.price, products.image, products.image_alt, products.published_at, count(orders_products.product_id) as `sales`, (SUM(products_reviews.rating) / COUNT(products_reviews.id)) as `rating`'))
 			->leftJoin('orders_products', 'products.id', '=', 'orders_products.product_id')
+			->leftJoin('products_reviews', 'products_reviews.product_id', '=', 'products.id')
+			->where(function($q) {
+				$q->where(function ($qu) {
+					$qu->where('products_reviews.is_published', '=', 1)
+						->where('products_reviews.parent_id', '=', 0)
+						->where('products_reviews.rating', '!=', 0);
+				})->orWhere('products_reviews.id', '=', null);
+			})
 			->with('category', 'category.parent')
 			->where('products.is_published', '=', 1)
-			->groupBy('orders_products.product_id')
-			->orderBy('boughtTimes', 'DESC')
+			->groupBy('products.id')
+			->orderBy('sales', 'DESC')
+			->orderBy('rating', 'DESC')
 			->orderBy('products.published_at', 'DESC')
 			->limit(12)
 			->get();
@@ -196,12 +205,7 @@ class SiteController extends Controller
 			])
 			->get(['id', 'parent_id', 'menu_title', 'title', 'alias']);
 
-		// сортировка
-		if($request->has('sortby') && !$request->get('reset-filters') && in_array($request->get('sortby'), Product::$sortingAttributes)) {
-			$sortby = $request->get('sortby');
-		} else {
-			$sortby = $request->cookie('sortby', 'popular');
-		}
+		// get products
 		$query = Product::select(\DB::raw('products.id, products.vendor_code, products.category_id, products.alias, products.is_published, products.title, products.price, products.image, products.image_alt, products.published_at, products.introtext, products.content'))
 			->where('products.is_published', '=', 1)
 			->where('products.published_at', '<=', Carbon::now())
@@ -213,25 +217,6 @@ class SiteController extends Controller
 					$q->select(['id', 'parent_id', 'alias', 'is_container']);
 				},
 			]);
-
-		// sort by sales (popular)
-		if($sortby == 'popular') {
-			$query->leftJoin('orders_products', 'orders_products.product_id', '=', 'products.id')
-				->addSelect(\DB::raw('COUNT(orders_products.id) as `popular`'));
-		}
-		// sort by rating
-		if($sortby == 'rating') {
-			$query->leftJoin('products_reviews', 'products_reviews.product_id', '=', 'products.id')
-				->where(function($q) {
-					$q->where(function ($qu) {
-						$qu->where('products_reviews.is_published', '=', 1)
-							->where('products_reviews.parent_id', '=', 0)
-							->where('products_reviews.rating', '!=', 0);
-					})->orWhere('products_reviews.id', '=', null);
-				})
-				->addSelect(\DB::raw('(SUM(products_reviews.rating) / COUNT(products_reviews.id)) as `rating`'));
-		}
-		$query->groupBy('products.id');
 
 		// сброс фильтров
 		if($request->get('reset-filters')) {
@@ -294,8 +279,47 @@ class SiteController extends Controller
 		}
 
 		// сортировка
+		if($request->has('sortby') && !$request->get('reset-filters') && in_array($request->get('sortby'), Product::$sortingAttributes)) {
+			$sortby = $request->get('sortby');
+		} else {
+			$sortby = $request->cookie('sortby', 'popular');
+		}
 		$direction = $request->has('direction') ? $request->get('direction') : $request->cookie('direction', 'DESC');
-		$query->orderBy($sortby, $direction);
+
+		// sort by sales (popular)
+		if($sortby == 'popular') {
+			$query->leftJoin('orders_products', 'orders_products.product_id', '=', 'products.id')
+				->addSelect(\DB::raw('COUNT(orders_products.id) as `popular`'));
+
+			$query->leftJoin('products_reviews', 'products_reviews.product_id', '=', 'products.id')
+				->where(function($q) {
+					$q->where(function ($qu) {
+						$qu->where('products_reviews.is_published', '=', 1)
+							->where('products_reviews.parent_id', '=', 0)
+							->where('products_reviews.rating', '!=', 0);
+					})->orWhere('products_reviews.id', '=', null);
+				})
+				->addSelect(\DB::raw('(SUM(products_reviews.rating) / COUNT(products_reviews.id)) as `rating`'));
+
+			$query->orderBy('popular', $direction);
+			$query->orderBy('rating', $direction);
+		}
+		// sort by rating
+		elseif($sortby == 'rating') {
+			$query->leftJoin('products_reviews', 'products_reviews.product_id', '=', 'products.id')
+				->where(function($q) {
+					$q->where(function ($qu) {
+						$qu->where('products_reviews.is_published', '=', 1)
+							->where('products_reviews.parent_id', '=', 0)
+							->where('products_reviews.rating', '!=', 0);
+					})->orWhere('products_reviews.id', '=', null);
+				})
+				->addSelect(\DB::raw('(SUM(products_reviews.rating) / COUNT(products_reviews.id)) as `rating`'));
+			$query->orderBy($sortby, $direction);
+		} else {
+			$query->orderBy($sortby, $direction);
+		}
+		$query->groupBy('products.id');
 		$query->orderBy('products.published_at', 'DESC');
 
 		// кол-во на странице
