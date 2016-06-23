@@ -20,16 +20,13 @@
                             </a>
                         </h5>
                         <p>
-                            Далеко-далеко за словесными горами в стране
-                            гласных и согласных живут рыбные тексты. Вдали
-                            от всех живут они в буквенных домах на берегу
-                            Семантика большого языкового океана. Маленький
-                            ручеек Даль журчит по всей стране и обеспечивает
-                            ее всеми необходимыми правилами. Эта парадигматическая
-                            страна.
+                            {{ $page->getIntrotext() }}
                         </p>
                         <div class="divider divider--xs"></div>
-                        <a href="{{ $page->getUrl() }}" class="btn btn--wd pull-right text-uppercase">Читать длее</a>
+                        <a href="{{ $page->getUrl() }}" class="btn btn--wd pull-right">
+                            <span class="text-uppercase pull-left">Читать далее</span>
+                            <i class="icon icon-arrow-right pull-left m-l-5"></i>
+                        </a>
                     </div>
                     @if($key < count($pages))
                         <div class="divider divider--sm visible-xs"></div>

@@ -37,7 +37,9 @@
                             <div class="card card--padding m-t-10 m-b-20">
                                 <div class="row">
                                     <div class="col-sm-7 col-md-8">
-                                        <h3 class="text-uppercase">{{ $child->getTitle() }}</h3>
+                                        <a href="{{ $child->getUrl() }}">
+                                            <h3 class="text-uppercase">{{ $child->getTitle() }}</h3>
+                                        </a>
                                     </div>
                                     <div class="col-sm-5 col-md-4">
                                         <span class="pull-right">
@@ -49,13 +51,15 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         @if($child->image)
-                                            <img src="{{ $child->getImageUrl() }}" alt="{{ $child->image_alt }}">
+                                            <a href="{{ $child->getUrl() }}">
+                                                <img src="{{ $child->getImageUrl() }}" alt="{{ $child->image_alt }}">
+                                            </a>
                                         @endif
-                                        {!! $child->introtext ? $child->introtext : \App\Helpers\Str::closeTags(\App\Helpers\Str::limit($child->content, 500)) !!}
+                                        {!! $child->getIntrotext() !!}
                                         <div class="divider divider--sm"></div>
                                         <a style="animation-delay: 0.5s;" href="{{ $child->getUrl() }}" class="btn btn--wd animation animated fadeInUp pull-right" data-animation="fadeInUp" data-animation-delay="0.5s">
-                                            Подрбнее
-                                            <i class="icon icon-arrow-right"></i>
+                                            <span class="text-uppercase pull-left">Подробнее</span>
+                                            <i class="icon icon-arrow-right pull-left m-l-5"></i>
                                         </a>
                                     </div>
                                 </div>

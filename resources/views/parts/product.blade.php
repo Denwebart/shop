@@ -92,9 +92,9 @@
                 <span class="price-box__new">{{ \App\Helpers\Str::priceFormat($item->getPrice()) }}</span>
                 {{--<span class="price-box__old">6000 руб.</span>--}}
             </div>
-            @if($item->introtext || $item->content)
+            @if($item->getIntrotext())
                 <div class="product-preview__info__description">
-                    {!! $item->introtext ? $item->introtext : \App\Helpers\Str::closeTags(\App\Helpers\Str::limit($item->content, 500)) !!}
+                    {!! $item->getIntrotext() !!}
                 </div>
             @endif
             <div class="product-preview__info__link">

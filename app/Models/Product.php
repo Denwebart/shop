@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use App\Helpers\Str;
 use App\Helpers\Translit;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -288,6 +289,14 @@ class Product extends Model
 	public function getMetaKey()
 	{
 		return $this->meta_key ? $this->meta_key : '';
+	}
+
+	public function getIntrotext($limit = null)
+	{
+		$limit = $limit ? $limit : 500;
+		return $this->introtext
+			? $this->introtext
+			: Str::closeTags(Str::limit($this->content, $limit));
 	}
 	
 	/**

@@ -36,6 +36,7 @@ class Articles extends BaseController
 		$pages = Page::whereParentId($parentId)
 			->whereIsPublished(1)
 			->where('published_at', '<', date('Y-m-d H:i:s'))
+			->whereIsContainer(0)
 			->with([
 				'parent' => function($q) {
 					$q->select(['id', 'type', 'is_container', 'alias']);
