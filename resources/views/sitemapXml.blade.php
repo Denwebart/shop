@@ -16,4 +16,10 @@
         {{ \App\Helpers\View::getChildrenPages($item, 1, 'xml') }}
     @endforeach
 
+    <image>
+        <url>@if(is_object($siteLogo)){{ $siteLogo->value }}@endif</url>
+        <title>@if(is_object($siteTitle)){{ $siteTitle->value }}@endif</title>
+        <siteurl>shop.dev</siteurl>
+        <copyright>2016 @if(date('Y') != 2016) - {{ date('Y') }} @endif ©</copyright>
+    </image>
 </urlset>

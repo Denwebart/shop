@@ -7,7 +7,7 @@
     <xsl:template match="/">
         <html xmlns="http://www.w3.org/1999/xhtml">
             <head>
-                <title>Sitemap - Avtorem.info</title>
+                <title>Sitemap XML</title>
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
                 <style type="text/css">
                     body {
@@ -52,6 +52,11 @@
                         margin: 0 auto;
                         padding: 1em;
                     }
+                    .content .total {
+                        margin-bottom: 10px;
+                        display: inline-block;
+                        width: 100%;
+                    }
                     .content table {
                         width: 100%;
                     }
@@ -92,16 +97,25 @@
             </head>
             <body>
                 <div id="logo">
-                    <a href="/" class="image">
-                        <img src="/images/logo.png" />
-                    </a>
-                    <h1>
-                        <a href="/">
-                            Интернет-магазин верхней женской одежды
+                    <xsl:for-each select="sitemap:urlset/sitemap:image">
+                        <a href="/" class="image">
+                            <img>
+                                <xsl:attribute name="src">
+                                    <xsl:value-of select="concat('/images/', sitemap:url)" />
+                                </xsl:attribute>
+                            </img>
                         </a>
-                    </h1>
+                        <h1>
+                            <a href="/">
+                                <xsl:value-of select="sitemap:title" />
+                            </a>
+                        </h1>
+                    </xsl:for-each>
                 </div>
                 <div class="content">
+                    <div class="total">
+                        <small>This sitemap contains <xsl:value-of select="count(sitemap:urlset/sitemap:url)"/> URLs.</small>
+                    </div>
                     <table cellpadding="5">
                         <tr>
                             <th><span>URL</span></th>
@@ -141,11 +155,16 @@
                 </div>
                 <div id="footer">
                     <div class="copyright">
-                        <span class="text">2016 ©</span>
-                        <a href="http://www.shop.dev" title="www.shop.dev">
-                            <span class="text">www.shop.dev</span>
-                            <img src="/images/logo.png" alt="" class="logo" />
-                        </a>
+                        <xsl:for-each select="sitemap:urlset/sitemap:image">
+                            <span class="text">
+                                <xsl:value-of select="sitemap:copyright" />
+                            </span>
+                            <a href="/">
+                                <span class="text">
+                                    <xsl:value-of select="sitemap:siteurl" />
+                                </span>
+                            </a>
+                        </xsl:for-each>
                     </div>
                 </div>
             </body>

@@ -401,7 +401,9 @@ class SiteController extends Controller
 			])
 			->get(['id', 'parent_id', 'type', 'is_container', 'alias', 'title', 'menu_title', 'updated_at', 'published_at']);
 
-		$content = \View::make('sitemapXml', compact('sitemapItems'))->render();
+		$siteTitle = $settings->get('siteTitle');
+		$siteLogo = $settings->get('logo.main');
+		$content = \View::make('sitemapXml', compact('sitemapItems', 'siteTitle', 'siteLogo'))->render();
 
 		return response($content)->header('Content-Type', 'text/xml');
 	}
