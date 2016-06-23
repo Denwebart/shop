@@ -26,14 +26,16 @@ class Property extends Model
 	/**
 	 * Тип (значение поля type)
 	 */
-	const TYPE_CHECKBOX = 0;
-	const TYPE_COLOR    = 1;
-	const TYPE_BUTTON   = 2;
+	const TYPE_DEFAULT = 0;
+	const TYPE_COLOR   = 1;
+	const TYPE_BUTTON  = 2;
+	const TYPE_BRAND   = 3;
 
 	public static $types = [
-		self::TYPE_CHECKBOX => 'Стандартная',
-		self::TYPE_COLOR    => 'Цвет',
-		self::TYPE_BUTTON   => 'Кнопка',
+		self::TYPE_DEFAULT => 'Стандартная',
+		self::TYPE_COLOR   => 'Цвет',
+		self::TYPE_BUTTON  => 'Кнопка',
+		self::TYPE_BRAND   => 'Бренд',
 	];
 
 	/**
@@ -44,6 +46,15 @@ class Property extends Model
 	protected $fillable = [
 		'title',
 	];
+
+	public static function boot()
+	{
+		parent::boot();
+
+		static::deleting(function($property) {
+			$property->values()->delete();
+		});
+	}
 
 	/**
 	 * Values

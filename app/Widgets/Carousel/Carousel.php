@@ -11,9 +11,19 @@ namespace App\Widgets\Carousel;
 
 
 use App\Models\Product;
+use App\Models\Property;
+use App\Models\PropertyValue;
 
 class Carousel
 {
+	/**
+	 * Best salles products
+	 *
+	 * @return mixed
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
 	public function sale()
 	{
 		$title = 'Распродажа';
@@ -30,5 +40,27 @@ class Carousel
 			->get();
 
 		return view('widget.carousel::index', compact('items', 'title'));
+	}
+
+	/**
+	 * Product brands
+	 *
+	 * @return mixed
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function brands()
+	{
+		$title = 'С нами сотрудничают';
+
+		$items = PropertyValue::select(['property_values.id', 'property_values.property_id', 'property_values.value', 'property_values.additional_value'])
+			->leftJoin('properties', 'property_values.property_id', '=', 'properties.id')
+			->where('properties.type', '=', Property::TYPE_BRAND)
+			->with('property')
+			->orderBy('property_values.id', 'DESC')
+			->get();
+
+		return view('widget.carousel::brands', compact('items', 'title'));
 	}
 }

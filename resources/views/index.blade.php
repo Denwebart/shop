@@ -32,34 +32,7 @@
 {!! $carousel->sale() !!}
 
 <!-- Brands Section -->
-<section class="content content--fill top-null">
-    <div class="container">
-        <h3 class="text-center text-uppercase">С нами сотрудничают</h3>
-        <div class="brands brands-carousel animated-arrows mobile-special-arrows">
-            <div class="brands__item"><a href="#"><img src="images/brand-empty.png"
-                                                       data-lazy="images/brand-01.png" alt=""/></a></div>
-            <div class="brands__item"><a href="#"><img src="images/brand-empty.png"
-                                                       data-lazy="images/brand-02.png" alt=""/></a></div>
-            <div class="brands__item"><a href="#"><img src="images/brand-empty.png"
-                                                       data-lazy="images/brand-03.png" alt=""/></a></div>
-            <div class="brands__item"><a href="#"><img src="images/brand-empty.png"
-                                                       data-lazy="images/brand-04.png" alt=""/></a></div>
-            <div class="brands__item"><a href="#"><img src="images/brand-empty.png"
-                                                       data-lazy="images/brand-05.png" alt=""/></a></div>
-            <div class="brands__item"><a href="#"><img src="images/brand-empty.png"
-                                                       data-lazy="images/brand-06.png" alt=""/></a></div>
-            <div class="brands__item"><a href="#"><img src="images/brand-empty.png"
-                                                       data-lazy="images/brand-07.png" alt=""/></a></div>
-            <div class="brands__item"><a href="#"><img src="images/brand-empty.png"
-                                                       data-lazy="images/brand-01.png" alt=""/></a></div>
-            <div class="brands__item"><a href="#"><img src="images/brand-empty.png"
-                                                       data-lazy="images/brand-02.png" alt=""/></a></div>
-            <div class="brands__item"><a href="#"><img src="images/brand-empty.png"
-                                                       data-lazy="images/brand-03.png" alt=""/></a></div>
-        </div>
-    </div>
-</section>
-<!-- End Brands Section -->
+{!! $carousel->brands() !!}
 
 {!! $review->show() !!}
 

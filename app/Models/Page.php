@@ -186,11 +186,11 @@ class Page extends Model
 			}
 		});
 
-		static::deleting(function($product) {
-			$product->children()->delete();
-			$product->products()->delete();
-			$product->menus()->delete();
-			$product->deleteImagesFolder();
+		static::deleting(function($page) {
+			$page->children()->delete();
+			$page->products()->delete();
+			$page->menus()->delete();
+			$page->deleteImagesFolder();
 		});
 	}
 
