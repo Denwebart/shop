@@ -103,13 +103,16 @@
                                 <xsl:attribute name="src">
                                     <xsl:value-of select="concat('/images/', sitemap:url)" />
                                 </xsl:attribute>
+                                <xsl:attribute name="alt">
+                                    <xsl:value-of select="sitemap:title" />
+                                </xsl:attribute>
                             </img>
                         </a>
-                        <h1>
-                            <a href="/">
+                        <a href="/">
+                            <h1>
                                 <xsl:value-of select="sitemap:title" />
-                            </a>
-                        </h1>
+                            </h1>
+                        </a>
                     </xsl:for-each>
                 </div>
                 <div class="content">
