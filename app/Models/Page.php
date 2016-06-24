@@ -355,6 +355,22 @@ class Page extends Model
 	 * @author     It Hill (it-hill.com@yandex.ua)
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
+	public static function getPageUrl($id)
+	{
+		$page = Page::select(['id', 'parent_id', 'alias'])
+			->whereId($id)
+			->first();
+
+		return $page ? $page->getUrl() : false;
+	}
+
+	/**
+	 * Get page url
+	 *
+	 * @return mixed
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
 	public function getUrl()
 	{
 		if($this->parent_id) {

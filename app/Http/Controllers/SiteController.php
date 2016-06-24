@@ -358,18 +358,16 @@ class SiteController extends Controller
 	{
 		$page->ratingInfo = $page->getRating();
 		$page->rating = $page->ratingInfo['value'];
-//		$page->popular = $page->sales;
 		
 		// previous / next
-		$sortby = $request->cookie('sortby', 'popular');
 		$direction = $request->cookie('direction', 'desc');
-		$page->previous = $direction == 'desc'
-			? $page->getPrevious($sortby)
-			: $page->getNext($sortby);
-		$page->next = $direction == 'desc'
-			? $page->getNext($sortby)
-			: $page->getPrevious($sortby);
-
+		$previousNext = $page->getPreviousNext($request->cookie('sortby', 'popular'));
+		$page->previous = ($direction == 'desc')
+			? collect($previousNext)->first()
+			: collect($previousNext)->last();
+		$page->next = ($direction == 'desc')
+			? collect($previousNext)->last()
+			: collect($previousNext)->first();
 		$productReviews = $page->getReviews();
 		$viewed = new Viewed();
 		$productProperties = $page->getProperties();

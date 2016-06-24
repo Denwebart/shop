@@ -16,23 +16,29 @@
             <ul id="productOther" class="product-other pull-right hidden-xs">
                 @if(is_object($page->previous))
                     <li class="product-other__link product-prev">
-                        <a href="{{ $page->previous->getUrl() }}">
-                            {{ $page->previous->getTitle() }}
-                            {{ $page->previous->popular }}
+                        <a href="{{ \App\Models\Page::getPageUrl($page->previous->category_id) . '/' . $page->previous->alias }}">
+                            {{ $page->previous->title }}
                         </a>
                         <span class="product-other__link__image">
-                            <img src="{{ $page->previous->getImageUrl() }}" alt="{{ $page->previous->image_alt }}"/>
+                            @if($page->previous->image)
+                                <img src="{{ asset($page->getImagePath() . $page->previous->id . '/' . $page->previous->image) }}" alt="{{ $page->previous->image_alt }}"/>
+                            @else
+                                <img src="{{ $page->getDefaultImage() }}" alt="{{ $page->previous->image_alt }}"/>
+                            @endif
                         </span>
                     </li>
                 @endif
                 @if(is_object($page->next))
                     <li class="product-other__link product-next">
-                        <a href="{{ $page->next->getUrl() }}">
-                            {{ $page->next->getTitle() }}
-                            {{ $page->next->popular }}
+                        <a href="{{ \App\Models\Page::getPageUrl($page->previous->category_id) . '/' . $page->next->alias }}">
+                            {{ $page->next->title }}
                         </a>
                         <span class="product-other__link__image">
-                            <img src="{{ $page->next->getImageUrl() }}" alt="{{ $page->next->image_alt }}"/>
+                            @if($page->next->image)
+                                <img src="{{ asset($page->getImagePath() . $page->next->id . '/' . $page->next->image) }}" alt="{{ $page->next->image_alt }}"/>
+                            @else
+                                <img src="{{ $page->getDefaultImage() }}" alt="{{ $page->next->image_alt }}"/>
+                            @endif
                         </span>
                     </li>
                 @endif

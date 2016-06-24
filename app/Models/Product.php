@@ -298,7 +298,7 @@ class Product extends Model
 			? $this->introtext
 			: Str::closeTags(Str::limit($this->content, $limit));
 	}
-	
+
 	/**
 	 * Get page url
 	 *
@@ -391,6 +391,16 @@ class Product extends Model
 		return $items;
 	}
 
+	public function getImagePath()
+	{
+		return $this->imagePath;
+	}
+
+	public function getDefaultImage()
+	{
+		return asset('images/product-default-image.jpg');
+	}
+
 	/**
 	 * Get image url
 	 *
@@ -406,7 +416,7 @@ class Product extends Model
 		return $this->image
 			? asset($this->imagePath . $this->id . '/' . $prefix . $this->image)
 			: ($default
-				? asset('images/product-default-image.jpg')
+				? $this->getDefaultImage()
 			    : '');
 	}
 
@@ -579,7 +589,75 @@ class Product extends Model
 		return key_exists($this->id, $wishlistProducts) ? true : false;
 	}
 
-	protected function queryPreviousNext($sortby)
+	protected function queryPreviousNext($sortby, $categoriesIds)
+	{
+		//доделать - из-за join неправильное значение position (по рейтингу и популярности ошибка на товарах, где есть значение)
+		$query = Product::select(\DB::raw('products.id, products.category_id, products.alias, products.is_published, products.title, products.image, products.image_alt, products.published_at, @num := @num + 1 AS `position`'))
+			->where('products.is_published', '=', 1)
+			->where('products.published_at', '<=', Carbon::now())
+			->with([
+				'category' => function($q) {
+					$q->select(['id', 'parent_id', 'alias', 'is_container']);
+				},
+				'category.parent' => function($q) {
+					$q->select(['id', 'parent_id', 'alias', 'is_container']);
+				},
+			]);
+		if(isset($categoriesIds)) {
+			$query = $query->whereIn('products.category_id', $categoriesIds);
+		}
+
+		if($sortby == 'popular') {
+			// sales (popular)
+			$query->leftJoin('orders_products', 'orders_products.product_id', '=', 'products.id')
+				->addSelect(\DB::raw('IFNULL(COUNT(orders_products.id), 0) as `popular`'));
+
+			$query->leftJoin('products_reviews', 'products_reviews.product_id', '=', 'products.id')
+				->where(function($q) {
+					$q->where(function ($qu) {
+						$qu->where('products_reviews.is_published', '=', 1)
+							->where('products_reviews.parent_id', '=', 0)
+							->where('products_reviews.rating', '!=', 0);
+					})->orWhere('products_reviews.id', '=', null);
+				})
+				->addSelect(\DB::raw('IFNULL((SUM(products_reviews.rating) / COUNT(products_reviews.id)), 0) as `rating`'));
+		}
+		if($sortby == 'rating') {
+			// rating
+			$query->leftJoin('products_reviews', 'products_reviews.product_id', '=', 'products.id')
+				->where(function($q) {
+					$q->where(function ($qu) {
+						$qu->where('products_reviews.is_published', '=', 1)
+							->where('products_reviews.parent_id', '=', 0)
+							->where('products_reviews.rating', '!=', 0);
+					})->orWhere('products_reviews.id', '=', null);
+				})
+				->addSelect(\DB::raw('IFNULL((SUM(products_reviews.rating) / COUNT(products_reviews.id)), 0) as `rating`'));
+			$query->raw(\DB::raw('join (SELECT @num := -1) r'));
+		}
+		$query->groupBy('products.id');
+
+		if($sortby == 'popular') {
+			$query->orderBy(\DB::raw('IFNULL(COUNT(orders_products.id), 0)'), 'ASC');
+		} elseif($sortby == 'rating') {
+			$query->orderBy(\DB::raw('IFNULL((SUM(products_reviews.rating) / COUNT(products_reviews.id)), 0)'), 'ASC');
+		} else {
+			$query->orderBy($sortby, 'ASC');
+		}
+
+		$query->orderBy('products.published_at', 'ASC');
+		
+//		foreach ($query->get() as $item) {
+//			echo $item->title;
+//			echo ' - ';
+//			echo $item->position;
+//			echo '<br>';
+//		}
+//		dd();
+		return $query;
+	}
+
+	public function getPreviousNext($sortby)
 	{
 		// доделать вложенность (рекурсивно?) - не хватает 1-го уровня
 		if($this->category) {
@@ -600,43 +678,22 @@ class Product extends Model
 			}
 		}
 
-		$query = Product::select(\DB::raw('products.id, products.category_id, products.alias, products.is_published, products.title, products.image, products.image_alt, products.published_at'))
-			->where('products.is_published', '=', 1)
-			->where('products.published_at', '<=', Carbon::now())
-			->with([
-				'category' => function($q) {
-					$q->select(['id', 'parent_id', 'alias', 'is_container']);
-				},
-				'category.parent' => function($q) {
-					$q->select(['id', 'parent_id', 'alias', 'is_container']);
-				},
-			]);
-		if(isset($categoriesIds)) {
-			$query = $query->whereIn('products.category_id', $categoriesIds);
-		}
+		// current position
+		\DB::statement("SET @num = 0");
+		$currentPosition = \DB::table(\DB::raw("({$this->queryPreviousNext($sortby, $categoriesIds)->toSql()}) as sub") )
+			->mergeBindings($this->queryPreviousNext($sortby, $categoriesIds)->getQuery())
+			->select('position')
+			->where('id', '=', $this->id)
+			->first();
 
-		if($sortby == 'popular') {
-			// sales (popular)
-			$query->leftJoin('orders_products', 'orders_products.product_id', '=', 'products.id')
-//				->orWhere('orders_products.id', '=', null)
-				->addSelect(\DB::raw('COUNT(orders_products.id) as `popular`'));
-		}
-		if($sortby == 'rating') {
-			// rating
-			$query->leftJoin('products_reviews', 'products_reviews.product_id', '=', 'products.id')
-				->where(function($q) {
-					$q->where(function ($qu) {
-						$qu->where('products_reviews.is_published', '=', 1)
-							->where('products_reviews.parent_id', '=', 0)
-							->where('products_reviews.rating', '!=', 0);
-					})->orWhere('products_reviews.id', '=', null);
-				})
-				->addSelect(\DB::raw('(SUM(products_reviews.rating) / COUNT(products_reviews.id)) as `rating`'));
-		}
-		$query->groupBy('products.id')
-			->where('products.id', '!=', $this->id);
+		\DB::statement("SET @num = 0");
+		$result = \DB::table(\DB::raw("({$this->queryPreviousNext($sortby, $categoriesIds)->toSql()}) as sub") )
+			->mergeBindings($this->queryPreviousNext($sortby, $categoriesIds)->getQuery())
+			->whereIn('position', [$currentPosition->position - 1, $currentPosition->position + 1])
+			->orderBy('position', 'DESC')
+			->get();
 
-		return $query;
+		return $result;
 	}
 
 	/**
@@ -650,17 +707,7 @@ class Product extends Model
 	 */
 	public function getPrevious($sortby)
 	{
-		$query = $this->queryPreviousNext($sortby);
-		if($sortby == 'popular') {
-			$query->having(\DB::raw('COUNT(orders_products.id)'), '>=', $this->sales)
-				->orderBy(\DB::raw('COUNT(orders_products.id)'), 'ASC');
-		} else {
-			$query->where($sortby, '>=', $this->$sortby)
-				->orderBy($sortby, 'ASC');
-		}
-		$query->orderBy('products.published_at', 'DESC');
-
-		return $query->first();
+		return collect($this->getPreviousNext($sortby))->first();
 	}
 
 	/**
@@ -674,17 +721,7 @@ class Product extends Model
 	 */
 	public function getNext($sortby)
 	{
-		$query = $this->queryPreviousNext($sortby);
-		if($sortby == 'popular') {
-			$query->having(\DB::raw('COUNT(orders_products.id)'), '<=', $this->sales)
-				->orderBy(\DB::raw('COUNT(orders_products.id)'), 'DESC');
-		} else {
-			$query->where($sortby, '<=', $this->$sortby)
-				->orderBy($sortby, 'DESC');
-		}
-		$query->orderBy('products.published_at', 'DESC');
-
-		return $query->first();
+		return collect($this->getPreviousNext($sortby))->last();
 	}
 
 }
