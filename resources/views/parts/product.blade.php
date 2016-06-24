@@ -38,9 +38,9 @@
             </div>
             <ul class="options-swatch options-swatch--color">
                 @foreach($item->propertyColor as $color)
-                    <li>
-                        <a href="#" data-property="{{ $color->property->title }}" data-value="{{ $color->value }}" class="ajax-filter-link @if(in_array($color->value, explode(',', \Request::get($color->property->title)))) active @endif">
-                            <span class="color-icon color" style="background: {{ $color->additional_value or '#ffffff' }}"></span>
+                    <li @if(in_array($color->value, explode(',', \Request::get($color->property->title)))) class="active" @endif>
+                        <a href="{{ $item->getUrl([$color->property->title => $color->value]) }}" title="{{ $color->value }}">
+                            <span class="swatch-label color-icon color" style="background: {{ $color->additional_value or '#ffffff' }}"></span>
                         </a>
                     </li>
                 @endforeach

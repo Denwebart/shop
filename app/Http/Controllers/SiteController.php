@@ -50,7 +50,7 @@ class SiteController extends Controller
 						->where('products_reviews.rating', '!=', 0);
 				})->orWhere('products_reviews.id', '=', null);
 			})
-			->with('category', 'category.parent')
+			->with('category', 'category.parent', 'propertyColor')
 			->where('products.is_published', '=', 1)
 			->groupBy('products.id')
 			->orderBy('sales', 'DESC')
@@ -216,6 +216,7 @@ class SiteController extends Controller
 				'category.parent' => function($q) {
 					$q->select(['id', 'parent_id', 'alias', 'is_container']);
 				},
+				'propertyColor'
 			]);
 
 		// сброс фильтров

@@ -320,16 +320,21 @@ class Product extends Model
 	/**
 	 * Get page url
 	 *
-	 * @return mixed
+	 * @param array $parameters
+	 * @return string
+	 *
 	 * @author     It Hill (it-hill.com@yandex.ua)
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
-	public function getUrl()
+	public function getUrl($parameters = [])
 	{
+		$parameters = count($parameters)
+			? urldecode("?" . http_build_query($parameters))
+			: '';
 		if($this->category) {
-			return url($this->category->getUrl() . '/' . $this->alias);
+			return url($this->category->getUrl() . '/' . $this->alias) . $parameters;
 		} else {
-			return url($this->alias);
+			return url($this->alias) . $parameters;
 		}
 	}
 

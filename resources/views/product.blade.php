@@ -121,55 +121,13 @@
                     <div class="divider divider--xs"></div>
                     <label>Цвет:</label>
                     <ul class="options-swatch options-swatch--color options-swatch--lg">
-                        <li>
-                            <a href="#">
-                                    <span class="swatch-label">
-                                        <img src="/images/colors/blue.png" width="10" height="10" alt=""/>
-                                    </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                    <span class="swatch-label">
-                                        <img src="/images/colors/yellow.png" width="10" height="10" alt=""/>
-                                    </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                    <span class="swatch-label">
-                                        <img src="/images/colors/green.png" width="10" height="10" alt=""/>
-                                    </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                    <span class="swatch-label">
-                                        <img src="/images/colors/dark-grey.png" width="10" height="10" alt=""/>
-                                    </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                    <span class="swatch-label">
-                                        <img src="/images/colors/grey.png" width="10" height="10" alt=""/>
-                                    </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                    <span class="swatch-label">
-                                        <img src="/images/colors/red.png" width="10" height="10" alt=""/>
-                                    </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                    <span class="swatch-label">
-                                        <img src="/images/colors/white.png" width="10" height="10" alt=""/>
-                                    </span>
-                            </a>
-                        </li>
+                        @foreach($page->propertyColor as $color)
+                            <li @if(Request::get($color->property->title) == $color->value) class="active" @endif>
+                                <a href="{{ $page->getUrl([$color->property->title => $color->value]) }}" title="{{ $color->value }}">
+                                    <span class="swatch-label color-icon color" style="background: {{ $color->additional_value or '#ffffff' }}"></span>
+                                </a>
+                            </li>
+                        @endforeach
                     </ul>
                     <div class="divider divider--sm"></div>
                     <label>Количество:</label>
