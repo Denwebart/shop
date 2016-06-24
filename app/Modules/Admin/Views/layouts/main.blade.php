@@ -51,7 +51,7 @@
 
         <!-- LOGO -->
         <div class="topbar-left hidden-xs">
-            <a href="{{ url('/') }}" class="back-to-site pull-left" target="_blank" title="На сайт" data-toggle="tooltip" data-placement="right">
+            <a href="{{ url('/') }}" class="back-to-site pull-left" target="_blank" title="Перейти на сайт" data-toggle="tooltip" data-placement="right">
                 <i class="fa fa-arrow-left"></i>
             </a>
             <a href="{{ route('admin.index') }}" class="logo">
