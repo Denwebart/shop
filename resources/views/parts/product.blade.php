@@ -36,57 +36,15 @@
                     </a>
                 </h2>
             </div>
-            {{--<ul class="options-swatch options-swatch--color">--}}
-            {{--<li>--}}
-            {{--<a href="#">--}}
-            {{--<span class="swatch-label">--}}
-            {{--<img src="images/colors/blue.png" width="10" height="10" alt=""/>--}}
-            {{--</span>--}}
-            {{--</a>--}}
-            {{--</li>--}}
-            {{--<li>--}}
-            {{--<a href="#">--}}
-            {{--<span class="swatch-label">--}}
-            {{--<img src="images/colors/yellow.png" width="10" height="10" alt=""/>--}}
-            {{--</span>--}}
-            {{--</a>--}}
-            {{--</li>--}}
-            {{--<li>--}}
-            {{--<a href="#">--}}
-            {{--<span class="swatch-label">--}}
-            {{--<img src="images/colors/green.png" width="10" height="10" alt=""/>--}}
-            {{--</span>--}}
-            {{--</a>--}}
-            {{--</li>--}}
-            {{--<li>--}}
-            {{--<a href="#">--}}
-            {{--<span class="swatch-label">--}}
-            {{--<img src="images/colors/dark-grey.png" width="10" height="10" alt=""/>--}}
-            {{--</span>--}}
-            {{--</a>--}}
-            {{--</li>--}}
-            {{--<li>--}}
-            {{--<a href="#">--}}
-            {{--<span class="swatch-label">--}}
-            {{--<img src="images/colors/grey.png" width="10" height="10" alt=""/>--}}
-            {{--</span>--}}
-            {{--</a>--}}
-            {{--</li>--}}
-            {{--<li>--}}
-            {{--<a href="#">--}}
-            {{--<span class="swatch-label">--}}
-            {{--<img src="images/colors/red.png" width="10" height="10" alt=""/>--}}
-            {{--</span>--}}
-            {{--</a>--}}
-            {{--</li>--}}
-            {{--<li>--}}
-            {{--<a href="#">--}}
-            {{--<span class="swatch-label">--}}
-            {{--<img src="images/colors/white.png" width="10" height="10" alt=""/>--}}
-            {{--</span>--}}
-            {{--</a>--}}
-            {{--</li>--}}
-            {{--</ul>--}}
+            <ul class="options-swatch options-swatch--color">
+                @foreach($item->propertyColor as $color)
+                    <li>
+                        <a href="#" data-property="{{ $color->property->title }}" data-value="{{ $color->value }}" class="ajax-filter-link @if(in_array($color->value, explode(',', \Request::get($color->property->title)))) active @endif">
+                            <span class="color-icon color" style="background: {{ $color->additional_value or '#ffffff' }}"></span>
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
             <div class="price-box ">
                 <span class="price-box__new">{{ \App\Helpers\Str::priceFormat($item->getPrice()) }}</span>
                 {{--<span class="price-box__old">6000 руб.</span>--}}

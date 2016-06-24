@@ -271,6 +271,24 @@ class Product extends Model
 	    }])->get();
     }
 
+	/**
+	 * Get properties color
+	 *
+	 * @return \Illuminate\Database\Eloquent\Collection|static[]
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function propertyColor()
+	{
+		return $this->belongsToMany('App\Models\PropertyValue', 'products_property_values')
+			->whereHas('property', function ($q) {
+				$q->where('type', '=', Property::TYPE_COLOR);
+			})->with(['property' => function ($q) {
+				$q->where('type', '=', Property::TYPE_COLOR);
+			}]);
+	}
+
 	public function getTitle()
 	{
 		return $this->title;
