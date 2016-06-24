@@ -51,6 +51,9 @@
 
         <!-- LOGO -->
         <div class="topbar-left hidden-xs">
+            <a href="{{ url('/') }}" class="back-to-site pull-left" target="_blank" title="На сайт" data-toggle="tooltip" data-placement="right">
+                <i class="fa fa-arrow-left"></i>
+            </a>
             <a href="{{ route('admin.index') }}" class="logo">
                 <span>Admin<span> panel</span></span>
                 <i class="zmdi zmdi-layers"></i>
