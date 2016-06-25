@@ -108,28 +108,35 @@
                     @endif
 
                     <div class="divider divider&#45;&#45;xs product-info__divider"></div>
-                    <label>Размер:</label>
-                    <ul class="options-swatch options-swatch--size options-swatch--lg">
-                        <li>XS</li>
-                        <li>S</li>
-                        <li>M</li>
-                        <li>L</li>
-                        <li>XL</li>
-                        <li>XXL</li>
-                        <li>XXXL</li>
-                    </ul>
-                    <div class="divider divider--xs"></div>
-                    <label>Цвет:</label>
-                    <ul class="options-swatch options-swatch--color options-swatch--lg">
-                        @foreach($page->propertyColor as $color)
-                            <li @if(Request::get($color->property->title) == $color->value) class="active" @endif>
-                                <a href="{{ $page->getUrl([$color->property->title => $color->value]) }}" title="{{ $color->value }}">
+
+                    @if(count($page->propertySize))
+                        <label>Размер:</label>
+                        <ul class="options-swatch options-swatch--size options-swatch--lg">
+                            @foreach($page->propertySize as $size)
+                                <li class="add-to-cart__size @if(Request::get($size->property->title) == $size->value || count($page->propertySize) == 1) active @endif" title="{{ $size->value }} @if($size->additional_value) ({{ $size->additional_value }}) @endif" data-value="{{ $size->value }}">
+                                    <span class="swatch-label">{{ $size->value }}</span>
+                                </li>
+                            @endforeach
+                            {!! Form::hidden('add-to-cart__size__input', Request::get($size->property->title)) !!}
+                            <span class="help-block error add-to-cart__size__error"></span>
+                        </ul>
+                        <div class="divider divider--xs"></div>
+                    @endif
+
+                    @if(count($page->propertyColor))
+                        <label>Цвет:</label>
+                        <ul class="options-swatch options-swatch--color options-swatch--lg">
+                            @foreach($page->propertyColor as $color)
+                                <li class="add-to-cart__color @if(Request::get($color->property->title) == $color->value) active @endif" title="{{ $color->value }}" data-value="{{ $color->value }}">
                                     <span class="swatch-label color-icon color" style="background: {{ $color->additional_value or '#ffffff' }}"></span>
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
-                    <div class="divider divider--sm"></div>
+                                </li>
+                            @endforeach
+                            {!! Form::hidden('add-to-cart__color__input', Request::get($color->property->title)) !!}
+                            <span class="help-block error add-to-cart__color___error"></span>
+                        </ul>
+                        <div class="divider divider--sm"></div>
+                    @endif
+
                     <label>Количество:</label>
                     <div class="outer">
                         <div class="input-group-qty pull-left">

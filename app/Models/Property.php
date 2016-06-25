@@ -30,12 +30,14 @@ class Property extends Model
 	const TYPE_COLOR   = 1;
 	const TYPE_BUTTON  = 2;
 	const TYPE_BRAND   = 3;
+	const TYPE_SIZE    = 4;
 
 	public static $types = [
 		self::TYPE_DEFAULT => 'Стандартная',
 		self::TYPE_COLOR   => 'Цвет',
 		self::TYPE_BUTTON  => 'Кнопка',
 		self::TYPE_BRAND   => 'Бренд',
+		self::TYPE_SIZE    => 'Размер',
 	];
 
 	/**

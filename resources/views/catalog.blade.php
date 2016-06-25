@@ -181,6 +181,9 @@
                                                         <span class="check"></span>
                                                         <span class="box"></span>
                                                         {{ $value->value }}
+                                                        @if($property->type != \App\Models\Property::TYPE_BRAND && $value->additional_value)
+                                                            ({{ $value->additional_value }})
+                                                        @endif
                                                     </label>
                                                 </li>
                                             @endforeach

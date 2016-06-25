@@ -29,8 +29,14 @@
                             <span class="text-danger text-uppercase">Товар был удален с сайта.</span>
                         @endif
                     </div>
-                    {{--<div class="shopping-cart__item__info__option">Цвет: Голубой</div>--}}
-                    {{--<div class="shopping-cart__item__info__option">Размер: 42-46</div>--}}
+
+                    @if(isset($item['options']['color']))
+                        <div class="shopping-cart__item__info__option">Цвет: {{ $item['options']['color'] }}</div>
+                    @endif
+                    @if(isset($item['options']['size']))
+                        <div class="shopping-cart__item__info__option">Размер: {{ $item['options']['size'] }}</div>
+                    @endif
+
                     @if($item['product'])
                         <div class="shopping-cart__item__info__price">
                             {{ \App\Helpers\Str::priceFormat($item['product']->getPrice() * $item['quantity']) }}

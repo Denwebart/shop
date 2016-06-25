@@ -49,15 +49,41 @@
 
             "use strict";
 
+            $j(document).on('click', '.add-to-cart__color', function(e){
+                e.preventDefault();
+                var $button = $j(this),
+                    color = $button.data('value');
+                $j('.add-to-cart__color').removeClass('active');
+                $button.addClass('active');
+                $j('input[name="add-to-cart__color__input"]').val(color);
+            });
+
+            $j(document).on('click', '.add-to-cart__size', function(e){
+                e.preventDefault();
+                var $button = $j(this),
+                    size = $button.data('value');
+                $j('.add-to-cart__size').removeClass('active');
+                $button.addClass('active');
+                $j('input[name="add-to-cart__size__input"]').val(size);
+            });
+
             $j(document).on('click', '.add-to-cart', function(e){
                 e.preventDefault();
                 var $button = $j(this),
                     productId = $button.data('productId'),
-                    quantity = $j('[data-cart="quantity"]').val();
+                    quantity = $j('[data-cart="quantity"]').val(),
+                    color = $j('input[name="add-to-cart__color__input"]').val(),
+                    size = $j('input[name="add-to-cart__size__input"]').val();
 
                 var data = {'id': productId};
                 if(quantity) {
                     data['quantity'] = quantity;
+                }
+                if(color) {
+                    data['options[color]'] = color;
+                }
+                if(size) {
+                    data['options[size]'] = size;
                 }
 
                 $button.addClass('btn--wait');
