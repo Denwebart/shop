@@ -24,7 +24,7 @@
     </div>
 
     <button type="submit" class="btn btn--wd text-uppercase wave pull-left">
-        <span class="hidden-xs">Перезвоните мне!</span>
+        <span class="hidden-xs">Перезвоните мне</span>
         <span class="icon icon-telephone visible-xs"></span>
     </button>
 </div>

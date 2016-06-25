@@ -6,14 +6,7 @@
 ?>
 
 <div id="wishlist" class="header__wishlist pull-left">
-    <a href="{{ route('wishlist.index') }}" class="btn dropdown-toggle btn--links--dropdown header__wishlist__button header__dropdowns__button" title="Список желаний" data-toggle="tooltip">
-        <span class="icon icon-favorite"></span>
-        @if(count($products))
-            <span class="badge badge--menu count-wishlist-items">
-                {{ $products->total() }}
-            </span>
-        @endif
-    </a>
+    @include('widget.wishlist::wishlistButton')
 </div>
 
 @section('bottom')

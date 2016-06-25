@@ -43,7 +43,7 @@ class Wishlist extends BaseController
 					return \Response::json([
 						'success' => true,
 						'message' => 'Продукт успешно добавлен в <a href="' . route('wishlist.index') . '">список желаний</a>!',
-						'wishlistHtml' => view('widget.wishlist::wishlist')->with('products', $productsHtml)->render(),
+						'wishlistHtml' => view('widget.wishlist::wishlistButton')->with('products', $productsHtml)->render(),
 					])->withCookie(cookie()->forever('wishlist', $products));
 				} else {
 					return \Response::json([
@@ -72,7 +72,7 @@ class Wishlist extends BaseController
 			$response = \Response::json([
 				'success' => true,
 				'wishlistProductsHtml' => view('widget.wishlist::products')->with('products', $productsHtml)->render(),
-				'wishlistHtml' => view('widget.wishlist::wishlist')->with('products', $productsHtml)->render(),
+				'wishlistHtml' => view('widget.wishlist::wishlistButton')->with('products', $productsHtml)->render(),
 				'pageUrl' => $productsHtml->url($productsHtml->currentPage()),
 				'count' => count($productsHtml),
 			]);
@@ -91,7 +91,7 @@ class Wishlist extends BaseController
 			$response = \Response::json([
 				'success' => true,
 				'wishlistProductsHtml' => view('widget.wishlist::products')->with('products', $productsHtml)->render(),
-				'wishlistHtml' => view('widget.wishlist::wishlist')->with('products', $productsHtml)->render(),
+				'wishlistHtml' => view('widget.wishlist::wishlistButton')->with('products', $productsHtml)->render(),
 				'pageUrl' => $productsHtml->url(1),
 			]);
 

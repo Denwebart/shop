@@ -6489,7 +6489,8 @@ body.fullwidth .header__dropdowns-container {
     }
 }
 
-.header__dropdowns .dropdown .dropdown-toggle {
+.header__dropdowns .dropdown .dropdown-toggle,
+.header__dropdowns .header__wishlist__button {
     position: relative;
 }
 
@@ -6744,7 +6745,7 @@ body.fullwidth .header__dropdowns-container {
 }
 @media (max-width: 460px) {
     .logo {
-        width: calc(100% - 200px);
+        width: calc(40% - 30px);
     }
 }
 
