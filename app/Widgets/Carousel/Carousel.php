@@ -57,6 +57,8 @@ class Carousel
 		$items = PropertyValue::select(['property_values.id', 'property_values.property_id', 'property_values.value', 'property_values.additional_value'])
 			->leftJoin('properties', 'property_values.property_id', '=', 'properties.id')
 			->where('properties.type', '=', Property::TYPE_BRAND)
+			->whereNotNull('property_values.additional_value')
+			->where('property_values.additional_value', '!=', '')
 			->with('property')
 			->orderBy('property_values.id', 'DESC')
 			->get();

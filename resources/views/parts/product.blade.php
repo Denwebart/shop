@@ -58,7 +58,8 @@
                 <a href="#" class="add-to-wishlist @if($item->inWishlist()) active @endif" data-product-id="{{ $item->id }}" rel="nofollow">
                     <span class="icon icon-favorite"></span>
                     <span class="product-preview__info__link__text dashed-bottom">
-                        Добавить в список желаний
+                        <span class="hidden-md hidden-sm hidden-xs">Добавить в список желаний</span>
+                        <span class="hidden-lg">B список желаний</span>
                     </span>
                 </a>
                 <button class="btn btn--wd buy-link add-to-cart" data-product-id="{{ $item->id }}">

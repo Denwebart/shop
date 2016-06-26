@@ -74,6 +74,7 @@
             </div>
             <div class="col-md-3">
                 <div class="row">
+                    <div class="divider divider--sm visible-sm visible-xs"></div>
                     <div class="col-md-12 animation" data-animation="fadeInRight" data-animation-delay="0s">
                         <div class="card card--icon">
                             <div class="card--icon__cell">

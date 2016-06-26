@@ -6605,6 +6605,11 @@ body.fullwidth .header__dropdowns-container {
         width: auto;
     }
 }
+@media (min-width: 992px) and (max-width: 1199px) {
+    .header__currency .header__dropdowns__button .currency__item__title {
+        display: none;
+    }
+}
 @media (max-width: 460px) {
     .header__currency {
         margin-right: 0;
@@ -6942,6 +6947,13 @@ body.fullwidth .header__dropdowns-container {
     .navbar #slidemenu {
         float: none !important;
     }
+    .header .stuck .navbar-header,
+    .navbar.stuck #slidemenu {
+        float: left;
+        width: 100% !important;
+        margin-right: 0;
+        display: inline-block;
+    }
 }
 
 .navbar .navbar-toggle {
@@ -7094,7 +7106,7 @@ body.fullwidth .header__dropdowns-container {
 
 @media (min-width: 1200px) {
     .navbar.navbar-wd .nav {
-        padding: 3px 0 0 0;
+        padding: 11px 0 0 0;
         width: auto;
     }
 }
@@ -7102,6 +7114,7 @@ body.fullwidth .header__dropdowns-container {
 @media (min-width: 992px) and (max-width: 1199px) {
     .navbar.navbar-wd .nav {
         width: auto;
+        padding: 11px 0 0 0;
     }
 }
 
@@ -8549,7 +8562,7 @@ body.fullwidth .footer .container > .navbar-collapse {
 
 @media (max-width: 767px) {
     .content {
-        padding-top: 37.5px;
+        padding-top: 20px; /* 37.5px */
     }
 }
 
@@ -10641,6 +10654,7 @@ form label.error {
 #subscribeSuccess,
 #subscribeError {
     height: 30px;
+    text-align: center;
 }
 
 #success span,
@@ -11560,8 +11574,8 @@ form label.error {
 
     .product-preview .product-preview__info__link {
         position: absolute;
-        right: 30px;
-        bottom: 18px;
+        right: 42px;
+        bottom: 10px;
         height: auto;
         padding-top: 0;
         opacity: 1;

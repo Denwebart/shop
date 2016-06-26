@@ -18,7 +18,7 @@
 @endif
 
 <!-- Content section -->
-<section class="content">
+<section class="content p-b-0">
     <div class="container">
         @if($page->title)
             <h1 class="text-uppercase">{{ $page->title }}</h1>
@@ -34,6 +34,7 @@
 <!-- Brands Section -->
 {!! $carousel->brands() !!}
 
+<!-- Reviews Section -->
 {!! $review->show() !!}
 
 <!-- End Content section -->
