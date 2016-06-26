@@ -77,7 +77,6 @@ class Product extends Model
 	];
 
 	public $rating = 0;
-//	public $popular; // sales
 	public $previous;
 	public $next;
 
@@ -530,12 +529,12 @@ class Product extends Model
 			
 			if ($image->width() >= 1200 && $image->height() >= 1507) {
 				$height = $image->height();
-				$width = $height / 1.255;
+				$width = $height / 1.256;
 
 				if($image->width() < $image->height()) {
-					if($image->width() < ($image->height() / 1.255)) {
+					if($image->width() < ($image->height() / 1.256)) {
 						$width = $image->width();
-						$height = $width * 1.255;
+						$height = $width * 1.256;
 					}
 				}
 				$image->crop((integer) $width, (integer) $height);
@@ -543,12 +542,12 @@ class Product extends Model
 						$constraint->aspectRatio();
 					});
 			} else {
-				if($image->height() < ($image->width() * 1.255)) {
+				if($image->height() < ($image->width() * 1.256)) {
 					$height = $image->height();
-					$width = $height / 1.255;
+					$width = $height / 1.256;
 				} else {
 					$width = $image->width();
-					$height = $width * 1.255;
+					$height = $width * 1.256;
 				}
 				$image->crop((integer) $width, (integer) $height);
 			}
