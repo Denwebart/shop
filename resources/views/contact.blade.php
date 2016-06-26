@@ -31,7 +31,7 @@
                     {!! $page->content !!}
 
                     <div class="divider divider--sm"></div>
-                    <div class="contact-info">
+                    <div id="contact-info">
                         @include('parts.contactInfo')
                     </div>
                     <div class="divider divider--sm visible-sm visible-xs"></div>

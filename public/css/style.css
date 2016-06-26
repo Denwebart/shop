@@ -9240,7 +9240,11 @@ address {
     text-align: left;
     margin: 0 0 10px;
 }
-
+@media (max-width: 991px) {
+    #contact-info {
+        text-align: center;
+    }
+}
 .v-links-list li {
     padding: 0 0 4px;
     font-weight: lighter;
