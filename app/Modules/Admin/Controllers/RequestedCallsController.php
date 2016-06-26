@@ -27,7 +27,7 @@ class RequestedCallsController extends Controller
     {
 	    $calls = $this->getCalls();
 
-        return view('admin::requestedcalls.index', compact('calls'));
+        return view('admin::requestedCalls.index', compact('calls'));
     }
 
     /**
@@ -42,7 +42,7 @@ class RequestedCallsController extends Controller
 
 	    $backUrl = \Request::has('back_url') ? urldecode(\Request::get('back_url')) : URL::previous();
 	    
-	    return view('admin::requestedcalls.edit', compact('call', 'backUrl'));
+	    return view('admin::requestedCalls.edit', compact('call', 'backUrl'));
     }
 
     /**
