@@ -44,7 +44,7 @@ View::share('title', $title);
                 {!! Form::model($call, ['route' => ['admin.calls.update', $call->id], 'class' => 'form-horizontal', 'id' => 'main-form', 'files' => true]) !!}
                     {!! Form::hidden('_method', 'PUT') !!}
 
-                    @include('admin::requestedcalls.form')
+                    @include('admin::requestedCalls.form')
 
                 {!! Form::close() !!}
             </div>

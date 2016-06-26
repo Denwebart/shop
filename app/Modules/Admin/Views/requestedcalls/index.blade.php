@@ -43,7 +43,7 @@ View::share('title', $title);
         <div class="col-lg-12">
             <div class="white-bg @if(count($calls)) card-box @endif">
                 <div id="table-container" class="table-responsive m-b-20">
-                    @include('admin::requestedcalls.table')
+                    @include('admin::requestedCalls.table')
                 </div>
 
                 <div class="row">

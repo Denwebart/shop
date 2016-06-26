@@ -22,26 +22,48 @@
     <!-- Content section -->
     <section class="content">
         <div class="container">
-            @if($page->title)
-                <h2 class="text-uppercase">{{ $page->title }}</h2>
-            @endif
+            <div class="row">
+                <div class="col-md-12">
+                    @if($page->title)
+                        <h2 class="text-uppercase">{{ $page->title }}</h2>
+                    @endif
 
-            {!! $page->content !!}
+                    {!! $page->content !!}
+                </div>
 
-            <div id="sitemap">
-                <ul>
-                    @foreach($sitemapItems as $item)
-                        <li>
-                            <a href="{{ $item->getUrl() }}">
-                                @if($item->type == \App\Models\Page::TYPE_CATALOG)
-                                    <i class="icon icon-bag-alt"></i>
-                                @endif
-                                <span>{{ $item->getTitle() }}</span>
-                            </a>
-                            {{ \App\Helpers\View::getChildrenPages($item) }}
-                        </li>
-                    @endforeach
-                </ul>
+                <div id="sitemap">
+                    <div class="col-md-6">
+                        <ul>
+                            @foreach($sitemapItemsLeft as $item)
+                                <li>
+                                    <a href="{{ $item->getUrl() }}">
+                                        @if($item->type == \App\Models\Page::TYPE_CATALOG)
+                                            <i class="icon icon-bag-alt"></i>
+                                        @endif
+                                        <span>{{ $item->getTitle() }}</span>
+                                    </a>
+                                    {{ \App\Helpers\View::getChildrenPages($item) }}
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+
+                    <div class="col-md-6">
+                        <ul>
+                            @foreach($sitemapItemsRight as $item)
+                                <li>
+                                    <a href="{{ $item->getUrl() }}">
+                                        @if($item->type == \App\Models\Page::TYPE_CATALOG)
+                                            <i class="icon icon-bag-alt"></i>
+                                        @endif
+                                        <span>{{ $item->getTitle() }}</span>
+                                    </a>
+                                    {{ \App\Helpers\View::getChildrenPages($item) }}
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
