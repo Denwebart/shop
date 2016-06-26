@@ -11257,8 +11257,9 @@ form label.error {
 .product-preview__info {
     position: absolute;
     bottom: 0;
-    border-top-width: 2px;
-    border-top-style: solid;
+    /*border-top-width: 2px;*/
+    /*border-top-style: solid;*/
+    border-top: none !important; /* полоса по изображением в превью товара */
     width: 100%;
     padding: 30px 30px 20px 30px;
     border-radius: 0 0 5px 5px;

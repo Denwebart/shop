@@ -65,7 +65,8 @@
                 <button class="btn btn--wd buy-link add-to-cart" data-product-id="{{ $item->id }}">
                     <span class="icon icon-ecommerce"></span>
                     <span class="product-preview__info__link__text text-uppercase">
-                        Добавить в корзину
+                        <span class="hidden-md hidden-sm hidden-xs">Добавить в корзину</span>
+                        <span class="hidden-lg">B корзину</span>
                     </span>
                 </button>
             </div>
