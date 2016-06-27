@@ -10,7 +10,7 @@
 @section('content')
     <!-- Breadcrumb section -->
 
-    <section class="breadcrumbs  hidden-xs">
+    <section class="breadcrumbs">
         <div class="container">
             <ol class="breadcrumb breadcrumb--wd pull-left">
                 <li><a href="{{ url('/') }}">Главная</a></li>

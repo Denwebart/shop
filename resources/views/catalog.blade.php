@@ -2,7 +2,7 @@
 
 @section('content')
     <!-- Breadcrumb section -->
-    <section class="breadcrumbs  hidden-xs">
+    <section class="breadcrumbs">
         <div class="container">
             @include('parts.breadcrumbs')
         </div>
