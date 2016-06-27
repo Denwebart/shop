@@ -449,19 +449,14 @@ class SiteController extends Controller
 			}
 
 			if($letter = Letter::create($data)) {
-				$users = User::whereIn('role', [User::ROLE_ADMIN, User::ROLE_MANAGER])
-					->whereIsActive(1)
-					->with('settings')
-					->get();
-				foreach ($users as $user) {
-					$user->setNotification(Notification::TYPE_NEW_LETTER, [
-						'[linkToLetter]' => route('admin.letters.show', ['id' => $letter->id]),
-						'[letterFromEmail]' => $letter->email,
-						'[letterFromName]' => $letter->name,
-						'[letterSubject]' => $letter->subject,
-						'[letterText]' => $letter->message
-					]);
-				}
+				
+				Notification::forAllUsers(Notification::TYPE_NEW_LETTER, [
+					'[linkToLetter]' => route('admin.letters.show', ['id' => $letter->id]),
+					'[letterFromEmail]' => $letter->email,
+					'[letterFromName]' => $letter->name,
+					'[letterSubject]' => $letter->subject,
+					'[letterText]' => $letter->message
+				]);
 
 				return \Response::json([
 					'success' => true,
@@ -498,12 +493,18 @@ class SiteController extends Controller
 				]);
 			}
 
-			RequestedCall::create($data);
+			if($call = RequestedCall::create($data)) {
+				Notification::forAllUsers(Notification::TYPE_NEW_REQUESTED_CALL, [
+					'[linkToCall]' => route('admin.calls.edit', ['id' => $call->id]),
+					'[userName]' => $call->name,
+					'[userPhone]' => $call->phone,
+				]);
 
-			return \Response::json([
-				'success' => true,
-				'message' => 'Ваш запрос успешно отправлен! Менеджер свяжется с вами в течение рабочего дня call-центра.',
-			]);
+				return \Response::json([
+					'success' => true,
+					'message' => 'Ваш запрос успешно отправлен! Менеджер свяжется с вами в течение рабочего дня call-центра.',
+				]);
+			}
 		}
 	}
 

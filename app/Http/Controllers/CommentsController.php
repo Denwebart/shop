@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notification;
 use App\Models\Page;
 use App\Models\Product;
 use App\Models\ProductReview;
@@ -51,6 +52,20 @@ class CommentsController extends Controller
 			}
 
 			$review = ProductReview::create($data);
+
+			$variables = [
+				'[linkToReview]' => route('admin.reviews.edit', ['id' => $review->id]),
+				'[review]' => $review->text,
+				'[linkToPage]' => $review->getUrl(),
+				'[pageTitle]' => $review->product->getTitle(),
+				'[rating]' => $review->rating
+			];
+
+			if($review->parent_id == 0 && $review->rating) {
+				Notification::forAllUsers(Notification::TYPE_NEW_PRODUCT_REVIEW, $variables);
+			} else {
+				Notification::forAllUsers(Notification::TYPE_NEW_PRODUCT_COMMENT, $variables);
+			}
 
 			$product = Product::whereId($product_id)->first();
 			$product->ratingInfo = $product->getRating();

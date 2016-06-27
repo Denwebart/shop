@@ -289,7 +289,7 @@
                     @foreach(Auth::user()->notifications as $notification)
                         <li class="list-group-item"><!-- active -->
                             <a href="#" class="user-list-item">
-                                <div class="icon bg-warning">
+                                <div class="icon {{ \App\Models\Notification::$classes[$notification->type] }}">
                                     <i class="{{ \App\Models\Notification::$icons[$notification->type] }}"></i>
                                 </div>
                                 <div class="user-desc">

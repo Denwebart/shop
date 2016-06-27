@@ -34,6 +34,14 @@ class Notification extends Model
 		self::TYPE_NEW_ORDER           => 'fa fa-shopping-cart',
 	];
 
+	public static $classes = [
+		self::TYPE_NEW_LETTER          => 'bg-warning',
+		self::TYPE_NEW_PRODUCT_REVIEW  => 'bg-pink',
+		self::TYPE_NEW_PRODUCT_COMMENT => 'bg-pink',
+		self::TYPE_NEW_REQUESTED_CALL  => 'bg-info',
+		self::TYPE_NEW_ORDER           => 'bg-success',
+	];
+
 	public static $notificationSettingColumns = [
 		self::TYPE_NEW_LETTER          => ['permission_letters'],
 		self::TYPE_NEW_PRODUCT_REVIEW  => ['permission_products_reviews'],
@@ -142,6 +150,27 @@ class Notification extends Model
 					'message' => $notificationMessage,
 				]);
 			}
+		}
+	}
+
+	/**
+	 * New notification for all users (admin and manager)
+	 *
+	 * @param $notificationType
+	 * @param array $variables
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public static function forAllUsers($notificationType, $variables = [])
+	{
+		$users = User::whereIn('role', [User::ROLE_ADMIN, User::ROLE_MANAGER])
+			->whereIsActive(1)
+			->with('settings')
+			->get();
+
+		foreach ($users as $user) {
+			$user->setNotification($notificationType, $variables);
 		}
 	}
 
