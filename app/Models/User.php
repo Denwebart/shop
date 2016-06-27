@@ -138,7 +138,7 @@ class User extends Authenticatable
 		parent::boot();
 
 		// доделать редактирование удаленных пользователей
-		static::saving(function($user) {
+		static::creating(function($user) {
 			if($user->id !== 1 && $user->role != self::ROLE_NONE) {
 				$user->is_active = 1;
 			}
@@ -151,6 +151,7 @@ class User extends Authenticatable
 
 			if(count($user->orders) || count($user->requestedCalls) || count($user->comments)) {
 				$user->is_active = 0;
+				$user->save();
 				return false;
 			}
 		});

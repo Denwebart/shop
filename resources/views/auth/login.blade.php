@@ -21,7 +21,7 @@ View::share('title', $title);
 
                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                     <div class="col-xs-12">
-                        <input name="email" value="{{ old('email') }}" class="form-control" type="email" placeholder="Email">
+                        <input name="email" value="{{ old('email') }}" class="form-control" type="text" placeholder="Email">
 
                         @if ($errors->has('email'))
                             <span class="help-block error">
