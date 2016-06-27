@@ -182,4 +182,25 @@ class Str
 	{
 		return str_replace('</a>', '', preg_replace('/<a\b[^>]*+>|<\/a\b[^>]*+>/', '', $html));
 	}
+
+	/**
+	 * Склонение слова "товар" в зависимости от количества
+	 * @param string $productsCount
+	 * @return mixed
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+    public static function wordProductCount($productsCount)
+    {
+	    if($productsCount%10 == 1 && $productsCount != 11) {
+		    $string = 'товар';
+	    } elseif (in_array($productsCount%10, [2, 3, 4])) {
+		    $string = 'товара';
+	    } else {
+		    $string = 'товаров';
+	    }
+
+	    return $productsCount . ' ' . $string;
+    }
 }

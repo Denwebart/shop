@@ -68,8 +68,8 @@
             @else
                 <a href="{{ route('cart.index') }}" class="more-products">
                     + еще
-                    {{ count($cart['products']) - $key }}
-                    товар на сумму
+                    {{ \App\Helpers\Str::wordProductCount($cart['count'] - $key) }}
+                    на сумму
                     <span class="m-l-5 m-r-5">
                         {{ \App\Helpers\Str::priceFormat($cart['total_price'] - $sum) }}
                     </span>
