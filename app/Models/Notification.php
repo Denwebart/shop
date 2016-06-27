@@ -26,6 +26,14 @@ class Notification extends Model
 		self::TYPE_NEW_ORDER           => 'Добавлен новый <a href="[linkToOrder]">заказ</a> на сумму [totalPrice]</a>. Статус: [status]',
 	];
 
+	public static $icons = [
+		self::TYPE_NEW_LETTER          => 'fa fa-envelope',
+		self::TYPE_NEW_PRODUCT_REVIEW  => 'fa fa-comments',
+		self::TYPE_NEW_PRODUCT_COMMENT => 'fa fa-comments',
+		self::TYPE_NEW_REQUESTED_CALL  => 'fa fa-phone',
+		self::TYPE_NEW_ORDER           => 'fa fa-shopping-cart',
+	];
+
 	public static $notificationSettingColumns = [
 		self::TYPE_NEW_LETTER          => ['permission_letters'],
 		self::TYPE_NEW_PRODUCT_REVIEW  => ['permission_products_reviews'],

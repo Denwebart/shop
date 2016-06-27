@@ -195,6 +195,7 @@ class UsersController extends Controller
                         WHEN 3 THEN 3 
                         WHEN 0 THEN 4 
                         END'))
+			->whereIsActive(1)
 			->orderBy('created_at', 'ASC')
 			->paginate(12);
 	}

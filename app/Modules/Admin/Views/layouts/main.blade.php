@@ -86,10 +86,12 @@
                                     <a href="javascript:void(0);" class="right-bar-toggle">
                                         <i class="zmdi zmdi-notifications-none"></i>
                                     </a>
-                                    <div class="noti-dot">
-                                        <span class="dot"></span>
-                                        <span class="pulse"></span>
-                                    </div>
+                                    @if(count(Auth::user()->notifications))
+                                        <div class="noti-dot">
+                                            <span class="dot"></span>
+                                            <span class="pulse"></span>
+                                        </div>
+                                    @endif
                                 </li>
                             </ul>
                         </div>
@@ -280,70 +282,29 @@
         <a href="javascript:void(0);" class="right-bar-toggle">
             <i class="zmdi zmdi-close-circle-o"></i>
         </a>
-        <h4 class="">Notifications</h4>
+        <h4 class="">Новые уведомления</h4>
         <div class="notification-list nicescroll">
             <ul class="list-group list-no-border user-list">
-                <li class="list-group-item">
-                    <a href="#" class="user-list-item">
-                        <div class="avatar">
-                            <img src="{{ asset('backend/images/users/avatar-2.jpg') }}" alt="">
-                        </div>
-                        <div class="user-desc">
-                            <span class="name">Michael Zenaty</span>
-                            <span class="desc">There are new settings available</span>
-                            <span class="time">2 hours ago</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="list-group-item">
-                    <a href="#" class="user-list-item">
-                        <div class="icon bg-info">
-                            <i class="zmdi zmdi-account"></i>
-                        </div>
-                        <div class="user-desc">
-                            <span class="name">New Signup</span>
-                            <span class="desc">There are new settings available</span>
-                            <span class="time">5 hours ago</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="list-group-item">
-                    <a href="#" class="user-list-item">
-                        <div class="icon bg-pink">
-                            <i class="zmdi zmdi-comment"></i>
-                        </div>
-                        <div class="user-desc">
-                            <span class="name">New Message received</span>
-                            <span class="desc">There are new settings available</span>
-                            <span class="time">1 day ago</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="list-group-item active">
-                    <a href="#" class="user-list-item">
-                        <div class="avatar">
-                            <img src="{{ asset('backend/images/users/avatar-3.jpg') }}" alt="">
-                        </div>
-                        <div class="user-desc">
-                            <span class="name">James Anderson</span>
-                            <span class="desc">There are new settings available</span>
-                            <span class="time">2 days ago</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="list-group-item active">
-                    <a href="#" class="user-list-item">
-                        <div class="icon bg-warning">
-                            <i class="zmdi zmdi-settings"></i>
-                        </div>
-                        <div class="user-desc">
-                            <span class="name">Settings</span>
-                            <span class="desc">There are new settings available</span>
-                            <span class="time">1 day ago</span>
-                        </div>
-                    </a>
-                </li>
-
+                @if(count(Auth::user()->notifications))
+                    @foreach(Auth::user()->notifications as $notification)
+                        <li class="list-group-item"><!-- active -->
+                            <a href="#" class="user-list-item">
+                                <div class="icon bg-warning">
+                                    <i class="{{ \App\Models\Notification::$icons[$notification->type] }}"></i>
+                                </div>
+                                <div class="user-desc">
+                                    {{--<span class="name">Settings</span>--}}
+                                    <span class="desc">
+                                        {!! \App\Helpers\Str::withoutLinks($notification->message) !!}
+                                    </span>
+                                    <span class="time">{!! \App\Helpers\Date::getRelative($notification->created_at) !!}</span>
+                                </div>
+                            </a>
+                        </li>
+                    @endforeach
+                @else
+                    Новых уведомлений нет
+                @endif
             </ul>
         </div>
     </div>

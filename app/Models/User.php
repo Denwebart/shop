@@ -133,6 +133,29 @@ class User extends Authenticatable
 		return $rules;
 	}
 
+	public static function boot()
+	{
+		parent::boot();
+
+		// доделать редактирование удаленных пользователей
+		static::saving(function($user) {
+			if($user->id !== 1 && $user->role != self::ROLE_NONE) {
+				$user->is_active = 1;
+			}
+		});
+
+		// доделать вход только активных пользователей, неавтивный пользователь - удаленный пользователь
+		static::deleting(function($user) {
+			$user->notifications()->delete();
+			$user->settings()->delete();
+
+			if(count($user->orders) || count($user->requestedCalls) || count($user->comments)) {
+				$user->is_active = 0;
+				return false;
+			}
+		});
+	}
+
     /**
      * The attributes that should be hidden for arrays.
      *
