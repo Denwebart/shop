@@ -173,6 +173,29 @@ class User extends Authenticatable
 	}
 
 	/**
+	 * Уведомления пользователя
+	 *
+	 * @return mixed
+	 */
+	public function notifications()
+	{
+		return $this->hasMany('App\Models\Notification', 'user_id')->orderBy('created_at', 'DESC');
+	}
+
+	/**
+	 * Настройки аккаунта пользователя
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function settings()
+	{
+		return $this->hasOne('App\Models\UserSetting', 'user_id');
+	}
+
+	/**
 	 * Get user's avatar path
 	 *
 	 * @param bool $default
@@ -274,5 +297,20 @@ class User extends Authenticatable
 			File::delete($imagePath . 'origin_' . $this->image);
 		}
 		$this->avatar = null;
+	}
+	
+	/**
+	 * Set new notification for user (with sending email letter)
+	 * 
+	 * @param $notificationType
+	 * @param array $variables
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function setNotification($notificationType, $variables = [])
+	{
+		$notification = new Notification();
+		$notification->add($this, $notificationType, $variables);
 	}
 }

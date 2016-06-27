@@ -11,11 +11,13 @@ namespace App\Http\Controllers;
 use App\Helpers\Settings;
 use App\Helpers\Str;
 use App\Models\Letter;
+use App\Models\Notification;
 use App\Models\Page;
 use App\Models\Product;
 use App\Models\Property;
 use App\Models\RequestedCall;
 use App\Models\Setting;
+use App\Models\User;
 use App\Widgets\Articles\Articles;
 use App\Widgets\Carousel\Carousel;
 use App\Widgets\Reviews\Reviews;
@@ -446,12 +448,26 @@ class SiteController extends Controller
 				]);
 			}
 
-			Letter::create($data);
+			if($letter = Letter::create($data)) {
+				$users = User::whereIn('role', [User::ROLE_ADMIN, User::ROLE_MANAGER])
+					->whereIsActive(1)
+					->with('settings')
+					->get();
+				foreach ($users as $user) {
+					$user->setNotification(Notification::TYPE_NEW_LETTER, [
+						'[linkToLetter]' => route('admin.letters.show', ['id' => $letter->id]),
+						'[letterFromEmail]' => $letter->email,
+						'[letterFromName]' => $letter->name,
+						'[letterSubject]' => $letter->subject,
+						'[letterText]' => $letter->message
+					]);
+				}
 
-			return \Response::json([
-				'success' => true,
-				'message' => 'Ваше письмо успешно отправлено!',
-			]);
+				return \Response::json([
+					'success' => true,
+					'message' => 'Ваше письмо успешно отправлено!',
+				]);
+			}
 		}
 	}
 
