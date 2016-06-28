@@ -32,6 +32,8 @@ Route::group(['module' => 'Admin', 'prefix' => 'admin', 'middleware' => 'web', '
 
 	Route::resource('users', 'UsersController');
 
+	Route::post('notifications/view/', ['as' => 'admin.notifications.view', 'uses' => 'NotificationsController@view']);
+
 	Route::post('delivery/upload_image/', ['as' => 'admin.deliveryTypes.uploadImage', 'uses' => 'DeliveryTypesController@uploadImage']);
 	Route::post('delivery/delete_image/', ['as' => 'admin.deliveryTypes.deleteImage', 'uses' => 'DeliveryTypesController@deleteImage']);
 	Route::post('delivery/set_is_active/', ['as' => 'admin.deliveryTypes.setIsActive', 'uses' => 'DeliveryTypesController@setIsActive']);

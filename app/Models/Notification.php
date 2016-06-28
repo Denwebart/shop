@@ -12,14 +12,22 @@ class Notification extends Model
 {
 	protected $table = 'notifications';
 
-	const TYPE_NEW_LETTER         = 1;
-	const TYPE_NEW_PRODUCT_REVIEW = 2;
+	const TYPE_NEW_LETTER          = 1;
+	const TYPE_NEW_PRODUCT_REVIEW  = 2;
 	const TYPE_NEW_PRODUCT_COMMENT = 3;
-	const TYPE_NEW_REQUESTED_CALL = 4;
-	const TYPE_NEW_ORDER          = 5;
+	const TYPE_NEW_REQUESTED_CALL  = 4;
+	const TYPE_NEW_ORDER           = 5;
+
+	public static $notificationsTitle = [
+		self::TYPE_NEW_LETTER          => 'Новое письмо',
+		self::TYPE_NEW_PRODUCT_REVIEW  => 'Новый отзыв о товаре',
+		self::TYPE_NEW_PRODUCT_COMMENT => 'Новый комментарий к товару',
+		self::TYPE_NEW_REQUESTED_CALL  => 'Заказ звонка',
+		self::TYPE_NEW_ORDER           => 'Новый заказ',
+	];
 
 	public static $messagesTemplates = [
-		self::TYPE_NEW_LETTER          => 'Пришло новое <a href="[linkToLetter]">письмо</a> от [letterFromName] ([letterFromEmail]). Тема: "[letterSubject]".',
+		self::TYPE_NEW_LETTER          => 'Пришло новое <a href="[linkToLetter]">письмо</a> от [letterFromName] ([letterFromEmail]).<br> Тема: "[letterSubject]".',
 		self::TYPE_NEW_PRODUCT_REVIEW  => 'Добавлен новый <a href="[linkToReview]">отзыв</a> к товару <a href="[linkToPage]">"[pageTitle]"</a>.',
 		self::TYPE_NEW_PRODUCT_COMMENT => 'Добавлен новый <a href="[linkToReview]">комментарий</a> к товару <a href="[linkToPage]">"[pageTitle]"</a>.',
 		self::TYPE_NEW_REQUESTED_CALL  => '<a href="[linkToCall]">[userName] просит перезвонить</a>.',
@@ -144,7 +152,7 @@ class Notification extends Model
 				]);
 
 				if(self::TYPE_NEW_LETTER == $notificationType) {
-					$notificationMessage = $notificationMessage . '<br><h3>Текст письма:</h3><p>' . $variables['lettersMessage'] . '</p>';
+					$notificationMessage = $notificationMessage . '<br><h3>Текст письма:</h3><p>' . $variables['[letterText]'] . '</p>';
 				}
 
 				\Mail::send('layouts.email', ['content' => $notificationMessage, 'variables' => $variables, 'userModel' => $userModel], function($message) use ($userModel, $emailSubject)

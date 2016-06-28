@@ -86,12 +86,10 @@
                                     <a href="javascript:void(0);" class="right-bar-toggle">
                                         <i class="zmdi zmdi-notifications-none"></i>
                                     </a>
-                                    @if(count(Auth::user()->notifications))
-                                        <div class="noti-dot">
-                                            <span class="dot"></span>
-                                            <span class="pulse"></span>
-                                        </div>
-                                    @endif
+                                    <div class="noti-dot @if(!count(Auth::user()->notifications)) hidden @endif">
+                                        <span class="dot"></span>
+                                        <span class="pulse"></span>
+                                    </div>
                                 </li>
                             </ul>
                         </div>
@@ -244,8 +242,6 @@
     </div>
     <!-- Left Sidebar End -->
 
-
-
     <!-- ============================================================== -->
     <!-- Start right Content here -->
     <!-- ============================================================== -->
@@ -276,39 +272,8 @@
     <!-- End Right content here -->
     <!-- ============================================================== -->
 
-
     <!-- Right Sidebar -->
-    <div class="side-bar right-bar">
-        <a href="javascript:void(0);" class="right-bar-toggle">
-            <i class="zmdi zmdi-close-circle-o"></i>
-        </a>
-        <h4 class="">Новые уведомления</h4>
-        <div class="notification-list nicescroll">
-            <ul class="list-group list-no-border user-list">
-                @if(count(Auth::user()->notifications))
-                    @foreach(Auth::user()->notifications as $notification)
-                        <li class="list-group-item"><!-- active -->
-                            <a href="#" class="user-list-item">
-                                <div class="icon {{ \App\Models\Notification::$classes[$notification->type] }}">
-                                    <i class="{{ \App\Models\Notification::$icons[$notification->type] }}"></i>
-                                </div>
-                                <div class="user-desc">
-                                    {{--<span class="name">Settings</span>--}}
-                                    <span class="desc">
-                                        {!! \App\Helpers\Str::withoutLinks($notification->message) !!}
-                                    </span>
-                                    <span class="time">{!! \App\Helpers\Date::getRelative($notification->created_at) !!}</span>
-                                </div>
-                            </a>
-                        </li>
-                    @endforeach
-                @else
-                    Новых уведомлений нет
-                @endif
-            </ul>
-        </div>
-    </div>
-    <!-- /Right-bar -->
+    @include('admin::notifications.notifications')
 
 </div>
 <!-- END wrapper -->

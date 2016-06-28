@@ -1059,6 +1059,11 @@ textarea.form-control {
   padding: 0;
   padding-top: 15px;
 }
+.modal-dialog .time {
+    font-size: 11px;
+    color: #71b6f9;
+    font-style: italic;
+}
 .modal-full {
   width: 98%;
 }
