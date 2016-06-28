@@ -16,8 +16,8 @@
                     </h3>
                 </div>
                 <div class="panel-body">
-                    <p>{!! $notification->message !!}</p>
-                    <span class="time">{{ \App\Helpers\Date::getRelative($notification->created_at) }}</span>
+                    <span class="time pull-right">{{ \App\Helpers\Date::getRelative($notification->created_at) }}</span>
+                    <div class="message">{!! $notification->message !!}</div>
                 </div>
             </div>
         </div><!-- /.modal-content -->

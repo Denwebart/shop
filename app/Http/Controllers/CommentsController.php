@@ -13,6 +13,7 @@ use App\Models\Page;
 use App\Models\Product;
 use App\Models\ProductReview;
 use App\Models\Setting;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -58,7 +59,10 @@ class CommentsController extends Controller
 				'[review]' => $review->text,
 				'[linkToPage]' => $review->getUrl(),
 				'[pageTitle]' => $review->product->getTitle(),
-				'[rating]' => $review->rating
+				'[rating]' => $review->rating,
+				'[user]' => $review->user
+					? (User::$roles[$review->user->role] . ' ' . $review->user->login)
+					: ('Пользователь ' . $review->user_name . ' (' . $review->user_email . ')'),
 			];
 
 			if($review->parent_id == 0 && $review->rating) {

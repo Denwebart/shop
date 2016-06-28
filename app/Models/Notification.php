@@ -27,11 +27,11 @@ class Notification extends Model
 	];
 
 	public static $messagesTemplates = [
-		self::TYPE_NEW_LETTER          => 'Пришло новое <a href="[linkToLetter]">письмо</a> от [letterFromName] ([letterFromEmail]).<br> Тема: "[letterSubject]".',
-		self::TYPE_NEW_PRODUCT_REVIEW  => 'Добавлен новый <a href="[linkToReview]">отзыв</a> к товару <a href="[linkToPage]">"[pageTitle]"</a>.',
-		self::TYPE_NEW_PRODUCT_COMMENT => 'Добавлен новый <a href="[linkToReview]">комментарий</a> к товару <a href="[linkToPage]">"[pageTitle]"</a>.',
-		self::TYPE_NEW_REQUESTED_CALL  => '<a href="[linkToCall]">[userName] просит перезвонить</a>.',
-		self::TYPE_NEW_ORDER           => 'Добавлен новый <a href="[linkToOrder]">заказ</a> на сумму [totalPrice]</a>. Статус: [status]',
+		self::TYPE_NEW_LETTER          => '<p>Пришло новое <a href="[linkToLetter]">письмо</a> от [letterFromName] ([letterFromEmail]).<br>Тема: "[letterSubject]".</p> <p class="notify-hidden"><a href="[linkToLetter]" class="pull-right m-t-10">Прочесть <i class="fa fa-arrow-right"></i></a></p>',
+		self::TYPE_NEW_PRODUCT_REVIEW  => '<p>[user] добавил новый <a href="[linkToReview]">отзыв</a> к товару <a href="[linkToPage]">"[pageTitle]"</a>.</p> <p class="notify-hidden"><a href="[linkToReview]" class="pull-right m-t-10">Редактировать <i class="fa fa-arrow-right"></i></a></p>',
+		self::TYPE_NEW_PRODUCT_COMMENT => '<p>[user] добавил новый <a href="[linkToReview]">комментарий</a> к товару <a href="[linkToPage]">"[pageTitle]"</a>.</p> <p class="notify-hidden"><a href="[linkToReview]" class="pull-right m-t-10">Редактировать <i class="fa fa-arrow-right"></i></a></p>',
+		self::TYPE_NEW_REQUESTED_CALL  => '<p><a href="[linkToCall]">[userName] просит перезвонить</a>.</p>',
+		self::TYPE_NEW_ORDER           => '<p>Добавлен новый <a href="[linkToOrder]">заказ</a> на сумму [totalPrice]</a>.</p>',
 	];
 
 	public static $icons = [

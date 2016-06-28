@@ -559,6 +559,9 @@
   padding-bottom: 60px;
   height: 100%;
 }
+.notification-list .notify-hidden {
+    display: none;
+}
 .notification-list .list-group-item {
   border-bottom: 1px solid rgba(152, 166, 173, 0.2) !important;
   margin-bottom: 0px;
@@ -600,7 +603,7 @@
   width: 100%;
   overflow: hidden;
 }
-.user-list .user-list-item .user-desc span.desc {
+.user-list .user-list-item .user-desc .desc {
   color: #98a6ad;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -608,6 +611,9 @@
   width: 100%;
   overflow: hidden;
   font-size: 12px;
+}
+.user-list .user-list-item .user-desc .desc p {
+    margin-bottom: 0;
 }
 .user-list .user-list-item .user-desc span.time {
   font-size: 11px;

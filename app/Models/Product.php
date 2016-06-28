@@ -726,14 +726,16 @@ class Product extends Model
 			->where('id', '=', $this->id)
 			->first();
 
-		\DB::statement("SET @num = 0");
-		$result = \DB::table(\DB::raw("({$this->queryPreviousNext($sortby, $categoriesIds)->toSql()}) as sub") )
-			->mergeBindings($this->queryPreviousNext($sortby, $categoriesIds)->getQuery())
-			->whereIn('position', [$currentPosition->position - 1, $currentPosition->position + 1])
-			->orderBy('position', 'DESC')
-			->get();
+		if($currentPosition) {
+			\DB::statement("SET @num = 0");
+			$result = \DB::table(\DB::raw("({$this->queryPreviousNext($sortby, $categoriesIds)->toSql()}) as sub") )
+				->mergeBindings($this->queryPreviousNext($sortby, $categoriesIds)->getQuery())
+				->whereIn('position', [$currentPosition->position - 1, $currentPosition->position + 1])
+				->orderBy('position', 'DESC')
+				->get();
 
-		return $result;
+			return $result;
+		}
 	}
 
 	/**

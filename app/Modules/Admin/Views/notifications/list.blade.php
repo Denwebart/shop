@@ -9,9 +9,9 @@
                     <span class="name">
                         {{ \App\Models\Notification::$notificationsTitle[$notification->type] }}
                     </span>
-                    <span class="desc">
+                    <div class="desc">
                         {!! \App\Helpers\Str::withoutLinks($notification->message) !!}
-                    </span>
+                    </div>
                     <span class="time">{!! \App\Helpers\Date::getRelative($notification->created_at) !!}</span>
                 </div>
             </a>
