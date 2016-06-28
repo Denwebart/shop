@@ -455,7 +455,8 @@ class SiteController extends Controller
 					'[letterFromEmail]' => $letter->email,
 					'[letterFromName]' => $letter->name,
 					'[letterSubject]' => $letter->subject,
-					'[letterText]' => $letter->message
+					'[letterText]' => $letter->message,
+					'[letterCreatedAt]' => $letter->created_at,
 				]);
 
 				return \Response::json([

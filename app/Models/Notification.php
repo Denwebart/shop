@@ -137,18 +137,22 @@ class Notification extends Model
 			$emailSubject = $this->getEmailSubject($variables);
 
 			if($notificationMessage) {
+				Notification::create([
+					'user_id' => $userModel->id,
+					'type'    => $notificationType,
+					'message' => $notificationMessage,
+				]);
+
+				if(self::TYPE_NEW_LETTER == $notificationType) {
+					$notificationMessage = $notificationMessage . '<br><h3>Текст письма:</h3><p>' . $variables['lettersMessage'] . '</p>';
+				}
+
 				\Mail::send('layouts.email', ['content' => $notificationMessage, 'variables' => $variables, 'userModel' => $userModel], function($message) use ($userModel, $emailSubject)
 				{
 					$message->to($userModel->email, $userModel->login)
 						->subject($emailSubject);
 				});
 				\Log::info("Email with notification for [{$userModel->login}] successfully sent. Notfication: [{$notificationMessage}]");
-
-				Notification::create([
-					'user_id' => $userModel->id,
-					'type'    => $notificationType,
-					'message' => $notificationMessage,
-				]);
 			}
 		}
 	}
