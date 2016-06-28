@@ -96,7 +96,7 @@
                         <li><img src="/images/product-blue.jpg" alt=""/></li>
                     </ul>
                     <div class="price-box product-info__price">
-                        <span class="price-box__new">{{ \App\Helpers\Str::priceFormat($page->price) }}</span>
+                        <span class="price-box__new">{{ \App\Helpers\Str::priceFormat($page->getPrice()) }}</span>
                         {{--<span class="price-box__old">7 000 руб.</span>--}}
                     </div>
                     <div id="rating" class="rating product-rating hidden-xs p-b-20"></div>

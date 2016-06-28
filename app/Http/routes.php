@@ -7,6 +7,8 @@ Route::auth();
 
 Route::get('/', 'SiteController@index');
 
+Route::get('currency/change', ['as' => 'currency.change', 'uses' => 'CurrencyController@change']);
+
 Route::post('letter/send', ['as' => 'letter.send', 'uses' => 'SiteController@sendLetter']);
 
 Route::post('call/request', ['as' => 'call.request', 'uses' => 'SiteController@requestCall']);

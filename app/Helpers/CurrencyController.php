@@ -19,6 +19,8 @@ class CurrencyController implements CurrencyRate
 		$xml = $this->getXML();
 		if($xml) {
 			$result = $this->procXML($xml, $currency);
+			if(is_null($result)) $result = 1;
+			$result = floatval(str_replace(',', '.', $result));
 			\Cache::forever('course' . $currency, $result);
 			return $result;
 		} else {

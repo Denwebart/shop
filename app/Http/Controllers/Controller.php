@@ -21,7 +21,7 @@ class Controller extends BaseController
 	public function __construct(CurrencyRate $course, Settings $settings)
 	{
 		\View::share('siteSettings', $settings->getCategory(Setting::CATEGORY_SITE));
-		\View::share('courseUSD', $course->getCourse());
+		\View::share('courseUSD', number_format($course->getCourse(), 2, '.', ' '));
 		\View::share('menuWidget', new Menu());
 		\View::share('cartWidget', new Cart());
 		\View::share('wishlistWidget', new Wishlist($course, $settings));

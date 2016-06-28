@@ -145,30 +145,7 @@
                 <div class="header__dropdowns">
                     <div class="header__currency pull-left">
                         <div class="dropdown">
-                            <a href="#" class="btn dropdown-toggle btn--links--dropdown header__dropdowns__button" data-toggle="dropdown" aria-expanded="false">
-                                <span class="header__dropdowns__button__text">Цены в: </span>
-                                <span class="header__dropdowns__button__symbol">
-                                    <span class="currency__item__symbol">₽</span>
-                                    <span class="currency__item__title">(рублях)</span>
-                                </span>
-                                <span class="caret caret--dots"></span>
-                            </a>
-                            <ul class="dropdown-menu animated fadeIn" role="menu">
-                                <li class="currency__item currency__item--active">
-                                    <a href="#">
-                                        <span class="currency__item__symbol">₽</span>
-                                        <span class="currency__item__title">(рублях)</span>
-                                    </a>
-                                </li>
-                                @if($courseUSD)
-                                    <li class="currency__item">
-                                        <a href="#">
-                                            <span class="currency__item__symbol">$</span>
-                                            <span class="currency__item__title">(долларах)</span>
-                                        </a>
-                                    </li>
-                                @endif
-                            </ul>
+                            @include('parts.switchCurrency', ['header' => true])
                         </div>
                     </div>
                     {!! $cartWidget->show() !!}
@@ -251,29 +228,7 @@
         <div class="footer__settings visible-xs">
             <div class="container text-center">
                 <div class="dropdown pull-left">
-                    <a href="#" class="btn dropdown-toggle btn--links--dropdown header__dropdowns__button" data-toggle="dropdown" aria-expanded="false">
-                        <span class="header__dropdowns__button__text">Цены в: </span>
-                        <span class="header__dropdowns__button__symbol">
-                            <span class="currency__item__symbol">₽</span>
-                            <span class="currency__item__title">(рублях)</span>
-                        </span>
-                    </a>
-                    <ul class="dropdown-menu animated fadeIn" role="menu">
-                        <li class="currency__item currency__item--active">
-                            <a href="#">
-                                <span class="currency__item__symbol">₽</span>
-                                <span class="currency__item__title">(рублях)</span>
-                            </a>
-                        </li>
-                        @if($courseUSD)
-                            <li class="currency__item">
-                                <a href="#">
-                                    <span class="currency__item__symbol">$</span>
-                                    <span class="currency__item__title">(долларах)</span>
-                                </a>
-                            </li>
-                        @endif
-                    </ul>
+                    @include('parts.switchCurrency')
                 </div>
             </div>
         </div>

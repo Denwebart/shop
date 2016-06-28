@@ -53,7 +53,7 @@
                     </div>
                     @if(isset($item['product']) && is_object($item['product']))
                         <div class="shopping-cart__item__info__price">
-                            {{ \App\Helpers\Str::priceFormat($item['product']->price) }}
+                            {{ \App\Helpers\Str::priceFormat($item['product']->getPrice()) }}
                         </div>
                     @endif
                     <div class="shopping-cart__item__info__delete">
