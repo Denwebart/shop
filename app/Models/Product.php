@@ -529,12 +529,12 @@ class Product extends Model
 			
 			if ($image->width() >= 1200 && $image->height() >= 1507) {
 				$height = $image->height();
-				$width = $height / 1.256;
+				$width = $height / 1.257;
 
 				if($image->width() < $image->height()) {
-					if($image->width() < ($image->height() / 1.256)) {
+					if($image->width() < ($image->height() / 1.257)) {
 						$width = $image->width();
-						$height = $width * 1.256;
+						$height = $width * 1.257;
 					}
 				}
 				$image->crop((integer) $width, (integer) $height);
@@ -542,12 +542,12 @@ class Product extends Model
 						$constraint->aspectRatio();
 					});
 			} else {
-				if($image->height() < ($image->width() * 1.256)) {
+				if($image->height() < ($image->width() * 1.257)) {
 					$height = $image->height();
-					$width = $height / 1.256;
+					$width = $height / 1.257;
 				} else {
 					$width = $image->width();
-					$height = $width * 1.256;
+					$height = $width * 1.257;
 				}
 				$image->crop((integer) $width, (integer) $height);
 			}
