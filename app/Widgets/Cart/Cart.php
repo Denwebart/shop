@@ -123,7 +123,7 @@ class Cart extends BaseController
 
 		foreach($cart['products'] as $key => $cartProduct) {
 			if($cartProduct['product_id'] == $product->id && $cartProduct['options'] == $options) {
-				$cart['products'][$key]['quantity'] = $cartProduct['quantity'] + 1;
+				$cart['products'][$key]['quantity'] = $cartProduct['quantity'] + $quantity;
 				$request->session()->put('cart', $cart);
 				return true;
 			}

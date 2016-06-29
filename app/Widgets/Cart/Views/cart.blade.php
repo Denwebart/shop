@@ -61,7 +61,7 @@
                 e.preventDefault();
                 var $button = $j(this),
                     productId = $button.data('productId'),
-                    quantity = $j('[data-cart="quantity"]').val(),
+                    quantity = $j('input.add-to-cart__quantity').val(),
                     color = $j('input[name="add-to-cart__color__input"]').val(),
                     size = $j('input[name="add-to-cart__size__input"]').val();
 

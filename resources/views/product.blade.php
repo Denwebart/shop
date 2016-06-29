@@ -74,26 +74,18 @@
                 <div class="product-info col-sm-8 col-md-4 col-lg-4">
                     <div class="product-info__title">
                         <h2>{{ $page->title }}</h2>
-                        <div class="rating product-info__rating visible-xs">
-                            <span class="icon-star"></span>
-                            <span class="icon-star"></span>
-                            <span class="icon-star"></span>
-                            <span class="icon-star"></span>
-                        </div>
                     </div>
+                    <div id="rating" class="pull-left rating product-rating visible-xs m-b-15 m-t-10"></div>
                     <div class="product-info__sku pull-right">
                         Артикул: {{ $page->vendor_code }}
                         <span class="label label-success m-l-10">В НАЛИЧИИ</span>
                     </div>
+                    <div class="clearfix visible-xs"></div>
                     <ul id="singleGallery" class="visible-xs">
-                        <li><img src="/images/product-red.jpg" alt="" /></li>
-                        <li><img src="/images/product-red-2.jpg" alt=""/></li>
-                        <li><img src="/images/product-red-3.jpg" alt=""/></li>
-                        <li><img src="/images/product-red-4.jpg" alt=""/></li>
-                        <li><img src="/images/product-yellow.jpg" alt=""/></li>
-                        <li><img src="/images/product-grey.jpg" alt=""/></li>
-                        <li><img src="/images/product-green.jpg" alt=""/></li>
-                        <li><img src="/images/product-blue.jpg" alt=""/></li>
+                        <li><img src="{{ $page->getImageUrl('zoom') }}" alt="{{ $page->image_alt }}" /></li>
+                        @foreach($page->images as $image)
+                            <li><img src="{{ $image->getImageUrl('zoom') }}" alt="{{ $image->image_alt }}"/></li>
+                        @endforeach
                     </ul>
                     <div class="price-box product-info__price">
                         <span class="price-box__new">{{ \App\Helpers\Str::priceFormat($page->getPrice()) }}</span>
@@ -163,27 +155,15 @@
                         </li>
                     </ul>
                     <div class="social-links social-links--colorize social-links--invert social-links--padding pull-left">
-                        <ul>
-                            <li class="social-links__item">
-                                <a class="icon icon-vk tooltip-link" href="#" data-placement="top" data-toggle="tooltip" data-original-title="Поделиться ВКонтакте"></a>
-                            </li>
-                            <li class="social-links__item">
-                                <a class="icon icon-facebook tooltip-link" href="#" data-placement="top" data-toggle="tooltip" data-original-title="Поделиться в Facebook"></a>
-                            </li>
-                            <li class="social-links__item">
-                                <a class="icon icon-instagram tooltip-link" href="#" data-placement="top" data-toggle="tooltip" data-original-title="Поделиться в Instagram"></a>
-                            </li>
-                            <li class="social-links__item">
-                                <a class="icon icon-twitter tooltip-link" href="#" data-placement="top" data-toggle="tooltip" data-original-title="Поделиться в Twitter"></a>
-                            </li>
-                            <li class="social-links__item">
-                                <a class="icon icon-google tooltip-link" href="#" data-placement="top" data-toggle="tooltip" data-original-title="Поделиться в Google+"></a>
-                            </li>
-                        </ul>
+                        <script type="text/javascript" src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js" charset="utf-8"></script>
+                        <script type="text/javascript" src="//yastatic.net/share2/share.js" charset="utf-8"></script>
+                        <div class="ya-share2" data-services="vkontakte,facebook,odnoklassniki,moimir,gplus,twitter,viber,whatsapp">
+                        </div>
                     </div>
                 </div>
+                <div class="clearfix visible-xs"></div>
                 <div class="col-sm-12 col-md-4 col-lg-3">
-                    <h4>Дополнительная информация</h4>
+                    <h4 class="align-center m-t-20">Дополнительная информация</h4>
                     <div class="card">
                         <div class="card__row">
                             Вы можете добавить свой контент здесь,

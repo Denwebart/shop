@@ -9108,7 +9108,7 @@ h4 {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     font-size: 1.692em;
-    padding: 0 0 1.5em;
+    padding: 0 0 1.1em;
     margin: 0;
 }
 
@@ -11184,6 +11184,14 @@ form label.error {
     text-transform: uppercase;
 }
 
+@media (max-width: 767px) {
+    .product-info .product-links,
+    .product-info .social-links {
+        text-align: center;
+        width: 100%;
+    }
+}
+
 .product-links .icon {
     padding: 0 5px 0 0;
     vertical-align: baseline;
@@ -12074,6 +12082,12 @@ form label.error {
 .product-info__price {
     font-size: 1.846em;
 }
+@media (max-width: 767px) {
+    .product-info__price {
+        text-align: center;
+        margin-right: 20px;
+    }
+}
 
 .product-info__description {
     line-height: 1.231em;
@@ -12100,6 +12114,11 @@ form label.error {
         margin-bottom: 15px;
     }
 }
+@media (max-width: 767px) {
+    .product-info__sku {
+        float: right !important;
+    }
+}
 
 .product-info__divider {
     border-top-width: 1px;
@@ -12109,7 +12128,7 @@ form label.error {
 @media (min-width: 992px) and (max-width: 1199px) {
     .product-info .social-links {
         float: none !important;
-        padding-top: 25px;
+        /*padding-top: 25px;*/
         clear: both;
     }
 }
@@ -12162,6 +12181,13 @@ form label.error {
     margin: 0;
     padding: 11px 0 9px;
     list-style: none;
+}
+
+@media (max-width: 991px) {
+    .product-other {
+        width: 100%;
+        text-align: center;
+    }
 }
 
 .product-other__link {
@@ -12264,13 +12290,13 @@ form label.error {
 /* End Sitemap */
 
 #singleGallery {
-    margin: 0 0 35px;
+    margin: 0 0 20px;
     padding: 0;
     list-style: none;
 }
 
 #singleGallery .slick-slide {
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 #singleGallery .slick-dots {
@@ -17546,6 +17572,12 @@ table.table-total h2 {
 }
 .p-b-5 {
     padding-bottom: 5px !important;
+}
+.p-b-15 {
+    padding-bottom: 15px !important;
+}
+.p-b-10 {
+    padding-bottom: 10px !important;
 }
 .p-b-20 {
     padding-bottom: 20px !important;
