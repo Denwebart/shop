@@ -10,9 +10,11 @@
             <a href="{{ $item->getUrl() }}">
                 <img src="{{ $item->getImageUrl() }}" alt=""/>
             </a>
-            {{--<div class="product-preview__label product-preview__label--left product-preview__label--new">--}}
-            {{--<span>новое</span>--}}
-            {{--</div>--}}
+            @if(count($item->propertyTag))
+                <div class="product-preview__label product-preview__label--left product-preview__label--new">
+                    <span>{{ $item->propertyTag->first()->value }}</span>
+                </div>
+            @endif
             {{--<div class="product-preview__label product-preview__label--right product-preview__label--sale">--}}
             {{--<span>скидка<br>-10%</span>--}}
             {{--</div>--}}

@@ -162,7 +162,7 @@
                                                 </li>
                                             @endforeach
                                         </ul>
-                                    @elseif($property->type == \App\Models\Property::TYPE_BUTTON)
+                                    @elseif($property->type == \App\Models\Property::TYPE_TAG)
                                         <ul class="tags-list">
                                             @foreach($property->values as $value)
                                                 <li>

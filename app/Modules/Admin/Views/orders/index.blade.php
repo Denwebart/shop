@@ -19,11 +19,11 @@ View::share('title', $title);
                 <li>{{ $title }}</li>
             </ul>
         </div>
-        <div class="col-sm-4">
-            <a href="{{ route('admin.orders.create') }}" class="btn btn-success btn-bordred w-md waves-effect waves-light pull-right">
-                Новый заказ
-            </a>
-        </div>
+        {{--<div class="col-sm-4">--}}
+            {{--<a href="{{ route('admin.orders.create') }}" class="btn btn-success btn-bordred w-md waves-effect waves-light pull-right">--}}
+                {{--Новый заказ--}}
+            {{--</a>--}}
+        {{--</div>--}}
     </div>
 
     <div class="row">

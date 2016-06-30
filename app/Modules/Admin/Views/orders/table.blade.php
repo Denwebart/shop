@@ -67,9 +67,9 @@
                         <a href="{{ route('admin.orders.show', ['id' => $order->id]) }}" title="Просмотреть" data-toggle="tooltip" class="m-r-15">
                             <i class="fa fa-eye fa-lg"></i>
                         </a>
-                        <a href="{{ route('admin.orders.edit', ['id' => $order->id]) }}" title="Редактировать" data-toggle="tooltip" class="m-r-15">
-                            <i class="fa fa-pencil fa-lg"></i>
-                        </a>
+                        {{--<a href="{{ route('admin.orders.edit', ['id' => $order->id]) }}" title="Редактировать" data-toggle="tooltip" class="m-r-15">--}}
+                            {{--<i class="fa fa-pencil fa-lg"></i>--}}
+                        {{--</a>--}}
                         @if(Auth::user()->isAdmin())
                             <a href="javascript:void(0)" class="button-delete" title="Удалить" data-toggle="tooltip" data-item-id="{{ $order->id }}" data-item-title="">
                                 <i class="fa fa-trash fa-lg"></i>

@@ -66,13 +66,11 @@
                     <td>{{ \App\Helpers\Date::format($productReview->created_at) }}</td>
                     <td>{{ \App\Helpers\Date::format($productReview->published_at) }}</td>
                     <td>
-                        @if($productReview->parent_id == 0)
-                            <a href="#" title="Ответить" data-toggle="tooltip">
-                                <i class="fa fa-reply"></i>
-                            </a>
-                        @endif
-                    </td>
-                    <td>
+                        {{--@if($productReview->parent_id == 0)--}}
+                            {{--<a href="#" title="Ответить" data-toggle="tooltip">--}}
+                                {{--<i class="fa fa-reply fa-lg m-r-10"></i>--}}
+                            {{--</a>--}}
+                        {{--@endif--}}
                         <a href="{{ route('admin.reviews.edit', ['id' => $productReview->id]) }}" title="Редактировать" data-toggle="tooltip" class="m-r-15">
                             <i class="fa fa-pencil fa-lg"></i>
                         </a>

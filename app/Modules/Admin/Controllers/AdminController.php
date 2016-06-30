@@ -24,11 +24,13 @@ class AdminController extends Controller
 	{
 		$orders = Order::select(['id', 'customer_id', 'total_price', 'status', 'created_at', 'paid_at'])
 			->with('customer')
+			->orderBy('created_at', 'DESC')
 			->limit(10)
 			->get();
 
 		$calls = RequestedCall::select(['id', 'user_id', 'name', 'phone', 'status', 'created_at'])
 			->with('user')
+			->orderBy('created_at', 'DESC')
 			->limit(5)
 			->get();
 
