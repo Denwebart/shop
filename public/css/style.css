@@ -9092,7 +9092,7 @@ h2 {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     font-size: 2.408em;
-    padding: 0 0 20px;
+    padding: 10px 0 20px;
     margin: 0;
 }
 
@@ -12084,6 +12084,10 @@ form label.error {
 }
 @media (max-width: 767px) {
     .product-info__price {
+        text-align: center;
+        margin-right: 20px;
+    }
+    #product-rating.product-rating {
         text-align: center;
         margin-right: 20px;
     }

@@ -75,7 +75,7 @@
                     <div class="product-info__title">
                         <h2>{{ $page->title }}</h2>
                     </div>
-                    <div id="rating" class="pull-left rating product-rating visible-xs m-b-15 m-t-10"></div>
+                    {{--<div id="product-rating-mobile" class="pull-left rating product-rating visible-xs m-b-15 m-t-10"></div>--}}
                     <div class="product-info__sku pull-right">
                         Артикул: {{ $page->vendor_code }}
                         {{--<span class="label label-success m-l-10">В НАЛИЧИИ</span>--}}
@@ -91,7 +91,7 @@
                         <span class="price-box__new">{{ \App\Helpers\Str::priceFormat($page->getPrice()) }}</span>
                         {{--<span class="price-box__old">7 000 руб.</span>--}}
                     </div>
-                    <div id="rating" class="rating product-rating hidden-xs p-b-20"></div>
+                    <div id="product-rating" class="rating product-rating p-b-20"></div>
                     @if($page->introtext)
                         <div class="divider divider&#45;&#45;xs product-info__divider"></div>
                         <div class="product-info__description">
@@ -598,7 +598,7 @@
                 endColor: '#F9BC39',
                 precision: 1.0,
                 onSet: function (rating) {
-                    $j('#rating').val(rating);
+                    $j('#product-review-rating-input').val(rating);
                     $j('.product-review-rating-number').text(rating);
                 },
                 onChange: function (rating) {
@@ -614,7 +614,7 @@
                 var $form = $j(this),
                     values = $form.serializeArray(),
                     url = $j(this).attr('action'),
-                    rating = $j('#rating').val();
+                    rating = $j('#product-review-rating-input').val();
 
                 values.push({
                     name: "rating",
@@ -640,13 +640,14 @@
                         if(response.success){
                             $form.trigger('reset');
                             ratingInput.setRating(0);
-                            $j('#rating').val(0)
+                            $j('#product-review-rating-input').val(0)
                             $j('.product-review-rating-number').text('0');
 
                             $j('#success-message').show().find('.infobox__text').text(response.message);
                             $j('#comments').html(response.commentsHtml);
                             $j('.reviews-count').html(response.commentsCount);
 
+                            $j(".product-rating").jRate(productRatingOptions);
                             productRating.setRating(response.newProductRating);
                             productRating = $j('.rating-in-comments').jRate(productRatingOptions);
                             productRating.setRating(response.newProductRating);
