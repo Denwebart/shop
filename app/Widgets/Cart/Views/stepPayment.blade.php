@@ -108,7 +108,8 @@
             </div>
 
             <a href="#" class="pull-left btn btn--wd text-uppercase change-step" data-step="{{ \App\Widgets\Cart\CartController::STEP_CHECKOUT }}">Назад</a>
-            {!! Form::submit('Оплатить', ['class' => 'pull-right btn btn--wd text-uppercase']) !!}
+            <a href="#" class="pull-right btn btn--wd text-uppercase change-step" data-step="{{ \App\Widgets\Cart\CartController::STEP_SUCCESS }}">Оплатить</a>
+            {{--{!! Form::submit('Оплатить', ['class' => 'pull-right btn btn--wd text-uppercase']) !!}--}}
 
         </div>
     {!! Form::close() !!}

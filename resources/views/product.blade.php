@@ -78,7 +78,7 @@
                     <div id="rating" class="pull-left rating product-rating visible-xs m-b-15 m-t-10"></div>
                     <div class="product-info__sku pull-right">
                         Артикул: {{ $page->vendor_code }}
-                        <span class="label label-success m-l-10">В НАЛИЧИИ</span>
+                        {{--<span class="label label-success m-l-10">В НАЛИЧИИ</span>--}}
                     </div>
                     <div class="clearfix visible-xs"></div>
                     <ul id="singleGallery" class="visible-xs">

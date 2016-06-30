@@ -19,11 +19,13 @@ class CartController extends Controller
 	const STEP_CART = 'cart';
 	const STEP_CHECKOUT = 'checkout';
 	const STEP_PAYMENT = 'payment';
+	const STEP_SUCCESS = 'success';
 
 	protected static $steps = [
 		self::STEP_CART => 'Корзина товаров',
 		self::STEP_CHECKOUT => 'Оформление заказа',
 		self::STEP_PAYMENT => 'Оплата заказа',
+		self::STEP_SUCCESS => 'Заказ оформлен',
 	];
 
 	public function index(Request $request)
@@ -65,7 +67,7 @@ class CartController extends Controller
 
 				return \Response::json([
 					'success' => true,
-					'stepContent' => view('widget.cart::step' . $step, compact('page', 'cart'))->render(),
+					'stepContent' => view('widget.cart::step' . ucfirst($step), compact('page', 'cart'))->render(),
 				]);
 			}
 

@@ -57,7 +57,7 @@
 
             <?php $deliveryTypes = \App\Models\DeliveryType::getDeliveryTypes() ?>
             @if(count($deliveryTypes) > 1)
-                <div class="input-group input-group--wd">
+                <div class="input-group input-group--wd m-t-20">
                     {{--<label class="static-label">Способ доставки <span class="required">*</span></label>--}}
                     {!! Form::select('order[delivery_type]', ['' => ' '] + $deliveryTypes, null, ['id' => 'delivery_type', 'class' => 'selectpicker', 'data-style' => 'select--wd select--wd--sm select--wd--full']) !!}
                     <span class="input-group__bar"></span>

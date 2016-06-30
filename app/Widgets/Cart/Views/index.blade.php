@@ -18,6 +18,10 @@
 <!-- Content section -->
 <section class="content">
     <div class="container">
+        <p class="help-block error align-center">
+            Внимание!
+            Оформление заказа работает в тестовом режиме.
+        </p>
         <div id="step-content">
             @include('widget.cart::stepCart')
         </div>
@@ -57,7 +61,7 @@
                     Заполните данные о себе, правильно указав имя и телефон.
                     Если телефон указан неверно &mdash; заказ будет отменен.
                     <br>
-                    Выберите способ доставки, обязательно указав адрес.
+                    Укажите адрес доставки.
                 </p>
             </div>
             <div class="divider divider--sm visible-xs"></div>
