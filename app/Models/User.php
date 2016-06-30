@@ -231,7 +231,7 @@ class User extends Authenticatable
 		return $this->avatar
 			? url($this->imagePath . $this->id . '/' . $this->avatar)
 			: ($default
-				? url('images/default-avatar.jpg')
+				? url('images/default-avatar.png')
 				: '');
 	}
 

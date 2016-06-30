@@ -112,7 +112,7 @@ class Review extends Model
 		return $this->user_avatar
 			? url($this->imagePath . $this->id . '/' . $this->user_avatar)
 			: ($default
-				? url('images/default-avatar.jpg')
+				? url('images/default-avatar.png')
 				: '');
 	}
 
