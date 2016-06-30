@@ -76,7 +76,6 @@
                     </div>
                 </div>
             </div>
-            <div class="divider divider--md"></div>
         </div>
         <div class="col-sm-7 col-md-8 col-lg-9">
             <div class="count">
@@ -119,9 +118,9 @@
                         <div class="help-block"></div>
                     </div>
                     <div class="review__comments m-t-10">
-                        <a href="#" class="add-comment m-r-20" rel="nofollow" data-parent-id="{{ $review->id }}">
-                            Ответить
-                        </a>
+                        {{--<a href="#" class="add-comment m-r-20" rel="nofollow" data-parent-id="{{ $review->id }}">--}}
+                            {{--Ответить--}}
+                        {{--</a>--}}
                         @if(count($review->publishedChildren))
                             <a href="#" class="show-comments" rel="nofollow" data-parent-id="{{ $review->id }}">
                                 Комментарии ({{ count($review->publishedChildren) }})
