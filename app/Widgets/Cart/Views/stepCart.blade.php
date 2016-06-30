@@ -8,13 +8,13 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div id="checkout-steps" class="row">
-                <div style="animation-delay: 0.0s;" class="checkout-steps__step col-md-4 animation animated fadeInRight" data-animation="fadeInRight" data-animation-delay="0.0s">
+                <div style="animation-delay: 0.0s;" class="checkout-steps__step col-md-4 col-sm-4 col-xs-4 animation animated fadeInRight" data-animation="fadeInRight" data-animation-delay="0.0s">
                     <a href="#" rel="nofollow" class="icon checkout-steps__step__icon icon-bag-alt change-step done active" data-step="{{ \App\Widgets\Cart\CartController::STEP_CART }}"></a>
                 </div>
-                <div style="animation-delay: 0.5s;" class="checkout-steps__step col-md-4 animation animated fadeInRight" data-animation="fadeInRight" data-animation-delay="0.5s">
+                <div style="animation-delay: 0.5s;" class="checkout-steps__step col-md-4 col-sm-4 col-xs-4 animation animated fadeInRight" data-animation="fadeInRight" data-animation-delay="0.5s">
                     <a href="#" rel="nofollow" class="icon checkout-steps__step__icon icon-person change-step" data-step="{{ \App\Widgets\Cart\CartController::STEP_CHECKOUT }}"></a>
                 </div>
-                <div style="animation-delay: 1.0s;" class="checkout-steps__step col-md-4 animation animated fadeInRight" data-animation="fadeInRight" data-animation-delay="1.0s">
+                <div style="animation-delay: 1.0s;" class="checkout-steps__step col-md-4 col-sm-4 col-xs-4 animation animated fadeInRight" data-animation="fadeInRight" data-animation-delay="1.0s">
                     <a href="#" rel="nofollow" class="icon checkout-steps__step__icon icon-money change-step" data-step="{{ \App\Widgets\Cart\CartController::STEP_PAYMENT }}"></a>
                 </div>
             </div>
