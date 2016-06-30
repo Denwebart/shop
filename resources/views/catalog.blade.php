@@ -645,6 +645,7 @@
             function sortingAjax(name, value) {
                 var data = {};
                 data[name] = value;
+                data['page'] = 1;
 
 //                $j('html, body').animate({
 //                    scrollTop: $j('#filters-form').offset().top - 150

@@ -631,6 +631,7 @@ class Product extends Model
 
 	protected function queryPreviousNext($sortby, $categoriesIds)
 	{
+//		\DB::statement("SET @num = 0");
 		//доделать - из-за join неправильное значение position (по рейтингу и популярности ошибка на товарах, где есть значение)
 		$query = Product::select(\DB::raw('products.id, products.category_id, products.alias, products.is_published, products.title, products.image, products.image_alt, products.published_at, @num := @num + 1 AS `position`'))
 			->where('products.is_published', '=', 1)
@@ -646,7 +647,9 @@ class Product extends Model
 		if(isset($categoriesIds)) {
 			$query = $query->whereIn('products.category_id', $categoriesIds);
 		}
-
+		
+		/* БЫЛО */
+		/*
 		if($sortby == 'popular') {
 			// sales (popular)
 			$query->leftJoin('orders_products', 'orders_products.product_id', '=', 'products.id')
@@ -675,18 +678,44 @@ class Product extends Model
 				->addSelect(\DB::raw('IFNULL((SUM(products_reviews.rating) / COUNT(products_reviews.id)), 0) as `rating`'));
 			$query->raw(\DB::raw('join (SELECT @num := -1) r'));
 		}
-		$query->groupBy('products.id');
+		*/
+
+		/* БЫЛО */
 
 		if($sortby == 'popular') {
-			$query->orderBy(\DB::raw('IFNULL(COUNT(orders_products.id), 0)'), 'ASC');
-		} elseif($sortby == 'rating') {
-			$query->orderBy(\DB::raw('IFNULL((SUM(products_reviews.rating) / COUNT(products_reviews.id)), 0)'), 'ASC');
+			$query->leftJoin('orders_products', 'orders_products.product_id', '=', 'products.id')
+				->addSelect(\DB::raw('COUNT(distinct orders_products.id) as `popular`'));
+
+			$query->leftJoin('products_reviews', 'products_reviews.product_id', '=', 'products.id')
+				->where(function($q) {
+					$q->where(function ($qu) {
+						$qu->where('products_reviews.parent_id', '=', 0);
+					})->orWhereNull('products_reviews.id');
+				})
+				->addSelect(\DB::raw('COUNT(distinct products_reviews.id) as reviews_count'));
+
+			$query->orderBy('popular', 'ASC');
+			$query->orderBy('reviews_count', 'ASC');
+		}
+		// sort by rating
+		elseif($sortby == 'rating') {
+			$query->leftJoin('products_reviews', 'products_reviews.product_id', '=', 'products.id')
+				->where(function($q) {
+					$q->where(function ($qu) {
+						$qu->where('products_reviews.parent_id', '=', 0);
+					})->orWhereNull('products_reviews.id');
+				})
+				->addSelect(\DB::raw('CASE WHEN (products_reviews.is_published = 1 && products_reviews.rating != 0) THEN (SUM(products_reviews.rating) / COUNT(CASE WHEN (products_reviews.is_published = 1 && products_reviews.rating != 0) THEN 1 END)) ELSE 0 END as rating'));
+			$query->orderBy($sortby, 'ASC');
+//			$query->addSelect(\DB::raw('@num := -1 r'));
+//			$query->raw(\DB::raw('join (SELECT @num := -1) r'));
 		} else {
 			$query->orderBy($sortby, 'ASC');
 		}
-
+		$query->groupBy('products.id');
 		$query->orderBy('products.published_at', 'ASC');
-		
+
+
 //		foreach ($query->get() as $item) {
 //			echo $item->title;
 //			echo ' - ';
@@ -694,6 +723,7 @@ class Product extends Model
 //			echo '<br>';
 //		}
 //		dd();
+
 		return $query;
 	}
 

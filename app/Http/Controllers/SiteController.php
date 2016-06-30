@@ -42,24 +42,28 @@ class SiteController extends Controller
 		$carousel = new Carousel();
 		$review = new Reviews();
 
-		$bestSellers = Product::select(\DB::raw('products.id, products.vendor_code, products.category_id, products.alias, products.is_published, products.title, products.price, products.image, products.image_alt, products.published_at, count(orders_products.product_id) as `sales`, (SUM(products_reviews.rating) / COUNT(products_reviews.id)) as `rating`'))
-			->leftJoin('orders_products', 'products.id', '=', 'orders_products.product_id')
-			->leftJoin('products_reviews', 'products_reviews.product_id', '=', 'products.id')
+		$query = Product::select(\DB::raw('products.id, products.vendor_code, products.category_id, products.alias, products.is_published, products.title, products.price, products.image, products.image_alt, products.published_at'))
+            ->with('category', 'category.parent', 'propertyColor')
+			->where('products.is_published', '=', 1);
+
+		$query->leftJoin('orders_products', 'orders_products.product_id', '=', 'products.id')
+			->addSelect(\DB::raw('COUNT(distinct orders_products.id) as `popular`'));
+
+		$query->leftJoin('products_reviews', 'products_reviews.product_id', '=', 'products.id')
 			->where(function($q) {
 				$q->where(function ($qu) {
-					$qu->where('products_reviews.is_published', '=', 1)
-						->where('products_reviews.parent_id', '=', 0)
-						->where('products_reviews.rating', '!=', 0);
-				})->orWhere('products_reviews.id', '=', null);
+					$qu->where('products_reviews.parent_id', '=', 0);
+				})->orWhereNull('products_reviews.id');
 			})
-			->with('category', 'category.parent', 'propertyColor')
-			->where('products.is_published', '=', 1)
-			->groupBy('products.id')
-			->orderBy('sales', 'DESC')
-			->orderBy('rating', 'DESC')
+			->addSelect(\DB::raw('COUNT(distinct products_reviews.id) as reviews_count'));
+
+		$query->groupBy('products.id')
+			->orderBy('popular', 'DESC')
+			->orderBy('reviews_count', 'DESC')
 			->orderBy('products.published_at', 'DESC')
-			->limit(12)
-			->get();
+			->limit(12);
+
+		$bestSellers = $query->get();
 
 		return view('index', compact('page', 'slider', 'carousel', 'bestSellers', 'review'));
 	}
@@ -307,44 +311,41 @@ class SiteController extends Controller
 		// sort by sales (popular)
 		if($sortby == 'popular') {
 			$query->leftJoin('orders_products', 'orders_products.product_id', '=', 'products.id')
-				->addSelect(\DB::raw('COUNT(orders_products.id) as `popular`'));
+				->addSelect(\DB::raw('COUNT(distinct orders_products.id) as `popular`'));
 
 			$query->leftJoin('products_reviews', 'products_reviews.product_id', '=', 'products.id')
 				->where(function($q) {
 					$q->where(function ($qu) {
-						$qu->where('products_reviews.is_published', '=', 1)
-							->where('products_reviews.parent_id', '=', 0)
-							->where('products_reviews.rating', '!=', 0);
-					})->orWhere('products_reviews.id', '=', null);
+						$qu->where('products_reviews.parent_id', '=', 0);
+					})->orWhereNull('products_reviews.id');
 				})
-				->addSelect(\DB::raw('(SUM(products_reviews.rating) / COUNT(products_reviews.id)) as `rating`'));
+				->addSelect(\DB::raw('COUNT(distinct products_reviews.id) as reviews_count'));
 
 			$query->orderBy('popular', $direction);
-			$query->orderBy('rating', $direction);
+			$query->orderBy('reviews_count', $direction);
 		}
 		// sort by rating
 		elseif($sortby == 'rating') {
 			$query->leftJoin('products_reviews', 'products_reviews.product_id', '=', 'products.id')
 				->where(function($q) {
 					$q->where(function ($qu) {
-						$qu->where('products_reviews.is_published', '=', 1)
-							->where('products_reviews.parent_id', '=', 0)
-							->where('products_reviews.rating', '!=', 0);
-					})->orWhere('products_reviews.id', '=', null);
+						$qu->where('products_reviews.parent_id', '=', 0);
+					})->orWhereNull('products_reviews.id');
 				})
-				->addSelect(\DB::raw('(SUM(products_reviews.rating) / COUNT(products_reviews.id)) as `rating`'));
+				->addSelect(\DB::raw('CASE WHEN (products_reviews.is_published = 1 && products_reviews.rating != 0) THEN (SUM(products_reviews.rating) / COUNT(CASE WHEN (products_reviews.is_published = 1 && products_reviews.rating != 0) THEN 1 END)) ELSE 0 END as rating'));
 			$query->orderBy($sortby, $direction);
 		} else {
 			$query->orderBy($sortby, $direction);
 		}
+		$query->orderBy('products.published_at', $direction);
 		$query->groupBy('products.id');
-		$query->orderBy('products.published_at', 'DESC');
 
 		// кол-во на странице
 		$limit = ($request->has('onpage') && !$request->get('reset-filters'))
 			? $request->get('onpage')
 			: $request->cookie('catalog-onpage', 12);
 
+//		dd($query->toSql());
 		$products = $query->paginate($limit);
 
 		if(!$request->ajax()) {
