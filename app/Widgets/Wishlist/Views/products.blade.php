@@ -71,6 +71,7 @@
     <div class="align-center m-t-5">
         Список желаний пуст.
     </div>
+    <div class="divider--md"></div>
 @endif
 
 @push('scripts')

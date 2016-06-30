@@ -13,13 +13,13 @@
 <div class="form-elements">
     <label for="phone" class="subscribe-form__label text-uppercase pull-left">Заказать звонок</label>
 
-    <div class="form-group pull-left">
+    <div class="form-group pull-left form-group__name">
         {!! Form::text('name', null, ['id' => 'name', 'class' => 'subscribe-form__input input--wd', 'placeholder' => 'Имя *']) !!}
         <span class="help-block error name_error"></span>
     </div>
 
-    <div class="form-group pull-left">
-        {!! Form::text('phone', null, ['id' => 'phone', 'class' => 'subscribe-form__input input--wd', 'placeholder' => 'Номер телефона *']) !!}
+    <div class="form-group pull-left form-group__phone">
+        {!! Form::text('phone', null, ['id' => 'phone', 'class' => 'subscribe-form__input input--wd', 'placeholder' => 'Телефон *']) !!}
         <span class="help-block error phone_error"></span>
     </div>
 

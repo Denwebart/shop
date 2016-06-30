@@ -10325,7 +10325,7 @@ label.label--inline {
     .subscribe-form__input {
         margin-right: 0;
         width: 97%;
-        padding-right: 50px;
+        padding-right: 12px;
     }
 }
 
@@ -10339,6 +10339,14 @@ label.label--inline {
     .subscribe-form button {
         position: absolute;
         right: 0;
+    }
+}
+@media (max-width: 479px) {
+    .subscribe-form .form-group__name {
+        width: 40%;
+    }
+    .subscribe-form .form-group__phone {
+        width: 60%;
     }
 }
 
