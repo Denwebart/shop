@@ -43,7 +43,7 @@ class SiteController extends Controller
 		$review = new Reviews();
 
 		$query = Product::select(\DB::raw('products.id, products.vendor_code, products.category_id, products.alias, products.is_published, products.title, products.price, products.image, products.image_alt, products.published_at'))
-            ->with('category', 'category.parent', 'propertyColor', 'propertyTag')
+            ->with('category', 'category.parent', 'propertyColor')
 			->where('products.is_published', '=', 1);
 
 		$query->leftJoin('orders_products', 'orders_products.product_id', '=', 'products.id')
@@ -237,7 +237,7 @@ class SiteController extends Controller
 				'category.parent' => function($q) {
 					$q->select(['id', 'parent_id', 'alias', 'is_container']);
 				},
-				'propertyColor', 'propertyTag'
+				'propertyColor'
 			]);
 
 		// сброс фильтров
@@ -298,6 +298,11 @@ class SiteController extends Controller
 					}
 				});
 			}
+		}
+
+		// доделать тег новое в константы + нельзя удалить
+		if($request->has('new') && !$request->get('reset-filters')) {
+			$query->whereDate('products.published_at', '>', Carbon::now()->subDay($request->get('new')));
 		}
 
 		// сортировка

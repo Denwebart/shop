@@ -39,7 +39,7 @@ class Carousel
 				'category.parent' => function($q) {
 					$q->select(['id', 'parent_id', 'alias', 'type']);
 				},
-				'propertyColor', 'propertyTag'
+				'propertyColor'
 			])
 			->groupBy('orders_products.product_id')
 //			->orderBy('boughtTimes', 'ASC')

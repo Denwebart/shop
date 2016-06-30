@@ -39,7 +39,7 @@
                     <td>
                         @if($call->user)
                             <a href="{{ route('admin.users.show', ['id' => $call->user->id]) }}">
-                                <img src="{{ $call->user->getAvatarUrl() }}" class="img-circle" width="40px" alt="{{ $call->user->login }}" title="Ответил {{ $call->user->login }}" data-toggle="tooltip" data-placement="right">
+                                <img src="{{ $call->user->getAvatarUrl() }}" class="img-circle" width="26" alt="{{ $call->user->login }}" title="Ответил {{ $call->user->login }}" data-toggle="tooltip" data-placement="right">
                                 <span class="m-l-5">{{ $call->user->login }}</span>
                             </a>
                         @else

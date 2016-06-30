@@ -1685,7 +1685,7 @@ input[type=checkbox]:checked ~ label .box {
 }
 
 .product-preview__label--new {
-    background: #a8afb3;
+    background: #D56D57;
 }
 
 @media (max-width: 767px) {

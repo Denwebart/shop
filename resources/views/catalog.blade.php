@@ -164,6 +164,11 @@
                                         </ul>
                                     @elseif($property->type == \App\Models\Property::TYPE_TAG)
                                         <ul class="tags-list">
+                                            <li>
+                                                <a href="#" data-property="new" data-value="7" class="ajax-filter-link @if(in_array('new', explode(',', \Request::get('new')))) active @endif">
+                                                    Новое
+                                                </a>
+                                            </li>
                                             @foreach($property->values as $value)
                                                 <li>
                                                     <a href="#" data-property="{{ $property->title }}" data-value="{{ $value->value }}" class="ajax-filter-link @if(in_array($value->value, explode(',', \Request::get($property->title)))) active @endif">

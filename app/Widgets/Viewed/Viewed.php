@@ -103,7 +103,7 @@ class Viewed extends BaseController
 					'category.parent' => function($q) {
 						$q->select(['id', 'parent_id', 'alias', 'type']);
 					},
-					'propertyColor', 'propertyTag'
+					'propertyColor'
 				])->get(['id', 'category_id', 'alias', 'title', 'image', 'image_alt', 'price']);
 
 			foreach($productModels as $productModel) {
