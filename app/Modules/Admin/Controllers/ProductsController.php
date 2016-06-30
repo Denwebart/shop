@@ -19,11 +19,12 @@ class ProductsController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-	    $products = $this->getProducts();
+	    $products = $this->getProducts($request);
 
         return view('admin::products.index', compact('products'));
     }
@@ -141,16 +142,17 @@ class ProductsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param Request $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
 	    if(\Request::ajax()) {
 
 		    if(Product::destroy($id)){
 			
-			    $products = $this->getProducts();
+			    $products = $this->getProducts($request);
 
 			    return \Response::json([
 				    'success' => true,
@@ -171,15 +173,25 @@ class ProductsController extends Controller
 	/**
 	 * Get list of products
 	 *
+	 * @param Request $request
 	 * @return mixed
 	 * @author     It Hill (it-hill.com@yandex.ua)
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
-	protected function getProducts()
+	protected function getProducts(Request $request)
 	{
-		return Product::select(['id', 'vendor_code', 'category_id', 'is_published', 'title', 'price', 'image', 'image_alt', 'published_at'])
+		$query = Product::select(['id', 'vendor_code', 'category_id', 'is_published', 'title', 'price', 'image', 'image_alt', 'published_at'])
 			->with('category', 'images')
-			->orderBy('created_at', 'DESC')
-			->paginate(20);
+			->orderBy('created_at', 'DESC');
+
+		if($request->has('query')) {
+			$searchQuery = $request->get('query');
+			$query->where(function ($q) use($searchQuery) {
+				$q->where('title', 'LIKE', '%'. $searchQuery .'%')
+					->orWhere('vendor_code', 'LIKE', $searchQuery .'%');
+			});
+		}
+
+		return $query->paginate(20);
 	}
 }
