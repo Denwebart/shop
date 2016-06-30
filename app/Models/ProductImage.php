@@ -80,6 +80,15 @@ class ProductImage extends Model
 		return $rules;
 	}
 
+	public static function boot()
+	{
+		parent::boot();
+
+		static::deleting(function($productImage) {
+			$productImage->deleteImagesFolder();
+		});
+	}
+
 	/**
 	 * Product
 	 *
@@ -109,6 +118,18 @@ class ProductImage extends Model
 	}
 
 	/**
+	 * Get image path
+	 *
+	 * @return mixed
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function getImagesPath()
+	{
+		return public_path() . $this->imagePath . $this->product->id . '/images/' . $this->id . '/';
+	}
+
+	/**
 	 * Image uploading
 	 *
 	 * @param Request $request
@@ -122,7 +143,7 @@ class ProductImage extends Model
 		$postImage = $request->file('image');
 		if (isset($postImage)) {
 			$fileName = Translit::generateFileName($postImage->getClientOriginalName());
-			$imagePath = public_path() . $this->imagePath . $this->product->id . '/images/' . $this->id . '/';
+			$imagePath = $this->getImagesPath();
 			$image = Image::make($postImage->getRealPath());
 			File::exists($imagePath) or File::makeDirectory($imagePath, 0755, true);
 
@@ -193,7 +214,7 @@ class ProductImage extends Model
 	 */
 	public function deleteImage()
 	{
-		$imagePath = public_path() . $this->imagePath . $this->product->id . '/images/' . $this->id . '/';
+		$imagePath = $this->getImagesPath();
 		// delete old image
 		if(File::exists($imagePath . 'origin_' . $this->image)) {
 			File::delete($imagePath . 'origin_' . $this->image);
@@ -208,5 +229,16 @@ class ProductImage extends Model
 			File::delete($imagePath . $this->image);
 		}
 		$this->image = null;
+	}
+
+	/**
+	 * Delete image folder
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function deleteImagesFolder()
+	{
+		File::deleteDirectory($this->getImagesPath());
 	}
 }
