@@ -648,7 +648,7 @@
                             $j('#comments').html(response.commentsHtml);
                             $j('.reviews-count').html(response.commentsCount);
 
-                            $j(".product-rating").jRate(productRatingOptions);
+//                            $j(".product-rating").jRate(productRatingOptions);
                             productRating.setRating(response.newProductRating);
                             productRating = $j('.rating-in-comments').jRate(productRatingOptions);
                             productRating.setRating(response.newProductRating);

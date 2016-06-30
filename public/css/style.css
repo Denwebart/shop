@@ -10341,13 +10341,8 @@ label.label--inline {
         right: 0;
     }
 }
-@media (max-width: 479px) {
-    .subscribe-form .form-group__name {
-        width: 40%;
-    }
-    .subscribe-form .form-group__phone {
-        width: 60%;
-    }
+@media (max-width: 767px) {
+
 }
 
 .subscribe-form button .icon {
@@ -12882,6 +12877,8 @@ body.modal-open {
 }
 .active .swatch-label {
     border: 1px solid #212121;
+    display: inline-block;
+    width: 100%;
 }
 .active .color-icon:not(.swatch-label) {
     border: 2px solid #212121;
