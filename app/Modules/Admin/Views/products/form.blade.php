@@ -108,22 +108,8 @@
             <div class="col-md-12">
                 <div class="task-detail">
                     <div class="attached-files">
-                        <div class="files-list">
-                            @foreach($product->images as $image)
-                                <div class="file-box">
-                                    {!! Form::file('image['. $image->id .']', ['id' => 'image['. $image->id .']', 'class' => 'img-responsive img-thumbnail dropify-more', 'data-default-file' => $image->getImageUrl(), 'data-max-file-size' => '3M', 'data-height' => '100']) !!}
-                                    {{--<a href="javascript:void(0)">--}}
-                                        {{--<img src="{{ $image->getImageUrl() }}" class="img-responsive img-thumbnail" alt="">--}}
-                                    {{--</a>--}}
-                                </div>
-                            @endforeach
-
-                            <div class="file-box m-l-15">
-                                <div class="fileupload add-new-plus">
-                                    <span><i class="zmdi-plus zmdi"></i></span>
-                                    <input type="file" class="upload">
-                                </div>
-                            </div>
+                        <div class="files-list product-images">
+                            @include('admin::products.images')
                         </div>
                         <span class="help-block">
                             <small>Дополнительные изображения для товара.</small>
@@ -132,9 +118,6 @@
                 </div>
             </div>
         </div>
-
-
-
 
         {{--<div class="form-group product-images">--}}
             {{--<div class="col-md-12">--}}
@@ -278,37 +261,6 @@
     <script src="{{ asset('backend/plugins/summernote/lang/summernote-ru-RU.js') }}"></script>
 
     <script type="text/javascript">
-
-        // Image Uploader
-        var drEvent = $('.dropify').dropify({
-            messages: {
-                'default': 'Кликните или перетащите файл.',
-                'replace': 'Кликните или перетащите файл для замены.',
-                'remove': 'Удалить',
-                'error': 'Ошибка.'
-            },
-            error: {
-                'fileSize': 'Размер файла слишком большой (максимум 3Мб).'
-            }
-        });
-
-        drEvent.on('dropify.afterClear', function(event, element){
-            $('#deleteImage').val(1);
-        });
-
-        $('.dropify-more').dropify({
-            messages: {
-                'default': '+',
-                'replace': '',
-                'remove': 'x',
-                'error': 'Ошибка!'
-            },
-            error: {
-                'fileSize': 'Размер файла слишком большой (максимум 3Мб).'
-            }
-        });
-
-
         // WYSIWYG
         $(document).ready(function() {
             $('.editor').summernote({
@@ -329,6 +281,136 @@
             $("#returnBack").val('0');
             $("#main-form").submit();
         });
+        
+        
+        // Image Uploader
+        var drEvent = $('.dropify').dropify({
+            messages: {
+                'default': 'Кликните или перетащите файл.',
+                'replace': 'Кликните или перетащите файл для замены.',
+                'remove': 'Удалить',
+                'error': 'Ошибка.'
+            },
+            error: {
+                'fileSize': 'Размер файла слишком большой (максимум 3Мб).'
+            }
+        });
 
+        drEvent.on('dropify.afterClear', function(event, element){
+            $('#deleteImage').val(1);
+        });
+
+//        $('.dropify-more').dropify({
+//            messages: {
+//                'default': '+',
+//                'replace': '',
+//                'remove': 'x',
+//                'error': 'Ошибка!'
+//            },
+//            error: {
+//                'fileSize': 'Размер файла слишком большой (максимум 3Мб).'
+//            }
+//        });
+
+        // Image Uploader
+        $(document).on('click', '.add-new-product-image', function (e) {
+            $('.new-product-image').removeClass('hidden');
+        });
+
+        var dropifyMoreOptions = {
+            messages: {
+                'default': '+',
+                'replace': '',
+                'remove': 'x',
+                'error': 'Ошибка!'
+            },
+            error: {
+                'fileSize': 'Размер файла слишком большой (максимум 3Мб).'
+            }
+        };
+
+        function ajaxUploadImage(event, element, dropifyElement)
+        {
+            var productId = "{{ $product->id }}";
+            var imageId = dropifyElement.data('imageId');
+            var url = "{{ route('admin.products.uploadImage') }}";
+            var data = new FormData();
+            data.append("image_id", imageId);
+            data.append("product_id", productId);
+            data.append("image", dropifyElement[0].files[0]);
+            $.ajax({
+                url: url,
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                type: "POST",
+                data: data,
+                beforeSend: function(request) {
+                    return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+                },
+                success: function(response) {
+                    if(response.success){
+                        Command: toastr["success"](response.message);
+                        $('.product-images').html(response.productImages);
+
+                        var dropifyAjax = $('.dropify-more').dropify(dropifyMoreOptions);
+
+                        dropifyAjax.on('dropify.fileReady', function(event, element) {
+                            ajaxUploadImage(event, element, $(this));
+                        });
+
+                        dropifyAjax.on('dropify.beforeClear', function(event, element) {
+                            ajaxDeleteImage(event, element, $(this));
+                        });
+                    } else {
+                        Command: toastr["error"](response.message);
+                    }
+                }
+            });
+        }
+
+        function ajaxDeleteImage(event, element, dropifyElement)
+        {
+            var productId = "{{ $product->id }}";
+            var imageId = dropifyElement.data('imageId');
+            var url = "{{ route('admin.products.deleteImage') }}";
+            $.ajax({
+                url: url,
+                dataType: "text json",
+                type: "POST",
+                data: {product_id: productId, image_id: imageId},
+                beforeSend: function(request) {
+                    return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+                },
+                success: function(response) {
+                    if(response.success){
+                        Command: toastr["success"](response.message);
+                        $('.product-images').html(response.productImages);
+
+                        var dropifyAjax = $('.dropify-more').dropify(dropifyMoreOptions);
+
+                        dropifyAjax.on('dropify.fileReady', function(event, element) {
+                            ajaxUploadImage(event, element, $(this));
+                        });
+
+                        dropifyAjax.on('dropify.beforeClear', function(event, element) {
+                            ajaxDeleteImage(event, element, $(this));
+                        });
+                    } else {
+                        Command: toastr["error"](response.message);
+                    }
+                }
+            });
+        }
+
+        var dropifyAjax = $('.dropify-more').dropify(dropifyMoreOptions);
+
+        dropifyAjax.on('dropify.fileReady', function(event, element) {
+            ajaxUploadImage(event, element, $(this));
+        });
+
+        dropifyAjax.on('dropify.beforeClear', function(event, element) {
+            ajaxDeleteImage(event, element, $(this));
+        });
     </script>
 @endpush

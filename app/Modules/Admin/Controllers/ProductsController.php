@@ -9,6 +9,7 @@
 namespace App\Modules\Admin\Controllers;
 
 use App\Models\Product;
+use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Input;
@@ -193,5 +194,87 @@ class ProductsController extends Controller
 		}
 
 		return $query->paginate(20);
+	}
+
+	/**
+	 * Upload image
+	 *
+	 * @param Request $request
+	 * @return \Illuminate\Http\JsonResponse
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function uploadImage(Request $request)
+	{
+		if($request->ajax()) {
+			$productImage = ProductImage::whereId($request->get('image_id'))
+				->whereProductId($request->get('product_id'))->first();
+
+			if($productImage) {
+				$productImage->setImage($request);
+				$productImage->save();
+
+				return \Response::json([
+					'success' => true,
+					'message' => 'Изобржение загружено.',
+					'productImages' => view('admin::products.images')
+						->with('product', $productImage->product)
+						->render()
+				]);
+			} else {
+				$productImage = new ProductImage();
+				$productImage->product_id = $request->get('product_id');
+				$productImage->save();
+
+				$productImage->setImage($request);
+				$productImage->image_alt = $productImage->product->image_alt;
+				$productImage->save();
+
+				return \Response::json([
+					'success' => true,
+					'message' => 'Изобржение загружено.',
+					'productImages' => view('admin::products.images')
+						->with('product', $productImage->product)
+						->render()
+				]);
+			}
+		}
+	}
+
+	/**
+	 * Delete image
+	 *
+	 * @param Request $request
+	 * @return \Illuminate\Http\JsonResponse
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function deleteImage(Request $request)
+	{
+		if($request->ajax()) {
+			$productImage = ProductImage::whereId($request->get('image_id'))
+				->whereProductId($request->get('product_id'))->first();
+
+			if($productImage) {
+
+				$productImage->deleteImage();
+				$productImage->delete();
+
+				return \Response::json([
+					'success' => true,
+					'message' => 'Изобржение удалено.',
+					'productImages' => view('admin::products.images')
+						->with('product', $productImage->product)
+						->render()
+				]);
+			} else {
+				return \Response::json([
+					'success' => false,
+					'message' => 'Произошла ошибка.'
+				]);
+			}
+		}
 	}
 }

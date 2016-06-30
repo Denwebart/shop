@@ -1453,6 +1453,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.down .hopscotch-bubble-ar
   display: inline-block;
   margin: 5px 5px 5px 0px;
 }
+.task-detail .files-list .file-box.new-product-image,
 .task-detail .files-list .file-box {
   display: inline-block;
   vertical-align: middle;
@@ -1462,6 +1463,9 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.down .hopscotch-bubble-ar
   border-radius: 3px;
   -moz-border-radius: 3px;
   background-clip: padding-box;
+}
+.task-detail .files-list .file-box.new-product-image.hidden {
+    display: none;
 }
 .task-detail .files-list .file-box img {
   line-height: 70px;

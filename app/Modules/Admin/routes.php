@@ -14,6 +14,8 @@ Route::group(['module' => 'Admin', 'prefix' => 'admin', 'middleware' => 'web', '
 	Route::post('orders/get_payment_statuses', ['as' => 'admin.orders.getJsonPaymentStatues', 'uses' => 'OrdersController@getJsonPaymentStatues']);
 	Route::post('orders/{orders}/set_payment_status', ['as' => 'admin.orders.setPaymentStatus', 'uses' => 'OrdersController@setPaymentStatus']);
 
+	Route::post('products/upload_image/', ['as' => 'admin.products.uploadImage', 'uses' => 'ProductsController@uploadImage']);
+	Route::post('products/delete_image/', ['as' => 'admin.products.deleteImage', 'uses' => 'ProductsController@deleteImage']);
 	Route::resource('products', 'ProductsController');
 
 	Route::resource('pages', 'PagesController');

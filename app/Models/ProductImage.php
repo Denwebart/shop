@@ -6,7 +6,11 @@
 
 namespace App\Models;
 
+use App\Helpers\Translit;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Intervention\Image\Facades\Image;
 
 /**
  * App\Models\ProductImage
@@ -107,14 +111,15 @@ class ProductImage extends Model
 	/**
 	 * Image uploading
 	 *
-	 * @param $postImage
+	 * @param Request $request
 	 * @return bool
 	 *
 	 * @author     It Hill (it-hill.com@yandex.ua)
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
-	public function setImage($postImage)
+	public function setImage(Request $request)
 	{
+		$postImage = $request->file('image');
 		if (isset($postImage)) {
 			$fileName = Translit::generateFileName($postImage->getClientOriginalName());
 			$imagePath = public_path() . $this->imagePath . $this->product->id . '/images/' . $this->id . '/';
@@ -125,30 +130,39 @@ class ProductImage extends Model
 			$this->deleteImage();
 
 			$watermark = Image::make(public_path('images/watermark.png'));
+
+			$image->save($imagePath . 'origin_' . $fileName);
+
+			if ($image->width() >= 1200 && $image->height() >= 1507) {
+				$height = $image->height();
+				$width = $height / 1.257;
+
+				if($image->width() < $image->height()) {
+					if($image->width() < ($image->height() / 1.257)) {
+						$width = $image->width();
+						$height = $width * 1.257;
+					}
+				}
+				$image->crop((integer) $width, (integer) $height);
+				$image->resize(1200, null, function ($constraint) {
+					$constraint->aspectRatio();
+				});
+			} else {
+				if($image->height() < ($image->width() * 1.257)) {
+					$height = $image->height();
+					$width = $height / 1.257;
+				} else {
+					$width = $image->width();
+					$height = $width * 1.257;
+				}
+				$image->crop((integer) $width, (integer) $height);
+			}
+
 			$watermark->resize(($image->width() * 2) / 3, null, function ($constraint) {
 				$constraint->aspectRatio();
 			})->save($imagePath . 'watermark.png');
-
 			$image->insert($imagePath . 'watermark.png', 'center')
-				->save($imagePath . 'origin_' . $fileName);
-
-			if (File::exists($imagePath . 'watermark.png')) {
-				File::delete($imagePath . 'watermark.png');
-			}
-
-			if ($image->width() > 1200) {
-				$image->resize(1200, null, function ($constraint) {
-					$constraint->aspectRatio();
-				})->crop(1200, 1507)
-					->save($imagePath . 'zoom_' . $fileName);
-			} else {
-				$width = $image->width();
-				$height = $width * 1.255;
-				$image->resize($width, null, function ($constraint) {
-					$constraint->aspectRatio();
-				})->crop($width, (integer) $height)
-					->save($imagePath . 'zoom_' . $fileName);
-			}
+				->save($imagePath . 'zoom_' . $fileName);
 
 			$image->resize(458, null, function ($constraint) {
 				$constraint->aspectRatio();
@@ -159,6 +173,10 @@ class ProductImage extends Model
 				$constraint->aspectRatio();
 			})->crop(100, 126)
 				->save($imagePath . 'mini_' . $fileName);
+
+			if (File::exists($imagePath . 'watermark.png')) {
+				File::delete($imagePath . 'watermark.png');
+			}
 
 			$this->image = $fileName;
 			return true;
