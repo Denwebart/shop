@@ -2212,6 +2212,11 @@ fieldset[disabled] .form-control {
     cursor: not-allowed;
 }
 
+input,
+textarea {
+    outline: none;
+}
+
 textarea.form-control {
     height: auto;
 }
