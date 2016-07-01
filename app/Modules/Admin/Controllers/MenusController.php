@@ -268,11 +268,19 @@ class MenusController extends Controller
 	public function delete(Request $request)
 	{
 		if($request->ajax()) {
-			$menu = Menu::find($request->get('id'));
-			if($menu->delete()) {
+			$menu = Menu::whereId($request->get('itemId'))
+				->whereType($request->get('menuType'))
+				->first();
+
+			if(is_object($menu) && $menu->delete()) {
+
+				$items = Menu::getMenuItems($request->get('menuType'));
+
 				return \Response::json([
 					'success' => true,
-					'message' => 'Пункт меню успешно удалён.'
+					'message' => 'Пункт меню успешно удалён.',
+					'menuItemsHtml' => view('admin::menus.items', compact('items'))
+						->with('menuType', $request->get('menuType'))->render(),
 				]);
 			}
 
@@ -281,5 +289,30 @@ class MenusController extends Controller
 				'message' => 'Произошла ошибка, пункт меню не удалён'
 			]);
 		}
+	}
+
+	/**
+	 * Change position of menu items
+	 *
+	 * @param Request $request
+	 * @return mixed
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function changePosition(Request $request)
+	{
+		$positions = $request->get('positions');
+		$i = 0;
+		foreach($positions as $itemId) {
+			$menu = Menu::find($itemId);
+			$menu->position = $i;
+			$menu->save();
+			$i++;
+		}
+		return \Response::json(array(
+			'success' => true,
+			'message' => 'Позиция пункта меню изменена.',
+		));
 	}
 }

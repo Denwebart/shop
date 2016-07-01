@@ -283,6 +283,7 @@
 
 <!-- jQuery  -->
 <script src="{{ asset('backend/js/jquery.min.js') }}"></script>
+<script src="{{ asset('backend/js/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('backend/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('backend/js/detect.js') }}"></script>
 <script src="{{ asset('backend/js/fastclick.js') }}"></script>

@@ -266,7 +266,7 @@ View::share('title', $title);
         </div>
         <div class="col-lg-6">
             <div class="card-box">
-                @include('admin::settings.menu')
+                @include('admin::menus.menu')
             </div>
 
             <div class="card-box">

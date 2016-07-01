@@ -8,6 +8,7 @@
 
 namespace App\Modules\Admin\Controllers;
 
+use App\Helpers\Settings;
 use App\Models\Menu;
 use App\Models\Setting;
 use Illuminate\Http\Request;
@@ -17,12 +18,16 @@ use Intervention\Image\Facades\Image;
 
 class SettingsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(\App\Helpers\Settings $settings)
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @param Settings $settings
+	 * @return mixed
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+    public function index(Settings $settings)
     {
 	    $settings = $settings->getAll();
 

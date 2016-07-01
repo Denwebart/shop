@@ -32,7 +32,7 @@
                         <i class="fa fa-file-o" title="Страница" data-toggle="tooltip"></i>
                     @endif
                 </td>
-                <td>{{ $page->title }}</td>
+                <td>{{ $page->getTitle() }}</td>
                 <td>{{ $page->menu_title }}</td>
                 <td>{{ $page->alias }}</td>
                 <td>
