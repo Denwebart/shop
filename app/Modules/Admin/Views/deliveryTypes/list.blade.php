@@ -132,6 +132,7 @@
 
                             // доделать навешивание dropify и switchery после добавления нового
                             dropifyAjax = $('.dropify-ajax').dropify(dropifyOptions);
+                            $('.editable-text').editable(getSettingsEditableOptions());
                         } else {
                             $.each(response.errors, function(index, value) {
                                 var errorDiv = '.' + index + '_error';

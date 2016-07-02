@@ -5,11 +5,11 @@
  */
 ?>
 
-<ul class="sortable todo">
+<ul class="form-editable sortable todo">
     @foreach($items as $item)
         <li id="{{ $item->id }}" data-item-id="{{ $item->id }}" data-page-id="{{ $item->page->id }}" data-menu-type="{{ $menuType }}">
             <span class="title pull-left">
-                {{ $item->page->getTitle() }}
+                <a href="#" class="editable-menu-item" data-value="{{ $item->page->getTitle() }}" data-type="text" data-pk="{{ $item->id }}" data-page-id="{{ $item->page->id }}">{{ $item->page->getTitle() }}</a>
             </span>
             <a href="#" class="delete-item pull-right margin-right-5" data-item-id="{{ $item->id }}" data-page-id="{{ $item->page->id }}" data-menu-type="{{ $menuType }}" data-item-title="{{ $item->page->getTitle() }}" data-menu-title="{{ \App\Models\Menu::$types[$menuType] }}" title="Удалить пункт меню &laquo;{{ $item->page->getTitle() }}&raquo;" data-toggle="tooltip">
                 <i class="fa fa-remove"></i>
@@ -20,7 +20,7 @@
                     @foreach($item->children as $itemChild)
                         <li id="{{ $itemChild->id }}" data-item-id="{{ $itemChild->id }}" data-page-id="{{ $itemChild->page->id }}" data-menu-type="{{ $menuType }}">
                             <span class="title pull-left">
-                                {{ $itemChild->page->getTitle() }}
+                                <a href="#" class="editable-menu-item" data-value="{{ $itemChild->page->getTitle() }}" data-type="text" data-pk="{{ $itemChild->id }}" data-page-id="{{ $itemChild->page->id }}">{{ $itemChild->page->getTitle() }}</a>
                             </span>
                             <a href="#" class="delete-item pull-right margin-right-5" data-item-id="{{ $itemChild->id }}" data-page-id="{{ $itemChild->page->id }}" data-menu-type="{{ $menuType }}" data-item-title="{{ $itemChild->page->getTitle() }}" data-menu-title="{{ \App\Models\Menu::$types[$menuType] }}" title="Удалить пункт меню &laquo;{{ $itemChild->page->getTitle() }}&raquo;" data-toggle="tooltip">
                                 <i class="fa fa-remove"></i>

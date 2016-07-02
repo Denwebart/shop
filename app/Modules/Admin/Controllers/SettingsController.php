@@ -107,7 +107,7 @@ class SettingsController extends Controller
 						? trim($request->get('value'))
 						: null);
 
-				$validator = \Validator::make($data, $setting->getRules());
+				$validator = \Validator::make($data, $setting->getRules(), $setting->getMessages());
 
 				if ($validator->fails())
 				{

@@ -750,7 +750,7 @@ textarea.form-control {
   border-radius: 3px;
 }
 /* Form editable */
-.form-horizontal.form-editable .help-block {
+.form-editable .help-block {
     font-weight: 700;
     font-size: 12px;
 }

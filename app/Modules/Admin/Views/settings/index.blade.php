@@ -374,27 +374,30 @@ View::share('title', $title);
         };
 
         // Edit settings
-        $('.editable-text').editable({
-            url: "{{ route('admin.settings.setValue') }}",
-            mode: 'inline',
-            prepend: false,
-            emptytext: 'не задано',
-            ajaxOptions: {
-                dataType: 'json',
-                sourceCache: 'false',
-                type: 'PUT'
-            },
-            success: function(response, newValue) {
-                if(response.success) {
-                    Command: toastr["success"](response.message);
-                    return true;
-                } else {
-                    Command: toastr["error"](response.message);
-                    return response.error;
+        function getSettingsEditableOptions() {
+            return {
+                url: "{{ route('admin.settings.setValue') }}",
+                mode: 'inline',
+                prepend: false,
+                emptytext: 'не задано',
+                ajaxOptions: {
+                    dataType: 'json',
+                    sourceCache: 'false',
+                    type: 'PUT'
+                },
+                success: function(response, newValue) {
+                    if(response.success) {
+                        Command: toastr["success"](response.message);
+                        return true;
+                    } else {
+                        Command: toastr["error"](response.message);
+                        return response.error;
+                    }
+                    return false;
                 }
-                return false;
             }
-        });
+        }
+        $('.editable-text').editable(getSettingsEditableOptions());
 
         // Change active status or boolean value
         $('[data-plugin=switchery]').on('change', function () {

@@ -127,4 +127,25 @@ class Setting extends Model
 		return $rules;
 	}
 
+	/**
+	 * Get validation message for current setting
+	 *
+	 * @return array
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function getMessages()
+	{
+		$messages = [
+			'map.latitude' => [
+				'regex' => 'Поле должно содержать правильные географические координаты (в градусах).',
+			],
+			'map.longitude' => [
+				'regex' => 'Поле должно содержать правильные географические координаты (в градусах).',
+			],
+		];
+
+		return isset($messages[$this->key]) ? $messages[$this->key] : [];
+	}
 }
