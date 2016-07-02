@@ -24,6 +24,8 @@ Route::group(['module' => 'Admin', 'prefix' => 'admin', 'middleware' => 'web', '
 	Route::put('menus/rename', ['as' => 'admin.menus.rename', 'uses' => 'MenusController@rename']);
 	Route::post('menus/delete', ['as' => 'admin.menus.delete', 'uses' => 'MenusController@delete']);
 	Route::post('menus/position', ['as' => 'admin.menus.position', 'uses' => 'MenusController@changePosition']);
+	Route::post('menus/add', ['as' => 'admin.menus.add', 'uses' => 'MenusController@add']);
+	Route::get('menus/autocomplete', ['as' => 'admin.menus.autocomplete', 'uses' => 'MenusController@pagesAutocomplete']);
 
 	Route::resource('shop_reviews', 'ReviewsController', ['except' => ['show']]);
 

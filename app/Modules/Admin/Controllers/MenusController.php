@@ -88,7 +88,7 @@ class MenusController extends Controller
 			}
 
 			return \Response::json([
-				'success' => true,
+				'success' => false,
 				'message' => 'Произошла ошибка, заголовок меню не изменен.'
 			]);
 		}
@@ -123,7 +123,7 @@ class MenusController extends Controller
 			}
 
 			return \Response::json([
-				'success' => true,
+				'success' => false,
 				'message' => 'Произошла ошибка, пункт меню не удалён'
 			]);
 		}
@@ -148,9 +148,88 @@ class MenusController extends Controller
 			$menu->save();
 			$i++;
 		}
+
 		return \Response::json(array(
 			'success' => true,
 			'message' => 'Позиция пункта меню изменена.',
 		));
+	}
+
+	/**
+	 * Autocomplete pages for adding to menus
+	 *
+	 * @param Request $request
+	 * @return mixed
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function pagesAutocomplete(Request $request) {
+		$term = $request->get('term');
+		$pages = Page::where('title', 'like', "%$term%")
+			->orWhere('menu_title', 'like', "%$term%")
+			->get(['id', 'title', 'menu_title']);
+		$result = [];
+		foreach($pages as $item) {
+			$result[] = ['id' => $item->id, 'value' => $item->getTitle()];
+		}
+		return \Response::json($result);
+	}
+
+	/**
+	 * Add new menu item
+	 *
+	 * @param Request $request
+	 * @return \Illuminate\Http\JsonResponse
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function add(Request $request)
+	{
+		if($request->ajax()) {
+
+			if(!$request->get('pageId') || (!$request->get('pageTitle') && empty($request->get('pageTitle')))) {
+				return \Response::json([
+					'success' => false,
+					'message' => 'Пункт меню не добавлен. Выберите страницу, которую хотите добавить.'
+				]);
+			}
+
+			$page = Page::whereId($request->get('pageId'))
+				->orWhere('title', '=', $request->get('pageTitle'))
+				->orWhere('menu_title', '=', $request->get('pageTitle'))
+				->first();
+
+			if(!$page) {
+				return \Response::json([
+					'success' => false,
+					'message' => 'Пункт меню не добавлен. Страница, которую вы хотите добавить, не существует.'
+				]);
+			}
+
+			$menu = Menu::whereType($request->get('menuType'))->wherePageId($page->id)->first();
+			if($menu) {
+				return \Response::json([
+					'success' => false,
+					'message' => 'Такой пункт меню уже добавлен в меню "' . Menu::$types[$request->get('menuType')] . '".'
+				]);
+			}
+
+			$menuItem = new Menu();
+			$menuItem->type = $request->get('menuType');
+			$menuItem->page_id = $page->id;
+
+			if($menuItem->save()) {
+				$items = Menu::getMenuItems($request->get('menuType'));
+
+				return \Response::json([
+					'success' => true,
+					'message' => 'Пункт меню успешно добавлен.',
+					'menuItemsHtml' => view('admin::menus.items', compact('items'))
+						->with('menuType', $request->get('menuType'))->render(),
+				]);
+			}
+		}
 	}
 }
