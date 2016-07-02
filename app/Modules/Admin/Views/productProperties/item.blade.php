@@ -5,20 +5,22 @@
  */
 ?>
 
-<div class="property form-group" data-property-id="{{ $property->id }}">
-    <label class="col-md-3 col-sm-3 control-label" title="{{ $property->title }}" data-toggle="tooltip">
-        {{ $property->title }}
-    </label>
-    <div class="col-md-7 col-sm-7">
+<div class="col-md-2">
+    <label>{{ $property->title }}</label>
+</div>
+<div class="col-md-10">
+    <ul class="list-group user-list">
         @foreach($property->values as $value)
-            <a href="#" class="editable-text" data-value="{{ $value->value }}" data-name="value" data-type="text" data-pk="{{ $value->id }}" data-url="{{ route('admin.productProperties.setValue') }}">
-                {{ $value->value }}
-            </a>
+            @if($property->type != \App\Models\Property::TYPE_DEFAULT)
+                <li class="list-group-item clearfix" id="{{ $value->id }}" data-item-id="{{ $value->id }}" data-property-id="{{ $property->id }}">
+                    <span class="value pull-left">
+                        {{ $value->value }}
+                    </span>
+                    <a href="#" class="delete-value pull-right margin-right-5" data-item-id="{{ $value->id }}" data-product-id="{{ $product->id }}" data-property-id="{{ $property->id }}" data-item-title="{{ $value->value }}" data-property-title="{{ $property->title }}" title="Удалить значение" data-toggle="tooltip">
+                        <i class="fa fa-remove"></i>
+                    </a>
+                </li>
+            @endif
         @endforeach
-    </div>
-    <div class="col-md-2 col-sm-2">
-        <a href="javascript:void(0)" class="remove-property pull-right" data-id="{{ $property->id }}" data-title="{{ $property->title }}" title="Удалить" data-toggle="tooltip">
-            <i class="fa fa-remove fa-lg m-t-10"></i>
-        </a>
-    </div>
+    </ul>
 </div>

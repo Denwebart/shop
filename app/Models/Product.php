@@ -259,15 +259,21 @@ class Product extends Model
 	 * @author     It Hill (it-hill.com@yandex.ua)
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
-    public function getProperties()
+    public function getProperties($propertyId = null)
     {
-	    return Property::whereHas('values', function ($q) {
+	    $query = Property::whereHas('values', function ($q) {
 		    $q->leftJoin('products_property_values', 'products_property_values.property_value_id', '=', 'property_values.id')
 			    ->where('products_property_values.product_id', '=', $this->id);
 	    })->with(['values' => function ($q) {
 		    $q->leftJoin('products_property_values', 'products_property_values.property_value_id', '=', 'property_values.id')
 			    ->where('products_property_values.product_id', '=', $this->id);
-	    }])->get();
+	    }]);
+
+	    if($propertyId) {
+		    $query->whereId($propertyId);
+	    }
+
+	    return $query->get();
     }
 
 	/**

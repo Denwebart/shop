@@ -9,6 +9,10 @@
 namespace App\Modules\Admin\Controllers;
 
 use App\Models\DeliveryType;
+use App\Models\Menu;
+use App\Models\Product;
+use App\Models\ProductPropertyValue;
+use App\Models\Property;
 use Illuminate\Http\Request;
 
 class ProductPropertiesController extends Controller
@@ -64,21 +68,29 @@ class ProductPropertiesController extends Controller
 	 * @author     It Hill (it-hill.com@yandex.ua)
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
-	public function remove(Request $request)
+	public function delete(Request $request)
 	{
 		if($request->ajax()) {
+			$productValue = ProductPropertyValue::whereproductId($request->get('productId'))
+				->wherePropertyValueId($request->get('valueId'))
+				->first();
 
-			if (DeliveryType::destroy($request->get('id')))
-			{
+			$product = Product::find($request->get('productId'));
+
+			if(is_object($productValue) && $productValue->delete()) {
+
+				$items = $product->getProperties($request->get('propertyId'));
+
 				return \Response::json([
 					'success' => true,
-					'message' => 'Способ доставки успешно удалён.'
+					'message' => 'Значение успешно удалено.',
+					'propertyHtml' => view('admin::productProperties.item', compact('items', 'product'))->render(),
 				]);
-			} 
-
+			}
+			
 			return \Response::json([
 				'success' => false,
-				'message' => 'Произошла ошибка. Способ доставки не удалён.',
+				'message' => 'Произошла ошибка, значение не удалено.'
 			]);
 		}
 	}

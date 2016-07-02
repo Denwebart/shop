@@ -8,7 +8,9 @@
     <div class="col-lg-6 col-sm-12 col-xs-12 m-b-15">
         <div id="product-properties-container" class="form-horizontal form-editable">
             @foreach($productProperties as $key => $property)
-                @include('admin::productProperties.item')
+                <div class="property clearfix m-b-20" data-property-id="{{ $property->id }}">
+                    @include('admin::productProperties.item')
+                </div>
             @endforeach
         </div>
 
@@ -116,38 +118,44 @@
 			});
 		});
 
-		$(document).on('click', '.remove-product-property', function() {
-			var itemId = $(this).data('id'),
-				itemTitle = $(this).data('title');
+        /* Delete item */
+        $('#product-properties-container').on('click', '.delete-value', function(e) {
+            e.preventDefault();
+            var propertyId = $(this).data('property-id'),
+                propertyTitle = $(this).data('property-title'),
+                productId = $(this).data('product-id'),
+                itemId = $(this).data('item-id'),
+                itemTitle = $(this).data('itemTitle');
 
-			sweetAlert({
-				title: "Удалить способ доставки?",
-				text: 'Вы точно хотите удалить способ доставки "'+ itemTitle +'"?',
-				type: "error",
-				showCancelButton: true,
-				cancelButtonText: 'Отмена',
-				confirmButtonClass: 'btn-danger waves-effect waves-light',
-				confirmButtonText: 'Удалить'
-			}, function(){
-				$.ajax({
-					url: "{{ route('admin.productProperties.remove') }}",
-					dataType: "json",
-					type: "POST",
-					data: {id: itemId},
-					beforeSend: function (request) {
-						return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
-					},
-					success: function(response) {
-						if(response.success){
-							Command: toastr["success"](response.message);
-							$('#product-properties-container').find("[data-delivery-id='" + itemId + "']").remove();
-						} else {
-							Command: toastr["error"](response.message);
-						}
-					}
-				});
-			});
-		});
+            sweetAlert(
+            {
+                title: "Удалить значение?",
+                text: 'Вы точно хотите удалить значение "'+ itemTitle +'" характеристики "'+ propertyTitle +'"?',
+                type: "error",
+                showCancelButton: true,
+                cancelButtonText: 'Отмена',
+                confirmButtonClass: 'btn-danger waves-effect waves-light',
+                confirmButtonText: 'Удалить'
+            },
+            function(){
+                $.ajax({
+                    data: {propertyId: propertyId, valueId: itemId, productId: productId},
+                    type: 'POST',
+                    url: '{{ route('admin.productProperties.delete') }}',
+                    beforeSend: function(request) {
+                        return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+                    },
+                    success: function(response) {
+                        if(response.success) {
+                            Command: toastr["success"](response.message);
+                            $('.property[data-property-id='+ propertyId +']').html(response.propertyHtml);
+                        } else {
+                            Command: toastr["error"](response.message);
+                        }
+                    },
+                });
+            });
+        });
 	}(window.jQuery);
 </script>
 @endpush
