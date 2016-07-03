@@ -47,9 +47,9 @@ Route::group(['module' => 'Admin', 'prefix' => 'admin', 'middleware' => 'web', '
 	Route::put('delivery/set_value/', ['as' => 'admin.deliveryTypes.setValue', 'uses' => 'DeliveryTypesController@setValue']);
 	Route::post('delivery/add/', ['as' => 'admin.deliveryTypes.add', 'uses' => 'DeliveryTypesController@add']);
 	Route::post('delivery/remove/', ['as' => 'admin.deliveryTypes.remove', 'uses' => 'DeliveryTypesController@remove']);
-
-	Route::post('product_properties/set_value/', ['as' => 'admin.productProperties.setValue', 'uses' => 'ProductPropertiesController@setValue']);
+	
 	Route::post('product_properties/add/', ['as' => 'admin.productProperties.add', 'uses' => 'ProductPropertiesController@add']);
+	Route::get('product_properties/autocomplete', ['as' => 'admin.productProperties.autocomplete', 'uses' => 'ProductPropertiesController@autocomplete']);
 	Route::post('product_properties/delete/', ['as' => 'admin.productProperties.delete', 'uses' => 'ProductPropertiesController@delete']);
 
 	Route::post('settings/upload_image/', ['as' => 'admin.settings.uploadImage', 'uses' => 'SettingsController@uploadImage']);

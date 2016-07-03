@@ -15,7 +15,7 @@
         </div>
 
         <a href="javascript:void(0)" class="show-product-properties-form pull-right">
-            <span class="m-t-3 pull-left">Добавить</span>
+            <span class="m-t-3 pull-left">Добавить новую характеристику</span>
             <i class="fa fa-plus fa-2x pull-left m-l-10"></i>
         </a>
         <div class="clearfix"></div>
@@ -154,6 +154,75 @@
                         }
                     },
                 });
+            });
+        });
+
+        /* Add new product property value */
+        $('#product-properties-container').on('click', '.open-product-property-value-form', function (e) {
+            e.preventDefault();
+            var propertyId = $(this).data('propertyId'),
+                $form = $('.new-product-property-value-form[data-property-id='+ propertyId +']');
+            if($form.is(':visible')) {
+                $form.hide();
+            } else {
+                $('.new-product-property-value-form').hide();
+                $form.show();
+            }
+        });
+
+        $('[id^="new-product-value-of-property-"]').autocomplete({
+            source: function(request, response) {
+                var input = this.element;
+                $.ajax({
+                    url: "<?php echo URL::route('admin.productProperties.autocomplete') ?>",
+                    dataType: "json",
+                    data: {
+                        term : request.term,
+                        propertyId : input.data('propertyId')
+                    },
+                    success: function(data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 1,
+            select: function(e, ui) {
+                $(this).val(ui.item.value);
+                $(this).attr('data-value-id', ui.item.id);
+            }
+        });
+
+        $('#product-properties-container').on('click', '.add-product-property-value', function (e) {
+            e.preventDefault();
+
+            var propertyId = $(this).data('propertyId'),
+                input = $('[name^="new-product-value-of-property-'+ propertyId +'"]'),
+                valueId = input.data('valueId'),
+                productId = "{{ $product->id }}",
+                valueTitle = input.val();
+
+            $.ajax({
+                data: {valueId: valueId, valueTitle: valueTitle, productId: productId, propertyId: propertyId},
+                type: 'POST',
+                url: '{{ route('admin.productProperties.add') }}',
+                beforeSend: function(request) {
+                    return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+                },
+                success: function(response) {
+                    if(response.success) {
+                        Command: toastr["success"](response.message);
+
+                        input.removeAttr('data-value-id');
+                        input.val('');
+
+                        $('.property[data-property-id='+ propertyId +']').html(response.propertyHtml);
+                    } else {
+                        Command: toastr["error"](response.message);
+
+                        input.removeAttr('data-value-id');
+                        input.val('');
+                    }
+                },
             });
         });
 	}(window.jQuery);

@@ -17,7 +17,7 @@
             <span class="pull-left">{{ $menuTitle }}</span>
             <a href="#" class="pull-right open-menu-item-form" data-menu-type="{{ $menuType }}" data-toggle="tooltip" title="Добавить пункт меню">
                 Добавить пункт меню
-                <i class="fa fa-plus"></i>
+                <i class="fa fa-plus m-l-5"></i>
             </a>
         </h5>
         <div class="new-menu-item-form m-b-20" data-menu-type="{{ $menuType }}" style="display: none">
