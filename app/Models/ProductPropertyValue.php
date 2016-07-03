@@ -12,6 +12,10 @@ use Illuminate\Database\Eloquent\Model;
  * App\Models\ProductPropertyValue
  *
  * @mixin \Eloquent
+ * @property integer $product_id
+ * @property integer $property_value_id
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ProductPropertyValue whereProductId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ProductPropertyValue wherePropertyValueId($value)
  */
 class ProductPropertyValue extends Model
 {
@@ -28,4 +32,14 @@ class ProductPropertyValue extends Model
 		'product_id',
 		'property_value_id',
 	];
+
+	/**
+	 * Product
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function product()
+	{
+		return $this->belongsTo('App\Models\Product', 'product_id');
+	}
 }

@@ -9,10 +9,7 @@
 namespace App\Modules\Admin\Controllers;
 
 use App\Models\DeliveryType;
-use App\Models\Menu;
-use App\Models\Product;
 use App\Models\ProductPropertyValue;
-use App\Models\Property;
 use Illuminate\Http\Request;
 
 class ProductPropertiesController extends Controller
@@ -71,20 +68,23 @@ class ProductPropertiesController extends Controller
 	public function delete(Request $request)
 	{
 		if($request->ajax()) {
-			$productValue = ProductPropertyValue::whereproductId($request->get('productId'))
-				->wherePropertyValueId($request->get('valueId'))
+			$productValue = ProductPropertyValue::whereProductId(intval($request->get('productId')))
+				->wherePropertyValueId(intval($request->get('valueId')))
 				->first();
 
-			$product = Product::find($request->get('productId'));
+			if(is_object($productValue)) {
+//			    $product = Product::find($request->get('productId'));
+				$product = $productValue->product;
 
-			if(is_object($productValue) && $productValue->delete()) {
+				$productValue->delete();
 
-				$items = $product->getProperties($request->get('propertyId'));
+				$property = $product->getProperties($request->get('propertyId'));
+				$property = $property->first();
 
 				return \Response::json([
 					'success' => true,
 					'message' => 'Значение успешно удалено.',
-					'propertyHtml' => view('admin::productProperties.item', compact('items', 'product'))->render(),
+					'propertyHtml' => view('admin::productProperties.item', compact('property', 'product'))->render(),
 				]);
 			}
 			

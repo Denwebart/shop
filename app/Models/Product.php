@@ -263,7 +263,8 @@ class Product extends Model
     {
 	    $query = Property::whereHas('values', function ($q) {
 		    $q->leftJoin('products_property_values', 'products_property_values.property_value_id', '=', 'property_values.id')
-			    ->where('products_property_values.product_id', '=', $this->id);
+			    ->where('products_property_values.product_id', '=', $this->id)
+		        ->addSelect('products_property_values.id as product_property_value_id');
 	    })->with(['values' => function ($q) {
 		    $q->leftJoin('products_property_values', 'products_property_values.property_value_id', '=', 'property_values.id')
 			    ->where('products_property_values.product_id', '=', $this->id);
