@@ -1620,6 +1620,16 @@ input[type=checkbox]:checked ~ label .box {
     border-right-color: #879196;
 }
 
+.checkout-steps__line.done {
+    background: #ad7155;
+}
+.checkout-steps__step__icon.done {
+    color: #ad7155;
+}
+.checkout-steps__step__icon.active {
+    border-color: #ad7155;
+}
+
 /* PRODUCTS COLORS */
 .product-links {
     color: #adadad;

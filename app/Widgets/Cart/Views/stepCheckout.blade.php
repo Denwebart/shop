@@ -8,6 +8,8 @@
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
         <div id="checkout-steps" class="row">
+            <div class="checkout-steps__line step-1 done col-xs-4 col-xs-offset-2"></div>
+            <div class="checkout-steps__line step-2 col-xs-4"></div>
             <div style="animation-delay: 0.0s;" class="checkout-steps__step col-md-4 animation animated fadeInRight" data-animation="fadeInRight" data-animation-delay="0.0s">
                 <a href="#" rel="nofollow" class="icon checkout-steps__step__icon icon-bag-alt change-step done" data-step="{{ \App\Widgets\Cart\CartController::STEP_CART }}"></a>
             </div>
@@ -116,8 +118,10 @@
                 </span>
             </div>
 
-            <a href="#" class="pull-left btn btn--wd text-uppercase change-step" data-step="{{ \App\Widgets\Cart\CartController::STEP_CART }}">Назад</a>
-
+            <a href="#" class="pull-left btn text-uppercase change-step" data-step="{{ \App\Widgets\Cart\CartController::STEP_CART }}">
+                <i class="icon icon-arrow-left"></i>
+                Назад
+            </a>
             <a href="#" class="pull-right btn btn--wd text-uppercase change-step" data-step="{{ \App\Widgets\Cart\CartController::STEP_PAYMENT }}">Перейти к оплате</a>
         </div>
     {!! Form::close() !!}

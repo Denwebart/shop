@@ -18,7 +18,7 @@
 <!-- Content section -->
 <section class="content">
     <div class="container">
-        <p class="help-block error align-center">
+        <p class="help-block error align-center m-b-20">
             Внимание!
             Оформление заказа работает в тестовом режиме.
         </p>
@@ -129,6 +129,13 @@
                     });
                 }
             });
+        });
+
+        $j(document).on('click', '.payment-types__item', function (event) {
+            var paymentType = $j(this).data('paymentType');
+            $j('.payment-types__item').removeClass('active');
+            $j(this).addClass('active');
+            $j('#payment_type').val(paymentType);
         });
     });
 </script>
