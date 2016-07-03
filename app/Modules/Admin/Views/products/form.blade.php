@@ -60,26 +60,51 @@
                 @endif
             </div>
         </div>
-        <div class="form-group @if($errors->has('price')) has-error @endif">
-            {!! Form::label('price', 'Цена', ['class' => 'col-md-2 control-label']) !!}
-            <div class="col-md-10">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-ruble"></i></span>
-                    {!! Form::text('price', $product->price, ['id' => 'price', 'class' => 'form-control']) !!}
-                    <span class="input-group-addon">руб.</span>
-                </div>
+        <div class="col-md-6">
+            <div class="form-group @if($errors->has('price')) has-error @endif">
+                {!! Form::label('price', 'Цена', ['class' => 'col-md-2 control-label']) !!}
+                <div class="col-md-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-ruble"></i></span>
+                        {!! Form::text('price', $product->price, ['id' => 'price', 'class' => 'form-control']) !!}
+                        <span class="input-group-addon">руб.</span>
+                    </div>
                 <span class="help-block @if($errors->has('price')) hidden @endif">
                     <small>
                         Цена только в рублях. Например: 1000 или 1000.00
                     </small>
                 </span>
-                @if ($errors->has('price'))
-                    <span class="help-block error">
+                    @if ($errors->has('price'))
+                        <span class="help-block error">
                         <strong>{{ $errors->first('price') }}</strong>
                     </span>
-                @endif
+                    @endif
+                </div>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="form-group @if($errors->has('price')) has-error @endif">
+                {!! Form::label('new_price', 'Новая цена', ['class' => 'col-md-2 control-label']) !!}
+                <div class="col-md-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-ruble"></i></span>
+                        {!! Form::text('new_price', null, ['id' => 'new_price', 'class' => 'form-control']) !!}
+                        <span class="input-group-addon">руб.</span>
+                    </div>
+                <span class="help-block @if($errors->has('new_price')) hidden @endif">
+                    <small>
+                        Акционная цена
+                    </small>
+                </span>
+                    @if ($errors->has('new_price'))
+                        <span class="help-block error">
+                        <strong>{{ $errors->first('new_price') }}</strong>
+                    </span>
+                    @endif
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
         <div class="form-group">
             <div class="col-sm-5 col-md-5 @if($errors->has('image')) has-error @endif">
                 {!! Form::label('image', 'Изображение для товара', ['class' => 'control-label m-b-5']) !!}
