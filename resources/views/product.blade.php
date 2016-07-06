@@ -377,7 +377,8 @@
         </div>
     </section>
 
-    {!! $viewed->show($page->id) !!}
+    {!! $viewed->show() !!}
+    {!! $viewed->addingToViewed($page->id) !!}
 @endsection
 
 @push('styles')

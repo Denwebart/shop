@@ -3,8 +3,6 @@
  * @author     It Hill (it-hill.com@yandex.ua)
  * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
  */
-
-$viewed = new \App\Widgets\Viewed\Viewed();
 ?>
 @extends('layouts.main')
 
@@ -34,6 +32,6 @@ $viewed = new \App\Widgets\Viewed\Viewed();
     </div>
 </section>
 
-{!! $viewed->show($page->id) !!}
+{!! $viewed->show() !!}
 <!-- End Content section -->
 @endsection

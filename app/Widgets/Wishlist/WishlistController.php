@@ -10,6 +10,7 @@
 namespace App\Widgets\Wishlist;
 
 use App\Http\Controllers\Controller;
+use App\Widgets\Viewed\Viewed;
 use Illuminate\Http\Request;
 use App\Models\Page;
 
@@ -24,6 +25,8 @@ class WishlistController extends Controller
 		$page->title = 'Список желаний';
 		$page->meta_title = 'Список желаний мета-тайтл';
 
-		return view('widget.wishlist::index', compact('page', 'products'));
+		$viewed = new Viewed();
+
+		return view('widget.wishlist::index', compact('page', 'products', 'viewed'));
 	}
 }

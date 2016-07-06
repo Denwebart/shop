@@ -20,19 +20,23 @@ class Viewed extends BaseController
 	/**
 	 * Show last viewed widget
 	 *
-	 * @param $productId
 	 * @return mixed
 	 *
 	 * @author     It Hill (it-hill.com@yandex.ua)
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
-	public function show($productId)
+	public function show()
 	{
 		$title = 'Недавно просмотренные';
 
 		$products = $this->get();
 
-		return view('widget.viewed::index', compact('products', 'title', 'productId'));
+		return view('widget.viewed::index', compact('products', 'title'));
+	}
+
+	public function addingToViewed($productId)
+	{
+		return view('widget.viewed::adding', compact('productId'));
 	}
 
 	/**
@@ -57,9 +61,7 @@ class Viewed extends BaseController
 				}
 
 				$products[$product->id] = [
-					'product_id' => $product->id,
-					'added_at' => Carbon::now(),
-					'product' => null,
+					'at' => date('Y-m-d H:i:s'),
 				];
 
 				$products = array_slice($products, -$this->limit, null, true);
@@ -89,7 +91,7 @@ class Viewed extends BaseController
 		}
 
 		foreach ($products as $productId => $item) {
-			$productsIds[] = $item['product_id'];
+			$productsIds[] = $productId;
 		}
 
 		if(isset($productsIds)) {
