@@ -10298,6 +10298,11 @@ label.label--inline {
     }
 }
 
+footer .help-block.error {
+    color: #ef3434 !important;
+}
+
+/* Requested Call */
 .subscribe-form {
     position: relative;
 }
@@ -10307,6 +10312,9 @@ label.label--inline {
 .subscribe-form .form-elements,
 .subscribe-form .description {
     display: inline-block;
+}
+.subscribe-form .description {
+    margin-left: 20px;
 }
 @media (min-width: 992px) {
     .subscribe-form .form-elements,
@@ -10326,6 +10334,7 @@ label.label--inline {
     .subscribe-form .form-elements,
     .subscribe-form .description {
         width: 100%;
+        margin-left: 0;
     }
     .subscribe-form .form-group {
         width: 50%;
@@ -10338,6 +10347,15 @@ label.label--inline {
     font-weight: normal;
     padding-right: 10px;
     margin-bottom: 0;
+}
+
+@media (max-width: 1199px) and (min-width: 992px) {
+    .subscribe-form .description {
+        margin-left: 10px;
+    }
+    .subscribe-form__input {
+        width: 200px;
+    }
 }
 
 @media (max-width: 767px) {
@@ -10371,9 +10389,6 @@ label.label--inline {
         position: absolute;
         right: 0;
     }
-}
-@media (max-width: 767px) {
-
 }
 
 .subscribe-form button .icon {

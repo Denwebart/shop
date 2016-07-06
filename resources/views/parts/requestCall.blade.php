@@ -24,12 +24,12 @@
     </div>
 
     <button type="submit" class="btn btn--wd text-uppercase wave pull-left">
-        <span class="hidden-xs">Перезвоните мне</span>
-        <span class="icon icon-telephone visible-xs"></span>
+        <span class="hidden-xs hidden-md">Перезвоните мне</span>
+        <span class="icon icon-telephone visible-xs visible-md"></span>
     </button>
 </div>
 <div class="clearfix visible-sm"></div>
-<div class="description m-l-20">
+<div class="description">
     <p>
         Закажите звонок, и менеджер перезвонит вам
         <br class="hidden-sm">
@@ -65,14 +65,14 @@
 
                         if(response.success){
                             $form.trigger('reset');
-                            $j('#subscribeSuccess').show().text(response.message);
+                            $j('#subscribeSuccess').show().html(response.message);
                         } else {
                             $j.each(response.errors, function(index, value) {
                                 var errorDiv = '.' + index + '_error';
                                 $form.find(errorDiv).parent().addClass('has-error');
                                 $form.find(errorDiv).empty().append(value);
                             });
-                            $j('#subscribeError').show().text(response.message);
+                            $j('#subscribeError').show().html('<i class="icon icon-info"></i> ' + response.message);
                         }
                     }
                 });
