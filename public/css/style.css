@@ -10298,9 +10298,6 @@ label.label--inline {
     }
 }
 
-footer .help-block.error {
-    color: #ef3434 !important;
-}
 
 /* Requested Call */
 .subscribe-form {
@@ -15735,6 +15732,11 @@ body.boxed .products-col {
     line-height: 1em;
     margin-right: 5px;
     margin-top: 2px;
+}
+
+.rating-extended__progress {
+    display: inline-block;
+    width: calc(100% - 60px);
 }
 
 .rating-extended .progress {

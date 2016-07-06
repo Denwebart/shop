@@ -38,7 +38,9 @@ class CommentsController extends Controller
 			$data['is_published'] = (is_object($premoderationModel) && $premoderationModel->value && !\Auth::check())
 				? ProductReview::UNPUBLISHED
 				: ProductReview::PUBLISHED;
-			$data['published_at'] = Carbon::now();
+			if($data['is_published']) {
+				$data['published_at'] = Carbon::now();
+			}
 
 			$validator = \Validator::make($data, ProductReview::rules());
 

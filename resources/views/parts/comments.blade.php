@@ -22,57 +22,67 @@
                 <div class="col-lg-12">
                     <div class="progress">
                         <span class="rating-extended__label">5 звезд</span>
-                        @if($page->ratingInfo[5])
-                            <div class="progress-bar progress-bar-five" role="progressbar" aria-valuenow="{{ count($productReviews) }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (100 * $page->ratingInfo[5]) / $page->ratingInfo['sum'] }}%">
-                                <span class="rating-extended__reviews-count">
-                                    {{ $page->ratingInfo[5] }}
-                                </span>
-                            </div>
-                        @endif
+                        <div class="rating-extended__progress">
+                            @if($page->ratingInfo[5])
+                                <div class="progress-bar progress-bar-five" role="progressbar" aria-valuenow="{{ count($productReviews) }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (100 * $page->ratingInfo[5]) / $page->ratingInfo['sum'] }}%">
+                                    <span class="rating-extended__reviews-count">
+                                        {{ $page->ratingInfo[5] }}
+                                    </span>
+                                </div>
+                            @endif
+                        </div>
                     </div>
                     <div class="clearfix"></div>
                     <div class="progress">
                         <span class="rating-extended__label">4 звезды</span>
-                        @if($page->ratingInfo[4])
-                            <div class="progress-bar progress-bar-four" role="progressbar" aria-valuenow="{{ count($productReviews) }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (100 * $page->ratingInfo[4]) / $page->ratingInfo['sum'] }}%">
-                                <span class="rating-extended__reviews-count">
-                                    {{ $page->ratingInfo[4] }}
-                                </span>
-                            </div>
-                        @endif
+                        <div class="rating-extended__progress">
+                            @if($page->ratingInfo[4])
+                                <div class="progress-bar progress-bar-four" role="progressbar" aria-valuenow="{{ count($productReviews) }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (100 * $page->ratingInfo[4]) / $page->ratingInfo['sum'] }}%">
+                                    <span class="rating-extended__reviews-count">
+                                        {{ $page->ratingInfo[4] }}
+                                    </span>
+                                </div>
+                            @endif
+                        </div>
                     </div>
                     <div class="clearfix"></div>
                     <div class="progress">
                         <span class="rating-extended__label">3 звезды</span>
-                        @if($page->ratingInfo[3])
-                            <div class="progress-bar progress-bar-three" role="progressbar" aria-valuenow="{{ count($productReviews) }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (100 * $page->ratingInfo[3]) / $page->ratingInfo['sum'] }}%">
-                                <span class="rating-extended__reviews-count">
-                                    {{ $page->ratingInfo[3] }}
-                                </span>
-                            </div>
-                        @endif
+                        <div class="rating-extended__progress">
+                            @if($page->ratingInfo[3])
+                                <div class="progress-bar progress-bar-three" role="progressbar" aria-valuenow="{{ count($productReviews) }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (100 * $page->ratingInfo[3]) / $page->ratingInfo['sum'] }}%">
+                                    <span class="rating-extended__reviews-count">
+                                        {{ $page->ratingInfo[3] }}
+                                    </span>
+                                </div>
+                            @endif
+                        </div>
                     </div>
                     <div class="clearfix"></div>
                     <div class="progress">
                         <span class="rating-extended__label">2 звезды</span>
-                        @if($page->ratingInfo[2])
-                            <div class="progress-bar progress-bar-two" role="progressbar" aria-valuenow="{{ count($productReviews) }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (100 * $page->ratingInfo[2]) / $page->ratingInfo['sum'] }}%">
-                                <span class="rating-extended__reviews-count">
-                                    {{ $page->ratingInfo[2] }}
-                                </span>
-                            </div>
-                        @endif
+                        <div class="rating-extended__progress">
+                            @if($page->ratingInfo[2])
+                                <div class="progress-bar progress-bar-two" role="progressbar" aria-valuenow="{{ count($productReviews) }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (100 * $page->ratingInfo[2]) / $page->ratingInfo['sum'] }}%">
+                                    <span class="rating-extended__reviews-count">
+                                        {{ $page->ratingInfo[2] }}
+                                    </span>
+                                </div>
+                            @endif
+                        </div>
                     </div>
                     <div class="clearfix"></div>
                     <div class="progress">
                         <span class="rating-extended__label">1 звезда</span>
-                        @if($page->ratingInfo[1])
-                            <div class="progress-bar progress-bar-one" role="progressbar" aria-valuenow="{{ count($productReviews) }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (100 * $page->ratingInfo[1]) / $page->ratingInfo['sum'] }}%">
-                                <span class="rating-extended__reviews-count">
-                                    {{ $page->ratingInfo[1] }}
-                                </span>
-                            </div>
-                        @endif
+                        <div class="rating-extended__progress">
+                            @if($page->ratingInfo[1])
+                                <div class="progress-bar progress-bar-one" role="progressbar" aria-valuenow="{{ count($productReviews) }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (100 * $page->ratingInfo[1]) / $page->ratingInfo['sum'] }}%">
+                                    <span class="rating-extended__reviews-count">
+                                        {{ $page->ratingInfo[1] }}
+                                    </span>
+                                </div>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
