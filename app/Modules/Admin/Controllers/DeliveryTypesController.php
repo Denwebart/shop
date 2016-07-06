@@ -34,7 +34,7 @@ class DeliveryTypesController extends Controller
 				return \Response::json([
 					'success' => false,
 					'errors' => $validator->errors(),
-					'message' => 'Значение не добавлено. Исправьте ошибки валидации.'
+					'message' => 'Значение не добавлено. Исправьте ошибки.'
 				]);
 			} else {
 				$deliveryType = DeliveryType::create($data);
@@ -109,7 +109,7 @@ class DeliveryTypesController extends Controller
 					return \Response::json([
 						'success' => false,
 						'error' => $validator->errors()->first('value'),
-						'message' => 'Значение не изменено. Исправьте ошибки валидации.'
+						'message' => 'Значение не изменено. Исправьте ошибки.'
 					]);
 				} else {
 					$deliveryType->$field = $data['value'];

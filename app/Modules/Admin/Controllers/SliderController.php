@@ -62,7 +62,7 @@ class SliderController extends Controller
 		    return redirect(route('admin.slider.create', ['back_url' => urlencode($request->get('backUrl'))]))
 			    ->withErrors($validator->errors())
 			    ->withInput()
-			    ->with('errorMessage', 'Слайд не сохранён. Исправьте ошибки валидации.');
+			    ->with('errorMessage', 'Слайд не сохранён. Исправьте ошибки.');
 	    } else {
 		    $slider->fill($data);
 		    $slider->save();
@@ -128,7 +128,7 @@ class SliderController extends Controller
 		    return redirect(route('admin.slider.edit', ['id' => $slider->id, 'back_url' => urlencode($request->get('backUrl'))]))
 			    ->withErrors($validator->errors())
 			    ->withInput()
-			    ->with('errorMessage', 'Слайд не сохранён. Исправьте ошибки валидации.');
+			    ->with('errorMessage', 'Слайд не сохранён. Исправьте ошибки.');
 	    } else {
 		    $slider->fill($data);
 		    $slider->image = $oldImageName;

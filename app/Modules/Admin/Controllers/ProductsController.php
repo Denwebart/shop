@@ -64,7 +64,7 @@ class ProductsController extends Controller
 		    return redirect(route('admin.products.create', ['back_url' => urlencode($request->get('backUrl'))]))
 			    ->withErrors($validator->errors())
 			    ->withInput()
-			    ->with('errorMessage', 'Информация о товаре не сохранена. Исправьте ошибки валидации.');
+			    ->with('errorMessage', 'Информация о товаре не сохранена. Исправьте ошибки.');
 	    } else {
 		    $product->fill($data);
 		    $product->save();
@@ -126,7 +126,7 @@ class ProductsController extends Controller
 		    return redirect(route('admin.products.edit', ['id' => $product->id, 'back_url' => urlencode($request->get('backUrl'))]))
 			    ->withErrors($validator->errors())
 			    ->withInput()
-			    ->with('errorMessage', 'Информация о товаре не сохранена. Исправьте ошибки валидации.');
+			    ->with('errorMessage', 'Информация о товаре не сохранена. Исправьте ошибки.');
 	    } else {
 		    $product->fill($data);
 		    $product->setImage($request);

@@ -58,7 +58,7 @@ class UsersController extends Controller
 			return redirect(route('admin.users.create', ['back_url' => urlencode($request->get('backUrl'))]))
 				->withErrors($validator->errors())
 				->withInput()
-				->with('errorMessage', 'Информация о пользователе не сохранена. Исправьте ошибки валидации.');
+				->with('errorMessage', 'Информация о пользователе не сохранена. Исправьте ошибки.');
 		} else {
 			$data['password'] = bcrypt($data['password']);
 			$data['password_confirmation'] = bcrypt($data['password_confirmation']);
@@ -126,7 +126,7 @@ class UsersController extends Controller
 			return redirect(route('admin.users.edit', ['id' => $user->id, 'back_url' => urlencode($request->get('backUrl'))]))
 				->withErrors($validator->errors())
 				->withInput()
-				->with('errorMessage', 'Информация о пользователе не сохранена. Исправьте ошибки валидации.');
+				->with('errorMessage', 'Информация о пользователе не сохранена. Исправьте ошибки.');
 		} else {
 			if($data['password']) {
 				$data['password'] = bcrypt($data['password']);

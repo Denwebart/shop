@@ -449,7 +449,7 @@ class SiteController extends Controller
 			if($validator->fails()) {
 				return \Response::json([
 					'success' => false,
-					'message' => 'Письмо не отправлено. Исправьте ошибки валидации.',
+					'message' => 'Письмо не отправлено. Исправьте ошибки.',
 					'errors' => $validator->errors()
 				]);
 			}
@@ -495,7 +495,7 @@ class SiteController extends Controller
 			if($validator->fails()) {
 				return \Response::json([
 					'success' => false,
-					'message' => 'Запрос не отправлен. Исправьте ошибки валидации.',
+					'message' => 'Запрос не отправлен. Исправьте ошибки.',
 					'errors' => $validator->errors()
 				]);
 			}

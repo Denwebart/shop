@@ -48,8 +48,8 @@ class CommentsController extends Controller
 				return \Response::json([
 					'success' => false,
 					'message' => $data['parent_id']
-						? 'Комментарий не сохранен. Исправьте ошибки валидации.'
-						: 'Отзыв не сохранен. Исправьте ошибки валидации.',
+						? 'Комментарий не сохранен. Исправьте ошибки.'
+						: 'Отзыв не сохранен. Исправьте ошибки.',
 					'errors' => $validator->errors()
 				]);
 			}

@@ -69,7 +69,7 @@ class PagesController extends Controller
 		    return redirect(route('admin.pages.create', ['back_url' => urlencode($request->get('backUrl'))]))
 			    ->withErrors($validator->errors())
 			    ->withInput($data)
-			    ->with('errorMessage', 'Страница не сохранена. Исправьте ошибки валидации.');
+			    ->with('errorMessage', 'Страница не сохранена. Исправьте ошибки.');
 	    } else {
 		    $page->fill($data);
 		    $page->save();
@@ -145,7 +145,7 @@ class PagesController extends Controller
 		    return redirect(route('admin.pages.edit', ['id' => $page->id, 'back_url' => urlencode($request->get('backUrl'))]))
 			    ->withErrors($validator->errors())
 			    ->withInput()
-			    ->with('errorMessage', 'Страница не сохранена. Исправьте ошибки валидации.');
+			    ->with('errorMessage', 'Страница не сохранена. Исправьте ошибки.');
 	    } else {
 		    $page->fill($data);
 		    $page->setImage($request);

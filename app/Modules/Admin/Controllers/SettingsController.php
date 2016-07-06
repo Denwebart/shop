@@ -71,7 +71,7 @@ class SettingsController extends Controller
 		    return redirect(route('admin.settings.edit', ['id' => $setting->id, 'back_url' => urlencode($request->get('backUrl'))]))
 			    ->withErrors($validator->errors())
 			    ->withInput()
-			    ->with('errorMessage', 'Информация не сохранена. Исправьте ошибки валидации.');
+			    ->with('errorMessage', 'Информация не сохранена. Исправьте ошибки.');
 	    } else {
 		    $setting->fill($data);
 		    $setting->save();
@@ -114,7 +114,7 @@ class SettingsController extends Controller
 					return \Response::json([
 						'success' => false,
 						'error' => $validator->errors()->first('value'),
-						'message' => 'Значение не изменено. Исправьте ошибки валидации.'
+						'message' => 'Значение не изменено. Исправьте ошибки.'
 					]);
 				} else {
 					$setting->value = $data['value'];
@@ -192,7 +192,7 @@ class SettingsController extends Controller
 					return \Response::json([
 						'success' => false,
 						'error' => $validator->errors()->first('value'),
-						'message' => 'Изображение не загружено. Исправьте ошибки валидации.'
+						'message' => 'Изображение не загружено. Исправьте ошибки.'
 					]);
 				}
 

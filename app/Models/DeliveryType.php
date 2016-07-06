@@ -141,7 +141,7 @@ class DeliveryType extends Model
 				return \Response::json([
 					'success' => false,
 					'error' => $validator->errors()->first('image'),
-					'message' => 'Изображение не загружено. Исправьте ошибки валидации.'
+					'message' => 'Изображение не загружено. Исправьте ошибки.'
 				]);
 			}
 

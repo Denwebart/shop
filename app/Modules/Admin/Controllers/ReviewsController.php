@@ -66,7 +66,7 @@ class ReviewsController extends Controller
 			return redirect(route('admin.shop_reviews.create', ['back_url' => urlencode($request->get('backUrl'))]))
 				->withErrors($validator->errors())
 				->withInput()
-				->with('errorMessage', 'Отзыв не сохранен. Исправьте ошибки валидации.');
+				->with('errorMessage', 'Отзыв не сохранен. Исправьте ошибки.');
 		} else {
 			$review->fill($data);
 			$review->save();
@@ -123,7 +123,7 @@ class ReviewsController extends Controller
 			return redirect(route('admin.shop_reviews.edit', ['id' => $review->id, 'back_url' => urlencode($request->get('backUrl'))]))
 				->withErrors($validator->errors())
 				->withInput()
-				->with('errorMessage', 'Отзыв не сохранен. Исправьте ошибки валидации.');
+				->with('errorMessage', 'Отзыв не сохранен. Исправьте ошибки.');
 		} else {
 			$review->fill($data);
 			$review->setImage($request);

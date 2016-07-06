@@ -72,7 +72,7 @@ class MenusController extends Controller
 				if($validator->fails()) {
 					return \Response::json([
 						'success' => false,
-						'message' => 'Произошла ошибка, заголовок меню не изменен. Исправьте ошибки валидации.',
+						'message' => 'Произошла ошибка, заголовок меню не изменен. Исправьте ошибки.',
 						'error' => $validator->errors()->first('menu_title'),
 					]);
 				}
