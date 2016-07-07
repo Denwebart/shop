@@ -35,6 +35,14 @@
                 </span>
             </div>
             <div class="form-group m-0">
+                {!! Form::label('price', 'Стоимость', ['class' => 'control-label m-b-5']) !!}
+                {!! Form::text('price', null, ['id' => 'price', 'class' => 'form-control']) !!}
+
+                <span class="help-block error price_error">
+                    {{ $errors->first('price') }}
+                </span>
+            </div>
+            <div class="form-group m-0">
                 {!! Form::label('description', 'Описание', ['class' => 'control-label m-b-5']) !!}
                 {!! Form::textarea('description', null, ['id' => 'description', 'class' => 'form-control', 'rows' => 5]) !!}
 
@@ -129,6 +137,7 @@
                             $form.trigger('reset');
                             Command: toastr["success"](response.message);
                             $('#delivery-types-container').append(response.itemHtml);
+                            $form.hide();
 
                             // доделать навешивание dropify и switchery после добавления нового
                             dropifyAjax = $('.dropify-ajax').dropify(dropifyOptions);

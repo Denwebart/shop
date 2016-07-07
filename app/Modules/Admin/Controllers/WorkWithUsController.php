@@ -109,7 +109,7 @@ class WorkWithUsController extends Controller
 				{
 					return \Response::json([
 						'success' => false,
-						'error' => $validator->errors()->first('value'),
+						'error' => $validator->errors()->first($field),
 						'message' => 'Значение не изменено. Исправьте ошибки.'
 					]);
 				} else {

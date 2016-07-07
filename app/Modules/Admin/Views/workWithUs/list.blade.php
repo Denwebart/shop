@@ -121,6 +121,7 @@
                             $form.trigger('reset');
                             Command: toastr["success"](response.message);
                             $('#work-with-us-container').append(response.itemHtml);
+                            $form.hide();
 
                             // доделать навешивание dropify и switchery после добавления нового
                             dropifyAjax = $('.dropify-ajax').dropify(dropifyOptions);

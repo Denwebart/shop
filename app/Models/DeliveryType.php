@@ -18,11 +18,13 @@ use Intervention\Image\Facades\Image;
  * @property integer $id
  * @property string $title
  * @property string $description
+ * @property string $price
  * @property string $image
  * @property string $is_active
  * @method static \Illuminate\Database\Query\Builder|\App\Models\DeliveryType whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\DeliveryType whereTitle($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\DeliveryType whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\DeliveryType wherePrice($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\DeliveryType whereImage($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\DeliveryType whereIsActive($value)
  * @mixin \Eloquent
@@ -54,6 +56,7 @@ class DeliveryType extends Model
 	protected $fillable = [
 		'title',
 		'description',
+		'price',
 		'image',
 		'is_active',
 	];
@@ -65,10 +68,11 @@ class DeliveryType extends Model
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
 	public static $rules = [
-		'is_active' => 'boolean',
 		'title' => 'required|max:50',
 		'description' => 'max:250',
-		'image' => 'image|max:3072'
+		'price' => 'required|numeric|between:0,9999999999.99',
+		'image' => 'image|max:3072',
+		'is_active' => 'boolean',
 	];
 
 	/**

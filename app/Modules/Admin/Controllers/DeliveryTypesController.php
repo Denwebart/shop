@@ -103,12 +103,12 @@ class DeliveryTypesController extends Controller
 				$data[$field] = trim($request->get('value')) ? trim($request->get('value')) : null;
 
 				$validator = \Validator::make($data, $deliveryType->getRules($field));
-
+				
 				if ($validator->fails())
 				{
 					return \Response::json([
 						'success' => false,
-						'error' => $validator->errors()->first('value'),
+						'error' => $validator->errors()->first($field),
 						'message' => 'Значение не изменено. Исправьте ошибки.'
 					]);
 				} else {
