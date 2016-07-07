@@ -47,7 +47,14 @@ Route::group(['module' => 'Admin', 'prefix' => 'admin', 'middleware' => 'web', '
 	Route::put('delivery/set_value/', ['as' => 'admin.deliveryTypes.setValue', 'uses' => 'DeliveryTypesController@setValue']);
 	Route::post('delivery/add/', ['as' => 'admin.deliveryTypes.add', 'uses' => 'DeliveryTypesController@add']);
 	Route::post('delivery/remove/', ['as' => 'admin.deliveryTypes.remove', 'uses' => 'DeliveryTypesController@remove']);
-	
+
+	Route::post('work_with_us/upload_image/', ['as' => 'admin.workWithUs.uploadImage', 'uses' => 'WorkWithUsController@uploadImage']);
+	Route::post('work_with_us/delete_image/', ['as' => 'admin.workWithUs.deleteImage', 'uses' => 'WorkWithUsController@deleteImage']);
+	Route::post('work_with_us/set_is_active/', ['as' => 'admin.workWithUs.setIsActive', 'uses' => 'WorkWithUsController@setIsActive']);
+	Route::put('work_with_us/set_value/', ['as' => 'admin.workWithUs.setValue', 'uses' => 'WorkWithUsController@setValue']);
+	Route::post('work_with_us/add/', ['as' => 'admin.workWithUs.add', 'uses' => 'WorkWithUsController@add']);
+	Route::post('work_with_us/remove/', ['as' => 'admin.workWithUs.remove', 'uses' => 'WorkWithUsController@remove']);
+
 	Route::post('product_properties/add/', ['as' => 'admin.productProperties.add', 'uses' => 'ProductPropertiesController@add']);
 	Route::get('product_properties/autocomplete', ['as' => 'admin.productProperties.autocomplete', 'uses' => 'ProductPropertiesController@autocomplete']);
 	Route::post('product_properties/delete/', ['as' => 'admin.productProperties.delete', 'uses' => 'ProductPropertiesController@delete']);

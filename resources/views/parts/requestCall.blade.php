@@ -58,12 +58,7 @@
                         return request.setRequestHeader('X-CSRF-Token', $j("meta[name='csrf-token']").attr('content'));
                     },
                     success: function(response) {
-                        $form.find('.has-error').removeClass('has-error');
-                        $form.find('.help-block.error').text('');
-                        $j('#subscribeSuccess').hide().text('');
-                        $j('#subscribeError').hide().text('');
-
-                        if(response.success){
+                        if(response.success) {
                             $form.trigger('reset');
                             $j('#subscribeSuccess').show().html(response.message);
                         } else {
@@ -76,6 +71,19 @@
                         }
                     }
                 });
+            });
+
+            $j(document).on('click', function(e) {
+                if($j(e.target).attr('id') != 'request-call-form')
+                {
+                    var $form = $j('#request-call-form');
+                    setTimeout(function() {
+                        $form.find('.has-error').removeClass('has-error');
+                        $form.find('.help-block.error').text('');
+                        $j('#subscribeSuccess').hide().text('');
+                        $j('#subscribeError').hide().text('');
+                    }, 3000);
+                }
             });
         });
     </script>

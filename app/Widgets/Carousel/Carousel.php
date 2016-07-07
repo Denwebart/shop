@@ -13,6 +13,7 @@ namespace App\Widgets\Carousel;
 use App\Models\Product;
 use App\Models\Property;
 use App\Models\PropertyValue;
+use App\Models\WorkWithUs;
 
 class Carousel
 {
@@ -62,13 +63,32 @@ class Carousel
 	{
 		$title = 'С нами сотрудничают';
 
-		$items = PropertyValue::select(['property_values.id', 'property_values.property_id', 'property_values.value', 'property_values.additional_value'])
+		$items = PropertyValue::select(\DB::raw('property_values.id, property_values.property_id, property_values.value as title, property_values.additional_value'))
 			->leftJoin('properties', 'property_values.property_id', '=', 'properties.id')
 			->where('properties.type', '=', Property::TYPE_BRAND)
 			->whereNotNull('property_values.additional_value')
 			->where('property_values.additional_value', '!=', '')
 			->with('property')
 			->orderBy('property_values.id', 'DESC')
+			->get();
+
+		return view('widget.carousel::brands', compact('items', 'title'));
+	}
+
+	/**
+	 * Work with us
+	 *
+	 * @return mixed
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function workWithUs()
+	{
+		$title = 'С нами сотрудничают';
+
+		$items = WorkWithUs::whereIsPublished(1)
+			->orderBy('published_at', 'DESC')
 			->get();
 
 		return view('widget.carousel::brands', compact('items', 'title'));

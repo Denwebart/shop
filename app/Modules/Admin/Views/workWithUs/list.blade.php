@@ -5,41 +5,33 @@
  */
 ?>
 
-<h4 class="header-title m-t-0 m-b-10"><b>Оплата и доставка</b></h4>
+<h4 class="header-title m-t-0 m-b-10"><b>С нами сотрудничают</b></h4>
 
 <p class="text-muted font-13 m-b-15">
-	Способы доставки и оплаты.
+	Виджет "С нами сотрудничают" на главной странице сайта.
 </p>
 
-<div id="delivery-types-container" class="form-horizontal form-editable">
-	@foreach(\App\Models\DeliveryType::all() as $key => $deliveryType)
-        @include('admin::deliveryTypes.item')
-	@endforeach
+<div id="work-with-us-container" class="form-horizontal form-editable">
+    @foreach(\App\Models\WorkWithUs::all() as $key => $item)
+        @include('admin::workWithUs.item', ['item' => $item])
+    @endforeach
 </div>
 
-<a href="javascript:void(0)" class="show-delivery-types-form pull-right">
-    <span class="m-t-3 pull-left">Добавить новый способ доставки</span>
+<a href="javascript:void(0)" class="show-work-with-us-form pull-right">
+    <span class="m-t-3 pull-left">Добавить</span>
     <i class="fa fa-plus fa-2x pull-left m-l-10"></i>
 </a>
 <div class="clearfix"></div>
 
-{!! Form::open(['url' => route('admin.deliveryTypes.add'), 'class' => 'form-horizontal m-t-30', 'id' => 'delivery-types-form', 'files' => true, 'style' => "display: none"]) !!}
+{!! Form::open(['url' => route('admin.workWithUs.add'), 'class' => 'form-horizontal m-t-30', 'id' => 'work-with-us-form', 'files' => true, 'style' => "display: none"]) !!}
     <div class="row">
         <div class="col-sm-6 col-md-6">
             <div class="form-group m-0">
-                {!! Form::label('title', 'Название', ['class' => 'control-label m-b-5']) !!}
+                {!! Form::label('title', 'Заголовок', ['class' => 'control-label m-b-5']) !!}
                 {!! Form::text('title', null, ['id' => 'title', 'class' => 'form-control', 'rows' => 2]) !!}
 
                 <span class="help-block error title_error">
                     {{ $errors->first('title') }}
-                </span>
-            </div>
-            <div class="form-group m-0">
-                {!! Form::label('description', 'Описание', ['class' => 'control-label m-b-5']) !!}
-                {!! Form::textarea('description', null, ['id' => 'description', 'class' => 'form-control', 'rows' => 5]) !!}
-
-                <span class="help-block error description_error">
-                    {{ $errors->first('description') }}
                 </span>
             </div>
         </div>
@@ -53,13 +45,13 @@
         <div class="col-sm-2 col-md-2">
             <div class="form-group m-t-25 m-r-0 m-l-0">
                 <div class="switchery-demo m-b-5">
-                    {!! Form::hidden('is_active', 0) !!}
-                    {!! Form::checkbox('is_active', 1, null, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
+                    {!! Form::hidden('is_published', 0) !!}
+                    {!! Form::checkbox('is_published', 1, null, ['id' => 'is_published', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
                 </div>
             </div>
         </div>
         <div class="col-sm-12 col-md-12">
-            <button type="button" class="btn btn-success btn-bordred waves-effect waves-light m-b-10 button-save-delivery pull-right">
+            <button type="button" class="btn btn-success btn-bordred waves-effect waves-light m-b-10 button-save-work-with-us pull-right">
                 <i class="fa fa-check"></i>
                 <span class="hidden-sm">Сохранить</span>
             </button>
@@ -80,8 +72,8 @@
             "use strict";
 
             // Open form
-            $(".show-delivery-types-form").on('click', function() {
-                var $form = $("#delivery-types-form");
+            $(".show-work-with-us-form").on('click', function() {
+                var $form = $("#work-with-us-form");
                 if($form.is(':visible')) {
                     $form.hide();
                 } else {
@@ -91,11 +83,11 @@
 
             var dropify = $('.dropify').dropify(dropifyOptions);
 
-            $('.button-save-delivery').on('click', function(){
-                $("#delivery-types-form").submit();
+            $('.button-save-work-with-us').on('click', function(){
+                $("#work-with-us-form").submit();
             });
 
-            $('#delivery-types-form').on('submit', function(event){
+            $('#work-with-us-form').on('submit', function(event){
                 event.preventDefault ? event.preventDefault() : event.returnValue = false;
 
                 var $form = $(this),
@@ -128,7 +120,7 @@
                         if(response.success){
                             $form.trigger('reset');
                             Command: toastr["success"](response.message);
-                            $('#delivery-types-container').append(response.itemHtml);
+                            $('#work-with-us-container').append(response.itemHtml);
 
                             // доделать навешивание dropify и switchery после добавления нового
                             dropifyAjax = $('.dropify-ajax').dropify(dropifyOptions);
@@ -145,14 +137,14 @@
                 });
             });
 
-            $(document).on('click', '.remove-delivery', function() {
+            $(document).on('click', '.remove-work-with-us', function() {
                 var itemId = $(this).data('id'),
                     itemTitle = $(this).data('title');
 
                 sweetAlert(
                     {
-                        title: "Удалить способ доставки?",
-                        text: 'Вы точно хотите удалить способ доставки "'+ itemTitle +'"?',
+                        title: "Удалить значение?",
+                        text: 'Вы точно хотите удалить значение "'+ itemTitle +'"?',
                         type: "error",
                         showCancelButton: true,
                         cancelButtonText: 'Отмена',
@@ -160,7 +152,7 @@
                         confirmButtonText: 'Удалить'
                     }, function(){
                         $.ajax({
-                            url: "{{ route('admin.deliveryTypes.remove') }}",
+                            url: "{{ route('admin.workWithUs.remove') }}",
                             dataType: "json",
                             type: "POST",
                             data: {id: itemId},
@@ -170,7 +162,7 @@
                             success: function(response) {
                                 if(response.success){
                                     Command: toastr["success"](response.message);
-                                    $('#delivery-types-container').find("[data-delivery-id='" + itemId + "']").remove();
+                                    $('#work-with-us-container').find("[data-work-with-us-id='" + itemId + "']").remove();
                                 } else {
                                     Command: toastr["error"](response.message);
                                 }

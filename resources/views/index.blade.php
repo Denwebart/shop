@@ -32,7 +32,7 @@
 {!! $carousel->sale() !!}
 
 <!-- Brands Section -->
-{!! $carousel->brands() !!}
+{!! $carousel->workWithUs() !!}
 
 <!-- Reviews Section -->
 {!! $review->show() !!}

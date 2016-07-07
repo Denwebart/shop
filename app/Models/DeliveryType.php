@@ -72,7 +72,7 @@ class DeliveryType extends Model
 	];
 
 	/**
-	 * Get validation rules for current setting
+	 * Get validation rules for current field
 	 *
 	 * @param null $attribute
 	 * @return array|mixed

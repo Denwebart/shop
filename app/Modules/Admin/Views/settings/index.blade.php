@@ -277,6 +277,11 @@ View::share('title', $title);
                     <span>Редактировать</span>
                 </a>
             </div>
+
+
+            <div class="card-box">
+                @include('admin::workWithUs.list')
+            </div>
         </div><!-- end col -->
     </div>
 
