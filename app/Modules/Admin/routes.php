@@ -64,5 +64,7 @@ Route::group(['module' => 'Admin', 'prefix' => 'admin', 'middleware' => 'web', '
 	Route::post('settings/set_is_active/', ['as' => 'admin.settings.setIsActive', 'uses' => 'SettingsController@setIsActive']);
 	Route::put('settings/set_value/', ['as' => 'admin.settings.setValue', 'uses' => 'SettingsController@setValue']);
 	Route::post('settings/set_value/', ['as' => 'admin.settings.setValue', 'uses' => 'SettingsController@setValue']);
-	Route::resource('settings', 'SettingsController', ['except' => ['create', 'store', 'destroy', 'show']]);
+	Route::get('settings', ['as' => 'admin.settings.index', 'uses' => 'SettingsController@general']);
+	Route::get('settings/widgets', ['as' => 'admin.settings.widgets', 'uses' => 'SettingsController@widgets']);
+	Route::get('settings/checkout', ['as' => 'admin.settings.checkout', 'uses' => 'SettingsController@checkout']);
 });

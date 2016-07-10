@@ -27,62 +27,46 @@ class SettingsController extends Controller
 	 * @author     It Hill (it-hill.com@yandex.ua)
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
-    public function index(Settings $settings)
+    public function general(Settings $settings)
     {
 	    $settings = $settings->getAll();
 
 	    $menuItems = Menu::getMenuItems();
 
-        return view('admin::settings.index', compact('settings', 'menuItems'));
+        return view('admin::settings.general', compact('settings', 'menuItems'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-	    $setting = Setting::findOrFail($id);
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @param Settings $settings
+	 * @return mixed
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function widgets(Settings $settings)
+	{
+		$settings = $settings->getAll();
 
-	    $backUrl = \Request::has('back_url') ? urldecode(\Request::get('back_url')) : \URL::previous();
+		return view('admin::settings.widgets', compact('settings'));
+	}
 
-	    return view('admin::settings.edit', compact('setting', 'backUrl'));
-    }
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @param Settings $settings
+	 * @return mixed
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function checkout(Settings $settings)
+	{
+		$settings = $settings->getAll();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-	    $setting = Setting::findOrFail($id);
-	    $data = $request->all();
-	    $data['value'] = trim($request->get('value')) ? trim($request->get('value')) : null;
-
-	    $validator = \Validator::make($data, $setting->getRules());
-
-	    if ($validator->fails())
-	    {
-		    return redirect(route('admin.settings.edit', ['id' => $setting->id, 'back_url' => urlencode($request->get('backUrl'))]))
-			    ->withErrors($validator->errors())
-			    ->withInput()
-			    ->with('errorMessage', 'Информация не сохранена. Исправьте ошибки.');
-	    } else {
-		    $setting->fill($data);
-		    $setting->save();
-
-		    if($request->get('returnBack')) {
-			    return redirect($request->get('backUrl'))->with('successMessage', 'Информация сохранена!');
-		    } else {
-			    return redirect(route('admin.settings.edit', ['id' => $setting->id, 'back_url' => urlencode($request->get('backUrl'))]))->with('successMessage', 'Информация сохранена!');
-		    }
-	    }
-    }
+		return view('admin::settings.checkout', compact('settings'));
+	}
 
 	/**
 	 * Set value

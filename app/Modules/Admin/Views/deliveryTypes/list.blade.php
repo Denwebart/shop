@@ -5,10 +5,10 @@
  */
 ?>
 
-<h4 class="header-title m-t-0 m-b-10"><b>Оплата и доставка</b></h4>
+<h4 class="header-title m-t-0 m-b-10"><b>Способы доставки</b></h4>
 
 <p class="text-muted font-13 m-b-15">
-	Способы доставки и оплаты.
+	Способы доставки, доступные для выбора при оформлении заказа.
 </p>
 
 <div id="delivery-types-container" class="form-horizontal form-editable">
