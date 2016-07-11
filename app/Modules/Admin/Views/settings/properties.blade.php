@@ -24,13 +24,14 @@
                     @include('admin::properties.properties')
                 </div>
 
-                <a href="javascript:void(0)" class="show-properties-form pull-right">
-                    <span class="m-t-3 pull-left">Добавить новую характеристику</span>
-                    <i class="fa fa-plus fa-2x pull-left m-l-10"></i>
-                </a>
-                <div class="clearfix"></div>
+                <div class="bg-muted p-20">
+                    <a href="javascript:void(0)" class="show-properties-form pull-right">
+                        <span class="m-t-3 pull-left">Добавить новую характеристику</span>
+                        <i class="fa fa-plus fa-2x pull-left m-l-10"></i>
+                    </a>
+                    <div class="clearfix"></div>
 
-                {!! Form::open(['url' => route('admin.properties.add'), 'class' => 'form-horizontal m-t-30', 'id' => 'properties-form', 'files' => true, 'style' => "display: none"]) !!}
+                    {!! Form::open(['url' => route('admin.properties.add'), 'class' => 'form-horizontal m-t-30', 'id' => 'properties-form', 'files' => true, 'style' => "display: none"]) !!}
                     <p class="text-muted font-13 m-b-15">
                         Для создания новой характеристики введите название характеристики и нажмите "Добавить".
                     </p>
@@ -43,9 +44,8 @@
                     </div>
                     <div class="help-block error title_error input-group-two-fields"></div>
                     <div class="help-block error type_error input-group-two-fields"></div>
-                {!! Form::close() !!}
-
-                <div class="clearfix"></div>
+                    {!! Form::close() !!}
+                </div>
             </div>
         </div>
         <div class="col-lg-5">

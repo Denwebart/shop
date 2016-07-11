@@ -8,11 +8,7 @@
 
 namespace App\Modules\Admin\Controllers;
 
-use App\Models\DeliveryType;
-use App\Models\Product;
-use App\Models\ProductPropertyValue;
 use App\Models\Property;
-use App\Models\PropertyValue;
 use Illuminate\Http\Request;
 
 class PropertiesController extends Controller
@@ -99,14 +95,14 @@ class PropertiesController extends Controller
 	public function setValue(Request $request)
 	{
 		if($request->ajax()) {
-			$deliveryType = DeliveryType::findOrFail($request->get('pk'));
+			$property = Property::findOrFail($request->get('pk'));
 
 			$field = $request->get('name');
-			if($deliveryType && $field) {
+			if($property && $field) {
 				$data = $request->all();
 				$data[$field] = trim($request->get('value')) ? trim($request->get('value')) : null;
 
-				$validator = \Validator::make($data, $deliveryType->getRules($field));
+				$validator = \Validator::make($data, $property->getRules($field));
 
 				if ($validator->fails())
 				{
@@ -116,12 +112,12 @@ class PropertiesController extends Controller
 						'message' => 'Значение не изменено. Исправьте ошибки.'
 					]);
 				} else {
-					$deliveryType->$field = $data['value'];
-					$deliveryType->save();
+					$property->$field = $data['value'];
+					$property->save();
 
 					return \Response::json([
 						'success' => true,
-						'message' => 'Значение изменено.'
+						'message' => 'Значение успешно изменено.'
 					]);
 				}
 			}

@@ -781,6 +781,9 @@ textarea.form-control {
 .form-horizontal.form-editable .form-group .switchery-demo {
     margin-top: 5px;
 }
+.editable-error-block {
+    font-size: 12px !important;
+}
 /* Form horizontal */
 .form-horizontal .control-label {
     padding-top: 0;

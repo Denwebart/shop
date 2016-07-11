@@ -9,7 +9,7 @@
     <div class="property clearfix m-b-20" data-property-id="{{ $property->id }}">
         <div class="col-md-12 col-sm-12 col-xs-12 m-b-10 bg-muted">
             <h4 class="header-title m-t-10 m-b-10 pull-left">
-                <b>{{ $property->title }}</b>
+                <a href="#" class="editable-text" data-value="{{ $property->title }}" data-name="title" data-type="text" data-pk="{{ $property->id }}" data-url="{{ route('admin.properties.setValue') }}"><b>{{ $property->title }}</b></a>
                 <small class="text-muted">(тип: {{ mb_strtolower(\App\Models\Property::$types[$property->type]) }})</small>
             </h4>
             <a href="#" class="remove-property pull-right m-t-5 m-b-5" data-property-id="{{ $property->id }}" data-item-title="{{ $property->title }}" data-count-values="{{ count($property->values) ? \App\Helpers\Str::wordValuesCount(count($property->values)) : 0 }}" data-count-products="{{ $property->productsCount ? \App\Helpers\Str::wordProductCount($property->productsCount) : 0 }}" title="Удалить характеристику" data-toggle="tooltip">

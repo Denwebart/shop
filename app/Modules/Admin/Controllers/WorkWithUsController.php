@@ -118,7 +118,7 @@ class WorkWithUsController extends Controller
 
 					return \Response::json([
 						'success' => true,
-						'message' => 'Значение изменено.'
+						'message' => 'Значение успешно изменено.'
 					]);
 				}
 			}

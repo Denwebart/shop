@@ -27,7 +27,7 @@ class Property extends Model
 	public $timestamps = false;
 
 	public $productsCount = 0;
-	
+
 	/**
 	 * Тип (значение поля type)
 	 */
@@ -88,6 +88,9 @@ class Property extends Model
 		parent::boot();
 
 		static::deleting(function($property) {
+			foreach ($property->values as $value) {
+				$value->productsPropertyValues()->delete();
+			}
 			$property->values()->delete();
 		});
 	}
