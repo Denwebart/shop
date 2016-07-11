@@ -185,7 +185,7 @@ class Str
 
 	/**
 	 * Склонение слова "товар" в зависимости от количества
-	 * @param string $productsCount
+	 * @param integer $productsCount
 	 * @return mixed
 	 *
 	 * @author     It Hill (it-hill.com@yandex.ua)
@@ -203,4 +203,24 @@ class Str
 
 	    return $productsCount . ' ' . $string;
     }
+	/**
+	 * Склонение слова "значение" в зависимости от количества
+	 * @param integer $valuesCount
+	 * @return mixed
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public static function wordValuesCount($valuesCount)
+	{
+		if($valuesCount%10 == 1 && $valuesCount != 11) {
+			$string = 'значение';
+		} elseif (in_array($valuesCount%10, [2, 3, 4])) {
+			$string = 'значения';
+		} else {
+			$string = 'значений';
+		}
+
+		return $valuesCount . ' ' . $string;
+	}
 }

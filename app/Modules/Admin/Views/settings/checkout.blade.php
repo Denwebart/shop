@@ -13,6 +13,7 @@
             <a href="{{ route('admin.settings.index') }}" class="btn btn-default waves-effect pull-left m-r-10">Общие настройки</a>
             <a href="{{ route('admin.settings.widgets') }}" class="btn btn-default waves-effect pull-left m-r-10">Виджеты</a>
             <a href="{{ route('admin.settings.checkout') }}" class="btn btn-primary waves-effect pull-left m-r-10">Оплата и доставка</a>
+            <a href="{{ route('admin.settings.properties') }}" class="btn btn-default waves-effect pull-left m-r-10">Характеристики товаров</a>
         </div>
     </div>
 

@@ -790,6 +790,13 @@ textarea.form-control {
   margin-left: -10px;
   margin-right: -10px;
 }
+.input-group.input-group-two-fields .form-control {
+    width: 50% !important;
+}
+.input-group-two-fields.help-block {
+    width: 44% !important;
+    float: left;
+}
 .form-control-feedback {
   line-height: 38px !important;
 }
@@ -829,6 +836,18 @@ textarea.form-control {
     margin: 0;
 }
 /* End Form dropify*/
+
+.color-icon {
+    display: inline-block;
+    width: 17px;
+    height: 17px;
+    margin-right: 8px;
+    cursor: pointer;
+    font-size: 11px;
+    line-height: 15px;
+    text-align: center;
+    vertical-align: text-top;
+}
 
 /* Labels */
 .label {
@@ -1154,7 +1173,8 @@ textarea.form-control {
   border-color: #f9c851;
   box-shadow: none !important;
 }
-.has-error .form-control {
+.has-error .form-control,
+.has-error.form-control {
   border-color: #ff5b5b;
   box-shadow: none !important;
 }

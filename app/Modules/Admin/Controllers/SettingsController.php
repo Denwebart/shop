@@ -10,6 +10,7 @@ namespace App\Modules\Admin\Controllers;
 
 use App\Helpers\Settings;
 use App\Models\Menu;
+use App\Models\Property;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -66,6 +67,26 @@ class SettingsController extends Controller
 		$settings = $settings->getAll();
 
 		return view('admin::settings.checkout', compact('settings'));
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return mixed
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function properties()
+	{
+		$properties = Property::with(['values', 'values.products'])->get();
+		foreach ($properties as $property) {
+			foreach($property->values as $propertyValue) {
+				$property->productsCount += count($propertyValue->products);
+			}
+		}
+
+		return view('admin::settings.properties', compact('properties'));
 	}
 
 	/**

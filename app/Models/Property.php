@@ -13,8 +13,11 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property integer $id
  * @property string $title
+ * @property boolean $type
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\PropertyValue[] $values
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Property whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Property whereTitle($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Property whereType($value)
  * @mixin \Eloquent
  */
 class Property extends Model
@@ -23,6 +26,8 @@ class Property extends Model
 	
 	public $timestamps = false;
 
+	public $productsCount = 0;
+	
 	/**
 	 * Тип (значение поля type)
 	 */
@@ -47,7 +52,36 @@ class Property extends Model
 	 */
 	protected $fillable = [
 		'title',
+		'type',
 	];
+
+	/**
+	 * @var array Validation rules
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public static $rules = [
+		'title' => 'required|max:50',
+		'type' => 'integer|between:0,4',
+	];
+
+	/**
+	 * Get validation rules for current field
+	 *
+	 * @param null $attribute
+	 * @return array|mixed
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function getRules($attribute = null)
+	{
+		if($attribute) {
+			return [$attribute => self::$rules[$attribute]];
+		}
+		return self::$rules;
+	}
 
 	public static function boot()
 	{

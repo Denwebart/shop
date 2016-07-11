@@ -51,6 +51,7 @@ class PropertyValue extends Model
 		});
 
 		static::deleting(function($model) {
+			$model->productsPropertyValues()->delete();
 			$model->deleteImagesFolder();
 		});
 	}
@@ -66,6 +67,28 @@ class PropertyValue extends Model
 	public function property()
 	{
 		return $this->belongsTo('App\Models\Property', 'property_id');
+	}
+
+	/**
+	 * Products
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function products()
+	{
+		return $this->belongsToMany('App\Models\Product', 'products_property_values');
+	}
+
+	/**
+	 * Products Property Values
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function productsPropertyValues()
+	{
+		return $this->hasMany('App\Models\ProductPropertyValue', 'property_value_id');
 	}
 
 	/**

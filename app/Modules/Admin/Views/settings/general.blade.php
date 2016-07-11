@@ -13,6 +13,7 @@
             <a href="{{ route('admin.settings.index') }}" class="btn btn-primary waves-effect pull-left m-r-10">Общие настройки</a>
             <a href="{{ route('admin.settings.widgets') }}" class="btn btn-default waves-effect pull-left m-r-10">Виджеты</a>
             <a href="{{ route('admin.settings.checkout') }}" class="btn btn-default waves-effect pull-left m-r-10">Оплата и доставка</a>
+            <a href="{{ route('admin.settings.properties') }}" class="btn btn-default waves-effect pull-left m-r-10">Характеристики товаров</a>
         </div>
     </div>
 
@@ -224,7 +225,7 @@
                     @endforeach
                 </div>
             </div>
-            
+
             <div class="card-box">
 
                 <h4 class="header-title m-t-0 m-b-10"><b>Системные настроки</b></h4>
