@@ -13,13 +13,17 @@
         </div>
         <div class="col-md-3 col-sm-2 col-xs-3 m-t-5">
             @if($property->type == \App\Models\Property::TYPE_COLOR)
+                {{--доделать редактирование цвета--}}
+                {{--<a href="#" class="editable-text" data-value="{{ $propertyValue->additional_value }}" data-name="additional_value" data-type="text" data-pk="{{ $propertyValue->id }}" data-url="{{ route('admin.properties.setValueValue') }}">{{ $propertyValue->additional_value }}</a>--}}
                 <span class="color-icon color" style="background: {{ $propertyValue->additional_value or '#ffffff' }}"></span>
             @elseif($property->type == \App\Models\Property::TYPE_BRAND)
-                <span class="color-icon color" style="background: {{ $propertyValue->additional_value or '#ffffff' }}"></span>
-            @elseif($property->type == \App\Models\Property::TYPE_SIZE)
-                <span class="color-icon color" style="background: {{ $propertyValue->additional_value or '#ffffff' }}"></span>
+                {{--доделать загрузку изображений--}}
             @else
-                <span class="color-icon color" style="background: {{ $propertyValue->additional_value or '#ffffff' }}"></span>
+                {{--<small>--}}
+                    {{--(--}}
+                    {{--<a href="#" class="editable-text" data-value="{{ $propertyValue->additional_value }}" data-name="additional_value" data-type="text" data-pk="{{ $propertyValue->id }}" data-url="{{ route('admin.properties.setValueValue') }}">{{ $propertyValue->additional_value }}</a>--}}
+                    {{--)--}}
+                {{--</small>--}}
             @endif
         </div>
         <div class="col-md-2 col-sm-2 col-xs-2">

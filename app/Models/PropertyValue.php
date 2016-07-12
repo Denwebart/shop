@@ -40,6 +40,35 @@ class PropertyValue extends Model
 		'value',
 		'additional_value',
 	];
+	
+	/**
+	 * @var array Validation rules
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public static $rules = [
+		'property_id' => 'integer',
+		'value' => 'required|max:125',
+		'additional_value' => 'max:125',
+	];
+
+	/**
+	 * Get validation rules for current field
+	 *
+	 * @param null $attribute
+	 * @return array|mixed
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function getRules($attribute = null)
+	{
+		if($attribute) {
+			return [$attribute => self::$rules[$attribute]];
+		}
+		return self::$rules;
+	}
 
 	public static function boot()
 	{
@@ -56,18 +85,6 @@ class PropertyValue extends Model
 			$model->deleteImagesFolder();
 		});
 	}
-
-	/**
-	 * @var array Validation rules
-	 *
-	 * @author     It Hill (it-hill.com@yandex.ua)
-	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
-	 */
-	public static $rules = [
-		'property_id' => 'integer',
-		'value' => 'required|max:125',
-		'additional_value' => 'max:125',
-	];
 
 	/**
 	 * Property

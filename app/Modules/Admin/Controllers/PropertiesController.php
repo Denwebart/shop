@@ -212,14 +212,14 @@ class PropertiesController extends Controller
 	public function setValueValue(Request $request)
 	{
 		if($request->ajax()) {
-			$property = Property::findOrFail($request->get('pk'));
+			$propertyValue = PropertyValue::findOrFail($request->get('pk'));
 
 			$field = $request->get('name');
-			if($property && $field) {
+			if($propertyValue && $field) {
 				$data = $request->all();
 				$data[$field] = trim($request->get('value')) ? trim($request->get('value')) : null;
 
-				$validator = \Validator::make($data, $property->getRules($field));
+				$validator = \Validator::make($data, $propertyValue->getRules($field));
 
 				if ($validator->fails())
 				{
@@ -229,8 +229,8 @@ class PropertiesController extends Controller
 						'message' => 'Значение не изменено. Исправьте ошибки.'
 					]);
 				} else {
-					$property->$field = $data['value'];
-					$property->save();
+					$propertyValue->$field = $data['value'];
+					$propertyValue->save();
 
 					return \Response::json([
 						'success' => true,
