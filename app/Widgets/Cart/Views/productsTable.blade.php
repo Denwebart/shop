@@ -86,6 +86,11 @@
                     Оформить заказ
                 </a>
             </div>
+            <div class="pull-left">
+                <a href="#" class="text-uppercase" id="pay">
+                    Оплатить заказ
+                </a>
+            </div>
         @endif
     </div>
 @else

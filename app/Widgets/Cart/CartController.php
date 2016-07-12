@@ -9,6 +9,7 @@
 
 namespace App\Widgets\Cart;
 
+use App\Helpers\LiqPay;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\Page;
@@ -28,6 +29,9 @@ class CartController extends Controller
 		self::STEP_SUCCESS => 'Заказ оформлен',
 	];
 
+	protected $publicKey = 'i99260556035';
+	protected $privateKey = 'C4y9VYr8b7BX66jfGWHt4xufmbF1KJUCjPj6zQdC';
+
 	public function index(Request $request)
 	{
 		$page = new Page();
@@ -43,6 +47,21 @@ class CartController extends Controller
 			]);
 		} else {
 			return view('widget.cart::index', compact('page', 'cart'));
+		}
+	}
+
+	public function success(Request $request)
+	{
+		$page = new Page();
+		$page->title = 'Success!';
+
+		if($request->ajax()) {
+			return \Response::json([
+				'success' => true,
+				'stepContent' => view('widget.cart::success', compact('page'))->render(),
+			]);
+		} else {
+			return view('widget.cart::success', compact('page'));
 		}
 	}
 
@@ -87,7 +106,7 @@ class CartController extends Controller
 	public function postCheckout(Request $request)
 	{
 		if($request->ajax()) {
-			dd($request->all());
+			dd('sdf');
 
 			$rules = [];
 
@@ -106,12 +125,41 @@ class CartController extends Controller
 	public function postPayment(Request $request)
 	{
 		if($request->ajax()) {
-			dd($request->all());
+			$cart = new Cart();
+			$cart = $cart->getCart();
 
-			$rules = [];
+			$totalPrice = $cart['total_price'];
 
-			$customer = Customer::wherePhone($request->get('phone'))->find();
+			// доделать создание заказа в табл. Order
+			$orderId = rand(10000, 99999);
 
+			// доделать - вынести переменные publicKey privateKey
+			$liqpay = new LiqPay($this->publicKey, $this->privateKey);
+
+			$data['form'] = $liqpay->cnb_form([
+				'version'        => '3',
+				'public_key'     => $this->publicKey,
+				'action'         => 'pay',
+				'amount'         => $totalPrice,
+				'currency'       => 'UAH',
+				'description'    => 'Test LiqPay payment',
+				'order_id'       => $orderId,
+				'language'       => 'ru',
+				'sandbox'        => 1,
+				'result_url'     => route('cart.success'),
+			]);
+
+			// доделать user_email
+			$data['user_email'] = 'annywebart@yandex.ua';
+			$data['sum'] = $totalPrice;
+
+			$page = new Page();
+			$page->title = 'Оплата заказа';
+
+			return \Response::json([
+				'success' => true,
+				'paymentFormHtml' => view('widget.cart::paymentForm', compact('data', 'page'))->render(),
+			]);
 		}
 	}
 }

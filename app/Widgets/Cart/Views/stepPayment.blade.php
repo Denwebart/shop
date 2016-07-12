@@ -131,8 +131,11 @@
                 <i class="icon icon-arrow-left"></i>
                 Назад
             </a>
-            {!! Form::submit('Оплатить', ['class' => 'pull-right btn btn--wd text-uppercase']) !!}
+{{--            {!! Form::submit('Оплатить', ['class' => 'pull-right btn btn--wd text-uppercase']) !!}--}}
 
+            <a href="#" class="pull-right btn btn--wd text-uppercase" id="submit-payment-form">
+                Оплатить
+            </a>
         </div>
     {!! Form::close() !!}
 </div>
@@ -140,7 +143,12 @@
 @push('scripts')
 <script type="text/javascript">
     jQuery(function($j) {
-        
+
+        $j(document).on('click', '#submit-payment-form', function(event) {
+            event.preventDefault ? event.preventDefault() : event.returnValue = false;
+            $j("#payment-form").submit();
+        });
+
         $j(document).on('submit', '#payment-form', function(event) {
             event.preventDefault ? event.preventDefault() : event.returnValue = false;
 

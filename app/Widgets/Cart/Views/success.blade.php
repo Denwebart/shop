@@ -18,12 +18,17 @@
 <!-- Content section -->
 <section class="content">
     <div class="container">
-        <p class="help-block error align-center m-b-20">
-            Внимание!
-            Оформление заказа работает в тестовом режиме.
-        </p>
         <div id="step-content">
-            @include('widget.cart::stepCart')
+            <div class="row">
+                @if($page->title)
+                    <h2 class="text-uppercase align-center">{{ $page->title }}</h2>
+                @endif
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="cart-products cart-products-table">
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -145,7 +150,7 @@
                     return request.setRequestHeader('X-CSRF-Token', $j("meta[name='csrf-token']").attr('content'));
                 },
                 success: function(response) {
-                    $j('#step-content').html(response.paymentFormHtml);
+                    $j('#step-content').html(response.stepContent);
                 }
             });
         });
