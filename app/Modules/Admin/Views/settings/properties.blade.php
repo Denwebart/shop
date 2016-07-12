@@ -206,6 +206,8 @@
             "use strict";
 
             // Properties
+
+            // доделать навешивание editable после добавления ajax
             // Open form
             $(document).on('click', '.show-properties-form', function() {
                 var $form = $("#properties-form");
@@ -375,7 +377,7 @@
                 sweetAlert(
                 {
                     title: "Удалить значение?",
-                    text: 'Вы точно хотите удалить значение '+ valueTitle +' характеристики "'+ propertyTitle +'"?' + text,
+                    text: 'Вы точно хотите удалить значение "'+ valueTitle +'" характеристики "'+ propertyTitle +'"?' + text,
                     type: "error",
                     showCancelButton: true,
                     cancelButtonText: 'Отмена',
