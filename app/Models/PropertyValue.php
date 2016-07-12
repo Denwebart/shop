@@ -7,6 +7,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\File;
 
 /**
  * App\Models\PropertyValue
@@ -55,6 +56,18 @@ class PropertyValue extends Model
 			$model->deleteImagesFolder();
 		});
 	}
+
+	/**
+	 * @var array Validation rules
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public static $rules = [
+		'property_id' => 'integer',
+		'value' => 'required|max:125',
+		'additional_value' => 'max:125',
+	];
 
 	/**
 	 * Property

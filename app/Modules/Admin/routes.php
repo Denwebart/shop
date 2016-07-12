@@ -70,9 +70,11 @@ Route::group(['module' => 'Admin', 'prefix' => 'admin', 'middleware' => 'web', '
 	Route::get('settings/properties', ['as' => 'admin.settings.properties', 'uses' => 'SettingsController@properties']);
 
 	Route::post('properties/add/', ['as' => 'admin.properties.add', 'uses' => 'PropertiesController@add']);
-	Route::put('properties/set_value/', ['as' => 'admin.properties.setValue', 'uses' => 'PropertiesController@setValue']);
+	Route::put('properties/set_property_value/', ['as' => 'admin.properties.setPropertyValue', 'uses' => 'PropertiesController@setPropertyValue']);
 	Route::post('properties/remove/', ['as' => 'admin.properties.remove', 'uses' => 'PropertiesController@remove']);
 	Route::post('properties/add_value/', ['as' => 'admin.properties.addValue', 'uses' => 'PropertiesController@addValue']);
+	Route::put('properties/set_value_value/', ['as' => 'admin.properties.setValueValue', 'uses' => 'PropertiesController@setValueValue']);
+	Route::post('properties/remove_value/', ['as' => 'admin.properties.removeValue', 'uses' => 'PropertiesController@removeValue']);
 
 	Route::post('properties/upload_image/', ['as' => 'admin.properties.uploadImage', 'uses' => 'PropertiesController@uploadImage']);
 	Route::post('properties/delete_image/', ['as' => 'admin.properties.deleteImage', 'uses' => 'PropertiesController@deleteImage']);

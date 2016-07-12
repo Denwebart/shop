@@ -31,19 +31,19 @@
                     </a>
                     <div class="clearfix"></div>
 
-                    {!! Form::open(['url' => route('admin.properties.add'), 'class' => 'form-horizontal m-t-30', 'id' => 'properties-form', 'files' => true, 'style' => "display: none"]) !!}
-                    <p class="text-muted font-13 m-b-15">
-                        Для создания новой характеристики введите название характеристики и нажмите "Добавить".
-                    </p>
-                    <div class="input-group input-group-two-fields m-t-10">
-                        {!! Form::text('title', null, ['class' => 'form-control', 'id' => 'new-property-title']) !!}
-                        {!! Form::select('type', \App\Models\Property::$types, null, ['class' => 'form-control', 'id' => 'new-property-type']) !!}
-                        <span class="input-group-btn">
-                            <button type="button" class="add-property btn waves-effect waves-light btn-success">Добавить</button>
-                        </span>
-                    </div>
-                    <div class="help-block error title_error input-group-two-fields"></div>
-                    <div class="help-block error type_error input-group-two-fields"></div>
+                    {!! Form::open(['url' => route('admin.properties.add'), 'class' => 'form-horizontal m-t-30', 'id' => 'properties-form', 'style' => "display: none"]) !!}
+                        <p class="text-muted font-13 m-b-15">
+                            Для создания новой характеристики введите название характеристики и нажмите "Добавить".
+                        </p>
+                        <div class="input-group input-group-two-fields m-t-10">
+                            {!! Form::text('title', null, ['class' => 'form-control', 'id' => 'new-property-title']) !!}
+                            {!! Form::select('type', \App\Models\Property::$types, null, ['class' => 'form-control', 'id' => 'new-property-type']) !!}
+                            <span class="input-group-btn">
+                                <button type="button" class="add-property btn waves-effect waves-light btn-success">Добавить</button>
+                            </span>
+                        </div>
+                        <div class="help-block error title_error input-group-two-fields"></div>
+                        <div class="help-block error type_error input-group-two-fields"></div>
                     {!! Form::close() !!}
                 </div>
             </div>
@@ -205,6 +205,7 @@
         !function ($) {
             "use strict";
 
+            // Properties
             // Open form
             $(document).on('click', '.show-properties-form', function() {
                 var $form = $("#properties-form");
@@ -292,7 +293,7 @@
                         success: function(response) {
                             if(response.success){
                                 Command: toastr["success"](response.message);
-                                $('#properties-container').find("[data-property-id='" + itemId + "']").remove();
+                                $('#properties-container').find(".property[data-property-id='" + itemId + "']").remove();
                             } else {
                                 Command: toastr["error"](response.message);
                             }
@@ -300,6 +301,107 @@
                     });
                 });
             });
+            // End Properties
+
+            // Property Values
+            // Open form
+            $(document).on('click', '.show-property-value-form', function (e) {
+                e.preventDefault();
+                var propertyId = $(this).data('propertyId'),
+                    $form = $('.new-property-value-form[data-property-id='+ propertyId +']');
+                if($form.is(':visible')) {
+                    $form.hide();
+                } else {
+                    $('.new-property-value-form').hide();
+                    $form.show();
+                }
+            });
+            $(document).on('click', '.add-property-value', function(){
+                var propertyId = $(this).data('propertyId');
+                $('.new-property-value-form[data-property-id='+ propertyId +']').submit();
+            });
+
+            $(document).on('submit', '.new-property-value-form', function(event){
+                event.preventDefault ? event.preventDefault() : event.returnValue = false;
+
+                var $form = $(this),
+                    propertyId = $(this).data('propertyId'),
+                    inputValue = $form.find('[name=value]').val(),
+                    url = $form.attr('action');
+
+                $.ajax({
+                    url: url,
+                    dataType: "json",
+                    type: "POST",
+                    data: {property_id: propertyId, value: inputValue},
+                    async: true,
+                    beforeSend: function (request) {
+                        return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+                    },
+                    success: function(response) {
+                        $form.find('.has-error').removeClass('has-error');
+                        $form.find('.help-block.error').text('');
+
+                        if(response.success){
+                            $form.trigger('reset');
+                            Command: toastr["success"](response.message);
+                            $('.property-values-container[data-property-id='+ propertyId +']').html(response.propertyValuesHtml);
+                            $form.hide();
+                        } else {
+                            $.each(response.errors, function(index, value) {
+                                var errorDiv = '.' + index + '_error';
+                                $form.find('[name='+ index +']').addClass('has-error');
+                                $form.find(errorDiv).empty().append(value);
+                            });
+                            Command: toastr["error"](response.message);
+                        }
+                    }
+                });
+            });
+
+            $(document).on('click', '.remove-property-value', function(event) {
+                event.preventDefault ? event.preventDefault() : event.returnValue = false;
+
+                var valueId = $(this).data('valueId'),
+                    valueTitle = $(this).data('valueTitle'),
+                    propertyTitle = $(this).data('propertyTitle'),
+                    countProducts = $(this).data('countProducts');
+
+                var text = '';
+                if(countProducts) {
+                    text = '\n Значение добавлено на ' + countProducts + ', все связи будут удалены.';
+                }
+
+                sweetAlert(
+                {
+                    title: "Удалить значение?",
+                    text: 'Вы точно хотите удалить значение '+ valueTitle +' характеристики "'+ propertyTitle +'"?' + text,
+                    type: "error",
+                    showCancelButton: true,
+                    cancelButtonText: 'Отмена',
+                    confirmButtonClass: 'btn-danger waves-effect waves-light',
+                    confirmButtonText: 'Удалить'
+                }, function(){
+                    $.ajax({
+                        url: "{{ route('admin.properties.removeValue') }}",
+                        dataType: "json",
+                        type: "POST",
+                        data: {id: valueId},
+                        beforeSend: function (request) {
+                            return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+                        },
+                        success: function(response) {
+                            if(response.success){
+                                Command: toastr["success"](response.message);
+                                $('#properties-container').find(".property-value[data-value-id='" + valueId + "']").remove();
+                            } else {
+                                Command: toastr["error"](response.message);
+                            }
+                        }
+                    });
+                });
+            });
+            // End Property Values
         }(window.jQuery);
     </script>
 @endpush
