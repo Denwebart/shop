@@ -67,11 +67,13 @@
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-ruble"></i></span>
                         {!! Form::text('price', $product->price, ['id' => 'price', 'class' => 'form-control']) !!}
-                        <span class="input-group-addon">руб.</span>
+                        <span class="input-group-addon">
+                            {{ Config::get('checkout.defaultCurrency.text') }}
+                        </span>
                     </div>
                 <span class="help-block @if($errors->has('price')) hidden @endif">
                     <small>
-                        Цена только в рублях. Например: 1000 или 1000.00
+                        Цена товара. Например: 1000 или 1000.00
                     </small>
                 </span>
                     @if ($errors->has('price'))
@@ -89,7 +91,9 @@
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-ruble"></i></span>
                         {!! Form::text('new_price', null, ['id' => 'new_price', 'class' => 'form-control']) !!}
-                        <span class="input-group-addon">руб.</span>
+                        <span class="input-group-addon">
+                            {{ Config::get('checkout.defaultCurrency.text') }}
+                        </span>
                     </div>
                 <span class="help-block @if($errors->has('new_price')) hidden @endif">
                     <small>

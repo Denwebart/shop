@@ -11,7 +11,7 @@
         <div class="m-t-10">
             Стоимость:
             <a href="#" class="editable-text" data-value="{{ $deliveryType->price }}" data-name="price" data-type="text" data-pk="{{ $deliveryType->id }}" data-url="{{ route('admin.deliveryTypes.setValue') }}">{{ $deliveryType->price }}</a>
-            руб.
+            {{ Config::get('checkout.defaultCurrency.text') }}
         </div>
         <div class="m-t-10">
             <small>

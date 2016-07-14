@@ -158,7 +158,7 @@ class Str
 	 */
 	public static function priceFormat($price)
 	{
-		$currency = \Request::cookie('currency', 'RUB');
+		$currency = \Request::cookie('currency', \Config::get('checkout.defaultCurrency.code'));
 		$course = \Cache::get('course' . $currency);
 		if($currency == 'USD' && $course) {
 			$price = $price / $course;
@@ -166,8 +166,12 @@ class Str
 		$afterPoint = ($currency == 'USD') ? 2 : 0;
 		if($currency == 'USD' && $course) {
 			$currency = ' $';
-		} else {
+		} elseif($currency == 'RUB' && $course) {
 			$currency = ' руб.';
+		} elseif($currency == 'UAH' && $course) {
+			$currency = ' грн.';
+		} else {
+			$currency = ' ' . \Config::get('checkout.defaultCurrency.text');
 		}
 		return number_format($price, $afterPoint, '.', ' ') . $currency;
 	}

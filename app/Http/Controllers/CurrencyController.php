@@ -25,7 +25,7 @@ class CurrencyController extends Controller
 	 */
 	public function change(Request $request, CurrencyRate $сurrencyRate)
 	{
-		$oldCurrency = $request->cookie('currency', 'RUB');
+		$oldCurrency = $request->cookie('currency', \Config::get('checkout.defaultCurrency.code'));
 		$newCurrency = $request->get('currency', 'USD');
 
 		$course = \Cache::has('course' . $newCurrency)

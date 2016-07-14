@@ -79,7 +79,11 @@
                     <div class="currency-info">
                         <ul>
                             @if($courseUSD)
-                                <li class="currency-info__item"><span>1$ = </span>{{ $courseUSD }} руб.</li>
+                                <li class="currency-info__item">
+                                    <span>1$ = </span>
+                                    {{ $courseUSD }}
+                                    {{ Config::get('checkout.defaultCurrency.text') }}
+                                </li>
                             @endif
                         </ul>
                     </div>
