@@ -152,7 +152,7 @@
                         return request.setRequestHeader('X-CSRF-Token', $j("meta[name='csrf-token']").attr('content'));
                     },
                     success: function(response) {
-                        $j('.button-container .payment-button').html(response.paymentButtonHtml);
+                        $j('.button-container .payment-button').html(response.paymentButtonHtml).show();
                     }
                 });
             } else {
