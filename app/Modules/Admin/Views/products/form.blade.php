@@ -65,7 +65,7 @@
                 {!! Form::label('price', 'Цена', ['class' => 'col-md-2 control-label']) !!}
                 <div class="col-md-10">
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-ruble"></i></span>
+                        <span class="input-group-addon"><i class="fa fa-money"></i></span>
                         {!! Form::text('price', $product->price, ['id' => 'price', 'class' => 'form-control']) !!}
                         <span class="input-group-addon">
                             {{ Config::get('checkout.defaultCurrency.text') }}
@@ -89,7 +89,7 @@
                 {!! Form::label('new_price', 'Новая цена', ['class' => 'col-md-2 control-label']) !!}
                 <div class="col-md-10">
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-ruble"></i></span>
+                        <span class="input-group-addon"><i class="fa fa-money"></i></span>
                         {!! Form::text('new_price', null, ['id' => 'new_price', 'class' => 'form-control']) !!}
                         <span class="input-group-addon">
                             {{ Config::get('checkout.defaultCurrency.text') }}

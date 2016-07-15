@@ -6,7 +6,7 @@
 ?>
 
 <div id="cart" class="header__cart pull-left">
-    @include('widget.cart::cartButton')
+    @include('widget.cart::widget.cartButton')
 </div>
 
 @section('bottom')

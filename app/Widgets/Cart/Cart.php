@@ -26,7 +26,7 @@ class Cart extends BaseController
 		//доделать вывод товаров корзины
 		$cart = $this->getCart();
 
-		return view('widget.cart::cart', compact('cart'));
+		return view('widget.cart::widget.cart', compact('cart'));
 	}
 	
 	public function addToCart(Request $request)
@@ -43,7 +43,7 @@ class Cart extends BaseController
 				return \Response::json([
 					'success' => true,
 					'message' => 'Продукт успешно добавлен в корзину!',
-					'cartHtml' => view('widget.cart::cartButton', compact('cart'))->render(),
+					'cartHtml' => view('widget.cart::widget.cartButton', compact('cart'))->render(),
 				]);
 			}
 
@@ -64,8 +64,8 @@ class Cart extends BaseController
 
 			return \Response::json([
 				'success' => true,
-				'productsWidgetHtml' => view('widget.cart::productsWidget')->with('cart', $cart)->render(),
-				'productsTableHtml' => view('widget.cart::productsTable')->with('cart', $cart)->render(),
+				'productsWidgetHtml' => view('widget.cart::widget.productsWidget')->with('cart', $cart)->render(),
+				'productsTableHtml' => view('widget.cart::checkout.productsTable')->with('cart', $cart)->render(),
 				'productsCount' => $cart['count'],
 			]);
 		}
@@ -181,8 +181,8 @@ class Cart extends BaseController
 
 		return \Response::json([
 			'success' => true,
-			'productsWidgetHtml' => view('widget.cart::productsWidget')->with('cart', $cart)->render(),
-			'productsTableHtml' => view('widget.cart::productsTable')->with('cart', $cart)->render(),
+			'productsWidgetHtml' => view('widget.cart::widget.productsWidget')->with('cart', $cart)->render(),
+			'productsTableHtml' => view('widget.cart::checkout.productsTable')->with('cart', $cart)->render(),
 			'productsCount' => $cart['count'],
 		]);
 	}

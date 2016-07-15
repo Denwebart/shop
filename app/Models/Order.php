@@ -99,22 +99,22 @@ class Order extends Model
 	/**
 	 * Способ оплаты (значение поля payment_type)
 	 */
-//	const PAYMENT_TYPE_CASH = 0;
-	const PAYMENT_TYPE_VISA = 1;
-	const PAYMENT_TYPE_MASTERCARD = 2;
-	const PAYMENT_TYPE_MAESTRO = 3;
+	const PAYMENT_TYPE_CASH = 0;
+	const PAYMENT_TYPE_CARD = 1;
 
 	public static $paymentTypes = [
-//		self::PAYMENT_TYPE_CASH => 'Наличными',
-		self::PAYMENT_TYPE_VISA => 'VISA',
-		self::PAYMENT_TYPE_MASTERCARD => 'MasterCard',
-		self::PAYMENT_TYPE_MAESTRO => 'Maestro',
+		self::PAYMENT_TYPE_CASH => 'Наличными',
+		self::PAYMENT_TYPE_CARD => 'Онлайн',
 	];
-
-	public static $omnipayPaymentType = [
-		self::PAYMENT_TYPE_VISA => 'VSA',
-		self::PAYMENT_TYPE_MASTERCARD => 'MSC',
-		self::PAYMENT_TYPE_MAESTRO => 'MAE',
+	
+	public static $paymentTypesDescription = [
+		self::PAYMENT_TYPE_CASH => 'Наличными при получении.',
+		self::PAYMENT_TYPE_CARD => 'Картой VISA, MasterCard, Maestro.',
+	];
+	
+	public static $paymentTypesImage = [
+		self::PAYMENT_TYPE_CASH => 'images/payment/cash.png',
+		self::PAYMENT_TYPE_CARD => 'images/payment/credit-card.svg',
 	];
 
 	/**

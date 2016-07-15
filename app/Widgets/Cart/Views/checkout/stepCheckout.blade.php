@@ -57,53 +57,56 @@
                 </div>
             </div>
 
-            <?php $deliveryTypes = \App\Models\DeliveryType::getDeliveryTypes() ?>
-            @if(count($deliveryTypes) > 1)
-                <div class="input-group input-group--wd m-t-20">
-                    {{--<label class="static-label">Способ доставки <span class="required">*</span></label>--}}
-                    {!! Form::select('order[delivery_type]', ['' => ' '] + $deliveryTypes, null, ['id' => 'delivery_type', 'class' => 'selectpicker', 'data-style' => 'select--wd select--wd--sm select--wd--full']) !!}
-                    <span class="input-group__bar"></span>
-                    <label>Способ доставки <span class="required">*</span></label>
-                    <span class="help-block error delivery_type_error">
-                        {{ $errors->first('order[delivery_type]') }}
-                    </span>
-                </div>
-            @endif
+            <div id="delivery-types" class="row m-t-10 m-b-30">
 
-            <div id="address" class="row">
+                @php($deliveryTypes = \App\Models\DeliveryType::whereIsActive(1)->get())
+                <div class="col-md-12">
+                    <h5 class="text-muted text-uppercase">
+                        @if(count($deliveryTypes) == 1)
+                            Cпособ доставки:
+                        @else
+                            Выберите способ доставки:
+                        @endif
+                    </h5>
+                </div>
+                <div class="col-md-12">
+                    {!! Form::hidden('delivery_type', null, ['id' => 'delivery_type']) !!}
+                    @foreach($deliveryTypes as $type)
+                        <div class="delivery-types__item" data-id="{{ $type->id }}" data-address="{{ $type->need_address }}" data-description="{{ $type->description }}">
+                            @if($type->image)
+                                <img src="{{ $type->getImageUrl() }}" alt="{{ $type->title }}" class="delivery-types__item__image">
+                            @else
+                                <span class="delivery-types__item__image">
+                                    <i class="icon icon-truck"></i>
+                                </span>
+                            @endif
+                            <span class="delivery-types__item__title">
+                                {{ $type->title }}
+                            </span>
+                            <span class="delivery-types__item__price">
+                                (<b>{{ \App\Helpers\Str::priceFormat($type->price) }}</b>)
+                            </span>
+                        </div>
+                    @endforeach
+                    <span class="help-block error delivery_type_error">
+                        {{ $errors->first('address') }}
+                    </span>
+                    <p class="delivery-types__item__description" style="display:none;"></p>
+                </div>
+            </div>
+
+            <div id="address" class="row" style="display: none">
                 <div class="col-md-12">
                     <h5 class="text-muted text-uppercase">Адрес доставки:</h5>
                 </div>
 
-                <div class="col-md-6">
-                    <div class="input-group input-group--wd">
-                        {!! Form::text('order[city]', null, ['id' => 'city', 'class' => 'input--full']) !!}
-                        <span class="input-group__bar"></span>
-                        <label>Город</label>
-                        <span class="help-block error city_error">
-                            {{ $errors->first('city') }}
-                        </span>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="input-group input-group--wd">
-                        {!! Form::text('order[postcode]', null, ['id' => 'postcode', 'class' => 'input--full']) !!}
-                        <span class="input-group__bar"></span>
-                        <label>Почтовый индекс</label>
-                        <span class="help-block error postcode_error">
-                            {{ $errors->first('postcode') }}
-                        </span>
-                    </div>
-                </div>
-
                 <div class="col-md-12">
                     <div class="input-group input-group--wd">
-                        {!! Form::text('order[address]', null, ['id' => 'street', 'class' => 'input--full']) !!}
+                        {!! Form::textarea('address', null, ['id' => 'address', 'class' => 'input--full', 'rows' => 2]) !!}
                         <span class="input-group__bar"></span>
-                        <label>Арес доставки</label>
-                        <span class="help-block error street_error">
-                            {{ $errors->first('street') }}
+                        <label for="address"></label>
+                        <span class="help-block error address_error">
+                            {{ $errors->first('address') }}
                         </span>
                     </div>
                 </div>
@@ -118,11 +121,13 @@
                 </span>
             </div>
 
-            <a href="#" class="pull-left btn text-uppercase change-step" data-step="{{ \App\Widgets\Cart\CartController::STEP_CART }}">
-                <i class="icon icon-arrow-left"></i>
-                Назад
-            </a>
-            <a href="#" class="pull-right btn btn--wd text-uppercase change-step" data-step="{{ \App\Widgets\Cart\CartController::STEP_PAYMENT }}">Перейти к оплате</a>
+            <div class="row m-t-20">
+                <a href="#" class="pull-left btn text-uppercase change-step" data-step="{{ \App\Widgets\Cart\CartController::STEP_CART }}">
+                    <i class="icon icon-arrow-left"></i>
+                    Назад
+                </a>
+                <a href="#" class="pull-right btn btn--wd text-uppercase change-step" data-step="{{ \App\Widgets\Cart\CartController::STEP_PAYMENT }}">Далее</a>
+            </div>
         </div>
     {!! Form::close() !!}
 </div>

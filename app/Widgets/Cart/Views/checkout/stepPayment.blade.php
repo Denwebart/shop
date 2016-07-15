@@ -41,101 +41,35 @@
                 <div class="col-md-12">
                     <div class="input-group input-group--wd">
                         <ul class="payment-types">
+                            {!! Form::hidden('payment_type', null, ['id' => 'payment_type']) !!}
                             @foreach(\App\Models\Order::$paymentTypes as $paymentType => $paymentTitle)
-                                <li class="payment-types__item" data-payment-type="{{ $paymentType }}">
-                                    <img src="{{ url('images/payment/' . strtolower($paymentTitle) . '.svg') }}" alt="{{ $paymentTitle }}">
+                                <li class="payment-types__item" data-payment-type="{{ $paymentType }}" data-description="{{ \App\Models\Order::$paymentTypesDescription[$paymentType] }}">
+                                    <img src="{{ url(\App\Models\Order::$paymentTypesImage[$paymentType]) }}" alt="{{ $paymentTitle }}" class="payment-types__item__image">
+                                    <span class="payment-types__item__title">
+                                        {{ $paymentTitle }}
+                                    </span>
                                 </li>
                             @endforeach
+                            <span class="help-block error payment_type_error">
+                                {{ $errors->first('payment_type_error') }}
+                            </span>
+                            <p class="payment-types__item__description" style="display:none;"></p>
                         </ul>
                     </div>
-                    {!! Form::hidden('payment_type', null, ['id' => 'payment_type']) !!}
                 </div>
             </div>
 
-            <div class="input-group input-group--wd">
-                {!! Form::text('card[number]', null, ['id' => 'card-number', 'class' => 'input--full']) !!}
-                <span class="input-group__bar"></span>
-                <label>Номер карты <span class="required">*</span></label>
-                <span class="help-block error card[number]_error">
-                    {{ $errors->first('card[number]') }}
-                </span>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <h5 class="text-muted text-uppercase">Срок действия:</h5>
-                </div>
+            <div class="row m-t-20">
+                <a href="#" class="pull-left btn text-uppercase change-step" data-step="{{ \App\Widgets\Cart\CartController::STEP_CHECKOUT }}">
+                    <i class="icon icon-arrow-left"></i>
+                    Назад
+                </a>
 
-                <div class="col-md-3">
-                    <div class="input-group input-group--wd">
-                        {!! Form::text('card[MM]', null, ['id' => 'card-MM', 'class' => 'input--full']) !!}
-                        <span class="input-group__bar"></span>
-                        <label>MM <span class="required">*</span></label>
-                        <span class="help-block error card[MM]_error">
-                            {{ $errors->first('card[MM]') }}
-                        </span>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="input-group input-group--wd">
-                        {!! Form::text('card[YY]', null, ['id' => 'card-YY', 'class' => 'input--full']) !!}
-                        <span class="input-group__bar"></span>
-                        <label>YY <span class="required">*</span></label>
-                        <span class="help-block error card[YY]_error">
-                            {{ $errors->first('card[YY]') }}
-                        </span>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="input-group input-group--wd">
-                        {!! Form::text('card[CVV]', null, ['id' => 'card-CVV', 'class' => 'input--full']) !!}
-                        <span class="input-group__bar"></span>
-                        <label>Код безопасности <span class="required">*</span></label>
-                        <span class="help-block error card[CVV]_error">
-                            {{ $errors->first('card[CVV]') }}
-                        </span>
-                    </div>
+                <div class="button-container">
+                    <div class="payment-button pull-right"></div>
+                    {!! Form::submit('Оформить заказ', ['class' => 'pull-right btn btn--wd text-uppercase', 'id' => 'create-order', 'disabled' => true]) !!}
                 </div>
             </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <h5 class="text-muted text-uppercase">Имя владельца карты:</h5>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="input-group input-group--wd">
-                        {!! Form::text('card[name]', null, ['id' => 'card-name', 'class' => 'input--full']) !!}
-                        <span class="input-group__bar"></span>
-                        <label>Имя <span class="required">*</span></label>
-                        <span class="help-block error card[name]_error">
-                            {{ $errors->first('card[name]') }}
-                        </span>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="input-group input-group--wd">
-                        {!! Form::text('card[lastname]', null, ['id' => 'card-lastname', 'class' => 'input--full']) !!}
-                        <span class="input-group__bar"></span>
-                        <label>Фамилия <span class="required">*</span></label>
-                        <span class="help-block error card[lastname]_error">
-                            {{ $errors->first('card[lastname]') }}
-                        </span>
-                    </div>
-                </div>
-            </div>
-
-            <a href="#" class="pull-left btn text-uppercase change-step" data-step="{{ \App\Widgets\Cart\CartController::STEP_CHECKOUT }}">
-                <i class="icon icon-arrow-left"></i>
-                Назад
-            </a>
-{{--            {!! Form::submit('Оплатить', ['class' => 'pull-right btn btn--wd text-uppercase']) !!}--}}
-
-            <a href="#" class="pull-right btn btn--wd text-uppercase" id="submit-payment-form">
-                Оплатить
-            </a>
         </div>
     {!! Form::close() !!}
 </div>
@@ -144,7 +78,7 @@
 <script type="text/javascript">
     jQuery(function($j) {
 
-        $j(document).on('click', '#submit-payment-form', function(event) {
+        $j(document).on('click', '#create-order', function(event) {
             event.preventDefault ? event.preventDefault() : event.returnValue = false;
             $j("#payment-form").submit();
         });

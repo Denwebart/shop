@@ -30,7 +30,7 @@
     @endif
     <div class="col-md-8 col-md-offset-2">
         <div class="cart-products cart-products-table">
-            @include('widget.cart::productsTable')
+            @include('widget.cart::checkout.productsTable')
         </div>
     </div>
 </div>

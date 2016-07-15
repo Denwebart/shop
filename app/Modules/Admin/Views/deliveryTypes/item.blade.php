@@ -5,7 +5,7 @@
  */
 ?>
 
-<div class="delivery-type form-group" data-delivery-id="{{ $deliveryType->id }}">
+<div class="delivery-type form-group p-t-10" data-delivery-id="{{ $deliveryType->id }}">
 	<div class="col-md-6 col-sm-6">
 		<a href="#" class="editable-text" data-value="{{ $deliveryType->title }}" data-name="title" data-type="text" data-pk="{{ $deliveryType->id }}" data-url="{{ route('admin.deliveryTypes.setValue') }}">{{ $deliveryType->title }}</a>
         <div class="m-t-10">
@@ -17,6 +17,12 @@
             <small>
                 <a href="#" class="editable-text" data-value="{{ $deliveryType->description }}" data-name="description" data-type="textarea" data-pk="{{ $deliveryType->id }}" data-url="{{ route('admin.deliveryTypes.setValue') }}">{{ $deliveryType->description }}</a>
             </small>
+        </div>
+        <div class="checkbox checkbox-custom m-t-5">
+            {!! Form::checkbox('need_address', 1, $deliveryType->need_address, ['id' => 'need_address-' . $deliveryType->id, 'class' => 'ajax-checkbox', 'data-url' => route('admin.deliveryTypes.setValue'), 'data-id' => $deliveryType->id]) !!}
+            <label for="need_address-{{ $deliveryType->id }}">
+                Нужен адрес?
+            </label>
         </div>
 	</div>
 	<div class="col-md-4 col-sm-4 m-t-5">

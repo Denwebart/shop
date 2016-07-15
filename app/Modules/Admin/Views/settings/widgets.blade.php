@@ -141,7 +141,7 @@
                 ajaxOptions: {
                     dataType: 'json',
                     sourceCache: 'false',
-                    type: 'PUT'
+                    type: 'POST'
                 },
                 success: function(response, newValue) {
                     if(response.success) {
@@ -158,7 +158,7 @@
         $('.editable-text').editable(getSettingsEditableOptions());
 
         // Change active status or boolean value
-        $('[data-plugin=switchery]').on('change', function () {
+        $('[data-plugin=switchery], .ajax-checkbox').on('change', function () {
             if($(this).is(':checked')) {
                 var value = 1;
             } else {
@@ -169,7 +169,7 @@
                 url: url,
                 dataType: "text json",
                 type: "POST",
-                data: {id: $(this).data('id'), 'value': value},
+                data: {id: $(this).data('id'), value: value, name: $(this).attr('name')},
                 beforeSend: function(request) {
                     return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
                 },

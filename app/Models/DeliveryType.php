@@ -21,12 +21,14 @@ use Intervention\Image\Facades\Image;
  * @property string $price
  * @property string $image
  * @property string $is_active
+ * @property string $need_address
  * @method static \Illuminate\Database\Query\Builder|\App\Models\DeliveryType whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\DeliveryType whereTitle($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\DeliveryType whereDescription($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\DeliveryType wherePrice($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\DeliveryType whereImage($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\DeliveryType whereIsActive($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\DeliveryType whereNeedAddress($value)
  * @mixin \Eloquent
  */
 class DeliveryType extends Model
@@ -73,6 +75,7 @@ class DeliveryType extends Model
 		'price' => 'required|numeric|between:0,9999999999.99',
 		'image' => 'image|max:3072',
 		'is_active' => 'boolean',
+		'need_address' => 'boolean',
 	];
 
 	/**
@@ -87,7 +90,9 @@ class DeliveryType extends Model
 	public function getRules($attribute = null)
 	{
 		if($attribute) {
-			return [$attribute => self::$rules[$attribute]];
+			return isset(self::$rules[$attribute])
+				? [$attribute => self::$rules[$attribute]]
+				: [$attribute => ''];
 		}
 		return self::$rules;
 	}
@@ -100,15 +105,26 @@ class DeliveryType extends Model
 	/**
 	 * Get image url
 	 *
-	 * @return mixed
+	 * @param bool $default
+	 * @return string
+	 *
 	 * @author     It Hill (it-hill.com@yandex.ua)
 	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
 	 */
-	public function getImageUrl()
+	public function getImageUrl($default = true)
 	{
-		return $this->image ? asset($this->imagePath . $this->id . '/' . $this->image) : '';
+		return $this->image
+			? asset($this->imagePath . $this->id . '/' . $this->image)
+			: ($default
+				? $this->getDefaultImage()
+				: '');
 	}
-
+	
+	public function getDefaultImage()
+	{
+		return asset('images/delivery-type-default-image.jpg');
+	}
+	
 	/**
 	 * Get image path
 	 *

@@ -11,29 +11,31 @@
     Зажать и перетащить пункт меню для смены порядка.
 </p>
 
-<div id="menus">
+<div id="menus" class="row">
     @foreach(\App\Models\Menu::$types as $menuType => $menuTitle)
-        <h5 class="clearfix">
-            <span class="pull-left">{{ $menuTitle }}</span>
-            <a href="#" class="pull-right open-menu-item-form" data-menu-type="{{ $menuType }}" data-toggle="tooltip" title="Добавить пункт меню">
-                Добавить пункт меню
-                <i class="fa fa-plus m-l-5"></i>
-            </a>
-        </h5>
-        <div class="new-menu-item-form m-b-20" data-menu-type="{{ $menuType }}" style="display: none">
-            {!! Form::open(['url' => route('admin.menus.add'), 'class' => 'form-horizontal m-t-10']) !!}
-                <p class="text-muted font-13 m-b-15">
-                    Начните вводить заголовок страницы, которую необходимо добавить в меню.
-                </p>
-                <div class="input-group m-t-10">
-                    <input type="text" id="new-item-in-menu-{{ $menuType }}" name="new-item-in-menu-{{ $menuType }}" class="form-control" placeholder="Заголовок страницы">
-                    <span class="input-group-btn">
-                        <button type="button" class="add-menu-item btn waves-effect waves-light btn-primary" data-menu-type="{{ $menuType }}">Добавить</button>
-                    </span>
-                </div>
-            {!! Form::close() !!}
+        <div class="col-md-12 col-sm-12 col-xs-12 bg-muted m-b-10">
+            <h5 class="m-t-10 m-b-10">
+                {{ $menuTitle }}
+                <a href="#" class="pull-right open-menu-item-form" data-menu-type="{{ $menuType }}" data-toggle="tooltip" title="Добавить пункт меню">
+                    Добавить пункт меню
+                    <i class="fa fa-plus m-l-5"></i>
+                </a>
+            </h5>
+            <div class="new-menu-item-form m-b-20" data-menu-type="{{ $menuType }}" style="display: none">
+                {!! Form::open(['url' => route('admin.menus.add'), 'class' => 'form-horizontal m-t-10']) !!}
+                    <p class="text-muted font-13 m-b-15">
+                        Начните вводить заголовок страницы, которую необходимо добавить в меню.
+                    </p>
+                    <div class="input-group m-t-10">
+                        <input type="text" id="new-item-in-menu-{{ $menuType }}" name="new-item-in-menu-{{ $menuType }}" class="form-control" placeholder="Заголовок страницы">
+                        <span class="input-group-btn">
+                            <button type="button" class="add-menu-item btn waves-effect waves-light btn-primary" data-menu-type="{{ $menuType }}">Добавить</button>
+                        </span>
+                    </div>
+                {!! Form::close() !!}
+            </div>
         </div>
-        <div class="menu-items" data-menu-type="{{ $menuType }}">
+        <div class="menu-items col-md-12 col-sm-12 col-xs-12" data-menu-type="{{ $menuType }}">
             @include('admin::menus.items', ['items' => isset($menuItems[$menuType]) ? $menuItems[$menuType] : []])
         </div>
     @endforeach
@@ -84,7 +86,7 @@
                 ajaxOptions: {
                     dataType: 'json',
                     sourceCache: 'false',
-                    type: 'PUT'
+                    type: 'POST'
                 },
                 success: function(response, newValue) {
                     if(response.success) {

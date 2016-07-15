@@ -23,7 +23,7 @@
             Оформление заказа работает в тестовом режиме.
         </p>
         <div id="step-content">
-            @include('widget.cart::stepCart')
+            @include('widget.cart::checkout.stepCart')
         </div>
     </div>
 </section>
@@ -90,6 +90,7 @@
 <script type="text/javascript">
     jQuery(function($j) {
 
+        // Переход по шагам
         $j(document).on('click', '.change-step', function(e){
             e.preventDefault();
             var step = $j(this).data('step');
@@ -131,30 +132,49 @@
             });
         });
 
-        // Оплата - доделать шаги
-        $j(document).on('click', '#pay', function(e){
-            e.preventDefault();
-
-            $j.ajax({
-                url: "{{ route('cart.postPayment') }}",
-                dataType: "json",
-                type: "POST",
-                data: {},
-                async: true,
-                beforeSend: function (request) {
-                    return request.setRequestHeader('X-CSRF-Token', $j("meta[name='csrf-token']").attr('content'));
-                },
-                success: function(response) {
-                    $j('#step-content').html(response.paymentFormHtml);
-                }
-            });
-        });
-
+        // Выбор способа оплаты
         $j(document).on('click', '.payment-types__item', function (event) {
             var paymentType = $j(this).data('paymentType');
             $j('.payment-types__item').removeClass('active');
             $j(this).addClass('active');
             $j('#payment_type').val(paymentType);
+            $j('.payment-types__item__description').show().text($j(this).data('description'));
+
+            if($j(this).data('paymentType') == '{{ \App\Models\Order::PAYMENT_TYPE_CARD }}') {
+                $j('#create-order').attr('disabled', true).hide();
+                $j.ajax({
+                    url: "{{ route('cart.postPayment') }}",
+                    dataType: "json",
+                    type: "POST",
+                    data: {},
+                    async: true,
+                    beforeSend: function (request) {
+                        return request.setRequestHeader('X-CSRF-Token', $j("meta[name='csrf-token']").attr('content'));
+                    },
+                    success: function(response) {
+                        $j('.button-container .payment-button').html(response.paymentButtonHtml);
+                    }
+                });
+            } else {
+                $j('#create-order').removeAttr('disabled').show();
+                $j('.button-container .payment-button').html('').hide();
+            }
+        });
+
+        // Выбор способа доставки
+        $j(document).on('click', '.delivery-types__item', function (event) {
+            var deliveryType = $j(this).data('id');
+            $j('.delivery-types__item').removeClass('active');
+            $j(this).addClass('active');
+            $j('#delivery_type').val(deliveryType);
+            if($j(this).data('address')) {
+                $j('.delivery-types__item__description').hide().text('');
+                $j('label[for=address]').text($j(this).data('description'));
+                $j('#address').slideDown();
+            } else {
+                $j('.delivery-types__item__description').show().text($j(this).data('description'));
+                $j('#address').slideUp();
+            }
         });
     });
 </script>

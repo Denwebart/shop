@@ -95,7 +95,8 @@ class DeliveryTypesController extends Controller
 	public function setValue(Request $request)
 	{
 		if($request->ajax()) {
-			$deliveryType = DeliveryType::findOrFail($request->get('pk'));
+			$id = $request->has('pk') ? $request->get('pk') : $request->get('id');
+			$deliveryType = DeliveryType::findOrFail($id);
 
 			$field = $request->get('name');
 			if($deliveryType && $field) {

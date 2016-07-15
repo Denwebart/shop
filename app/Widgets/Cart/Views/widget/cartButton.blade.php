@@ -13,6 +13,6 @@
         </span>
     </a>
     <div class="dropdown-menu animated fadeIn shopping-cart cart-products cart-products-widget" role="menu">
-        @include('widget.cart::productsWidget')
+        @include('widget.cart::widget.productsWidget')
     </div>
 </div>

@@ -80,18 +80,15 @@
     </div>
     <div class="clearfix"></div>
     <div class="shopping-cart__bottom">
-        @if($cart['total_price'])
-            <div class="pull-right">
-                <a href="#" class="btn btn--wd text-uppercase change-step" data-step="{{ \App\Widgets\Cart\CartController::STEP_CHECKOUT }}">
-                    Оформить заказ
-                </a>
-            </div>
-            <div class="pull-left">
-                <a href="#" class="text-uppercase" id="pay">
-                    Оплатить заказ
-                </a>
-            </div>
-        @endif
+        <div class="row m-t-20">
+            @if($cart['total_price'])
+                <div class="pull-right">
+                    <a href="#" class="btn btn--wd text-uppercase change-step" data-step="{{ \App\Widgets\Cart\CartController::STEP_CHECKOUT }}">
+                        Оформить заказ
+                    </a>
+                </div>
+            @endif
+        </div>
     </div>
 @else
     <div class="align-center m-t-5">

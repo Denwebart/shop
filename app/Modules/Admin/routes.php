@@ -21,7 +21,7 @@ Route::group(['module' => 'Admin', 'prefix' => 'admin', 'middleware' => 'web', '
 	Route::resource('pages', 'PagesController');
 
 	Route::post('menus/get_menu_items', ['as' => 'admin.menus.getJsonMenuItems', 'uses' => 'MenusController@getJsonMenuItems']);
-	Route::put('menus/rename', ['as' => 'admin.menus.rename', 'uses' => 'MenusController@rename']);
+	Route::post('menus/rename', ['as' => 'admin.menus.rename', 'uses' => 'MenusController@rename']);
 	Route::post('menus/delete', ['as' => 'admin.menus.delete', 'uses' => 'MenusController@delete']);
 	Route::post('menus/position', ['as' => 'admin.menus.position', 'uses' => 'MenusController@changePosition']);
 	Route::post('menus/add', ['as' => 'admin.menus.add', 'uses' => 'MenusController@add']);
@@ -44,14 +44,14 @@ Route::group(['module' => 'Admin', 'prefix' => 'admin', 'middleware' => 'web', '
 	Route::post('delivery/upload_image/', ['as' => 'admin.deliveryTypes.uploadImage', 'uses' => 'DeliveryTypesController@uploadImage']);
 	Route::post('delivery/delete_image/', ['as' => 'admin.deliveryTypes.deleteImage', 'uses' => 'DeliveryTypesController@deleteImage']);
 	Route::post('delivery/set_is_active/', ['as' => 'admin.deliveryTypes.setIsActive', 'uses' => 'DeliveryTypesController@setIsActive']);
-	Route::put('delivery/set_value/', ['as' => 'admin.deliveryTypes.setValue', 'uses' => 'DeliveryTypesController@setValue']);
+	Route::post('delivery/set_value/', ['as' => 'admin.deliveryTypes.setValue', 'uses' => 'DeliveryTypesController@setValue']);
 	Route::post('delivery/add/', ['as' => 'admin.deliveryTypes.add', 'uses' => 'DeliveryTypesController@add']);
 	Route::post('delivery/remove/', ['as' => 'admin.deliveryTypes.remove', 'uses' => 'DeliveryTypesController@remove']);
 
 	Route::post('work_with_us/upload_image/', ['as' => 'admin.workWithUs.uploadImage', 'uses' => 'WorkWithUsController@uploadImage']);
 	Route::post('work_with_us/delete_image/', ['as' => 'admin.workWithUs.deleteImage', 'uses' => 'WorkWithUsController@deleteImage']);
 	Route::post('work_with_us/set_is_active/', ['as' => 'admin.workWithUs.setIsActive', 'uses' => 'WorkWithUsController@setIsActive']);
-	Route::put('work_with_us/set_value/', ['as' => 'admin.workWithUs.setValue', 'uses' => 'WorkWithUsController@setValue']);
+	Route::post('work_with_us/set_value/', ['as' => 'admin.workWithUs.setValue', 'uses' => 'WorkWithUsController@setValue']);
 	Route::post('work_with_us/add/', ['as' => 'admin.workWithUs.add', 'uses' => 'WorkWithUsController@add']);
 	Route::post('work_with_us/remove/', ['as' => 'admin.workWithUs.remove', 'uses' => 'WorkWithUsController@remove']);
 
@@ -62,7 +62,6 @@ Route::group(['module' => 'Admin', 'prefix' => 'admin', 'middleware' => 'web', '
 	Route::post('settings/upload_image/', ['as' => 'admin.settings.uploadImage', 'uses' => 'SettingsController@uploadImage']);
 	Route::post('settings/delete_image/', ['as' => 'admin.settings.deleteImage', 'uses' => 'SettingsController@deleteImage']);
 	Route::post('settings/set_is_active/', ['as' => 'admin.settings.setIsActive', 'uses' => 'SettingsController@setIsActive']);
-	Route::put('settings/set_value/', ['as' => 'admin.settings.setValue', 'uses' => 'SettingsController@setValue']);
 	Route::post('settings/set_value/', ['as' => 'admin.settings.setValue', 'uses' => 'SettingsController@setValue']);
 	Route::get('settings', ['as' => 'admin.settings.index', 'uses' => 'SettingsController@general']);
 	Route::get('settings/widgets', ['as' => 'admin.settings.widgets', 'uses' => 'SettingsController@widgets']);
@@ -73,7 +72,7 @@ Route::group(['module' => 'Admin', 'prefix' => 'admin', 'middleware' => 'web', '
 	Route::put('properties/set_property_value/', ['as' => 'admin.properties.setPropertyValue', 'uses' => 'PropertiesController@setPropertyValue']);
 	Route::post('properties/remove/', ['as' => 'admin.properties.remove', 'uses' => 'PropertiesController@remove']);
 	Route::post('properties/add_value/', ['as' => 'admin.properties.addValue', 'uses' => 'PropertiesController@addValue']);
-	Route::put('properties/set_value_value/', ['as' => 'admin.properties.setValueValue', 'uses' => 'PropertiesController@setValueValue']);
+	Route::post('properties/set_value_value/', ['as' => 'admin.properties.setValueValue', 'uses' => 'PropertiesController@setValueValue']);
 	Route::post('properties/remove_value/', ['as' => 'admin.properties.removeValue', 'uses' => 'PropertiesController@removeValue']);
 
 	Route::post('properties/upload_image/', ['as' => 'admin.properties.uploadImage', 'uses' => 'PropertiesController@uploadImage']);

@@ -43,10 +43,10 @@ class CartController extends Controller
 		if($request->ajax()) {
 			return \Response::json([
 				'success' => true,
-				'stepContent' => view('widget.cart::stepCart', compact('page', 'cart'))->render(),
+				'stepContent' => view('widget.cart::checkout.stepCart', compact('page', 'cart'))->render(),
 			]);
 		} else {
-			return view('widget.cart::index', compact('page', 'cart'));
+			return view('widget.cart::checkout.index', compact('page', 'cart'));
 		}
 	}
 
@@ -58,10 +58,10 @@ class CartController extends Controller
 		if($request->ajax()) {
 			return \Response::json([
 				'success' => true,
-				'stepContent' => view('widget.cart::success', compact('page'))->render(),
+				'stepContent' => view('widget.cart::checkout.success', compact('page'))->render(),
 			]);
 		} else {
-			return view('widget.cart::success', compact('page'));
+			return view('widget.cart::checkout.success', compact('page'));
 		}
 	}
 
@@ -86,7 +86,7 @@ class CartController extends Controller
 
 				return \Response::json([
 					'success' => true,
-					'stepContent' => view('widget.cart::step' . ucfirst($step), compact('page', 'cart'))->render(),
+					'stepContent' => view('widget.cart::checkout.step' . ucfirst($step), compact('page', 'cart'))->render(),
 				]);
 			}
 
@@ -158,7 +158,7 @@ class CartController extends Controller
 
 			return \Response::json([
 				'success' => true,
-				'paymentFormHtml' => view('widget.cart::paymentForm', compact('data', 'page'))->render(),
+				'paymentButtonHtml' => view('widget.cart::checkout.paymentButton', compact('data', 'page'))->render(),
 			]);
 		}
 	}

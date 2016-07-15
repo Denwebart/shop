@@ -17,65 +17,81 @@
 	@endforeach
 </div>
 
-<a href="javascript:void(0)" class="show-delivery-types-form pull-right">
-    <span class="m-t-3 pull-left">Добавить новый способ доставки</span>
-    <i class="fa fa-plus fa-2x pull-left m-l-10"></i>
-</a>
-<div class="clearfix"></div>
+<div class="bg-muted p-20 m-t-20">
+    <a href="javascript:void(0)" class="show-delivery-types-form pull-right">
+        <span class="m-t-3 pull-left">Добавить новый способ доставки</span>
+        <i class="fa fa-plus fa-2x pull-left m-l-10"></i>
+    </a>
+    <div class="clearfix"></div>
 
-{!! Form::open(['url' => route('admin.deliveryTypes.add'), 'class' => 'form-horizontal m-t-30', 'id' => 'delivery-types-form', 'files' => true, 'style' => "display: none"]) !!}
-    <div class="row">
-        <div class="col-sm-6 col-md-6">
-            <div class="form-group m-0">
-                {!! Form::label('title', 'Название', ['class' => 'control-label m-b-5']) !!}
-                {!! Form::text('title', null, ['id' => 'title', 'class' => 'form-control', 'rows' => 2]) !!}
+    {!! Form::open(['url' => route('admin.deliveryTypes.add'), 'class' => 'form-horizontal m-t-30', 'id' => 'delivery-types-form', 'files' => true, 'style' => "display: none"]) !!}
+        <div class="row">
+            <div class="col-sm-6 col-md-6">
+                <div class="form-group m-0">
+                    {!! Form::label('title', 'Название', ['class' => 'control-label m-b-5']) !!}
+                    {!! Form::text('title', null, ['id' => 'title', 'class' => 'form-control', 'rows' => 2]) !!}
 
-                <span class="help-block error title_error">
-                    {{ $errors->first('title') }}
-                </span>
-            </div>
-            <div class="form-group m-0">
-                {!! Form::label('price', 'Стоимость', ['class' => 'control-label m-b-5']) !!}
-                {!! Form::text('price', null, ['id' => 'price', 'class' => 'form-control']) !!}
-
-                <span class="help-block error price_error">
-                    {{ $errors->first('price') }}
-                </span>
-            </div>
-            <div class="form-group m-0">
-                {!! Form::label('description', 'Описание', ['class' => 'control-label m-b-5']) !!}
-                {!! Form::textarea('description', null, ['id' => 'description', 'class' => 'form-control', 'rows' => 5]) !!}
-
-                <span class="help-block error description_error">
-                    {{ $errors->first('description') }}
-                </span>
-            </div>
-        </div>
-        <div class="col-sm-4 col-md-4">
-            <div class="form-group m-0">
-                {!! Form::label('image', 'Изображение', ['class' => 'control-label m-b-5']) !!}
-                {!! Form::file('image', ['id' => 'image', 'class' => 'dropify', 'data-default-file' => false, 'data-height' => '100', 'data-max-file-size' => '3M']) !!}
-                <span class="help-block error image_error"></span>
-            </div>
-        </div>
-        <div class="col-sm-2 col-md-2">
-            <div class="form-group m-t-25 m-r-0 m-l-0">
-                <div class="switchery-demo m-b-5">
-                    {!! Form::hidden('is_active', 0) !!}
-                    {!! Form::checkbox('is_active', 1, null, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
+                    <span class="help-block error title_error">
+                        {{ $errors->first('title') }}
+                    </span>
+                </div>
+                <div class="form-group m-0">
+                    {!! Form::label('price', 'Стоимость', ['class' => 'control-label m-b-5']) !!}
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                        {!! Form::text('price', null, ['id' => 'price', 'class' => 'form-control']) !!}
+                        <span class="input-group-addon">
+                            {{ Config::get('checkout.defaultCurrency.text') }}
+                        </span>
+                    </div>
+                    <span class="help-block error price_error">
+                        {{ $errors->first('price') }}
+                    </span>
                 </div>
             </div>
+            <div class="col-sm-4 col-md-4">
+                <div class="form-group m-0">
+                    {!! Form::label('image', 'Изображение', ['class' => 'control-label m-b-5']) !!}
+                    {!! Form::file('image', ['id' => 'image', 'class' => 'dropify', 'data-default-file' => false, 'data-height' => '100', 'data-max-file-size' => '3M']) !!}
+                    <span class="help-block error image_error"></span>
+                </div>
+            </div>
+            <div class="col-sm-2 col-md-2">
+                <div class="form-group m-t-25 m-r-0 m-l-0">
+                    <div class="switchery-demo m-b-5">
+                        {!! Form::hidden('is_active', 0) !!}
+                        {!! Form::checkbox('is_active', 1, null, ['id' => 'is_active', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-10 col-md-10">
+                <div class="form-group m-0">
+                    {!! Form::label('description', 'Описание', ['class' => 'control-label m-b-5']) !!}
+                    <small class="help-block">Какие данные необходимо заполнить для доставки?</small>
+                    {!! Form::textarea('description', null, ['id' => 'description', 'class' => 'form-control', 'rows' => 5]) !!}
+                    <span class="help-block error description_error">
+                        {{ $errors->first('description') }}
+                    </span>
+                </div>
+                <div class="checkbox checkbox-custom m-t-5">
+                    {!! Form::hidden('need_address', 0) !!}
+                    {!! Form::checkbox('need_address', 1, 1, ['id' => 'need_address', 'class' => 'm-t-5']) !!}
+                    <label for="need_address">
+                        Нужен адрес?
+                    </label>
+                </div>
+            </div>
+            <div class="col-sm-2 col-md-2">
+            </div>
+            <div class="col-sm-12 col-md-12">
+                <button type="button" class="btn btn-success btn-bordred waves-effect waves-light m-b-10 button-save-delivery pull-right">
+                    <i class="fa fa-check"></i>
+                    <span class="hidden-sm">Сохранить</span>
+                </button>
+            </div>
         </div>
-        <div class="col-sm-12 col-md-12">
-            <button type="button" class="btn btn-success btn-bordred waves-effect waves-light m-b-10 button-save-delivery pull-right">
-                <i class="fa fa-check"></i>
-                <span class="hidden-sm">Сохранить</span>
-            </button>
-        </div>
-    </div>
-{!! Form::close() !!}
-
-<div class="clearfix"></div>
+    {!! Form::close() !!}
+</div>
 
 @push('styles')
     <link href="{{ asset('backend/plugins/bootstrap-sweetalert/sweet-alert.css') }}" rel="stylesheet" type="text/css" />
@@ -107,10 +123,10 @@
                 event.preventDefault ? event.preventDefault() : event.returnValue = false;
 
                 var $form = $(this),
-                        formData = new FormData(),
-                        params   = $form.serializeArray(),
-                        image    = $form.find('[name="image"]')[0].files[0],
-                        url = $form.attr('action');
+                    formData = new FormData(),
+                    params   = $form.serializeArray(),
+                    image    = $form.find('[name="image"]')[0].files[0],
+                    url = $form.attr('action');
 
                 $.each(params, function(i, val) {
                     formData.append(val.name, val.value);
