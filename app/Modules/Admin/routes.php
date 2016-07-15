@@ -18,9 +18,8 @@ Route::group(['module' => 'Admin', 'prefix' => 'admin', 'middleware' => 'web', '
 	Route::post('products/upload_image/', ['as' => 'admin.products.uploadImage', 'uses' => 'ProductsController@uploadImage']);
 	Route::post('products/delete_image/', ['as' => 'admin.products.deleteImage', 'uses' => 'ProductsController@deleteImage']);
 
-	Route::resource('pages', 'PagesController');
-
-	Route::post('menus/get_menu_items', ['as' => 'admin.menus.getJsonMenuItems', 'uses' => 'MenusController@getJsonMenuItems']);
+	Route::resource('pages', 'PagesController', ['except' => ['show']]);
+	
 	Route::post('menus/rename', ['as' => 'admin.menus.rename', 'uses' => 'MenusController@rename']);
 	Route::post('menus/delete', ['as' => 'admin.menus.delete', 'uses' => 'MenusController@delete']);
 	Route::post('menus/position', ['as' => 'admin.menus.position', 'uses' => 'MenusController@changePosition']);

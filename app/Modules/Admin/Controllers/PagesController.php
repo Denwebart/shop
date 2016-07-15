@@ -18,11 +18,13 @@ use Illuminate\View\View;
 
 class PagesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return View
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
     public function index()
     {
 	    $pages = $this->getPages();
@@ -30,11 +32,14 @@ class PagesController extends Controller
         return view('admin::pages.index', compact('pages'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @param Request $request
+	 * @return View
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
     public function create(Request $request)
     {
 	    $page = new Page();
@@ -84,25 +89,15 @@ class PagesController extends Controller
 		    }
 	    }
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-	    //доделать
-        dd('просмотр страницы с id ' . $id);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+	
+	/**
+	 * Show the form for editing the specified resource.
+	 *
+	 * @param $id
+	 * @return View
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
     public function edit($id)
     {
 	    $page = Page::findOrFail($id);
@@ -147,6 +142,15 @@ class PagesController extends Controller
 			    ->withInput()
 			    ->with('errorMessage', 'Страница не сохранена. Исправьте ошибки.');
 	    } else {
+	    	if(count($page->menus)) {
+	    		foreach (['alias', 'title', 'menu_title', 'parent_id', 'is_published'] as $attribute) {
+				    if ($page->$attribute != $data[$attribute]) {
+					    \Cache::forget('menuItems');
+					    break;
+				    }
+			    }
+		    }
+	    	
 		    $page->fill($data);
 		    $page->setImage($request);
 		    $page->save();
@@ -159,12 +163,13 @@ class PagesController extends Controller
 	    }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param $id
+	 * @return \Illuminate\Http\JsonResponse
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)	 */
     public function destroy($id)
     {
 	    if(\Request::ajax()) {

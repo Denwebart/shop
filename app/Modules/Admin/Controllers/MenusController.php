@@ -19,39 +19,6 @@ use Illuminate\View\View;
 class MenusController extends Controller
 {
 	/**
-	 * Get menu items array in Json format
-	 *
-	 * @param Request $request
-	 * @return \Illuminate\Http\JsonResponse
-	 *
-	 * @author     It Hill (it-hill.com@yandex.ua)
-	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
-	 */
-	public function getJsonMenuItems(Request $request)
-	{
-		if($request->ajax()) {
-			$items = [];
-			foreach(Menu::getMenuItems($request->get('type')) as $key => $item) {
-				$valueArray = [
-					'id' => $item->id,
-					'parent' => $item->parent_id ? $item->parent_id : "#",
-					'text' => $item->page->getTitle(),
-					'children' => count($item->children) ? true : false
-				];
-				if($request->get('type')) {
-					$items[] = $valueArray;
-				} else {
-					$items[$item->type][] = $valueArray;
-				}
-			}
-
-			return \Response::json([
-				'items' => json_encode($items, JSON_UNESCAPED_UNICODE)
-			]);
-		}
-	}
-
-	/**
 	 * Rename menu item
 	 *
 	 * @param Request $request
@@ -79,6 +46,8 @@ class MenusController extends Controller
 
 				$menu->page->menu_title = $newMenuTitle;
 				$menu->page->save();
+				
+				\Cache::forget('menuItems');
 
 				return \Response::json([
 					'success' => true,
@@ -113,7 +82,9 @@ class MenusController extends Controller
 			if(is_object($menu) && $menu->delete()) {
 
 				$items = Menu::getMenuItems($request->get('menuType'));
-
+				
+				\Cache::forget('menuItems');
+				
 				return \Response::json([
 					'success' => true,
 					'message' => 'Пункт меню успешно удалён.',
@@ -148,6 +119,8 @@ class MenusController extends Controller
 			$menu->save();
 			$i++;
 		}
+		
+		\Cache::forget('menuItems');
 
 		return \Response::json(array(
 			'success' => true,
@@ -222,7 +195,9 @@ class MenusController extends Controller
 
 			if($menuItem->save()) {
 				$items = Menu::getMenuItems($request->get('menuType'));
-
+				
+				\Cache::forget('menuItems');
+				
 				return \Response::json([
 					'success' => true,
 					'message' => 'Пункт меню успешно добавлен.',

@@ -185,11 +185,15 @@ class Page extends Model
 				$page->content = '';
 			}
 		});
-
+		
 		static::deleting(function($page) {
+			if(count($page->menus)) {
+				\Cache::forget('menuItems');
+				$page->menus()->delete();
+			}
+			
 			$page->children()->delete();
 			$page->products()->delete();
-			$page->menus()->delete();
 			$page->deleteImagesFolder();
 		});
 	}

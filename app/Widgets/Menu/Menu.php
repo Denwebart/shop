@@ -14,7 +14,9 @@ class Menu
 
 	public function __construct()
 	{
-		$this->menuItems = \App\Models\Menu::getMenuItems();
+		$this->menuItems = \Cache::rememberForever('menuItems', function() {
+			return \App\Models\Menu::getMenuItems();
+		});
 	}
 
 	/**
