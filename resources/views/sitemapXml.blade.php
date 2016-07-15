@@ -13,7 +13,7 @@
     @foreach($sitemapItems as $item)
         @include('parts.xmlItem')
 
-        {{ \App\Helpers\View::getChildrenPages($item, 1, 'xml') }}
+        {{ \App\Helpers\View::getChildrenPages($item, $item->getUrl(), 1, 'xml') }}
     @endforeach
 
     <image>

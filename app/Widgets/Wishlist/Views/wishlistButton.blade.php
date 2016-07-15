@@ -9,7 +9,7 @@
     <span class="icon icon-favorite"></span>
     @if(count($products))
         <span class="badge badge--menu count-wishlist-items">
-            {{ $products->total() }}
+            {{ count($products) }}
         </span>
     @endif
 </a>

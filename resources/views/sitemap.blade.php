@@ -34,7 +34,7 @@
                 <div id="sitemap">
                     <div class="col-md-6">
                         <ul>
-                            @foreach($sitemapItemsLeft as $item)
+                            @foreach($sitemapItems as $item)
                                 <li>
                                     <a href="{{ $item->getUrl() }}">
                                         @if($item->type == \App\Models\Page::TYPE_CATALOG)
@@ -42,7 +42,7 @@
                                         @endif
                                         <span>{{ $item->getTitle() }}</span>
                                     </a>
-                                    {{ \App\Helpers\View::getChildrenPages($item) }}
+                                    {{ \App\Helpers\View::getChildrenPages($item, $item->getUrl()) }}
                                 </li>
                             @endforeach
                         </ul>
@@ -50,17 +50,17 @@
 
                     <div class="col-md-6">
                         <ul>
-                            @foreach($sitemapItemsRight as $item)
-                                <li>
-                                    <a href="{{ $item->getUrl() }}">
-                                        @if($item->type == \App\Models\Page::TYPE_CATALOG)
-                                            <i class="icon icon-bag-alt"></i>
-                                        @endif
-                                        <span>{{ $item->getTitle() }}</span>
-                                    </a>
-                                    {{ \App\Helpers\View::getChildrenPages($item) }}
-                                </li>
-                            @endforeach
+                            {{--@foreach($sitemapItemsRight as $item)--}}
+                                {{--<li>--}}
+                                    {{--<a href="{{ $item->getUrl() }}">--}}
+                                        {{--@if($item->type == \App\Models\Page::TYPE_CATALOG)--}}
+                                            {{--<i class="icon icon-bag-alt"></i>--}}
+                                        {{--@endif--}}
+                                        {{--<span>{{ $item->getTitle() }}</span>--}}
+                                    {{--</a>--}}
+                                    {{--{{ \App\Helpers\View::getChildrenPages($item) }}--}}
+                                {{--</li>--}}
+                            {{--@endforeach--}}
                         </ul>
                     </div>
                 </div>

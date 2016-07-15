@@ -5,7 +5,7 @@
  */
 ?>
 
-<a href="{{ $item->getUrl() }}">
+<a href="{{ $url }}">
     @if($item->type == \App\Models\Page::TYPE_CATALOG)
         <i class="icon icon-bag-alt"></i>
     @endif

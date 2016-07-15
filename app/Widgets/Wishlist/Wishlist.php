@@ -22,9 +22,8 @@ class Wishlist extends BaseController
 
 	public function show()
 	{
-		$request = new Request();
-		$products = $this->getWishlist(null, $request);
-
+		$products = \Request::cookie('wishlist', []);
+		
 		return view('widget.wishlist::wishlist', compact('products'));
 	}
 
@@ -119,8 +118,7 @@ class Wishlist extends BaseController
 					},
 					'category.parent' => function($q) {
 				        $q->select(['id', 'parent_id', 'alias', 'type']);
-			        },
-					'propertyColor'
+			        }
 				])->get(['id', 'category_id', 'alias', 'title', 'image', 'image_alt', 'price']);
 
 			foreach($productModels as $productModel) {

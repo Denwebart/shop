@@ -172,35 +172,27 @@ class SiteController extends Controller
 	 */
 	protected function getSitemapPage($request, $settings, $page)
 	{
-		$sitemapItemsLeft = Page::whereParentId(0)
+		$sitemapItems = Page::whereParentId(0)
 			->whereIsPublished(1)
 			->where('published_at', '<', date('Y-m-d H:i:s'))
-			->whereIn('type', [Page::TYPE_PAGE, Page::TYPE_SYSTEM_PAGE])
-			->with([
-				'publishedChildren' => function($query) {
-					$query->select('id', 'parent_id', 'type', 'is_container', 'alias', 'title', 'menu_title');
-				},
-				'publishedProducts' => function($query) {
-					$query->select('id', 'category_id', 'alias', 'title');
-				},
-			])
+//			->whereIn('type', [Page::TYPE_PAGE, Page::TYPE_SYSTEM_PAGE])
 			->get(['id', 'parent_id', 'type', 'is_container', 'alias', 'title', 'menu_title']);
 
-		$sitemapItemsRight = Page::whereParentId(0)
-			->whereIsPublished(1)
-			->where('published_at', '<', date('Y-m-d H:i:s'))
-			->whereIn('type', [Page::TYPE_CATALOG])
-			->with([
-				'publishedChildren' => function($query) {
-					$query->select('id', 'parent_id', 'type', 'is_container', 'alias', 'title', 'menu_title');
-				},
-				'publishedProducts' => function($query) {
-					$query->select('id', 'category_id', 'alias', 'title');
-				},
-			])
-			->get(['id', 'parent_id', 'type', 'is_container', 'alias', 'title', 'menu_title']);
+//		$sitemapItemsRight = Page::whereParentId(0)
+//			->whereIsPublished(1)
+//			->where('published_at', '<', date('Y-m-d H:i:s'))
+//			->whereIn('type', [Page::TYPE_CATALOG])
+//			->with([
+//				'publishedChildren' => function($query) {
+//					$query->select('id', 'parent_id', 'type', 'is_container', 'alias', 'title', 'menu_title');
+//				},
+//				'publishedProducts' => function($query) {
+//					$query->select('id', 'category_id', 'alias', 'title');
+//				},
+//			])
+//			->get(['id', 'parent_id', 'type', 'is_container', 'alias', 'title', 'menu_title']);
 
-		return view('sitemap', compact('page', 'sitemapItemsLeft', 'sitemapItemsRight'));
+		return view('sitemap', compact('page', 'sitemapItems'));
 	}
 
 	/**
@@ -394,7 +386,24 @@ class SiteController extends Controller
 			: collect($previousNext)->first();
 		$productReviews = $page->getReviews();
 		$viewed = new Viewed();
+		
 		$productProperties = $page->getProperties();
+		foreach($productProperties as $key => $property) {
+			if($property->type == Property::TYPE_COLOR || $property->type == Property::TYPE_TAG || $property->type == Property::TYPE_SIZE) {
+				if($property->type == Property::TYPE_COLOR) {
+					$attributeName = 'propertyColor';
+				} elseif($property->type == Property::TYPE_TAG) {
+					$attributeName = 'propertyTag';
+				} elseif($property->type == Property::TYPE_SIZE) {
+					$attributeName = 'propertySize';
+				}
+				if(isset($attributeName)) {
+					$page->$attributeName = $property->values;
+					$page->$attributeName->property_title = $property->title;
+					unset($productProperties[$key]);
+				}
+			}
+		}
 
 		return view('product', compact('page', 'productReviews', 'viewed', 'productProperties'));
 	}

@@ -124,7 +124,7 @@
                                 <div id="priceSlider" class="price-slider"></div>
                             </div>
                         </div>
-                        @foreach(\App\Models\Property::get() as $property)
+                        @foreach(\App\Models\Property::with(['values'])->get() as $property)
                             <div class="filters-col__collapse open">
                                 <h4 class="filters-col__collapse__title text-uppercase">{{ $property->title }}</h4>
                                 <div class="filters-col__collapse__content">
