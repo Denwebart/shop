@@ -200,14 +200,16 @@ class SiteController extends Controller
 	protected function getCatalogPage($request, $settings, $page)
 	{
 		// доделать вложенность (рекурсивно?)
-		$subcategories = $page->publishedChildren()
-			->has('products')
-			->with([
-				'products' => function($q) {
-					$q->select('id', 'category_id');
-				}
-			])
-			->get(['id', 'parent_id', 'menu_title', 'title', 'alias']);
+		$subcategories = \Cache::rememberForever('catalog.' . $page->id . '.subcategories', function() use($page) {
+			return $page->publishedChildren()
+				->has('products')
+				->with([
+					'products' => function($q) {
+						$q->select('id', 'category_id');
+					}
+				])
+				->get(['id', 'parent_id', 'menu_title', 'title', 'alias']);
+		});
 
 		// get products
 		$query = Product::select(\DB::raw('products.id, products.vendor_code, products.category_id, products.alias, products.is_published, products.title, products.price, products.image, products.image_alt, products.published_at, products.introtext, products.content'))
@@ -333,11 +335,14 @@ class SiteController extends Controller
 			? $request->get('onpage')
 			: $request->cookie('catalog-onpage', 12);
 
-//		dd($query->toSql());
 		$products = $query->paginate($limit);
+		
+		$properties = \Cache::rememberForever('properties', function() {
+			return Property::with(['values'])->get();
+		});
 
 		if(!$request->ajax()) {
-			return view('catalog', compact('page', 'products', 'subcategories', 'rangePrice'));
+			return view('catalog', compact('page', 'products', 'subcategories', 'rangePrice', 'properties'));
 		} else {
 			return \Response::json([
 				'success' => true,

@@ -197,6 +197,9 @@ class Page extends Model
 			\Cache::forget('sitemapItems');
 			\Cache::forget('sitemapItems.children-' . $page->id);
 			\Cache::forget('sitemapItems.children-' . $page->parent_id);
+			
+			\Cache::forget('catalog.' . $page->id . '.subcategories');
+			\Cache::forget('catalog.' . $page->parent_id . '.subcategories');
 		});
 		
 		static::deleting(function($page) {
@@ -221,6 +224,9 @@ class Page extends Model
 			\Cache::forget('sitemapItems');
 			\Cache::forget('sitemapItems.children-' . $page->id);
 			\Cache::forget('sitemapItems.children-' . $page->parent_id);
+			
+			\Cache::forget('catalog.' . $page->id . '.subcategories');
+			\Cache::forget('catalog.' . $page->parent_id . '.subcategories');
 		});
 	}
 
@@ -444,7 +450,7 @@ class Page extends Model
 	 */
 	public function getBredcrumbItem($page, $level)
 	{
-		if($page->parent) {
+		if($page->parent_id !=0 && $page->parent) {
 			$items = $page->getBredcrumbItem($page->parent, $level + 1);
 			$items[$level] = [
 				'url' => $page->parent->getUrl(),

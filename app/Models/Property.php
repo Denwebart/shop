@@ -86,8 +86,13 @@ class Property extends Model
 	public static function boot()
 	{
 		parent::boot();
-
+		
+		static::saving(function($property) {
+			\Cache::forget('properties');
+		});
+		
 		static::deleting(function($property) {
+			\Cache::forget('properties');
 			if(count($property->values) && in_array($property->type, [self::TYPE_COLOR, self::TYPE_TAG])) {
 				\Cache::forget('leadersOfSells');
 				\Cache::forget('widgets.carousel.sale');

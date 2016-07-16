@@ -75,6 +75,7 @@ class PropertyValue extends Model
 		parent::boot();
 
 		static::saving(function($model) {
+			\Cache::forget('properties');
 			if(trim(strip_tags($model->additional_value)) == '') {
 				$model->additional_value = null;
 			}
@@ -85,6 +86,7 @@ class PropertyValue extends Model
 		});
 
 		static::deleting(function($model) {
+			\Cache::forget('properties');
 			if(count($model->productsPropertyValues)) {
 				\Cache::forget('leadersOfSells');
 				\Cache::forget('widgets.carousel.sale');
