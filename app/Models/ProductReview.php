@@ -140,10 +140,12 @@ class ProductReview extends Model
 		
 		static::saving(function($model) {
 			\Cache::forget('leadersOfSells');
+			\Cache::forget('product.' . $model->product_id . '.rating');
 		});
 		
 		static::deleting(function($model) {
 			\Cache::forget('leadersOfSells');
+			\Cache::forget('product.' . $model->product_id . '.rating');
 		});
 	}
 	

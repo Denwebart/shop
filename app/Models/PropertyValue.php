@@ -82,6 +82,9 @@ class PropertyValue extends Model
 			if(count($model->productsPropertyValues)) {
 				\Cache::forget('leadersOfSells');
 				\Cache::forget('widgets.carousel.sale');
+				foreach ($model->productsPropertyValues as $propertyValue) {
+					\Cache::forget('product.' . $propertyValue->product_id . '.properties');
+				}
 			}
 		});
 
@@ -90,6 +93,9 @@ class PropertyValue extends Model
 			if(count($model->productsPropertyValues)) {
 				\Cache::forget('leadersOfSells');
 				\Cache::forget('widgets.carousel.sale');
+				foreach ($model->productsPropertyValues as $propertyValue) {
+					\Cache::forget('product.' . $propertyValue->product_id . '.properties');
+				}
 			}
 			$model->productsPropertyValues()->delete();
 			$model->deleteImagesFolder();

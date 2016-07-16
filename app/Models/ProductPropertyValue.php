@@ -41,6 +41,7 @@ class ProductPropertyValue extends Model
 			if($model->product) {
 				\Cache::forget('leadersOfSells');
 				\Cache::forget('widgets.carousel.sale');
+				\Cache::forget('product.' . $model->product->id . '.properties');
 			}
 		});
 		
@@ -48,6 +49,7 @@ class ProductPropertyValue extends Model
 			if($model->product) {
 				\Cache::forget('leadersOfSells');
 				\Cache::forget('widgets.carousel.sale');
+				\Cache::forget('product.' . $model->product->id . '.properties');
 			}
 		});
 	}

@@ -368,7 +368,10 @@ class SiteController extends Controller
 	 */
 	protected function getProductPage($request, $settings, $page)
 	{
-		$page->ratingInfo = $page->getRating();
+		$page->ratingInfo = \Cache::rememberForever('product.' . $page->id . '.rating', function() use($page) {
+			return $page->getRating();
+		});
+		
 		$page->rating = $page->ratingInfo['value'];
 		
 		// previous / next
@@ -383,7 +386,10 @@ class SiteController extends Controller
 		$productReviews = $page->getReviews();
 		$viewed = new Viewed();
 		
-		$productProperties = $page->getProperties();
+		$productProperties = \Cache::rememberForever('product.' . $page->id . '.properties', function() use($page) {
+			return $page->getProperties();
+		});
+		
 		foreach($productProperties as $key => $property) {
 			if($property->type == Property::TYPE_COLOR || $property->type == Property::TYPE_TAG || $property->type == Property::TYPE_SIZE) {
 				if($property->type == Property::TYPE_COLOR) {
