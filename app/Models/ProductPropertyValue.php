@@ -40,12 +40,14 @@ class ProductPropertyValue extends Model
 		static::saving(function($model) {
 			if($model->product) {
 				\Cache::forget('leadersOfSells');
+				\Cache::forget('widgets.carousel.sale');
 			}
 		});
 		
 		static::deleting(function($model) {
 			if($model->product) {
 				\Cache::forget('leadersOfSells');
+				\Cache::forget('widgets.carousel.sale');
 			}
 		});
 	}

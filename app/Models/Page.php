@@ -186,6 +186,7 @@ class Page extends Model
 			}
 			
 			\Cache::forget('leadersOfSells');
+			\Cache::forget('widgets.carousel.sale');
 		});
 		
 		static::deleting(function($page) {
@@ -199,6 +200,7 @@ class Page extends Model
 			$page->deleteImagesFolder();
 			
 			\Cache::forget('leadersOfSells');
+			\Cache::forget('widgets.carousel.sale');
 		});
 	}
 

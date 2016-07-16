@@ -90,6 +90,7 @@ class Property extends Model
 		static::deleting(function($property) {
 			if(count($property->values) && in_array($property->type, [self::TYPE_COLOR, self::TYPE_TAG])) {
 				\Cache::forget('leadersOfSells');
+				\Cache::forget('widgets.carousel.sale');
 			}
 			foreach ($property->values as $value) {
 				$value->productsPropertyValues()->delete();

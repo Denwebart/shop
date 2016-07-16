@@ -176,6 +176,7 @@ class Product extends Model
 			$product->vendor_code = trim($product->vendor_code);
 			
 			\Cache::forget('leadersOfSells');
+			\Cache::forget('widgets.carousel.sale');
 		});
 		
 		static::deleting(function($product) {
@@ -183,6 +184,7 @@ class Product extends Model
 			$product->deleteImagesFolder();
 			
 			\Cache::forget('leadersOfSells');
+			\Cache::forget('widgets.carousel.sale');
 		});
 	}
 
