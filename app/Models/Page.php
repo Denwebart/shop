@@ -187,6 +187,13 @@ class Page extends Model
 			
 			\Cache::forget('leadersOfSells');
 			\Cache::forget('widgets.carousel.sale');
+			
+			if($page->parent) {
+				\Cache::forget('page.'. $page->parent->id .'.children');
+				\Cache::forget('widgets.articles.from-'. $page->parent->id);
+			}
+			\Cache::forget('page.'. $page->id .'.children');
+			\Cache::forget('widgets.articles.from-'. $page->id);
 		});
 		
 		static::deleting(function($page) {
@@ -201,6 +208,13 @@ class Page extends Model
 			
 			\Cache::forget('leadersOfSells');
 			\Cache::forget('widgets.carousel.sale');
+			
+			if($page->parent) {
+				\Cache::forget('page.'. $page->parent->id .'.children');
+				\Cache::forget('widgets.articles.from-'. $page->parent->id);
+			}
+			\Cache::forget('page.'. $page->id .'.children');
+			\Cache::forget('widgets.articles.from-'. $page->id);
 		});
 	}
 

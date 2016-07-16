@@ -41,7 +41,6 @@ class RouteServiceProvider extends ServiceProvider
 				->whereIsPublished(1)
 				->where('published_at', '<=', Carbon::now())
 			    ->leftJoin('orders_products', 'orders_products.product_id', '=', 'products.id')
-//			    ->with(['propertyColor', 'propertySize', 'propertyTag'])
 			    ->groupBy('products.id')
 			    ->orderBy('sales', 'DESC')
 				->firstOrFail();

@@ -134,9 +134,11 @@ class SiteController extends Controller
 	 */
 	protected function getPage($request, $settings, $page)
 	{
-		$childrenPages = $page->is_container
-			? $page->publishedChildren()->orderBy('published_at', 'DESC')->paginate(10)
-			: [];
+		$childrenPages = \Cache::rememberForever('page.'. $page->id .'.children', function() use($page) {
+			return $page->is_container
+				? $page->publishedChildren()->orderBy('published_at', 'DESC')->paginate(10)
+				: [];
+		});
 
 		\View::share('articlesWidget', new Articles());
 
