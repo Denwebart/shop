@@ -135,6 +135,19 @@ class Order extends Model
 		'comment',
 	];
 
+	public static function boot()
+	{
+		parent::boot();
+		
+		static::saving(function($order) {
+			\Cache::forget('leadersOfSells');
+		});
+		
+		static::deleting(function($order) {
+			\Cache::forget('leadersOfSells');
+		});
+	}
+	
 	/**
 	 * Покупатель
 	 *

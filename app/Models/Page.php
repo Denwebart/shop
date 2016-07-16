@@ -184,6 +184,8 @@ class Page extends Model
 			if(trim(strip_tags($page->content)) == '') {
 				$page->content = '';
 			}
+			
+			\Cache::forget('leadersOfSells');
 		});
 		
 		static::deleting(function($page) {
@@ -195,6 +197,8 @@ class Page extends Model
 			$page->children()->delete();
 			$page->products()->delete();
 			$page->deleteImagesFolder();
+			
+			\Cache::forget('leadersOfSells');
 		});
 	}
 

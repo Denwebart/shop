@@ -78,9 +78,15 @@ class PropertyValue extends Model
 			if(trim(strip_tags($model->additional_value)) == '') {
 				$model->additional_value = null;
 			}
+			if(count($model->productsPropertyValues)) {
+				\Cache::forget('leadersOfSells');
+			}
 		});
 
 		static::deleting(function($model) {
+			if(count($model->productsPropertyValues)) {
+				\Cache::forget('leadersOfSells');
+			}
 			$model->productsPropertyValues()->delete();
 			$model->deleteImagesFolder();
 		});

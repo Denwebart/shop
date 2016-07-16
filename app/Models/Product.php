@@ -174,10 +174,15 @@ class Product extends Model
 				$product->content = '';
 			}
 			$product->vendor_code = trim($product->vendor_code);
+			
+			\Cache::forget('leadersOfSells');
 		});
+		
 		static::deleting(function($product) {
 			$product->images()->delete();
 			$product->deleteImagesFolder();
+			
+			\Cache::forget('leadersOfSells');
 		});
 	}
 

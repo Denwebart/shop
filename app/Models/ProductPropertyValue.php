@@ -32,7 +32,24 @@ class ProductPropertyValue extends Model
 		'product_id',
 		'property_value_id',
 	];
-
+	
+	public static function boot()
+	{
+		parent::boot();
+		
+		static::saving(function($model) {
+			if($model->product) {
+				\Cache::forget('leadersOfSells');
+			}
+		});
+		
+		static::deleting(function($model) {
+			if($model->product) {
+				\Cache::forget('leadersOfSells');
+			}
+		});
+	}
+	
 	/**
 	 * Product
 	 *

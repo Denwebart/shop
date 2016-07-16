@@ -137,8 +137,16 @@ class ProductReview extends Model
 		{
 			$model->created_at = Carbon::now();
         });
+		
+		static::saving(function($model) {
+			\Cache::forget('leadersOfSells');
+		});
+		
+		static::deleting(function($model) {
+			\Cache::forget('leadersOfSells');
+		});
 	}
-
+	
 	/**
 	 * Менеджер, который написал отзыв
 	 *

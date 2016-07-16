@@ -4,14 +4,14 @@
 
 {!! $slider->show() !!}
 
-@if(count($bestSellers))
+@if(count($leadersOfSells))
     <!-- 12 items -->
     <section class="content">
         <div class="container">
             <h3 class="text-center text-uppercase">Лидеры продаж</h3>
 
             <div class="products-grid products-listing products-col four-in-row">
-                @each('parts.product', $bestSellers, 'item')
+                @each('parts.product', $leadersOfSells, 'item')
             </div>
         </div>
     </section>

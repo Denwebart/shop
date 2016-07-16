@@ -88,6 +88,9 @@ class Property extends Model
 		parent::boot();
 
 		static::deleting(function($property) {
+			if(count($property->values) && in_array($property->type, [self::TYPE_COLOR, self::TYPE_TAG])) {
+				\Cache::forget('leadersOfSells');
+			}
 			foreach ($property->values as $value) {
 				$value->productsPropertyValues()->delete();
 			}

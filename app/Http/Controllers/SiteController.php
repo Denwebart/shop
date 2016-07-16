@@ -41,31 +41,33 @@ class SiteController extends Controller
 		$slider = new Slider();
 		$carousel = new Carousel();
 		$review = new Reviews();
+		
+		$leadersOfSells = \Cache::rememberForever('leadersOfSells', function() {
+			$query = Product::select(\DB::raw('products.id, products.vendor_code, products.category_id, products.alias, products.is_published, products.title, products.price, products.image, products.image_alt, products.published_at'))
+				->with('category', 'category.parent', 'propertyColor')
+				->where('products.is_published', '=', 1);
+			
+			$query->leftJoin('orders_products', 'orders_products.product_id', '=', 'products.id')
+				->addSelect(\DB::raw('COUNT(distinct orders_products.id) as `popular`'));
+			
+			$query->leftJoin('products_reviews', 'products_reviews.product_id', '=', 'products.id')
+				->where(function($q) {
+					$q->where(function ($qu) {
+						$qu->where('products_reviews.parent_id', '=', 0);
+					})->orWhereNull('products_reviews.id');
+				})
+				->addSelect(\DB::raw('COUNT(distinct products_reviews.id) as reviews_count'));
+			
+			$query->groupBy('products.id')
+				->orderBy('popular', 'DESC')
+				->orderBy('reviews_count', 'DESC')
+				->orderBy('products.published_at', 'DESC')
+				->limit(12);
+			
+			return $query->get();
+		});
 
-		$query = Product::select(\DB::raw('products.id, products.vendor_code, products.category_id, products.alias, products.is_published, products.title, products.price, products.image, products.image_alt, products.published_at'))
-            ->with('category', 'category.parent', 'propertyColor')
-			->where('products.is_published', '=', 1);
-
-		$query->leftJoin('orders_products', 'orders_products.product_id', '=', 'products.id')
-			->addSelect(\DB::raw('COUNT(distinct orders_products.id) as `popular`'));
-
-		$query->leftJoin('products_reviews', 'products_reviews.product_id', '=', 'products.id')
-			->where(function($q) {
-				$q->where(function ($qu) {
-					$qu->where('products_reviews.parent_id', '=', 0);
-				})->orWhereNull('products_reviews.id');
-			})
-			->addSelect(\DB::raw('COUNT(distinct products_reviews.id) as reviews_count'));
-
-		$query->groupBy('products.id')
-			->orderBy('popular', 'DESC')
-			->orderBy('reviews_count', 'DESC')
-			->orderBy('products.published_at', 'DESC')
-			->limit(12);
-
-		$bestSellers = $query->get();
-
-		return view('index', compact('page', 'slider', 'carousel', 'bestSellers', 'review'));
+		return view('index', compact('page', 'slider', 'carousel', 'leadersOfSells', 'review'));
 	}
 
 	/**
