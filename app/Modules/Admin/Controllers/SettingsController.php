@@ -186,7 +186,9 @@ class SettingsController extends Controller
 
 			$postImage = $request->file('image');
 			$data['value'] = $postImage;
-			$imagePath = public_path('images/');
+			
+			$imagePath = $setting->getImagesPath();
+			File::exists($imagePath) or File::makeDirectory($imagePath, 0755, true);
 
 			if($setting && $setting->type == Setting::TYPE_IMAGE && isset($postImage)) {
 
@@ -201,8 +203,8 @@ class SettingsController extends Controller
 					]);
 				}
 
-				if (File::exists(public_path('images/') . $setting->value)) {
-					File::delete(public_path('images/') . $setting->value);
+				if (File::exists($imagePath . $setting->value)) {
+					File::delete($imagePath . $setting->value);
 				}
 
 				$fileName = str_replace('.', '-', $setting->key) . '.' . pathinfo($postImage->getClientOriginalName(), PATHINFO_EXTENSION);

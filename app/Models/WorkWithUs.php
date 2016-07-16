@@ -93,7 +93,7 @@ class WorkWithUs extends Model
 		}
 		return $rules;
 	}
-
+	
 	/**
 	 * Get validation rules for current field
 	 *
@@ -114,9 +114,14 @@ class WorkWithUs extends Model
 	public static function boot()
 	{
 		parent::boot();
-
+		
+		static::saving(function($model) {
+			\Cache::forget('widgets.carousel.workWithUs');
+		});
+		
 		static::deleting(function($model) {
 			$model->deleteImagesFolder();
+			\Cache::forget('widgets.carousel.workWithUs');
 		});
 	}
 

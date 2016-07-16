@@ -49,7 +49,7 @@
         <a href="{{ url('/') }}" class="logo">
             @if(isset($siteSettings['logo']))
                 @if(isset($siteSettings['logo']['main']) && is_object($siteSettings['logo']['main']))
-                    <img class="logo-default" src="{{ asset('images/'. $siteSettings['logo']['main']->value) }}" alt=""/>
+                    <img class="logo-default" src="{{ $siteSettings['logo']['main']->getImageUrl() }}" alt=""/>
                 @endif
             @endif
         </a>

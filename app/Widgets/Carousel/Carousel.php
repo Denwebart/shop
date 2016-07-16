@@ -85,12 +85,14 @@ class Carousel
 	 */
 	public function workWithUs()
 	{
-		$title = 'С нами сотрудничают';
-
-		$items = WorkWithUs::whereIsPublished(1)
-			->orderBy('published_at', 'DESC')
-			->get();
-
-		return view('widget.carousel::brands', compact('items', 'title'));
+		return \Cache::rememberForever('widgets.carousel.workWithUs', function() {
+			$title = 'С нами сотрудничают';
+			
+			$items = WorkWithUs::whereIsPublished(1)
+				->orderBy('published_at', 'DESC')
+				->get();
+			
+			return view('widget.carousel::brands', compact('items', 'title'))->render();
+		});
 	}
 }

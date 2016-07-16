@@ -38,7 +38,9 @@ use Illuminate\Database\Eloquent\Model;
 class Setting extends Model
 {
 	protected $table = 'settings';
-
+	
+	protected $imagePath = '/uploads/settings/';
+	
 	/**
 	 * Тип настройки (значение поля type)
 	 */
@@ -147,5 +149,53 @@ class Setting extends Model
 		];
 
 		return isset($messages[$this->key]) ? $messages[$this->key] : [];
+	}
+	
+	public static function boot()
+	{
+		parent::boot();
+		
+		static::saving(function($setting) {
+			\Cache::forget('settings.setting-key-' . $setting->key);
+			\Cache::forget('settings.category-' . $setting->category);
+			\Cache::forget('settings');
+		});
+		
+		static::deleting(function($setting) {
+			\Cache::forget('settings.setting-key-' . $setting->key);
+			\Cache::forget('settings.category-' . $setting->category);
+			\Cache::forget('settings');
+		});
+	}
+	
+	public function getImagePath()
+	{
+		return $this->imagePath;
+	}
+	
+	/**
+	 * Get image url
+	 *
+	 * @return mixed
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function getImageUrl()
+	{
+		return $this->value
+			? asset($this->imagePath . $this->key . '/' . $this->value)
+			: '';
+	}
+	
+	/**
+	 * Get image path
+	 *
+	 * @return mixed
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function getImagesPath()
+	{
+		return public_path() . $this->imagePath . $this->key . '/';
 	}
 }

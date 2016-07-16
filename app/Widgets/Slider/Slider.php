@@ -14,8 +14,9 @@ class Slider
 {
 	public function show()
 	{
-		$items = \App\Models\Slider::whereIsPublished(1)->get();
-
-		return view('widget.slider::index', compact('items'));
+		return \Cache::rememberForever('widgets.slider', function() {
+			$items = \App\Models\Slider::whereIsPublished(1)->get();
+			return view('widget.slider::index', compact('items'))->render();
+		});
 	}
 }

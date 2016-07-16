@@ -100,6 +100,20 @@ class Review extends Model
 		}
 		return $rules;
 	}
+	
+	public static function boot()
+	{
+		parent::boot();
+		
+		static::saving(function($review) {
+			\Cache::forget('widgets.reviews');
+		});
+		
+		static::deleting(function($review) {
+			\Cache::forget('widgets.reviews');
+		});
+	}
+	
 	/**
 	 * Get image url
 	 *

@@ -21,7 +21,10 @@ class Settings
 	 */
 	public function get($key)
 	{
-		$setting = Setting::whereKey($key)->whereIsActive(1)->first();
+		$setting = \Cache::rememberForever('settings.setting-key-' . $key, function() use($key) {
+			return Setting::whereKey($key)->whereIsActive(1)->first();
+		});
+		
 		return $setting ? $setting : null;
 	}
 
@@ -34,21 +37,26 @@ class Settings
 	 */
 	public function getCategory($category)
 	{
-		$settings = Setting::select(['id', 'key', 'category', 'value', 'is_active'])
-			->whereCategory($category)
-			->whereIsActive(1)
-			->whereNotNull('value')
-			->get();
-		
-		foreach ($settings as $setting) {
-			$settingsLevel = explode('.', $setting->key);
-			if(isset($settingsLevel[1])) {
-				$result[$settingsLevel[0]][$settingsLevel[1]] = $setting;
-			} else {
-				$result[$settingsLevel[0]] = $setting;
+		$settings = \Cache::rememberForever('settings.category-' . $category, function() use($category) {
+			$settings = Setting::select(['id', 'key', 'category', 'value', 'is_active'])
+				->whereCategory($category)
+				->whereIsActive(1)
+				->whereNotNull('value')
+				->get();
+			
+			foreach ($settings as $setting) {
+				$settingsLevel = explode('.', $setting->key);
+				if(isset($settingsLevel[1])) {
+					$result[$settingsLevel[0]][$settingsLevel[1]] = $setting;
+				} else {
+					$result[$settingsLevel[0]] = $setting;
+				}
 			}
-		}
-		return isset($result) ? $result : [];
+			
+			return isset($result) ? $result : [];
+		});
+		
+		return $settings;
 	}
 
 	/**
@@ -59,7 +67,9 @@ class Settings
 	 */
 	public function getAll()
 	{
-		$settings = Setting::all();
+		$settings = \Cache::rememberForever('settings', function() {
+			return Setting::all();
+		});
 
 		foreach ($settings as $setting) {
 			$settingsLevel = explode('.', $setting->key);

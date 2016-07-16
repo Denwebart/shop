@@ -90,10 +90,10 @@
                                 @endif
                             </label>
                             <div class="col-md-7 col-sm-7">
-                                {!! Form::file('logo.' . $key, ['id' => 'logo.' . $key, 'class' => 'dropify-ajax', 'data-height' => '100', 'data-default-file' => ($setting->value) ? asset('images/' . $setting->value) : '', 'data-max-file-size' => '3M', 'data-setting-id' => $setting->id, 'data-delete-url' => route('admin.settings.deleteImage'), 'data-upload-url' => route('admin.settings.uploadImage')]) !!}
+                                {!! Form::file('logo.' . $key, ['id' => 'logo.' . $key, 'class' => 'dropify-ajax', 'data-height' => '100', 'data-default-file' => ($setting->value) ? $setting->getImageUrl() : '', 'data-max-file-size' => '3M', 'data-setting-id' => $setting->id, 'data-delete-url' => route('admin.settings.deleteImage'), 'data-upload-url' => route('admin.settings.uploadImage')]) !!}
                                 <span class="help-block error">
-                                        <strong class="text"></strong>
-                                    </span>
+                                    <strong class="text"></strong>
+                                </span>
                             </div>
                             <div class="col-md-2 col-sm-2">
                                 <div class="switchery-demo">

@@ -131,7 +131,20 @@ class Slider extends Model
 		}
 		return $rules;
 	}
-
+	
+	public static function boot()
+	{
+		parent::boot();
+		
+		static::saving(function($slide) {
+			\Cache::forget('widgets.slider');
+		});
+		
+		static::deleting(function($slide) {
+			\Cache::forget('widgets.slider');
+		});
+	}
+	
 	/**
 	 * Get image url
 	 *

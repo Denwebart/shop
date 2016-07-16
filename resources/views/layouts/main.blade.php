@@ -106,13 +106,13 @@
                     <a class="logo" href="{{ url('/') }}">
                         @if(isset($siteSettings['logo']))
                             @if(isset($siteSettings['logo']['main']) && is_object($siteSettings['logo']['main']))
-                                <img class="logo-default" src="{{ asset('images/'. $siteSettings['logo']['main']->value) }}" alt=""/>
+                                <img class="logo-default" src="{{ $siteSettings['logo']['main']->getImageUrl() }}" alt=""/>
                             @endif
                             @if(isset($siteSettings['logo']['mobile']) && is_object($siteSettings['logo']['mobile']))
-                                <img class="logo-mobile" src="{{ asset('images/'. $siteSettings['logo']['mobile']->value) }}" alt=""/>
+                                <img class="logo-mobile" src="{{ $siteSettings['logo']['mobile']->getImageUrl() }}" alt=""/>
                             @endif
                             @if(isset($siteSettings['logo']['transparent']) && is_object($siteSettings['logo']['transparent']))
-                                <img class="logo-transparent" src="{{ asset('images/'. $siteSettings['logo']['transparent']->value) }}" alt=""/>
+                                <img class="logo-transparent" src="{{ $siteSettings['logo']['transparent']->getImageUrl() }}" alt=""/>
                             @endif
                         @endif
                         @if(isset($siteSettings['siteTitle']) && is_object($siteSettings['siteTitle']))
@@ -195,7 +195,7 @@
                         <!--  Logo  -->
                         @if(isset($siteSettings['logo']) && isset($siteSettings['logo']['transparent']) && is_object($siteSettings['logo']['transparent']))
                             <a class="logo logo--footer" href="{{ url('/') }}">
-                                <img src="{{ asset('images/'. $siteSettings['logo']['transparent']->value) }}" alt=""/>
+                                <img src="{{ $siteSettings['logo']['transparent']->getImageUrl() }}" alt=""/>
                             </a>
                         @endif
                         <!-- End Logo -->
