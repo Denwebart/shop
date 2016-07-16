@@ -32,13 +32,17 @@ class View
 	public static function getChildrenPages($model, $url, $level = 1, $view = null)
 	{
 		// доделать: оптимизировать количество запросов, возможно выбирать одним запросом?
-		if($model->is_container){
-			$children = $model->publishedChildren()
-				->get(['id', 'parent_id', 'type', 'is_container', 'alias', 'title', 'menu_title', 'updated_at', 'published_at']);
+		if($model->is_container) {
+			$children = \Cache::rememberForever('sitemapItems.children-' . $model->id, function() use($model) {
+				return $model->publishedChildren()
+					->get(['id', 'parent_id', 'type', 'is_container', 'alias', 'title', 'menu_title', 'updated_at', 'published_at']);
+			});
 			
 			if($model->type == Page::TYPE_CATALOG) {
-				$products = $model->publishedProducts()
+				$products = \Cache::rememberForever('sitemapItems.products-' . $model->id, function() use($model) {
+					return $model->publishedProducts()
 					->get(['id', 'category_id', 'alias', 'title', 'updated_at', 'published_at']);
+				});
 			} else {
 				$products = [];
 			}

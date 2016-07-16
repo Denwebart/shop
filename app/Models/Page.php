@@ -188,12 +188,15 @@ class Page extends Model
 			\Cache::forget('leadersOfSells');
 			\Cache::forget('widgets.carousel.sale');
 			
-			if($page->parent) {
-				\Cache::forget('page.'. $page->parent->id .'.children');
-				\Cache::forget('widgets.articles.from-'. $page->parent->id);
-			}
-			\Cache::forget('page.'. $page->id .'.children');
-			\Cache::forget('widgets.articles.from-'. $page->id);
+			\Cache::forget('page.' . $page->id . '.children');
+			\Cache::forget('page.' . $page->parent_id . '.children');
+			
+			\Cache::forget('widgets.articles.from-' . $page->id);
+			\Cache::forget('widgets.articles.from-' . $page->parent_id);
+			
+			\Cache::forget('sitemapItems');
+			\Cache::forget('sitemapItems.children-' . $page->id);
+			\Cache::forget('sitemapItems.children-' . $page->parent_id);
 		});
 		
 		static::deleting(function($page) {
@@ -209,12 +212,15 @@ class Page extends Model
 			\Cache::forget('leadersOfSells');
 			\Cache::forget('widgets.carousel.sale');
 			
-			if($page->parent) {
-				\Cache::forget('page.'. $page->parent->id .'.children');
-				\Cache::forget('widgets.articles.from-'. $page->parent->id);
-			}
-			\Cache::forget('page.'. $page->id .'.children');
-			\Cache::forget('widgets.articles.from-'. $page->id);
+			\Cache::forget('page.' . $page->id . '.children');
+			\Cache::forget('page.' . $page->parent_id . '.children');
+			
+			\Cache::forget('widgets.articles.from-' . $page->id);
+			\Cache::forget('widgets.articles.from-' . $page->parent_id);
+			
+			\Cache::forget('sitemapItems');
+			\Cache::forget('sitemapItems.children-' . $page->id);
+			\Cache::forget('sitemapItems.children-' . $page->parent_id);
 		});
 	}
 

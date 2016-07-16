@@ -177,6 +177,7 @@ class Product extends Model
 			
 			\Cache::forget('leadersOfSells');
 			\Cache::forget('widgets.carousel.sale');
+			\Cache::forget('sitemapItems.products-' . $product->category_id);
 		});
 		
 		static::deleting(function($product) {
@@ -185,6 +186,7 @@ class Product extends Model
 			
 			\Cache::forget('leadersOfSells');
 			\Cache::forget('widgets.carousel.sale');
+			\Cache::forget('sitemapItems.products-' . $product->category_id);
 		});
 	}
 

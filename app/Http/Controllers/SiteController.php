@@ -176,25 +176,12 @@ class SiteController extends Controller
 	 */
 	protected function getSitemapPage($request, $settings, $page)
 	{
-		$sitemapItems = Page::whereParentId(0)
-			->whereIsPublished(1)
-			->where('published_at', '<', date('Y-m-d H:i:s'))
-//			->whereIn('type', [Page::TYPE_PAGE, Page::TYPE_SYSTEM_PAGE])
-			->get(['id', 'parent_id', 'type', 'is_container', 'alias', 'title', 'menu_title']);
-
-//		$sitemapItemsRight = Page::whereParentId(0)
-//			->whereIsPublished(1)
-//			->where('published_at', '<', date('Y-m-d H:i:s'))
-//			->whereIn('type', [Page::TYPE_CATALOG])
-//			->with([
-//				'publishedChildren' => function($query) {
-//					$query->select('id', 'parent_id', 'type', 'is_container', 'alias', 'title', 'menu_title');
-//				},
-//				'publishedProducts' => function($query) {
-//					$query->select('id', 'category_id', 'alias', 'title');
-//				},
-//			])
-//			->get(['id', 'parent_id', 'type', 'is_container', 'alias', 'title', 'menu_title']);
+		$sitemapItems = \Cache::rememberForever('sitemapItems', function() {
+			return Page::whereParentId(0)
+				->whereIsPublished(1)
+				->where('published_at', '<', date('Y-m-d H:i:s'))
+				->get(['id', 'parent_id', 'type', 'is_container', 'alias', 'title', 'menu_title']);
+		});
 
 		return view('sitemap', compact('page', 'sitemapItems'));
 	}
