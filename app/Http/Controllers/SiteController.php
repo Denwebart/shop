@@ -383,7 +383,11 @@ class SiteController extends Controller
 		$page->next = ($direction == 'desc')
 			? collect($previousNext)->last()
 			: collect($previousNext)->first();
-		$productReviews = $page->getReviews();
+		
+		$productReviews = \Cache::rememberForever('product.' . $page->id . '.reviews', function() use($page) {
+			return $page->getReviews();
+		});
+		
 		$viewed = new Viewed();
 		
 		$productProperties = \Cache::rememberForever('product.' . $page->id . '.properties', function() use($page) {
