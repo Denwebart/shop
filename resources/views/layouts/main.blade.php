@@ -48,15 +48,9 @@
     <!--[if IE]>
     <!--<link rel="stylesheet" href="{{ asset('css/ie.css') }}">-->
     <![endif]-->
-    <!--[if lte IE 8]>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.js"></script>
-    <![endif]-->
 
     @stack('styles')
 
-    <!-- Modernizr -->
-    <script src="{{ asset('vendor/modernizr/modernizr.js') }}"></script>
 </head>
 <body>
 <div id="loader-wrapper" class="loader-off">
@@ -258,6 +252,13 @@
 </div>
 
 @yield('bottom')
+
+<!--[if lte IE 8]>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.js"></script>
+<![endif]-->
+<!-- Modernizr -->
+<script src="{{ asset('vendor/modernizr/modernizr.js') }}"></script>
 
 <!-- Vendor -->
 <!-- jQuery 1.12.3-->
