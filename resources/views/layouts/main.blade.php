@@ -278,13 +278,13 @@
 <script src="{{ asset('vendor/countdown/jquery.plugin.min.js') }}"></script>
 <script src="{{ asset('vendor/countdown/jquery.countdown.min.js') }}"></script>
 <!-- jQuery form validation -->
-<script src="{{ asset('vendor/form/jquery.form.js') }}"></script>
-<script src="{{ asset('vendor/form/jquery.validate.min.js') }}"></script>
+{{--<script src="{{ asset('vendor/form/jquery.form.js') }}"></script>--}}
+{{--<script src="{{ asset('vendor/form/jquery.validate.min.js') }}"></script>--}}
 
 @stack('scripts')
 
 <!-- Custom -->
-<script src="{{ asset('js/custom.js') }}"></script>
+<script src="{{ asset('js/custom.min.js') }}"></script>
 <!-- SLIDER REVOLUTION 4.x SCRIPTS  -->
 <script type="text/javascript" src="{{ asset('vendor/rs-plugin/js/jquery.themepunch.tools.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('vendor/rs-plugin/js/jquery.themepunch.revolution.min.js') }}"></script>

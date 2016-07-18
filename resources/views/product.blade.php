@@ -105,7 +105,7 @@
                         <label>Размер:</label>
                         <ul class="options-swatch options-swatch--size options-swatch--lg">
                             @foreach($page->propertySize as $size)
-                                <li class="add-to-cart__size @if(Request::get($size->property_title) == $size->value || count($page->propertySize) == 1) active @endif" title="{{ $size->value }} @if($size->additional_value) ({{ $size->additional_value }}) @endif" data-value="{{ $size->value }}">
+                                <li class="add-to-cart__size tooltip-link @if(Request::get($size->property_title) == $size->value || count($page->propertySize) == 1) active @endif" title="{{ $size->value }} @if($size->additional_value) ({{ $size->additional_value }}) @endif" data-value="{{ $size->value }}">
                                     <span class="swatch-label">{{ $size->value }}</span>
                                 </li>
                             @endforeach
@@ -119,7 +119,7 @@
                         <label>Цвет:</label>
                         <ul class="options-swatch options-swatch--color options-swatch--lg">
                             @foreach($page->propertyColor as $color)
-                                <li class="add-to-cart__color @if(Request::get($color->property_title) == $color->value) active @endif" title="{{ $color->value }}" data-value="{{ $color->value }}">
+                                <li class="add-to-cart__color tooltip-link @if(Request::get($color->property_title) == $color->value) active @endif" title="{{ $color->value }}" data-value="{{ $color->value }}">
                                     <span class="swatch-label color-icon color" style="background: {{ $color->additional_value or '#ffffff' }}"></span>
                                 </li>
                             @endforeach
@@ -395,8 +395,15 @@
     <script src="{{ asset('vendor/jrate/jRate.min.js') }}"></script>
 
     <script type="text/javascript">
-        // Without zoom previews switcher
 
+        jQuery(function($j) {
+            "use strict";
+            $j('#productOther > li').hover(function() {
+                $j(this).toggleClass('show-image');
+            });
+        });
+
+        // Without zoom previews switcher
         jQuery(function($j) {
 
             if (!$j('.product-zoom').length) {

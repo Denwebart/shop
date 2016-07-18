@@ -37,3 +37,35 @@
     </section>
     <!-- End Slider section -->
 @endif
+
+@push('scripts')
+    <script type="text/javascript">
+        jQuery(function($j) {
+
+            "use strict";
+
+            // Simple slider Start (slider on main page)
+            window.setTimeout(function () {
+                $j('.single-slider').css({
+                    'opacity': '1'
+                })
+            }, 0); // 500
+
+            $j('.single-slider > ul').slick({
+                infinite: false,
+                dots: false,
+                arrows: true,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                responsive: [{
+                    breakpoint: 768,
+                    settings: {
+                        arrows: false,
+                        dots: true
+                    }
+                }]
+            });
+            // Simple slider End
+        });
+    </script>
+@endpush

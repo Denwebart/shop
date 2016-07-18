@@ -82,7 +82,7 @@
                         $form.find('.help-block.error').text('');
                         $j('#subscribeSuccess').hide().text('');
                         $j('#subscribeError').hide().text('');
-                    }, 3000);
+                    }, 10000);
                 }
             });
         });

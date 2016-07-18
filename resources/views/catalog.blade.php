@@ -61,8 +61,8 @@
                             <option value="rating" @if(\Request::get('sortby') == 'rating' || \Request::cookie('sortby', 'popular') == 'rating') selected @endif>рейтингу</option>
                             <option value="popular" @if(\Request::get('sortby') == 'popular' || \Request::cookie('sortby', 'popular') == 'popular') selected @endif>популярности</option>
                         </select>
-                        <a href="javascript:void(0)" class="icon icon-arrow-down m-l-10 @if(\Request::get('direction') == 'desc' || \Request::cookie('direction', 'desc') == 'desc') active @endif sort-direction" data-value="desc" rel="nofollow" title="По убыванию" data-toggle="tooltip"></a>
-                        <a href="javascript:void(0)" class="icon icon-arrow-up @if(\Request::get('direction') == 'asc' || \Request::cookie('direction', 'desc') == 'asc') active @endif sort-direction" data-value="asc" rel="nofollow" title="По возрастанию" data-toggle="tooltip"></a>
+                        <a href="javascript:void(0)" class="icon icon-arrow-down tooltip-link m-l-10 @if(\Request::get('direction') == 'desc' || \Request::cookie('direction', 'desc') == 'desc') active @endif sort-direction" data-value="desc" rel="nofollow" title="По убыванию" data-toggle="tooltip"></a>
+                        <a href="javascript:void(0)" class="icon icon-arrow-up tooltip-link @if(\Request::get('direction') == 'asc' || \Request::cookie('direction', 'desc') == 'asc') active @endif sort-direction" data-value="asc" rel="nofollow" title="По возрастанию" data-toggle="tooltip"></a>
                     </div>
                 </div>
             </div>
@@ -94,8 +94,8 @@
                                 <option value="rating" @if(\Request::get('sortby') == 'rating' || \Request::cookie('sortby', 'popular') == 'rating') selected @endif>рейтингу</option>
                                 <option value="popular" @if(\Request::get('sortby') == 'popular' || \Request::cookie('sortby', 'popular') == 'popular') selected @endif>популярности</option>
                             </select>
-                            <a href="javascript:void(0)" class="icon icon-arrow-down m-l-10 @if(\Request::get('direction') == 'desc' || \Request::cookie('direction', 'desc') == 'desc') active @endif sort-direction" data-value="desc" rel="nofollow" title="По убыванию" data-toggle="tooltip"></a>
-                            <a href="javascript:void(0)" class="icon icon-arrow-up @if(\Request::get('direction') == 'asc' || \Request::cookie('direction', 'desc') == 'asc') active @endif sort-direction" data-value="asc" rel="nofollow" title="По возрастанию" data-toggle="tooltip"></a>
+                            <a href="javascript:void(0)" class="icon icon-arrow-down tooltip-link m-l-10 @if(\Request::get('direction') == 'desc' || \Request::cookie('direction', 'desc') == 'desc') active @endif sort-direction" data-value="desc" rel="nofollow" title="По убыванию" data-toggle="tooltip"></a>
+                            <a href="javascript:void(0)" class="icon icon-arrow-up tooltip-link @if(\Request::get('direction') == 'asc' || \Request::cookie('direction', 'desc') == 'asc') active @endif sort-direction" data-value="asc" rel="nofollow" title="По возрастанию" data-toggle="tooltip"></a>
                         </div>
 
                         @if(count($subcategories))
