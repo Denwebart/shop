@@ -171,10 +171,10 @@ class WorkWithUs extends Model
 			
 			$image->save($imagePath . 'origin_' . $fileName);
 			
-			if ($image->width() > 152 && $image->height() > 94 && ($image->width() / 1.62) < $image->height()) {
-				$image->resize(152, null, function ($constraint) {
+			if ($image->width() >= 350) {
+				$image->resize(350, null, function ($constraint) {
 					$constraint->aspectRatio();
-				})->crop(152, 94)->save($imagePath . $fileName);
+				})->save($imagePath . $fileName);
 			} else {
 				$image->save($imagePath . $fileName);
 			}
