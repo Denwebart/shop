@@ -28,15 +28,19 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800,300italic,400italic,600italic,700italic,800italic&subset=latin,cyrillic-ext'
           rel='stylesheet' type='text/css'>
     <!-- Icon Fonts  -->
-    <link rel="stylesheet" href="{{ asset('font/style.css') }}">
+    {{--<link rel="stylesheet" href="{{ asset('font/style.css') }}">--}}
     <!-- Vendor CSS -->
-    <link rel="stylesheet" href="{{ asset('vendor/waves/waves.css') }}">
-    <link rel="stylesheet" href="{{ asset('vendor/slick/slick.css') }}">
-    <link rel="stylesheet" href="{{ asset('vendor/slick/slick-theme.css') }}">
+    {{--<link rel="stylesheet" href="{{ asset('vendor/waves/waves.css') }}">--}}
+    {{--<link rel="stylesheet" href="{{ asset('vendor/slick/slick.css') }}">--}}
+    {{--<link rel="stylesheet" href="{{ asset('vendor/slick/slick-theme.css') }}">--}}
+    {{-- ? --}}
     <link rel="stylesheet" href="{{ asset('vendor/bootstrap-select/bootstrap-select.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('css/compiled.min.css') }}">
+
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/style-colors-gold.css') }}">
+    {{--<link rel="stylesheet" href="{{ asset('css/style.css') }}">--}}
+    {{--<link rel="stylesheet" href="{{ asset('css/style-colors-gold.css') }}">--}}
     <!-- Custom Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,700,700italic,500,500italic&subset=latin-ext,cyrillic-ext' rel='stylesheet' type='text/css'>
     {{--<link href='https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700' rel='stylesheet' type='text/css'>--}}
