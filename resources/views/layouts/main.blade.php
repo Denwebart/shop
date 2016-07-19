@@ -39,7 +39,7 @@
     <link rel="stylesheet" href="{{ asset('css/style-colors-gold.css') }}">
     <!-- Custom Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,700,700italic,500,500italic&subset=latin-ext,cyrillic-ext' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700' rel='stylesheet' type='text/css'>
+    {{--<link href='https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700' rel='stylesheet' type='text/css'>--}}
 
     <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/rs-plugin/css/settings.css') }}" media="screen"/>
@@ -290,100 +290,6 @@
 <script type="text/javascript" src="{{ asset('vendor/rs-plugin/js/jquery.themepunch.tools.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('vendor/rs-plugin/js/jquery.themepunch.revolution.min.js') }}"></script>
 <script type="text/javascript">
-    jQuery(document).ready(function () {
-
-        var windowW = window.innerWidth || $j(window).width();
-        var fullwidth;
-        var fullscreen;
-
-        if (windowW > 767) {
-            fullwidth = "off";
-            fullscreen = "on";
-        } else {
-            fullwidth = "on";
-            fullscreen = "off";
-        }
-
-//        console.log(fullwidth);
-//        console.log(fullscreen);
-
-        jQuery('.tp-banner').show().revolution(
-                {
-                    dottedOverlay: "none",
-                    delay: 16000,
-                    startwidth: 1170,
-                    startheight: 700,
-                    hideThumbs: 200,
-                    hideTimerBar: "on",
-
-                    thumbWidth: 100,
-                    thumbHeight: 50,
-                    thumbAmount: 5,
-
-                    navigationType: "none",
-                    navigationArrows: "",
-                    navigationStyle: "",
-
-                    touchenabled: "on",
-                    onHoverStop: "on",
-
-                    swipe_velocity: 0.7,
-                    swipe_min_touches: 1,
-                    swipe_max_touches: 1,
-                    drag_block_vertical: false,
-
-                    parallax: "mouse",
-                    parallaxBgFreeze: "on",
-                    parallaxLevels: [7, 4, 3, 2, 5, 4, 3, 2, 1, 0],
-
-                    keyboardNavigation: "off",
-
-                    navigationHAlign: "center",
-                    navigationVAlign: "bottom",
-                    navigationHOffset: 0,
-                    navigationVOffset: 20,
-
-                    soloArrowLeftHalign: "left",
-                    soloArrowLeftValign: "center",
-                    soloArrowLeftHOffset: 20,
-                    soloArrowLeftVOffset: 0,
-
-                    soloArrowRightHalign: "right",
-                    soloArrowRightValign: "center",
-                    soloArrowRightHOffset: 20,
-                    soloArrowRightVOffset: 0,
-
-                    shadow: 0,
-                    fullWidth: fullwidth,
-                    fullScreen: fullscreen,
-
-                    spinner: "",
-
-                    stopLoop: "off",
-                    stopAfterLoops: -1,
-                    stopAtSlide: -1,
-
-                    shuffle: "off",
-
-                    autoHeight: "off",
-                    forceFullWidth: "off",
-
-
-                    hideThumbsOnMobile: "off",
-                    hideNavDelayOnMobile: 1500,
-                    hideBulletsOnMobile: "off",
-                    hideArrowsOnMobile: "off",
-                    hideThumbsUnderResolution: 0,
-
-                    hideSliderAtLimit: 0,
-                    hideCaptionAtLimit: 0,
-                    hideAllCaptionAtLilmit: 0,
-                    startWithSlide: 0,
-                    fullScreenOffsetContainer: ".header"
-                });
-
-    });	//ready
-
     function addPageLoader() {
         $j('body').removeClass('loaded').find('#loader-wrapper').removeClass('loader-off');
     }
@@ -399,7 +305,6 @@
         $j('body').addClass('loaded').find('.loader-wrapper').addClass('loader-off');
         $j(hiddenContainerSelector).removeClass('loading');
     }
-
 </script>
 </body>
 </html>

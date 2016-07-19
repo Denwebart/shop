@@ -6763,7 +6763,7 @@ body.fullwidth .header__dropdowns-container {
 .logo {
     float: none;
     display: inline-block;
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Roboto', sans-serif;
     text-decoration: none;
 }
 
@@ -12994,86 +12994,86 @@ body.modal-open {
     vertical-align: top;
 }
 
-.tp-banner-container {
-    width: 100%;
-    position: relative;
-    padding: 0;
-    opacity: 0;
-    height: 2000px;
-}
+/*.tp-banner-container {*/
+    /*width: 100%;*/
+    /*position: relative;*/
+    /*padding: 0;*/
+    /*opacity: 0;*/
+    /*height: 2000px;*/
+/*}*/
 
-.tp-banner {
-    width: 100%;
-    position: relative;
-}
+/*.tp-banner {*/
+    /*width: 100%;*/
+    /*position: relative;*/
+/*}*/
 
-.tp-banner-fullscreen-container {
-    width: 100%;
-    position: relative;
-    padding: 0;
-}
+/*.tp-banner-fullscreen-container {*/
+    /*width: 100%;*/
+    /*position: relative;*/
+    /*padding: 0;*/
+/*}*/
 
-.tp-caption--wd-1 {
-    font-size: 115px;
-    line-height: 1em;
-    font-family: 'Ubuntu', sans-serif;
-    font-weight: bold;
-}
+/*.tp-caption--wd-1 {*/
+    /*font-size: 115px;*/
+    /*line-height: 1em;*/
+    /*font-family: 'Ubuntu', sans-serif;*/
+    /*font-weight: bold;*/
+/*}*/
 
-.tp-caption--wd-2 {
-    font-size: 84px;
-    line-height: 1em;
-    font-weight: lighter;
-    font-family: 'Ubuntu', sans-serif;
-}
+/*.tp-caption--wd-2 {*/
+    /*font-size: 84px;*/
+    /*line-height: 1em;*/
+    /*font-weight: lighter;*/
+    /*font-family: 'Ubuntu', sans-serif;*/
+/*}*/
 
-.tp-caption--wd-3 {
-    font-size: 26px;
-    line-height: 1em;
-    font-family: 'Roboto', sans-serif;
-}
+/*.tp-caption--wd-3 {*/
+    /*font-size: 26px;*/
+    /*line-height: 1em;*/
+    /*font-family: 'Roboto', sans-serif;*/
+/*}*/
 
-.tp-caption--wd-4 {
-    font-size: 64px;
-    line-height: 1em;
-    font-family: 'Ubuntu', sans-serif;
-    font-weight: bold;
-}
+/*.tp-caption--wd-4 {*/
+    /*font-size: 64px;*/
+    /*line-height: 1em;*/
+    /*font-family: 'Ubuntu', sans-serif;*/
+    /*font-weight: bold;*/
+/*}*/
 
-.tp-caption--wd-5 {
-    font-size: 44px;
-    line-height: 1em;
-    font-family: 'Ubuntu', sans-serif;
-}
+/*.tp-caption--wd-5 {*/
+    /*font-size: 44px;*/
+    /*line-height: 1em;*/
+    /*font-family: 'Ubuntu', sans-serif;*/
+/*}*/
 
-.tp-caption--wd-6 {
-    font-size: 16px;
-    line-height: 1em;
-    font-family: 'Roboto', sans-serif;
-}
+/*.tp-caption--wd-6 {*/
+    /*font-size: 16px;*/
+    /*line-height: 1em;*/
+    /*font-family: 'Roboto', sans-serif;*/
+/*}*/
 
-.tp-caption--wd-7 {
-    font-size: 64px;
-    line-height: 1em;
-    font-family: 'Roboto', sans-serif;
-}
+/*.tp-caption--wd-7 {*/
+    /*font-size: 64px;*/
+    /*line-height: 1em;*/
+    /*font-family: 'Roboto', sans-serif;*/
+/*}*/
 
-.tp-caption--wd-8 {
-    font-size: 36px;
-    line-height: 1em;
-    font-family: 'Ubuntu', sans-serif;
-}
+/*.tp-caption--wd-8 {*/
+    /*font-size: 36px;*/
+    /*line-height: 1em;*/
+    /*font-family: 'Ubuntu', sans-serif;*/
+/*}*/
 
-.tp-caption .btn--wd {
-    font-size: 18px;
-}
+/*.tp-caption .btn--wd {*/
+    /*font-size: 18px;*/
+/*}*/
 
-@media (max-width: 767px) {
-    .tp-caption .btn--wd.btn--xl {
-        font-size: 16px;
-        padding: 12px 20px;
-    }
-}
+/*@media (max-width: 767px) {*/
+    /*.tp-caption .btn--wd.btn--xl {*/
+        /*font-size: 16px;*/
+        /*padding: 12px 20px;*/
+    /*}*/
+/*}*/
 
 .scroll-to-content {
     position: absolute;
@@ -13198,252 +13198,252 @@ body.modal-open {
     }
 }
 
-.banner {
-    position: relative;
-    cursor: pointer;
-    line-height: 1em;
-    -webkit-transform-style: preserve-3d;
-    -moz-transform-style: preserve-3d;
-    transform-style: preserve-3d;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    -webkit-transition: box-shadow 300ms 0s ease;
-    -moz-transition: box-shadow 300ms 0s ease;
-    -ms-transition: box-shadow 300ms 0s ease;
-    -o-transition: box-shadow 300ms 0s ease;
-    transition: box-shadow 300ms 0s ease;
-}
+/*.banner {*/
+    /*position: relative;*/
+    /*cursor: pointer;*/
+    /*line-height: 1em;*/
+    /*-webkit-transform-style: preserve-3d;*/
+    /*-moz-transform-style: preserve-3d;*/
+    /*transform-style: preserve-3d;*/
+    /*box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);*/
+    /*-webkit-transition: box-shadow 300ms 0s ease;*/
+    /*-moz-transition: box-shadow 300ms 0s ease;*/
+    /*-ms-transition: box-shadow 300ms 0s ease;*/
+    /*-o-transition: box-shadow 300ms 0s ease;*/
+    /*transition: box-shadow 300ms 0s ease;*/
+/*}*/
 
-.banner:hover {
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-}
+/*.banner:hover {*/
+    /*box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);*/
+/*}*/
 
-.banner--image {
-    display: inline-block;
-}
+/*.banner--image {*/
+    /*display: inline-block;*/
+/*}*/
 
-@media (max-width: 991px) {
-    .banner--image {
-        margin-bottom: 34px;
-    }
-}
+/*@media (max-width: 991px) {*/
+    /*.banner--image {*/
+        /*margin-bottom: 34px;*/
+    /*}*/
+/*}*/
 
-.banner--image img {
-    width: 100%;
-    max-width: 100%;
-}
+/*.banner--image img {*/
+    /*width: 100%;*/
+    /*max-width: 100%;*/
+/*}*/
 
-.banner--image__text {
-    position: absolute;
-    padding: 2%;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-}
+/*.banner--image__text {*/
+    /*position: absolute;*/
+    /*padding: 2%;*/
+    /*top: 50%;*/
+    /*-webkit-transform: translateY(-50%);*/
+    /*-ms-transform: translateY(-50%);*/
+    /*transform: translateY(-50%);*/
+/*}*/
 
-.banner--image__text--bottom {
-    top: 70%;
-}
+/*.banner--image__text--bottom {*/
+    /*top: 70%;*/
+/*}*/
 
-.banner--image__text--left {
-    width: 45%;
-    left: 6%;
-}
+/*.banner--image__text--left {*/
+    /*width: 45%;*/
+    /*left: 6%;*/
+/*}*/
 
-.banner--image__text--right {
-    width: 45%;
-    right: 6%;
-}
+/*.banner--image__text--right {*/
+    /*width: 45%;*/
+    /*right: 6%;*/
+/*}*/
 
-@media (max-width: 1199px) and (min-width: 992px) {
-    .banner--image__text--left {
-        width: 55%;
-        left: 6%;
-    }
+/*@media (max-width: 1199px) and (min-width: 992px) {*/
+    /*.banner--image__text--left {*/
+        /*width: 55%;*/
+        /*left: 6%;*/
+    /*}*/
 
-    .banner--image__text--right {
-        width: 55%;
-        right: 6%;
-    }
-}
+    /*.banner--image__text--right {*/
+        /*width: 55%;*/
+        /*right: 6%;*/
+    /*}*/
+/*}*/
 
-.banner--image__text .btn {
-    margin-top: 1.2em;
-}
+/*.banner--image__text .btn {*/
+    /*margin-top: 1.2em;*/
+/*}*/
 
-@media (max-width: 767px) {
-    .banner--image__text .btn {
-        margin-top: 0.8em;
-    }
-}
+/*@media (max-width: 767px) {*/
+    /*.banner--image__text .btn {*/
+        /*margin-top: 0.8em;*/
+    /*}*/
+/*}*/
 
-.banner--image__text h2 {
-    font-size: 5.538em;
-    line-height: 1em;
-    padding-bottom: 0.2em;
-    font-family: 'Ubuntu', sans-serif;
-}
+/*.banner--image__text h2 {*/
+    /*font-size: 5.538em;*/
+    /*line-height: 1em;*/
+    /*padding-bottom: 0.2em;*/
+    /*font-family: 'Ubuntu', sans-serif;*/
+/*}*/
 
-@media (max-width: 1199px) {
-    .banner--image__text h2 {
-        font-size: 4.8em;
-        line-height: 0.9em;
-    }
-}
+/*@media (max-width: 1199px) {*/
+    /*.banner--image__text h2 {*/
+        /*font-size: 4.8em;*/
+        /*line-height: 0.9em;*/
+    /*}*/
+/*}*/
 
-@media (max-width: 991px) {
-    .banner--image__text h2 {
-        font-size: 3.8em;
-        line-height: 0.8em;
-    }
-}
+/*@media (max-width: 991px) {*/
+    /*.banner--image__text h2 {*/
+        /*font-size: 3.8em;*/
+        /*line-height: 0.8em;*/
+    /*}*/
+/*}*/
 
-@media (max-width: 767px) {
-    .banner--image__text h2 {
-        font-size: 2.8em;
-        line-height: 0.8em;
-    }
-}
+/*@media (max-width: 767px) {*/
+    /*.banner--image__text h2 {*/
+        /*font-size: 2.8em;*/
+        /*line-height: 0.8em;*/
+    /*}*/
+/*}*/
 
-.banner--image__text h3 {
-    font-size: 5.538em;
-    line-height: 1em;
-    padding-bottom: 0;
-    font-family: 'Ubuntu', sans-serif;
-}
+/*.banner--image__text h3 {*/
+    /*font-size: 5.538em;*/
+    /*line-height: 1em;*/
+    /*padding-bottom: 0;*/
+    /*font-family: 'Ubuntu', sans-serif;*/
+/*}*/
 
-@media (max-width: 1199px) {
-    .banner--image__text h3 {
-        font-size: 4.2em;
-        line-height: 0.9em;
-    }
-}
+/*@media (max-width: 1199px) {*/
+    /*.banner--image__text h3 {*/
+        /*font-size: 4.2em;*/
+        /*line-height: 0.9em;*/
+    /*}*/
+/*}*/
 
-@media (max-width: 991px) {
-    .banner--image__text h3 {
-        font-size: 3.2em;
-        line-height: 0.8em;
-    }
-}
+/*@media (max-width: 991px) {*/
+    /*.banner--image__text h3 {*/
+        /*font-size: 3.2em;*/
+        /*line-height: 0.8em;*/
+    /*}*/
+/*}*/
 
-@media (max-width: 767px) {
-    .banner--image__text h3 {
-        font-size: 2.2em;
-        line-height: 0.8em;
-    }
-}
+/*@media (max-width: 767px) {*/
+    /*.banner--image__text h3 {*/
+        /*font-size: 2.2em;*/
+        /*line-height: 0.8em;*/
+    /*}*/
+/*}*/
 
-.banner--image__text h5 {
-    font-size: 1.654em;
-    line-height: 1.2em;
-    padding-bottom: 0;
-    font-family: 'Ubuntu', sans-serif;
-    font-weight: 300;
-}
+/*.banner--image__text h5 {*/
+    /*font-size: 1.654em;*/
+    /*line-height: 1.2em;*/
+    /*padding-bottom: 0;*/
+    /*font-family: 'Ubuntu', sans-serif;*/
+    /*font-weight: 300;*/
+/*}*/
 
-@media (max-width: 767px) {
-    .banner--image__text h5 {
-        font-size: 1.3em;
-    }
-}
+/*@media (max-width: 767px) {*/
+    /*.banner--image__text h5 {*/
+        /*font-size: 1.3em;*/
+    /*}*/
+/*}*/
 
-.banner--image__text h6 {
-    font-size: 1.308em;
-    line-height: 1.3em;
-    padding-bottom: 0;
-    font-family: 'Ubuntu', sans-serif;
-    font-weight: 300;
-}
+/*.banner--image__text h6 {*/
+    /*font-size: 1.308em;*/
+    /*line-height: 1.3em;*/
+    /*padding-bottom: 0;*/
+    /*font-family: 'Ubuntu', sans-serif;*/
+    /*font-weight: 300;*/
+/*}*/
 
-@media (max-width: 767px) {
-    .banner--image__text h6 {
-        font-size: 1.1em;
-    }
-}
+/*@media (max-width: 767px) {*/
+    /*.banner--image__text h6 {*/
+        /*font-size: 1.1em;*/
+    /*}*/
+/*}*/
 
-.banner--icon {
-    margin-bottom: 34px;
-}
+/*.banner--icon {*/
+    /*margin-bottom: 34px;*/
+/*}*/
 
-@media (max-width: 1199px) and (min-width: 992px) {
-    .banner--icon {
-        margin-bottom: 10px;
-    }
-}
+/*@media (max-width: 1199px) and (min-width: 992px) {*/
+    /*.banner--icon {*/
+        /*margin-bottom: 10px;*/
+    /*}*/
+/*}*/
 
-.banner--icon.banner--last {
-    margin-bottom: 0;
-}
+/*.banner--icon.banner--last {*/
+    /*margin-bottom: 0;*/
+/*}*/
 
-.banner--icon__icon {
-    padding: 0.75em 0 0.6em 0;
-    width: 1.643em;
-    font-size: 4.615em;
-    line-height: 1em;
-    text-align: center;
-}
+/*.banner--icon__icon {*/
+    /*padding: 0.75em 0 0.6em 0;*/
+    /*width: 1.643em;*/
+    /*font-size: 4.615em;*/
+    /*line-height: 1em;*/
+    /*text-align: center;*/
+/*}*/
 
-@media (max-width: 1199px) and (min-width: 992px) {
-    .banner--icon__icon {
-        padding: 0.38em 0 0.4em 0;
-    }
-}
+/*@media (max-width: 1199px) and (min-width: 992px) {*/
+    /*.banner--icon__icon {*/
+        /*padding: 0.38em 0 0.4em 0;*/
+    /*}*/
+/*}*/
 
-.banner--icon__text {
-    position: absolute;
-    width: 100%;
-    padding: 0 5% 0 8.582445em;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-}
+/*.banner--icon__text {*/
+    /*position: absolute;*/
+    /*width: 100%;*/
+    /*padding: 0 5% 0 8.582445em;*/
+    /*top: 50%;*/
+    /*-webkit-transform: translateY(-50%);*/
+    /*-ms-transform: translateY(-50%);*/
+    /*transform: translateY(-50%);*/
+/*}*/
 
-.banner--icon__text h4 {
-    font-size: 1.846em;
-    padding: 0;
-    margin: 0;
-}
+/*.banner--icon__text h4 {*/
+    /*font-size: 1.846em;*/
+    /*padding: 0;*/
+    /*margin: 0;*/
+/*}*/
 
-.banner--icon__text__divider {
-    height: 10px;
-    border-bottom: 1px solid #ffffff;
-    margin-bottom: 10px;
-}
+/*.banner--icon__text__divider {*/
+    /*height: 10px;*/
+    /*border-bottom: 1px solid #ffffff;*/
+    /*margin-bottom: 10px;*/
+/*}*/
 
-@media (max-width: 480px) {
-    .banner {
-        font-size: 8.5px;
-    }
-}
+/*@media (max-width: 480px) {*/
+    /*.banner {*/
+        /*font-size: 8.5px;*/
+    /*}*/
+/*}*/
 
-.banner-collection,
-#bannerCollection [class*="col-"] {
-    float: none;
-    display: inline-block;
-    vertical-align: top;
-    margin-right: -4px;
-    margin-bottom: 45px;
-}
+/*.banner-collection,*/
+/*#bannerCollection [class*="col-"] {*/
+    /*float: none;*/
+    /*display: inline-block;*/
+    /*vertical-align: top;*/
+    /*margin-right: -4px;*/
+    /*margin-bottom: 45px;*/
+/*}*/
 
-@media (max-width: 767px) {
-    .banner-collection,
-    #bannerCollection [class*="col-"] {
-        display: block;
-        margin-right: 0;
-    }
-}
+/*@media (max-width: 767px) {*/
+    /*.banner-collection,*/
+    /*#bannerCollection [class*="col-"] {*/
+        /*display: block;*/
+        /*margin-right: 0;*/
+    /*}*/
+/*}*/
 
-.banner-collection img,
-#bannerCollection [class*="col-"] img {
-    max-width: 100%;
-}
+/*.banner-collection img,*/
+/*#bannerCollection [class*="col-"] img {*/
+    /*max-width: 100%;*/
+/*}*/
 
-.banner-collection .banner-collection__title,
-#bannerCollection [class*="col-"] .banner-collection__title {
-    margin: 15px 0 15px;
-    padding: 0;
-}
+/*.banner-collection .banner-collection__title,*/
+/*#bannerCollection [class*="col-"] .banner-collection__title {*/
+    /*margin: 15px 0 15px;*/
+    /*padding: 0;*/
+/*}*/
 
 .blog-widget {
     position: relative;
