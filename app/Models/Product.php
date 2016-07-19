@@ -592,9 +592,9 @@ class Product extends Model
 			$image->insert($imagePath . 'watermark.png', 'center')
 				->save($imagePath . 'zoom_' . $fileName);
 
-			$image->resize(458, null, function ($constraint) {
+			$image->resize(335, null, function ($constraint) {
 					$constraint->aspectRatio();
-				})->crop(458, 575)
+				})->crop(335, 421)
 				->save($imagePath . $fileName);
 
 			$image->resize(100, null, function ($constraint) {

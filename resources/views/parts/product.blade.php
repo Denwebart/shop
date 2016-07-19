@@ -41,8 +41,8 @@
             <ul class="options-swatch options-swatch--color">
                 @foreach($item->propertyColor as $color)
                     <li @if(in_array($color->value, explode(',', \Request::get($color->property->title)))) class="active" @endif>
-                        <a href="{{ $item->getUrl([$color->property->title => $color->value]) }}" class="tooltip-link" title="{{ $color->value }}">
-                            <span class="swatch-label color-icon color" style="background: {{ $color->additional_value or '#ffffff' }}"></span>
+                        <a href="{{ $item->getUrl([$color->property->title => $color->value]) }}">
+                            <span class="swatch-label color-icon color tooltip-link" title="{{ $color->value }}" style="background: {{ $color->additional_value or '#ffffff' }}"></span>
                         </a>
                     </li>
                 @endforeach

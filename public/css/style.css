@@ -11398,6 +11398,10 @@ form label.error {
     padding: 0;
     text-transform: uppercase;
 }
+.row-view .product-preview__info__title h2,
+.row-view .product-preview__info__title a {
+    font-size: 1.4em;
+}
 .product-preview__info__title a:hover {
     color: #212121;
     text-decoration: underline;
