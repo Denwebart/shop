@@ -10,7 +10,7 @@
 <p class="text-muted font-13 m-b-15">
 	Виджет "С нами сотрудничают" на главной странице сайта.
     <br>
-    Рекомендуемая ширина изображения - 350px.
+    Рекомендуемая ширина изображения - <strong>350px</strong>.
 </p>
 
 <div id="work-with-us-container" class="form-horizontal form-editable">
@@ -45,7 +45,7 @@
             </div>
 
             <small class="help-block">
-                Рекомендуемая ширина изображения - 350px.
+                Рекомендуемая ширина изображения - <strong>350px</strong>.
             </small>
         </div>
         <div class="col-sm-2 col-md-2">

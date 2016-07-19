@@ -180,8 +180,8 @@ class Slider extends Model
 
 			$image->save($imagePath . 'origin_' . $fileName);
 
-			if ($image->width() > 760) {
-				$image->resize(760, null, function ($constraint) {
+			if ($image->width() >= 1140) {
+				$image->resize(1140, null, function ($constraint) {
 					$constraint->aspectRatio();
 				})->save($imagePath . $fileName);
 			} else {
