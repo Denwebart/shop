@@ -254,10 +254,12 @@
 @endsection
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('vendor/nouislider/nouislider.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/bootstrap-select/bootstrap-select.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/nouislider/nouislider.min.css') }}">
 @endpush
 
 @push('scripts')
+    <script src="{{ asset('vendor/bootstrap-select/bootstrap-select.min.js') }}"></script>
     <script src="{{ asset('vendor/elevatezoom/jquery.elevatezoom.js') }}"></script>
     <script src="{{ asset('vendor/isotope/isotope.pkgd.min.js') }}"></script>
     <script src="{{ asset('vendor/nouislider/nouislider.min.js') }}"></script>
