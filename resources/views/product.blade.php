@@ -21,7 +21,7 @@
                         </a>
                         <span class="product-other__link__image">
                             @if($page->previous->image)
-                                <img src="{{ asset($page->getImagePath() . $page->previous->id . '/' . $page->previous->image) }}" alt="{{ $page->previous->image_alt }}"/>
+                                <img src="{{ asset($page->getImagePath() . $page->previous->id . '/mini_' . $page->previous->image) }}" alt="{{ $page->previous->image_alt }}"/>
                             @else
                                 <img src="{{ $page->getDefaultImage() }}" alt="{{ $page->previous->image_alt }}"/>
                             @endif
@@ -35,7 +35,7 @@
                         </a>
                         <span class="product-other__link__image">
                             @if($page->next->image)
-                                <img src="{{ asset($page->getImagePath() . $page->next->id . '/' . $page->next->image) }}" alt="{{ $page->next->image_alt }}"/>
+                                <img src="{{ asset($page->getImagePath() . $page->next->id . '/mini_' . $page->next->image) }}" alt="{{ $page->next->image_alt }}"/>
                             @else
                                 <img src="{{ $page->getDefaultImage() }}" alt="{{ $page->next->image_alt }}"/>
                             @endif
@@ -53,7 +53,7 @@
                 <div class="col-sm-4 col-md-4 col-lg-5 hidden-xs">
                     <div class="product-main-image">
                         <div class="product-main-image__item">
-                            <img class="product-zoom" src='{{ $page->getImageUrl() }}' data-zoom-image="{{ $page->getImageUrl('zoom') }}"/>
+                            <img class="product-zoom" src='{{ $page->getImageUrl('zoom') }}' data-zoom-image="{{ $page->getImageUrl('zoom') }}"/>
                         </div>
                         <div class="product-main-image__zoom"></div>
                     </div>
@@ -62,7 +62,7 @@
                             <ul id="smallGallery">
                                 @foreach($page->images as $image)
                                     <li>
-                                        <a href="#" data-image="{{ $image->getImageUrl() }}" data-zoom-image="{{ $image->getImageUrl('zoom') }}">
+                                        <a href="#" data-image="{{ $image->getImageUrl('zoom') }}" data-zoom-image="{{ $image->getImageUrl('zoom') }}">
                                             <img src="{{ $image->getImageUrl('mini') }}" alt="{{ $image->image_alt }}"/>
                                         </a>
                                     </li>
