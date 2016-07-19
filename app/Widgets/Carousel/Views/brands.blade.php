@@ -15,7 +15,7 @@
             <div class="brands brands-carousel animated-arrows mobile-special-arrows">
                 @foreach($items as $item)
                     <div class="brands__item">
-                        <img src="{{ $item->getImageUrl() }}" data-lazy="{{ $item->getImageUrl() }}" alt="{{ $item->title }}" title="{{ $item->title }}" />
+                        <img src="{{ $item->getImageUrl() }}" data-lazy="{{ $item->getImageUrl() }}" alt="{{ $item->title }}" title="{{ $item->title }}" class="tooltip-link" />
                     </div>
                 @endforeach
             </div>

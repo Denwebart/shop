@@ -14262,6 +14262,10 @@ body.modal-open {
     margin: 2px 15px 10px;
 }
 
+.brands-carousel .slick-list {
+    overflow: visible;
+}
+
 .brands-carousel.slick-slider {
     margin: 0 -15px;
 }

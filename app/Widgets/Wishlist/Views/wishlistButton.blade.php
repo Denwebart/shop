@@ -5,7 +5,7 @@
  */
 ?>
 
-<a href="{{ route('wishlist.index') }}" class="btn dropdown-toggle btn--links--dropdown header__wishlist__button header__dropdowns__button" title="Список желаний" data-toggle="tooltip">
+<a href="{{ route('wishlist.index') }}" class="btn tooltip-link dropdown-toggle btn--links--dropdown header__wishlist__button header__dropdowns__button" title="Список желаний">
     <span class="icon icon-favorite"></span>
     @if(count($products))
         <span class="badge badge--menu count-wishlist-items">

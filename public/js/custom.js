@@ -1488,7 +1488,7 @@ jQuery(function ($) {
 jQuery(function($j) {
 
     "use strict";
-    $j('.tooltip-link').tooltip();
+    $j('.tooltip-link, .ya-share2__link').tooltip();
 });
 
 // Open menu button small Header

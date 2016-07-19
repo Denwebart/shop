@@ -9,6 +9,8 @@
 
 <p class="text-muted font-13 m-b-15">
 	Виджет "С нами сотрудничают" на главной странице сайта.
+    <br>
+    Рекомендуемая ширина изображения - 350px.
 </p>
 
 <div id="work-with-us-container" class="form-horizontal form-editable">
@@ -41,6 +43,10 @@
                 {!! Form::file('image', ['id' => 'image', 'class' => 'dropify', 'data-default-file' => false, 'data-height' => '100', 'data-max-file-size' => '3M']) !!}
                 <span class="help-block error image_error"></span>
             </div>
+
+            <small class="help-block">
+                Рекомендуемая ширина изображения - 350px.
+            </small>
         </div>
         <div class="col-sm-2 col-md-2">
             <div class="form-group m-t-25 m-r-0 m-l-0">

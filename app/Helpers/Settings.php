@@ -38,7 +38,7 @@ class Settings
 	public function getCategory($category)
 	{
 		$settings = \Cache::rememberForever('settings.category-' . $category, function() use($category) {
-			$settings = Setting::select(['id', 'key', 'category', 'value', 'is_active'])
+			$settings = Setting::select(['id', 'key', 'category', 'title', 'value', 'is_active'])
 				->whereCategory($category)
 				->whereIsActive(1)
 				->whereNotNull('value')

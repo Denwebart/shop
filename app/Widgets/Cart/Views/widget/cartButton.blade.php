@@ -6,7 +6,7 @@
 ?>
 
 <div class="dropdown pull-right">
-    <a href="#" class="btn dropdown-toggle btn--links--dropdown header__cart__button header__dropdowns__button" data-toggle="dropdown" title="Корзина" data-toggle="tooltip">
+    <a href="#" class="btn tooltip-link dropdown-toggle btn--links--dropdown header__cart__button header__dropdowns__button" data-toggle="dropdown" title="Корзина">
         <span class="icon icon-bag-alt"></span>
         <span class="badge badge--menu count-cart-items @if(!count($cart['products'])) hidden @endif">
             {{ $cart['count'] }}
