@@ -17,6 +17,10 @@
         @endif
     @endif
 
+    <meta property="og:title" content="{{ $page->getTitle() }}"/>
+    <meta property="og:image" content="{{ $page->getPageImage() }}"/>
+    <meta property="og:description" content="{{ $page->getIntrotext() }}"/>
+
     <meta name="w1-verification" content="149973184407" />
     
     <meta name="csrf-token" content="{!! csrf_token() !!}">

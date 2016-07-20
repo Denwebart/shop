@@ -383,6 +383,15 @@ class Page extends Model
 			? $this->introtext
 			: Str::closeTags(Str::limit($this->content, $limit));
 	}
+	
+	public function getPageImage()
+	{
+		return $this->getImageUrl()
+			? $this->getImageUrl()
+			: ($image = Str::getImageFromHtml($this->content))
+				? $image
+				: '';
+	}
 
 	/**
 	 * Get page url

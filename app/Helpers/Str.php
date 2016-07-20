@@ -186,7 +186,22 @@ class Str
 	{
 		return str_replace('</a>', '', preg_replace('/<a\b[^>]*+>|<\/a\b[^>]*+>/', '', $html));
 	}
-
+	
+	/**
+	 * Get first image from html
+	 *
+	 * @param $html
+	 * @return mixed
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public static function getImageFromHtml($html)
+	{
+		preg_match('/<img.+src=[\'"](?P<src>.+?)[\'"].*>/i', $html, $image);
+		return $image['src'];
+	}
+	
 	/**
 	 * Склонение слова "товар" в зависимости от количества
 	 * @param integer $productsCount

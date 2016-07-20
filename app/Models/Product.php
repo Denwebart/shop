@@ -367,6 +367,15 @@ class Product extends Model
 			? $this->introtext
 			: Str::closeTags(Str::limit($this->content, $limit));
 	}
+	
+	public function getPageImage()
+	{
+		return $this->getImageUrl(null, false)
+			? $this->getImageUrl(null, false)
+			: $this->images
+				? $this->images->first()->getImageUrl()
+				: $this->getDefaultImage();
+	}
 
 	/**
 	 * Get page url
