@@ -57,8 +57,6 @@
     {{--<link rel="stylesheet" type="text/css" href="{{ asset('vendor/rs-plugin/css/settings.css') }}" media="screen"/>--}}
     <!-- Head Libs -->
 
-    <!--[if IE]><link rel="stylesheet" href="{{ asset('css/ie.css') }}"><![endif]-->
-
     @stack('styles')
 
 </head>
