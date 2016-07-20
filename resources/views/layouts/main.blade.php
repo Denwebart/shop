@@ -69,7 +69,7 @@
 </div>
 <div class="wrapper">
     <!-- Header section -->
-    <header class="header header--sticky"> <!-- header--sticky -->
+    <header class="header header--sticky">
         <div class="header-line hidden-xs">
             <div class="container">
                 <div class="pull-left hidden-sm">
