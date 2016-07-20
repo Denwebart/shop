@@ -4786,8 +4786,8 @@ body.fullwidth .header__dropdowns-container {
     #slidemenu .navbar-nav > li .dropdown-menu {
         width: auto;
         top: auto;
-        border-top-style: 1px;
-        border-top-width: solid;
+        border-top-style: solid;
+        border-top-width: 1px;
     }
 
     #slidemenu .navbar-nav > li .megamenu .container {
