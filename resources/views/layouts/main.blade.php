@@ -268,16 +268,14 @@
 <!-- Vendor -->
 <!-- jQuery 1.12.3-->
 <script src="{{ asset('vendor/jquery/jquery-1.12.3.js') }}"></script>
-<!-- jQuery 1.11.2-->
-{{--<script src="{{ asset('vendor/jquery/jquery.js') }}"></script>--}}
 <!-- Bootstrap 3-->
 <script src="{{ asset('vendor/bootstrap/bootstrap.min.js') }}"></script>
 <!-- Specific Page Vendor -->
 <script src="{{ asset('vendor/waves/waves.min.js') }}"></script>
 <script src="{{ asset('vendor/slick/slick.min.js') }}"></script>
-<script src="{{ asset('vendor/parallax/jquery.parallax-1.1.3.js') }}"></script>
-<script src="{{ asset('vendor/waypoints/jquery.waypoints.min.js') }}"></script>
-<script src="{{ asset('vendor/waypoints/sticky.min.js') }}"></script>
+{{--<script src="{{ asset('vendor/parallax/jquery.parallax-1.1.3.js') }}"></script>--}}
+{{--<script src="{{ asset('vendor/waypoints/jquery.waypoints.min.js') }}"></script>--}}
+{{--<script src="{{ asset('vendor/waypoints/sticky.min.js') }}"></script>--}}
 <script src="{{ asset('vendor/doubletaptogo/doubletaptogo.js') }}"></script>
 <script src="{{ asset('vendor/imagesloaded/imagesloaded.pkgd.min.js') }}"></script>
 <script src="{{ asset('vendor/countdown/jquery.plugin.min.js') }}"></script>
@@ -291,8 +289,9 @@
 <!-- Custom -->
 <script src="{{ asset('js/custom.min.js') }}"></script>
 <!-- SLIDER REVOLUTION 4.x SCRIPTS  -->
-<script type="text/javascript" src="{{ asset('vendor/rs-plugin/js/jquery.themepunch.tools.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('vendor/rs-plugin/js/jquery.themepunch.revolution.min.js') }}"></script>
+{{--<script type="text/javascript" src="{{ asset('vendor/rs-plugin/js/jquery.themepunch.tools.min.js') }}"></script>--}}
+{{--<script type="text/javascript" src="{{ asset('vendor/rs-plugin/js/jquery.themepunch.revolution.min.js') }}"></script>--}}
+
 <script type="text/javascript">
     function addPageLoader() {
         $j('body').removeClass('loaded').find('#loader-wrapper').removeClass('loader-off');

@@ -15,7 +15,7 @@
                 @endif
                 @foreach($items as $item)
                     <div class="testimonials">
-                        <div class="col-sm-6 col-md-3 animation" data-animation="fadeInUp" data-animation-delay="0.1s">
+                        <div class="col-sm-6 col-md-3 m-b-20 animation" data-animation="fadeInUp" data-animation-delay="0.1s">
                             <div class="testimonials__item">
                                 <div class="testimonials__item__image-sell">
                                     <a href="#">
@@ -32,7 +32,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="divider divider--sm visible-xs"></div>
+                        <div class="divider divider--xs visible-xs"></div>
                     </div>
                 @endforeach
             </div>
