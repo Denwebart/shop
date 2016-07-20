@@ -7,7 +7,7 @@
 
 @if(count($items))
     <!-- Slider section -->
-    <section class="content p-t-0 p-b-0">
+    <div class="content p-t-0 p-b-0">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -34,7 +34,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </div>
     <!-- End Slider section -->
 @endif
 
