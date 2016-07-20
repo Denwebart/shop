@@ -269,7 +269,7 @@
 <!-- Web Fonts  -->
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800,300italic,400italic,600italic,700italic,800italic&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
 <!-- Custom Fonts -->
-<link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,700,700italic,500,500italic&subset=latin-ext,cyrillic-ext' rel='stylesheet' type='text/css'>
+{{--<link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,700,700italic,500,500italic&subset=latin-ext,cyrillic-ext' rel='stylesheet' type='text/css'>--}}
 
 <script src="{{ asset('js/compiled.min.js') }}"></script>
 
