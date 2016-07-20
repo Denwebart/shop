@@ -25,7 +25,7 @@
             <meta property="og:image" content="{{ $siteSettings['logo']['main']->getImageUrl() }}"/>
         @endif
     @endif
-    <meta property="og:description" content="{{ $page->getIntrotext(50) }}"/>
+    <meta property="og:description" content="{{ $page->getDescription(50) }}"/>
 
     <meta name="w1-verification" content="149973184407" />
     

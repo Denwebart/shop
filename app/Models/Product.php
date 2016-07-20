@@ -359,7 +359,23 @@ class Product extends Model
 	{
 		return $this->meta_key ? $this->meta_key : '';
 	}
-
+	
+	/**
+	 * Description for meta-tag og:description
+	 * @param null $limit
+	 * @return string
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function getDescription($limit = null)
+	{
+		$limit = $limit ? $limit : 250;
+		return $this->introtext
+			? Str::closeTags(Str::limit($this->introtext, $limit))
+			: Str::closeTags(Str::limit($this->content, $limit));
+	}
+	
 	public function getIntrotext($limit = null)
 	{
 		$limit = $limit ? $limit : 500;
