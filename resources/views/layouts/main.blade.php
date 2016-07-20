@@ -18,7 +18,13 @@
     @endif
 
     <meta property="og:title" content="{{ $page->getTitle() }}"/>
-    <meta property="og:image" content="{{ $page->getPageImage() or (isset($siteSettings['logo']['main']) && is_object($siteSettings['logo']['main'])) ? $siteSettings['logo']['main']->getImageUrl(): '' }}"/>
+    @if($pageImage = $page->getPageImage())
+        <meta property="og:image" content="{{ $pageImage }}"/>
+    @else
+        @if(isset($siteSettings['logo']['main']) && is_object($siteSettings['logo']['main']))
+            <meta property="og:image" content="{{ $siteSettings['logo']['main']->getImageUrl() }}"/>
+        @endif
+    @endif
     <meta property="og:description" content="{{ $page->getIntrotext(50) }}"/>
 
     <meta name="w1-verification" content="149973184407" />
