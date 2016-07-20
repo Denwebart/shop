@@ -199,7 +199,7 @@ class Str
 	public static function getImageFromHtml($html)
 	{
 		preg_match('/<img.+src=[\'"](?P<src>.+?)[\'"].*>/i', $html, $image);
-		return $image['src'];
+		return isset($image['src']) ? $image['src'] : '';
 	}
 	
 	/**

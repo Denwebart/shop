@@ -372,9 +372,9 @@ class Product extends Model
 	{
 		return $this->getImageUrl(null, false)
 			? $this->getImageUrl(null, false)
-			: $this->images
-				? $this->images->first()->getImageUrl()
-				: $this->getDefaultImage();
+			: ((count($this->images) && $this->images()->first())
+				? $this->images()->first()->getImageUrl()
+				: $this->getDefaultImage());
 	}
 
 	/**
