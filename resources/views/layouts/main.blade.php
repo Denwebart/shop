@@ -19,7 +19,7 @@
 
     <meta property="og:title" content="{{ $page->getTitle() }}"/>
     <meta property="og:image" content="{{ $page->getPageImage() }}"/>
-    <meta property="og:description" content="{{ $page->getIntrotext() }}"/>
+    <meta property="og:description" content="{{ $page->getIntrotext(50) }}"/>
 
     <meta name="w1-verification" content="149973184407" />
     
