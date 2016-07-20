@@ -24,9 +24,6 @@
     <link rel="shortcut icon" href="{{ asset('images/favicons/favicon.ico') }}">
     <!-- Mobile Specific Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Web Fonts  -->
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800,300italic,400italic,600italic,700italic,800italic&subset=latin,cyrillic-ext'
-          rel='stylesheet' type='text/css'>
 
     <link rel="stylesheet" href="{{ asset('css/compiled.min.css') }}">
 
@@ -41,10 +38,6 @@
     <!-- Custom CSS -->
     {{--<link rel="stylesheet" href="{{ asset('css/style.css') }}">--}}
     {{--<link rel="stylesheet" href="{{ asset('css/style-colors-gold.css') }}">--}}
-
-    <!-- Custom Fonts -->
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,700,700italic,500,500italic&subset=latin-ext,cyrillic-ext' rel='stylesheet' type='text/css'>
-    {{--<link href='https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700' rel='stylesheet' type='text/css'>--}}
 
     <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
     {{--<link rel="stylesheet" type="text/css" href="{{ asset('vendor/rs-plugin/css/settings.css') }}" media="screen"/>--}}
@@ -263,7 +256,12 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.js"></script>
 <![endif]-->
 <!-- Modernizr -->
-<script src="{{ asset('vendor/modernizr/modernizr.js') }}"></script>
+<script src="{{ asset('vendor/modernizr/modernizr.min.js') }}"></script>
+
+<!-- Web Fonts  -->
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800,300italic,400italic,600italic,700italic,800italic&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
+<!-- Custom Fonts -->
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,700,700italic,500,500italic&subset=latin-ext,cyrillic-ext' rel='stylesheet' type='text/css'>
 
 <!-- Vendor -->
 <!-- jQuery 1.12.3-->
@@ -276,7 +274,7 @@
 {{--<script src="{{ asset('vendor/parallax/jquery.parallax-1.1.3.js') }}"></script>--}}
 {{--<script src="{{ asset('vendor/waypoints/jquery.waypoints.min.js') }}"></script>--}}
 {{--<script src="{{ asset('vendor/waypoints/sticky.min.js') }}"></script>--}}
-<script src="{{ asset('vendor/doubletaptogo/doubletaptogo.js') }}"></script>
+<script src="{{ asset('vendor/doubletaptogo/doubletaptogo.min.js') }}"></script>
 <script src="{{ asset('vendor/imagesloaded/imagesloaded.pkgd.min.js') }}"></script>
 <script src="{{ asset('vendor/countdown/jquery.plugin.min.js') }}"></script>
 <script src="{{ asset('vendor/countdown/jquery.countdown.min.js') }}"></script>
