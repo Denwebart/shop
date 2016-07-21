@@ -18,11 +18,6 @@
                 <button type="button" class="close icon-clear" data-dismiss="modal"></button>
                 <div class="text-center">
                     <div class="message success">
-                        <div class="infobox__icon"><span class="icon icon icon-bag-alt"></span></div>
-                        <span class="infobox__text text"></span>
-
-                        <div class="divider divider--xs"></div>
-                        <a href="{{ route('cart.index') }}" class="btn btn--wd">Посмотреть корзину</a>
                     </div>
                     <div class="message error">
                         <span class="infobox__text text"></span>
@@ -57,6 +52,7 @@
                 $j('input[name="add-to-cart__size__input"]').val(size);
             });
 
+            // Add to Cart
             $j(document).on('click', '.add-to-cart', function(e){
                 e.preventDefault();
                 var $button = $j(this),
@@ -90,17 +86,31 @@
                         return request.setRequestHeader('X-CSRF-Token', $j("meta[name='csrf-token']").attr('content'));
                     },
                     success: function(response) {
-                        if(response.success){
+                        if(!$j('#modalAddToCart').is(':visible')) {
+                            $j('#modalAddToCart').modal("toggle");
                             $button.removeClass('btn--wait');
-                            $j('#modalAddToCart').modal("toggle");
+                        }
+                        if(response.success){
                             $j('#modalAddToCart .error').hide();
-                            $j('#modalAddToCart .success').show().find('.text').html(response.message);
+                            $j('#modalAddToCart .success').html(response.modalContent).show()
+                                    .find('.text').html(response.message);
                             $j('#cart').html(response.cartHtml);
+
                             $j('.add-to-cart__quantity').val(1);
+                            $j('input[name="add-to-cart__color__input"]').val('');
+                            $j('input[name="add-to-cart__size__input"]').val('');
+                            $j('.add-to-cart__color, .add-to-cart__size').removeClass('active');
                         } else {
-                            $j('#modalAddToCart').modal("toggle");
                             $j('#modalAddToCart .sussess').hide();
                             $j('#modalAddToCart .error').show().find('.text').html(response.message);
+                        }
+                        if(response.selectProperties){
+                            $j('#modalAddToCart .error').hide();
+                            $j('#modalAddToCart .success').html(response.modalContent).show();
+                            $j.each(response.errors, function(index, value) {
+                                var errorDiv = '.add-to-cart__' + index + '___error';
+                                $j('#modalAddToCart').find(errorDiv).empty().append(value);
+                            });
                         }
                     }
                 });

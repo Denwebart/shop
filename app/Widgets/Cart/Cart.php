@@ -36,6 +36,23 @@ class Cart extends BaseController
 			$product = Product::find($request->get('id'));
 			if(is_object($product)) {
 				// доделать добавление с доп. характеристиками
+				
+				$options = $request->get('options');
+				if((count($product->propertyColor) > 1 && !isset($options['color'])) || (count($product->propertySize) > 1 && !isset($options['size']))) {
+					if(count($product->propertyColor) > 1 && !isset($options['color'])) {
+						$errors['color'] = 'Выберите цвет.';
+					}
+					if(count($product->propertySize) > 1 && !isset($options['size'])) {
+						$errors['size'] = 'Выберите размер.';
+					}
+					return \Response::json([
+						'selectProperties' => true,
+						'message' => 'Выберите обязательные характеристики товара.',
+						'modalContent' => view('widget.cart::widget.modalSelect', compact('product'))->render(),
+						'errors' => isset($errors) ? $errors : []
+					]);
+				}
+				
 				$this->addProduct($request, $product, $request->get('quantity', 1));
 
 				$cart = $this->getCart();
@@ -44,6 +61,7 @@ class Cart extends BaseController
 					'success' => true,
 					'message' => 'Продукт успешно добавлен в корзину!',
 					'cartHtml' => view('widget.cart::widget.cartButton', compact('cart'))->render(),
+					'modalContent' => view('widget.cart::widget.modalSuccess')->render(),
 				]);
 			}
 
@@ -120,6 +138,12 @@ class Cart extends BaseController
 		$cart = $request->session()->get('cart', $this->cart);
 
 		$options = $request->has('options') ? $request->get('options') : [];
+		if(!isset($options['color']) && count($product->propertyColor) == 1 && is_object($product->propertyColor()->first())) {
+			$options['color'] = $product->propertyColor()->first()->value;
+		}
+		if(!isset($options['size']) && count($product->propertySize) == 1 && is_object($product->propertySize()->first())) {
+			$options['size'] = $product->propertySize()->first()->value;
+		}
 
 		foreach($cart['products'] as $key => $cartProduct) {
 			if($cartProduct['product_id'] == $product->id && $cartProduct['options'] == $options) {
