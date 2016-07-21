@@ -14,7 +14,7 @@
         </li>
         @endforeach
         {!! Form::hidden('add-to-cart__size__input', Request::get($size->property_title)) !!}
-        <span class="help-block error add-to-cart__size__error"></span>
+        <span class="help-block error add-to-cart__size___error"></span>
     </ul>
     <div class="divider divider--xs"></div>
 @endif
