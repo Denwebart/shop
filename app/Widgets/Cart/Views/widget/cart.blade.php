@@ -13,7 +13,7 @@
     @parent
 
     <div class="modal fade bs-example-modal-sm" role="dialog" id="modalAddToCart">
-        <div class="modal-dialog modal-sm">
+        <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <button type="button" class="close icon-clear" data-dismiss="modal"></button>
                 <div class="text-center">

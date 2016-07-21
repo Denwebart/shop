@@ -61,7 +61,7 @@ class Cart extends BaseController
 					'success' => true,
 					'message' => 'Продукт успешно добавлен в корзину!',
 					'cartHtml' => view('widget.cart::widget.cartButton', compact('cart'))->render(),
-					'modalContent' => view('widget.cart::widget.modalSuccess')->render(),
+					'modalContent' => view('widget.cart::widget.modalSuccess', compact('product'))->render(),
 				]);
 			}
 

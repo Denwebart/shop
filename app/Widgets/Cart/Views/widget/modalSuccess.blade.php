@@ -5,8 +5,15 @@
  */
 ?>
 
-<div class="infobox__icon"><span class="icon icon icon-bag-alt"></span></div>
-<span class="infobox__text text"></span>
+<div class="row">
+    <div class="col-md-5 col-sm-5 col-xs-5">
+        <img src="{{ $product->getImageUrl() }}" alt="{{ $product->image_alt }}" class="product-image">
+    </div>
 
-<div class="divider divider--xs"></div>
-<a href="{{ route('cart.index') }}" class="btn btn--wd">Посмотреть корзину</a>
+    <div class="col-md-7 col-sm-7 col-xs-7 align-center">
+        <h4 class="infobox__text text"></h4>
+
+        <div class="divider divider--xs"></div>
+        <a href="{{ route('cart.index') }}" class="btn btn--wd">Посмотреть корзину</a>
+    </div>
+</div>
