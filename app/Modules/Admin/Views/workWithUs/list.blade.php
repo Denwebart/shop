@@ -14,9 +14,7 @@
 </p>
 
 <div id="work-with-us-container" class="form-horizontal form-editable">
-    @foreach(\App\Models\WorkWithUs::all() as $key => $item)
-        @include('admin::workWithUs.item', ['item' => $item])
-    @endforeach
+    @include('admin::workWithUs.items')
 </div>
 
 <a href="javascript:void(0)" class="show-work-with-us-form pull-right">
@@ -126,8 +124,10 @@
                         if(response.success){
                             $form.trigger('reset');
                             Command: toastr["success"](response.message);
-                            $('#work-with-us-container').append(response.itemHtml);
+                            $('#work-with-us-container').html(response.itemsHtml);
                             $form.hide();
+                            $.Components.init();
+                            setIsActive();
 
                             // доделать навешивание dropify и switchery после добавления нового
                             dropifyAjax = $('.dropify-ajax').dropify(dropifyOptions);

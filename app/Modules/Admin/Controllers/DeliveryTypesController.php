@@ -44,7 +44,7 @@ class DeliveryTypesController extends Controller
 				return \Response::json([
 					'success' => true,
 					'message' => 'Значение добавлено.',
-					'itemHtml' => view('admin::deliveryTypes.item', compact('deliveryType'))->render(),
+					'itemsHtml' => view('admin::deliveryTypes.items')->render(),
 				]);
 			}
 

@@ -45,7 +45,7 @@ class WorkWithUsController extends Controller
 				return \Response::json([
 					'success' => true,
 					'message' => 'Значение добавлено.',
-					'itemHtml' => view('admin::workWithUs.item', compact('item'))->render(),
+					'itemsHtml' => view('admin::workWithUs.items')->render(),
 				]);
 			}
 

@@ -12,9 +12,7 @@
 </p>
 
 <div id="delivery-types-container" class="form-horizontal form-editable">
-	@foreach(\App\Models\DeliveryType::all() as $key => $deliveryType)
-        @include('admin::deliveryTypes.item')
-	@endforeach
+    @include('admin::deliveryTypes.items')
 </div>
 
 <div class="bg-muted p-20 m-t-20">
@@ -152,8 +150,10 @@
                         if(response.success){
                             $form.trigger('reset');
                             Command: toastr["success"](response.message);
-                            $('#delivery-types-container').append(response.itemHtml);
+                            $('#delivery-types-container').html(response.itemsHtml);
                             $form.hide();
+                            $.Components.init();
+                            setIsActive();
 
                             // доделать навешивание dropify и switchery после добавления нового
                             dropifyAjax = $('.dropify-ajax').dropify(dropifyOptions);

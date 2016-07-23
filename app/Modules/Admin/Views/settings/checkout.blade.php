@@ -147,29 +147,32 @@
         $('.editable-text').editable(getSettingsEditableOptions());
 
         // Change active status or boolean value
-        $('[data-plugin=switchery], .ajax-checkbox').on('change', function () {
-            if($(this).is(':checked')) {
-                var value = 1;
-            } else {
-                var value = 0;
-            }
-            var url = $(this).data('url') ? $(this).data('url') : "{{ route('admin.settings.setIsActive') }}";
-            $.ajax({
-                url: url,
-                dataType: "text json",
-                type: "POST",
-                data: {id: $(this).data('id'), value: value, name: $(this).attr('name')},
-                beforeSend: function(request) {
-                    return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
-                },
-                success: function(response) {
-                    if(response.success){
-                        Command: toastr["success"](response.message);
-                    } else {
-                        Command: toastr["error"](response.message);
-                    }
+        function setIsActive() {
+            $('[data-plugin=switchery], .ajax-checkbox').on('change', function () {
+                if($(this).is(':checked')) {
+                    var value = 1;
+                } else {
+                    var value = 0;
                 }
+                var url = $(this).data('url') ? $(this).data('url') : "{{ route('admin.settings.setIsActive') }}";
+                $.ajax({
+                    url: url,
+                    dataType: "text json",
+                    type: "POST",
+                    data: {id: $(this).data('id'), value: value, name: $(this).attr('name')},
+                    beforeSend: function(request) {
+                        return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+                    },
+                    success: function(response) {
+                        if(response.success){
+                            Command: toastr["success"](response.message);
+                        } else {
+                            Command: toastr["error"](response.message);
+                        }
+                    }
+                });
             });
-        });
+        }
+        setIsActive();
     </script>
 @endpush
