@@ -37,7 +37,7 @@ class Cart extends BaseController
 			if(is_object($product)) {
 				// доделать добавление с доп. характеристиками
 				
-				$options = $request->get('options');
+				$options = $request->get('options', []);
 				if((count($product->propertyColor) > 1 && !isset($options['color'])) || (count($product->propertySize) > 1 && !isset($options['size']))) {
 					if(count($product->propertyColor) > 1 && !isset($options['color'])) {
 						$errors['color'] = 'Выберите цвет.';
@@ -48,7 +48,7 @@ class Cart extends BaseController
 					return \Response::json([
 						'selectProperties' => true,
 						'message' => 'Выберите обязательные характеристики товара.',
-						'modalContent' => view('widget.cart::widget.modalSelect', compact('product'))->render(),
+						'modalContent' => view('widget.cart::widget.modalSelect', compact('product', 'options'))->render(),
 						'errors' => isset($errors) ? $errors : []
 					]);
 				}
