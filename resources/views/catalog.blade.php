@@ -245,11 +245,11 @@
 
     <!-- Content section -->
     @if($page->content)
-        <section class="content">
+        <div class="content">
             <div class="container">
                 {!! $page->content !!}
             </div>
-        </section>
+        </div>
     @endif
 @endsection
 
