@@ -22,7 +22,7 @@
         </section>
     @endif
 
-    <section class="content">
+    <div class="content">
         <div class="container">
             {!! Form::open(['url' => Request::getUri(), 'id' => 'filters-form']) !!}
             <div class="filters-row row">
@@ -241,7 +241,7 @@
             </div>
             {!! Form::close() !!}
         </div>
-    </section>
+    </div>
 
     <!-- Content section -->
     @if($page->content)
