@@ -10,14 +10,14 @@
 @section('content')
     <!-- Breadcrumb section -->
 
-    <section class="breadcrumbs">
+    <div class="breadcrumbs">
         <div class="container">
             <ol class="breadcrumb breadcrumb--wd pull-left">
                 <li><a href="{{ url('/') }}">Главная</a></li>
                 <li class="active">{{ $page->getTitle() }}</li>
             </ol>
         </div>
-    </section>
+    </div>
 
     <!-- Content section -->
     <section class="content">

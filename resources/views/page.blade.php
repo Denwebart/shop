@@ -10,11 +10,11 @@
 @section('content')
 <!-- Breadcrumb section -->
 
-<section class="breadcrumbs">
+<div class="breadcrumbs">
     <div class="container">
         @include('parts.breadcrumbs')
     </div>
-</section>
+</div>
 
 <!-- Content section -->
 <section class="content">
