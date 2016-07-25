@@ -9,7 +9,7 @@
 
 @section('content')
     <!-- Breadcrumb section -->
-    <section class="breadcrumbs breadcrumbs-boxed">
+    <div class="breadcrumbs breadcrumbs-boxed">
         <div class="container">
             @include('parts.breadcrumbs')
 
@@ -44,7 +44,7 @@
                 @endif
             </ul>
         </div>
-    </section>
+    </div>
 
     <!-- Content section -->
     <section class="content">
@@ -53,7 +53,7 @@
                 <div class="col-sm-4 col-md-4 col-lg-5 hidden-xs">
                     <div class="product-main-image">
                         <div class="product-main-image__item">
-                            <img class="product-zoom" src='{{ $page->getImageUrl('zoom') }}' data-zoom-image="{{ $page->getImageUrl('zoom') }}"/>
+                            <img class="product-zoom" src='{{ $page->getImageUrl('zoom') }}' data-zoom-image="{{ $page->getImageUrl('zoom') }}" alt="{{ $page->image_alt }}" />
                         </div>
                         <div class="product-main-image__zoom"></div>
                     </div>
@@ -146,7 +146,7 @@
                             например акции или какую-то дополнительной информации
                             по оплате и доставке.
                         </div>
-                        <div href="#" class="card__row card__row--icon">
+                        <div class="card__row card__row--icon">
                             <div class="card__row--icon__icon">
                                 <span class="icon icon-money"></span>
                             </div>

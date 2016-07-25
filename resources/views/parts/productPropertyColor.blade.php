@@ -13,8 +13,8 @@
                 <span class="swatch-label color-icon color" style="background: {{ $color->additional_value or '#ffffff' }}"></span>
             </li>
         @endforeach
-        {!! Form::hidden('add-to-cart__color__input', Request::get($color->property_title, isset($options['color']) ? $options['color'] : '')) !!}
-        <span class="help-block error add-to-cart__color___error"></span>
     </ul>
+    <span class="help-block error add-to-cart__color___error"></span>
+    {!! Form::hidden('add-to-cart__color__input', Request::get($color->property_title, isset($options['color']) ? $options['color'] : '')) !!}
     <div class="divider divider--sm"></div>
 @endif

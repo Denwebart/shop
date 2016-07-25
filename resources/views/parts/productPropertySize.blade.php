@@ -13,8 +13,8 @@
             <span class="swatch-label">{{ $size->value }}</span>
         </li>
         @endforeach
-        {!! Form::hidden('add-to-cart__size__input', Request::get($size->property_title, isset($options['size']) ? $options['size'] : '')) !!}
-        <span class="help-block error add-to-cart__size___error"></span>
     </ul>
+    <span class="help-block error add-to-cart__size___error"></span>
+    {!! Form::hidden('add-to-cart__size__input', Request::get($size->property_title, isset($options['size']) ? $options['size'] : '')) !!}
     <div class="divider divider--xs"></div>
 @endif
