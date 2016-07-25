@@ -51,7 +51,7 @@
                         </div>
 
                         <div class="input-group input-group--wd">
-                            {!! Form::text('name', null, ['id' => 'name', 'class' => 'input--full']) !!}
+                            {!! Form::text('name', null, ['id' => 'contact-form-name', 'class' => 'input--full']) !!}
                             <span class="input-group__bar"></span>
                             <label>Ваше имя <span class="required">*</span></label>
                             <span class="help-block error name_error">
@@ -94,9 +94,9 @@
 
     <!-- Map section -->
     @if(isset($contactPageSettings['map']) && isset($contactPageSettings['map']['latitude']) && isset($contactPageSettings['map']['longitude']))
-        <section class="content fullwidth top-null bottom-null">
+        <div class="content fullwidth top-null bottom-null">
             <div id="map"></div>
-        </section>
+        </div>
     @endif
     <!-- End Map section -->
 @endsection
