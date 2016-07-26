@@ -329,6 +329,13 @@ select[size] {
     height: auto;
 }
 
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none;}
+input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none;}
+
 input[type="file"]:focus,
 input[type="radio"]:focus,
 input[type="checkbox"]:focus {

@@ -109,7 +109,7 @@
                     <div class="outer">
                         <div class="input-group-qty pull-left">
                             <span class="pull-left"> </span>
-                            <input type="text" name="product-quantity" class="add-to-cart__quantity input-number input--wd input-qty pull-left" value="1" min="1" max="1000" data-cart="quantity" data-product-id="{{ $page->id }}">
+                            <input type="date" name="product-quantity" class="add-to-cart__quantity input-number input--wd input-qty pull-left" value="1" min="1" max="1000" data-cart="quantity" data-product-id="{{ $page->id }}">
                             <span class="pull-left btn-number-container">
                                 <button type="button" class="btn btn-number btn-number--plus" data-type="plus" data-field="product-quantity">+</button>
                                 <button type="button" class="btn btn-number btn-number--minus" disabled="disabled" data-type="minus" data-field="product-quantity"> &#8211;</button>
