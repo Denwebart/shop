@@ -121,7 +121,9 @@
                 </span>
             </div>
 
-            @include('widget.cart::checkout.total')
+            <div id="total">
+                @include('widget.cart::checkout.total')
+            </div>
 
             <div class="shopping-cart__bottom">
                 <div class="row m-t-20">

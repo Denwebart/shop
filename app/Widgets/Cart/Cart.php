@@ -8,6 +8,7 @@
 
 namespace App\Widgets\Cart;
 
+use App\Models\DeliveryType;
 use Carbon\Carbon;
 use Illuminate\Routing\Controller as BaseController;
 use App\Models\Product;
@@ -18,6 +19,7 @@ class Cart extends BaseController
 	protected $cart = [
 		'products' => [],
 		'total_price' => 0,
+		'delivery_price' => 0,
 		'count' => 0,
 	];
 
@@ -208,6 +210,33 @@ class Cart extends BaseController
 			'productsWidgetHtml' => view('widget.cart::widget.productsWidget')->with('cart', $cart)->render(),
 			'productsTableHtml' => view('widget.cart::checkout.productsTable')->with('cart', $cart)->render(),
 			'productsCount' => $cart['count'],
+		]);
+	}
+	
+	/**
+	 * Set delivery price in cart session
+	 *
+	 * @param Request $request
+	 * @return bool|\Illuminate\Http\JsonResponse
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	protected function deliveryPrice(Request $request)
+	{
+		$cart = $request->session()->get('cart', $this->cart);
+		
+		$delivery = DeliveryType::find($request->get('deliveryId'));
+		
+		$cart['delivery_price'] = $delivery->price;
+		
+		$request->session()->put('cart', $cart);
+		
+		$cart = $this->getCart();
+		
+		return \Response::json([
+			'success' => true,
+			'totalHtml' => view('widget.cart::checkout.total')->with('cart', $cart)->render(),
 		]);
 	}
 }

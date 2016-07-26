@@ -132,6 +132,37 @@
             });
         });
 
+        // Выбор способа доставки
+        $j(document).on('click', '.delivery-types__item', function (event) {
+            var deliveryType = $j(this).data('id');
+
+            $j('.delivery-types__item').removeClass('active');
+            $j(this).addClass('active');
+            $j('#delivery_type').val(deliveryType);
+            if($j(this).data('address')) {
+                $j('.delivery-types__item__description').hide().text('');
+                $j('label[for=address]').text($j(this).data('description'));
+                $j('#address').slideDown();
+            } else {
+                $j('.delivery-types__item__description').show().text($j(this).data('description'));
+                $j('#address').slideUp();
+            }
+            
+            $j.ajax({
+                url: "{{ route('cart.delivery') }}",
+                dataType: "json",
+                type: "POST",
+                data: {deliveryId: deliveryType},
+                async: true,
+                beforeSend: function (request) {
+                    return request.setRequestHeader('X-CSRF-Token', $j("meta[name='csrf-token']").attr('content'));
+                },
+                success: function(response) {
+                    $j('#total').html(response.totalHtml);
+                }
+            });
+        });
+
         // Выбор способа оплаты
         $j(document).on('click', '.payment-types__item', function (event) {
             var paymentType = $j(this).data('paymentType');
@@ -158,22 +189,6 @@
             } else {
                 $j('#create-order').removeAttr('disabled').show();
                 $j('.button-container .payment-button').html('').hide();
-            }
-        });
-
-        // Выбор способа доставки
-        $j(document).on('click', '.delivery-types__item', function (event) {
-            var deliveryType = $j(this).data('id');
-            $j('.delivery-types__item').removeClass('active');
-            $j(this).addClass('active');
-            $j('#delivery_type').val(deliveryType);
-            if($j(this).data('address')) {
-                $j('.delivery-types__item__description').hide().text('');
-                $j('label[for=address]').text($j(this).data('description'));
-                $j('#address').slideDown();
-            } else {
-                $j('.delivery-types__item__description').show().text($j(this).data('description'));
-                $j('#address').slideUp();
             }
         });
     });

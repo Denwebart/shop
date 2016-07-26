@@ -28,7 +28,11 @@
     <div class="pull-right m-b-10">
         Стоимость доставки:
         <span class="price delivery-price">
-            {{ \App\Helpers\Str::priceFormat($cart['total_price']) }}
+            @if(isset($cart['delivery_price']))
+                {{ \App\Helpers\Str::priceFormat($cart['delivery_price']) }}
+            @else
+                -
+            @endif
         </span>
     </div>
     <div class="clearfix"></div>
@@ -37,7 +41,7 @@
         Общая сумма заказа:
         <span class="shopping-cart__total">
             <span class="price total-price">
-                {{ \App\Helpers\Str::priceFormat($cart['total_price']) }}
+                {{ \App\Helpers\Str::priceFormat($cart['total_price'] + (isset($cart['delivery_price']) ? $cart['delivery_price'] : 0)) }}
             </span>
         </span>
     </div>
