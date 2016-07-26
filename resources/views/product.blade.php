@@ -174,7 +174,8 @@
             <!-- Nav tabs -->
             <ul class="nav nav-tabs nav-tabs--wd" role="tablist">
                 <li class="active">
-                    <a href="#description" aria-controls="home" role="tab" data-toggle="tab" class="text-uppercase">
+                    {{--aria-controls="home"--}}
+                    <a href="#description" role="tab" data-toggle="tab" class="text-uppercase">
                         Описание
                     </a>
                 </li>
