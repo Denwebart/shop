@@ -29,7 +29,7 @@ class ProductPropertiesController extends Controller
 	{
 		if($request->ajax()) {
 
-			if(!$request->get('valueId') || (!$request->get('valueTitle') && empty($request->get('valueTitle')))) {
+			if(!$request->get('valueId') && (!$request->has('valueTitle') || empty($request->get('valueTitle')))) {
 				return \Response::json([
 					'success' => false,
 					'message' => 'Значение не добавлено. Выберите значение характеристики, которое хотите добавить.'

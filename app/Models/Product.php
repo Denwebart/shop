@@ -285,7 +285,26 @@ class Product extends Model
 
 	    return $query->get();
     }
-
+	
+	/**
+	 * Get all properties with product values
+	 *
+	 * @return \Illuminate\Database\Eloquent\Collection|static[]
+	 *
+	 * @author     It Hill (it-hill.com@yandex.ua)
+	 * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
+	 */
+	public function getAllProperties()
+	{
+		$query = Property::with(['values' => function ($q) {
+			$q->leftJoin('products_property_values', 'products_property_values.property_value_id', '=', 'property_values.id')
+				->where('products_property_values.product_id', '=', $this->id);
+		}]);
+		
+		return $query->get();
+	}
+	
+	
 	/**
 	 * Get properties color
 	 *
@@ -344,12 +363,10 @@ class Product extends Model
 	{
 		return $this->title;
 	}
-	
+
 	public function getMetaTitle()
 	{
-		return $this->meta_title
-			? $this->meta_title
-			: ($this->getTitle() ? $this->getTitle() : '');
+		return $this->meta_title ? $this->meta_title : '';
 	}
 
 	public function getMetaDesc()

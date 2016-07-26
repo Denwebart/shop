@@ -58,7 +58,7 @@ View::share('title', $title);
                     {!! Form::close() !!}
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="product-property">
-                    @include('admin::productProperties.index', ['productProperties' => $product->getProperties()])
+                    @include('admin::productProperties.index', ['productProperties' => $product->getAllProperties()])
                 </div>
             </div>
         </div><!-- end col -->
