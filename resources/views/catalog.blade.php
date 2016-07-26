@@ -254,8 +254,8 @@
 @endsection
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('vendor/bootstrap-select/bootstrap-select.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('vendor/nouislider/nouislider.min.css') }}">
+    {{--<link rel="stylesheet" href="{{ asset('vendor/bootstrap-select/bootstrap-select.min.css') }}">--}}
+    {{--<link rel="stylesheet" href="{{ asset('vendor/nouislider/nouislider.min.css') }}">--}}
 @endpush
 
 @push('scripts')
