@@ -344,10 +344,12 @@ class Product extends Model
 	{
 		return $this->title;
 	}
-
+	
 	public function getMetaTitle()
 	{
-		return $this->meta_title ? $this->meta_title : '';
+		return $this->meta_title
+			? $this->meta_title
+			: ($this->getTitle() ? $this->getTitle() : '');
 	}
 
 	public function getMetaDesc()

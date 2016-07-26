@@ -363,7 +363,9 @@ class Page extends Model
 
 	public function getMetaTitle()
 	{
-		return $this->meta_title ? $this->meta_title : '';
+		return $this->meta_title
+			? $this->meta_title
+			: ($this->getTitle() ? $this->getTitle() : '');
 	}
 
 	public function getMetaDesc()
