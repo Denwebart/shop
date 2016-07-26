@@ -360,11 +360,11 @@
 
 @push('styles')
     <!-- Magnific Popup core CSS file -->
-    <link rel="stylesheet" href="{{ asset('vendor/magnific-popup/magnific-popup.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/magnific-popup/magnific-popup.min.css') }}">
 @endpush
 
 @push('scripts')
-    <script src="{{ asset('vendor/elevatezoom/jquery.elevatezoom.js') }}"></script>
+    <script src="{{ asset('vendor/elevatezoom/jquery.elevatezoom.min.js') }}"></script>
     <!-- Magnific Popup core JS file -->
     <script src="{{ asset('vendor/magnific-popup/jquery.magnific-popup.min.js') }}"></script>
     <script src="{{ asset('vendor/countdown/jquery.plugin.min.js') }}"></script>
