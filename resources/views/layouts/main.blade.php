@@ -269,11 +269,18 @@
 <!-- Web Fonts  -->
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800,300italic,400italic,600italic,700italic,800italic&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
 <!-- Custom Fonts -->
-{{--<link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,700,700italic,500,500italic&subset=latin-ext,cyrillic-ext' rel='stylesheet' type='text/css'>--}}
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,700,700italic,500,500italic&subset=latin-ext,cyrillic-ext' rel='stylesheet' type='text/css'>
 
 <!-- Load CSS compiled without Bootstrap & Header styles (after release) -->
 <script>var ms=document.createElement("link");ms.rel="stylesheet";
      ms.href="/css/compiled.min.css";document.getElementsByTagName("head")[0].appendChild(ms);
+</script>
+
+<!-- Load Scripts -->
+<script>var scr = {"scripts":[
+        {"src" : "js/compiled.min.js", "async" : false},
+        {"src" : "js/custom.min.js", "async" : false}
+    ]};!function(t,n,r){"use strict";var c=function(t){if("[object Array]"!==Object.prototype.toString.call(t))return!1;for(var r=0;r<t.length;r++){var c=n.createElement("script"),e=t[r];c.src=e.src,c.async=e.async,n.body.appendChild(c)}return!0};t.addEventListener?t.addEventListener("load",function(){c(r.scripts);},!1):t.attachEvent?t.attachEvent("onload",function(){c(r.scripts)}):t.onload=function(){c(r.scripts)}}(window,document,scr);
 </script>
 
 <script src="{{ asset('js/compiled.min.js') }}"></script>
@@ -305,7 +312,7 @@
 @stack('scripts')
 
 <!-- Custom -->
-<script src="{{ asset('js/custom.min.js') }}"></script>
+{{--<script src="{{ asset('js/custom.min.js') }}"></script>--}}
 <!-- SLIDER REVOLUTION 4.x SCRIPTS  -->
 {{--<script type="text/javascript" src="{{ asset('vendor/rs-plugin/js/jquery.themepunch.tools.min.js') }}"></script>--}}
 {{--<script type="text/javascript" src="{{ asset('vendor/rs-plugin/js/jquery.themepunch.revolution.min.js') }}"></script>--}}
