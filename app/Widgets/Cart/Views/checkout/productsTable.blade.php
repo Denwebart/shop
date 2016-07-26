@@ -60,25 +60,8 @@
         @endforeach
     </ul>
 
-    <div class="shopping-cart__bottom">
-        <div class="pull-left m-b-10">
-            Товаров в корзине:
-            <span class="shopping-cart__count">
-                <span class="cart-count">
-                    {{ $cart['count'] }}
-                </span>
-            </span>
-        </div>
-        <div class="pull-right m-b-10">
-            Общая сумма заказа:
-            <span class="shopping-cart__total">
-                <span class="total-price">
-                    {{ \App\Helpers\Str::priceFormat($cart['total_price']) }}
-                </span>
-            </span>
-        </div>
-    </div>
-    <div class="clearfix"></div>
+    @include('widget.cart::checkout.total')
+
     <div class="shopping-cart__bottom">
         <div class="row m-t-20">
             @if($cart['total_price'])

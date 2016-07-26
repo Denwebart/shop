@@ -59,15 +59,19 @@
                 </div>
             </div>
 
-            <div class="row m-t-20">
-                <a href="#" class="pull-left btn text-uppercase change-step" data-step="{{ \App\Widgets\Cart\CartController::STEP_CHECKOUT }}">
-                    <i class="icon icon-arrow-left"></i>
-                    Назад
-                </a>
+            @include('widget.cart::checkout.total')
 
-                <div class="button-container">
-                    <div class="payment-button pull-right"></div>
-                    {!! Form::submit('Оформить заказ', ['class' => 'pull-right btn btn--wd text-uppercase', 'id' => 'create-order', 'disabled' => true]) !!}
+            <div class="shopping-cart__bottom">
+                <div class="row m-t-20">
+                    <a href="#" class="pull-left btn text-uppercase change-step" data-step="{{ \App\Widgets\Cart\CartController::STEP_CHECKOUT }}">
+                        <i class="icon icon-arrow-left"></i>
+                        Назад
+                    </a>
+
+                    <div class="button-container">
+                        <div class="payment-button pull-right"></div>
+                        {!! Form::submit('Оформить заказ', ['class' => 'pull-right btn btn--wd text-uppercase', 'id' => 'create-order', 'disabled' => true]) !!}
+                    </div>
                 </div>
             </div>
         </div>

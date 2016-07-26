@@ -121,12 +121,16 @@
                 </span>
             </div>
 
-            <div class="row m-t-20">
-                <a href="#" class="pull-left btn text-uppercase change-step" data-step="{{ \App\Widgets\Cart\CartController::STEP_CART }}">
-                    <i class="icon icon-arrow-left"></i>
-                    Назад
-                </a>
-                <a href="#" class="pull-right btn btn--wd text-uppercase change-step" data-step="{{ \App\Widgets\Cart\CartController::STEP_PAYMENT }}">Далее</a>
+            @include('widget.cart::checkout.total')
+
+            <div class="shopping-cart__bottom">
+                <div class="row m-t-20">
+                    <a href="#" class="pull-left btn text-uppercase change-step" data-step="{{ \App\Widgets\Cart\CartController::STEP_CART }}">
+                        <i class="icon icon-arrow-left"></i>
+                        Назад
+                    </a>
+                    <a href="#" class="pull-right btn btn--wd text-uppercase change-step" data-step="{{ \App\Widgets\Cart\CartController::STEP_PAYMENT }}">Далее</a>
+                </div>
             </div>
         </div>
     {!! Form::close() !!}

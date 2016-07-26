@@ -1251,6 +1251,10 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     white-space: nowrap;
 }
 /* Checkout */
+.price {
+    color: #212121;
+    padding-left: 15px;
+}
 #checkout-form .input-group-btn {
     font-size: inherit;
 }
@@ -7047,7 +7051,7 @@ form label.error {
     opacity: 0.5;
     color: #9a9a9a;
 }
-
+.price,
 .price-box {
     margin: 0 0 10px 0;
     font-size: 1.231em;
