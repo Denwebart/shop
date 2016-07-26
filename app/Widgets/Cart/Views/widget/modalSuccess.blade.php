@@ -11,7 +11,7 @@
     </div>
 
     <div class="col-md-7 col-sm-7 col-xs-7 align-center">
-        <h4 class="m-t-10"></h4>
+        <h4 class="text m-t-10"></h4>
 
         <div class="divider divider--xs"></div>
         <a href="{{ route('cart.index') }}" class="btn btn--wd">Посмотреть корзину</a>
