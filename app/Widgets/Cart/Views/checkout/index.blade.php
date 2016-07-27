@@ -147,7 +147,7 @@
                 $j('.delivery-types__item__description').show().text($j(this).data('description'));
                 $j('#address').slideUp();
             }
-            
+
             $j.ajax({
                 url: "{{ route('cart.delivery') }}",
                 dataType: "json",
