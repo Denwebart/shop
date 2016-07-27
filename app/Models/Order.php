@@ -108,7 +108,7 @@ class Order extends Model
 	];
 	
 	public static $paymentTypesDescription = [
-		self::PAYMENT_TYPE_CASH => 'Наличными при получении.',
+		self::PAYMENT_TYPE_CASH => 'Наличными.',
 		self::PAYMENT_TYPE_CARD => 'Картой VISA, MasterCard, Maestro.',
 	];
 	
