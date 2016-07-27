@@ -39,9 +39,9 @@
                     <h5 class="text-muted text-uppercase">Выберите способ оплаты:</h5>
                 </div>
                 <div class="col-md-12">
-                    <div class="input-group input-group--wd">
+                    <div class="input-group input-group--wd m-b-10">
+                        {!! Form::hidden('payment_type', null, ['id' => 'payment_type']) !!}
                         <ul class="payment-types">
-                            {!! Form::hidden('payment_type', null, ['id' => 'payment_type']) !!}
                             @foreach(\App\Models\Order::$paymentTypes as $paymentType => $paymentTitle)
                                 <li class="payment-types__item" data-payment-type="{{ $paymentType }}" data-description="{{ \App\Models\Order::$paymentTypesDescription[$paymentType] }}">
                                     <img src="{{ url(\App\Models\Order::$paymentTypesImage[$paymentType]) }}" alt="{{ $paymentTitle }}" class="payment-types__item__image">
@@ -50,11 +50,11 @@
                                     </span>
                                 </li>
                             @endforeach
-                            <span class="help-block error payment_type_error">
-                                {{ $errors->first('payment_type_error') }}
-                            </span>
-                            <p class="payment-types__item__description" style="display:none;"></p>
                         </ul>
+                        <span class="help-block error payment_type_error">
+                            {{ $errors->first('payment_type_error') }}
+                        </span>
+                        <p class="payment-types__item__description"></p>
                     </div>
                 </div>
             </div>
