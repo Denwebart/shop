@@ -16,6 +16,8 @@ View::share('title', $title);
         <div class="col-sm-8">
             <ul class="breadcrumb">
                 <li><a href="{{ route('admin.index') }}">Главная</a></li>
+                <li><a href="{{ route('admin.settings.index') }}">Настройки</a></li>
+                <li><a href="{{ route('admin.settings.widgets') }}">Виджеты</a></li>
                 <li>{{ $title }}</li>
             </ul>
         </div>

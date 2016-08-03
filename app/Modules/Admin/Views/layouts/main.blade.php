@@ -192,15 +192,15 @@
                             @endif
                         </a>
                     </li>
-                    <li>
-                        <a href="{{ route('admin.shop_reviews.index') }}" class="waves-effect @if(Request::is('admin/shop_reviews*')) active @endif">
-                            <i class="fa fa-comment"></i>
-                            <span>Отзывы о магазине</span>
-                            @if($badge->countNewReviews)
-                                <span class="label label-purple pull-right">{{ $badge->countNewReviews }}</span>
-                            @endif
-                        </a>
-                    </li>
+                    {{--<li>--}}
+                        {{--<a href="{{ route('admin.shop_reviews.index') }}" class="waves-effect @if(Request::is('admin/shop_reviews*')) active @endif">--}}
+                            {{--<i class="fa fa-comment"></i>--}}
+                            {{--<span>Отзывы о магазине</span>--}}
+                            {{--@if($badge->countNewReviews)--}}
+                                {{--<span class="label label-purple pull-right">{{ $badge->countNewReviews }}</span>--}}
+                            {{--@endif--}}
+                        {{--</a>--}}
+                    {{--</li>--}}
 
                     <hr>
 

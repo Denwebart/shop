@@ -21,13 +21,35 @@
         <div class="col-lg-6">
             <div class="card-box">
 
-                <h4 class="header-title m-t-0 m-b-10"><b>Слайдер</b></h4>
+                <h4 class="header-title m-t-0 m-b-10">
+                    <i class="fa fa-image m-r-10"></i>
+                    <b>Слайдер</b>
+                </h4>
 
                 <p class="text-muted font-13 m-b-15">
                     Виджет "Слайдер изображений" на главной странице сайта.
                 </p>
 
                 <a href="{{ route('admin.slider.index') }}">
+                    <span>Редактировать</span>
+                </a>
+            </div>
+
+            <div class="card-box">
+
+                <h4 class="header-title m-t-0 m-b-10">
+                    <i class="fa fa-comment m-r-10"></i>
+                    <b>Отзывы о магазине</b>
+                    @if($badge->countNewReviews)
+                        <span class="label label-purple pull-right">{{ $badge->countNewReviews }}</span>
+                    @endif
+                </h4>
+
+                <p class="text-muted font-13 m-b-15">
+                    Виджет "Слайдер изображений" на главной странице сайта.
+                </p>
+
+                <a href="{{ route('admin.shop_reviews.index') }}">
                     <span>Редактировать</span>
                 </a>
             </div>
