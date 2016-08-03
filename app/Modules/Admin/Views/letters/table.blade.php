@@ -32,9 +32,11 @@
                         <a href="{{ route('admin.letters.show', ['id' => $letter->id]) }}" title="Прочесть" data-toggle="tooltip" class="m-r-15">
                             <i class="fa fa-eye fa-lg"></i>
                         </a>
-                        <a href="javascript:void(0)" class="button-delete" title="Удалить" data-toggle="tooltip" data-item-id="{{ $letter->id }}" data-item-title="{{ $letter->name }} ({{ $letter->email }})">
-                            <i class="fa fa-trash fa-lg"></i>
-                        </a>
+                        @if(Auth::user()->isAdmin())
+                            <a href="javascript:void(0)" class="button-delete" title="Удалить" data-toggle="tooltip" data-item-id="{{ $letter->id }}" data-item-title="{{ $letter->name }} ({{ $letter->email }})">
+                                <i class="fa fa-trash fa-lg"></i>
+                            </a>
+                        @endif
                     </td>
                 </tr>
             @endforeach

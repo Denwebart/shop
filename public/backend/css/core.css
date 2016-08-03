@@ -385,12 +385,17 @@ a:focus {
     overflow-x: auto;
 }
 /* background icon */
+.error-code {
+    font-size: 100px;
+    margin-bottom: 20px;
+    line-height: 1em;
+}
+
 .background-icon {
     text-align: center;
     margin-top: 50px;
     margin-right: 100px;
 }
-
 .background-icon p,
 .background-icon span {
     font-size: 22px;

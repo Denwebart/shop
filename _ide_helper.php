@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.2.39 on 2016-07-15.
+ * Generated for Laravel 5.2.41 on 2016-08-03.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -3700,17 +3700,6 @@ namespace {
         }
         
         /**
-         * Get the deeply nested relations for a given top-level relation.
-         *
-         * @param string $relation
-         * @return array 
-         * @static 
-         */
-        public static function nestedRelations($relation){
-            return \Illuminate\Database\Eloquent\Builder::nestedRelations($relation);
-        }
-        
-        /**
          * Apply the callback's query changes if the given "value" is true.
          *
          * @param bool $value
@@ -3861,6 +3850,17 @@ namespace {
          */
         public static function withCount($relations){
             return \Illuminate\Database\Eloquent\Builder::withCount($relations);
+        }
+        
+        /**
+         * Add the given scopes to the current builder instance.
+         *
+         * @param array $scopes
+         * @return mixed 
+         * @static 
+         */
+        public static function scopes($scopes){
+            return \Illuminate\Database\Eloquent\Builder::scopes($scopes);
         }
         
         /**
@@ -5538,6 +5538,19 @@ namespace {
         }
         
         /**
+         * Move a directory.
+         *
+         * @param string $from
+         * @param string $to
+         * @param bool $overwrite
+         * @return bool 
+         * @static 
+         */
+        public static function moveDirectory($from, $to, $overwrite = false){
+            return \Illuminate\Filesystem\Filesystem::moveDirectory($from, $to, $overwrite);
+        }
+        
+        /**
          * Copy a directory from one location to another.
          *
          * @param string $directory
@@ -6756,15 +6769,15 @@ namespace {
         }
         
         /**
-         * Set the encrypter instance.
+         * Set the encrypter implementation.
          *
-         * @param \Illuminate\Contracts\Encryption\Encrypter $crypt
+         * @param \Illuminate\Contracts\Encryption\Encrypter $encrypter
          * @return void 
          * @static 
          */
-        public static function setEncrypter($crypt){
+        public static function setEncrypter($encrypter){
             //Method inherited from \Illuminate\Queue\Queue            
-            \Illuminate\Queue\SyncQueue::setEncrypter($crypt);
+            \Illuminate\Queue\SyncQueue::setEncrypter($encrypter);
         }
         
     }
@@ -7854,31 +7867,22 @@ namespace {
         }
         
         /**
-         * Gets a "parameter" value.
+         * Gets a "parameter" value from any bag.
          * 
-         * This method is mainly useful for libraries that want to provide some flexibility.
+         * This method is mainly useful for libraries that want to provide some flexibility. If you don't need the
+         * flexibility in controllers, it is better to explicitly get request parameters from the appropriate
+         * public property instead (attributes, query, request).
          * 
-         * Order of precedence: GET, PATH, POST
-         * 
-         * Avoid using this method in controllers:
-         * 
-         *  * slow
-         *  * prefer to get from a "named" source
-         * 
-         * It is better to explicitly get request parameters from the appropriate
-         * public property instead (query, attributes, request).
-         * 
-         * Note: Finding deep items is deprecated since version 2.8, to be removed in 3.0.
+         * Order of precedence: PATH (routing placeholders or custom attributes), GET, BODY
          *
          * @param string $key the key
          * @param mixed $default the default value if the parameter key does not exist
-         * @param bool $deep is parameter deep in multidimensional array
          * @return mixed 
          * @static 
          */
-        public static function get($key, $default = null, $deep = false){
+        public static function get($key, $default = null){
             //Method inherited from \Symfony\Component\HttpFoundation\Request            
-            return \Illuminate\Http\Request::get($key, $default, $deep);
+            return \Illuminate\Http\Request::get($key, $default);
         }
         
         /**
@@ -8324,7 +8328,7 @@ namespace {
          * Here is the process to determine the format:
          * 
          *  * format defined by the user (with setRequestFormat())
-         *  * _format request parameter
+         *  * _format request attribute
          *  * $default
          *
          * @param string $default The default format
@@ -9836,6 +9840,30 @@ namespace {
         }
         
         /**
+         * Increment the value of an item in the session.
+         *
+         * @param string $key
+         * @param int $amount
+         * @return mixed 
+         * @static 
+         */
+        public static function increment($key, $amount = 1){
+            return \Illuminate\Session\Store::increment($key, $amount);
+        }
+        
+        /**
+         * Decrement the value of an item in the session.
+         *
+         * @param string $key
+         * @param int $amount
+         * @return int 
+         * @static 
+         */
+        public static function decrement($key, $amount = 1){
+            return \Illuminate\Session\Store::decrement($key, $amount);
+        }
+        
+        /**
          * Flash a key / value pair to the session.
          *
          * @param string $key
@@ -10479,11 +10507,12 @@ namespace {
         /**
          * Get the URL for the previous request.
          *
+         * @param mixed $fallback
          * @return string 
          * @static 
          */
-        public static function previous(){
-            return \Illuminate\Routing\UrlGenerator::previous();
+        public static function previous($fallback = false){
+            return \Illuminate\Routing\UrlGenerator::previous($fallback);
         }
         
         /**
@@ -12712,49 +12741,6 @@ namespace {
          */
         public static function cache($callback, $lifetime = null, $returnObj = false){
             return \Intervention\Image\ImageManager::cache($callback, $lifetime, $returnObj);
-        }
-        
-    }
-
-
-    class Omnipay extends \Ignited\LaravelOmnipay\Facades\OmnipayFacade{
-        
-        /**
-         * Get an instance of the specified gateway
-         *
-         * @param \Ignited\LaravelOmnipay\index  of config array to use
-         * @return \Omnipay\Common\AbstractGateway 
-         * @static 
-         */
-        public static function gateway($name = null){
-            return \Ignited\LaravelOmnipay\LaravelOmnipayManager::gateway($name);
-        }
-        
-        /**
-         * 
-         *
-         * @static 
-         */
-        public static function creditCard($cardInput){
-            return \Ignited\LaravelOmnipay\LaravelOmnipayManager::creditCard($cardInput);
-        }
-        
-        /**
-         * 
-         *
-         * @static 
-         */
-        public static function getGateway(){
-            return \Ignited\LaravelOmnipay\LaravelOmnipayManager::getGateway();
-        }
-        
-        /**
-         * 
-         *
-         * @static 
-         */
-        public static function setGateway($name){
-            return \Ignited\LaravelOmnipay\LaravelOmnipayManager::setGateway($name);
         }
         
     }

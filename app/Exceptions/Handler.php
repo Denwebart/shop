@@ -3,9 +3,11 @@
 namespace App\Exceptions;
 
 use App\Helpers\CurrencyController;
+use App\Helpers\Errors;
 use App\Helpers\Settings;
 use App\Models\Page;
 use App\Models\Setting;
+use App\Modules\Admin\Widgets\Badge;
 use App\Widgets\Articles\Articles;
 use App\Widgets\Cart\Cart;
 use App\Widgets\Menu\Menu;
@@ -67,33 +69,14 @@ class Handler extends ExceptionHandler
 			    ]);
 		    }
 	    }
-
-	    if(!$request->ajax()) {
-		    if ($e instanceof ModelNotFoundException)
-		    {
-				$this->error404();
+	
+	    if ($e instanceof ModelNotFoundException)
+	    {
+		    if(!$request->ajax()) {
+			    return Errors::error404($request);
 		    }
 	    }
 
         return parent::render($request, $e);
     }
-
-	public function error404()
-	{
-		$page = new Page();
-		$page->menu_title = "Ошибка 404";
-		$page->title = "Ошибка 404. Страница не найдена.";
-		\View::share('page', $page);
-
-		$course = new CurrencyController();
-		$settings = new Settings();
-		\View::share('siteSettings', $settings->getCategory(Setting::CATEGORY_SITE));
-		\View::share('courseUSD', $course->getCourse());
-		\View::share('menuWidget', new Menu());
-		\View::share('cartWidget', new Cart());
-		\View::share('wishlistWidget', new Wishlist());
-		\View::share('articlesWidget', new Articles());
-
-		return \Response::view('errors.404');
-	}
 }

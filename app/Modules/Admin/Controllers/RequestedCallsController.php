@@ -9,6 +9,7 @@
 namespace App\Modules\Admin\Controllers;
 
 use App\Models\RequestedCall;
+use App\Modules\Admin\Widgets\Badge;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -18,6 +19,13 @@ use Illuminate\Support\Facades\URL;
 
 class RequestedCallsController extends Controller
 {
+	public function __construct(Badge $badge)
+	{
+		parent::__construct($badge);
+		
+		$this->middleware('admin', ['only' => ['destroy']]);
+	}
+	
     /**
      * Display a listing of the resource.
      *

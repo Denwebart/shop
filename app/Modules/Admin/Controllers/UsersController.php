@@ -8,12 +8,20 @@
 
 namespace App\Modules\Admin\Controllers;
 
+use App\Helpers\Errors;
 use App\Models\User;
+use App\Modules\Admin\Widgets\Badge;
 use Illuminate\Http\Request;
-use App\Http\Requests;
 
 class UsersController extends Controller
 {
+	public function __construct(Badge $badge)
+	{
+		parent::__construct($badge);
+
+		$this->middleware('admin', ['only' => ['create', 'store', 'destroy']]);
+	}
+	
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -93,11 +101,16 @@ class UsersController extends Controller
 	/**
 	 * Show the form for editing the specified resource.
 	 *
+	 * @param  \Illuminate\Http\Request  $request
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function edit($id)
+	public function edit(Request $request, $id)
 	{
+		if (!\Auth::user()->isAdmin() && \Auth::user()->id != $id) {
+			return Errors::error403($request);
+		}
+		
 		$user = User::findOrFail($id);
 
 		$backUrl = \Request::has('back_url') ? urldecode(\Request::get('back_url')) : \URL::previous();
@@ -114,6 +127,10 @@ class UsersController extends Controller
 	 */
 	public function update(Request $request, $id)
 	{
+		if (!\Auth::user()->isAdmin() && \Auth::user()->id != $id) {
+			return Errors::error403($request);
+		}
+		
 		$user = User::findOrFail($id);
 		$data = $request->except('avatar');
 

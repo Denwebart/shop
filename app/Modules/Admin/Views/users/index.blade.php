@@ -20,9 +20,11 @@ View::share('title', $title);
             </ul>
         </div>
         <div class="col-sm-4">
-            <a href="{{ route('admin.users.create') }}" class="btn btn-success btn-bordred w-md waves-effect waves-light pull-right">
-                Создать пользователя
-            </a>
+            @if(Auth::user()->isAdmin())
+                <a href="{{ route('admin.users.create') }}" class="btn btn-success btn-bordred w-md waves-effect waves-light pull-right">
+                    Создать пользователя
+                </a>
+            @endif
         </div>
     </div>
 

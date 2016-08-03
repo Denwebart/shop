@@ -17,6 +17,13 @@ use Illuminate\Support\Facades\URL;
 
 class OrdersController extends Controller
 {
+	public function __construct(Badge $badge)
+	{
+		parent::__construct($badge);
+		
+		$this->middleware('admin', ['only' => ['destroy']]);
+	}
+	
     /**
      * Display a listing of the resource.
      *

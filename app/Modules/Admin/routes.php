@@ -35,9 +35,9 @@ Route::group(['module' => 'Admin', 'prefix' => 'admin', 'middleware' => 'web', '
 	Route::resource('reviews', 'ProductsReviewsController', ['except' => ['create', 'store', 'show']]);
 
 	Route::resource('letters', 'LettersController', ['except' => ['create', 'store', 'edit', 'update']]);
-
+	
 	Route::resource('users', 'UsersController');
-
+	
 	Route::post('notifications/view/', ['as' => 'admin.notifications.view', 'uses' => 'NotificationsController@view']);
 
 	Route::post('delivery/upload_image/', ['as' => 'admin.deliveryTypes.uploadImage', 'uses' => 'DeliveryTypesController@uploadImage']);

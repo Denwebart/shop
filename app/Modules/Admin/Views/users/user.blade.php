@@ -6,21 +6,23 @@
 ?>
 
 <div class="text-center card-box">
-    <div class="dropdown pull-right">
-        <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false">
-            <i class="fa fa-cog"></i>
-        </a>
-        <ul class="dropdown-menu" role="menu">
-            <li><a href="{{ route('admin.users.edit', ['id' => $user->id]) }}">Редактировать</a></li>
-            <li>
-                @if(!$user->isAdmin())
-                    <a href="javascript:void(0)" class="button-delete" title="Удалить" data-toggle="tooltip" data-item-id="{{ $user->id }}" data-item-title="{{ $user->login }}">
-                        Удалить
-                    </a>
-                @endif
-            </li>
-        </ul>
-    </div>
+    @if(Auth::user()->isAdmin() || Auth::user()->is($user))
+        <div class="dropdown pull-right">
+            <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-cog"></i>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="{{ route('admin.users.edit', ['id' => $user->id]) }}">Редактировать</a></li>
+                <li>
+                    @if(!$user->isAdmin() && !$user->is(Auth::user()))
+                        <a href="javascript:void(0)" class="button-delete" title="Удалить" data-toggle="tooltip" data-item-id="{{ $user->id }}" data-item-title="{{ $user->login }}">
+                            Удалить
+                        </a>
+                    @endif
+                </li>
+            </ul>
+        </div>
+    @endif
     <div>
         <a href="{{ route('admin.users.show', ['id' => $user->id]) }}">
             <img src="{{ $user->getAvatarUrl() }}" class="img-circle thumb-xl img-thumbnail m-b-10" alt="{{ $user->login }}">

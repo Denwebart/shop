@@ -27,6 +27,12 @@
   line-height: 70px;
     margin-left: -50px;
 }
+.fixed-left-void .topbar .topbar-left .logo {
+    margin-left: 0px;
+}
+.fixed-left-void .topbar .topbar-left .back-to-site {
+    display: none;
+}
 .navbar-default {
   background-color: #ebeff2;
   border-radius: 0px;
