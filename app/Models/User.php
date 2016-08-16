@@ -8,6 +8,7 @@ namespace App\Models;
 
 use App\Helpers\Str;
 use App\Helpers\Translit;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -31,6 +32,7 @@ use Intervention\Image\Facades\Image;
  * @property string $remember_token
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Order[] $orders
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\RequestedCall[] $requestedCalls
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ProductReview[] $comments
@@ -49,6 +51,7 @@ use Intervention\Image\Facades\Image;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\User whereRememberToken($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\User whereDeletedAt($value)
  * @mixin \Eloquent
  */
 class User extends Authenticatable
@@ -63,7 +66,7 @@ class User extends Authenticatable
 	const ROLE_NONE    = 0;
 	const ROLE_ADMIN   = 1;
 	const ROLE_MANAGER = 2;
-	const ROLE_USER    = 3;
+//	const ROLE_USER    = 3;
 
 	public static $roles = [
 		self::ROLE_NONE    => '-',
@@ -94,6 +97,7 @@ class User extends Authenticatable
 	    'description',
 	    'phone',
 	    'avatar',
+	    'deleted_at',
     ];
 
 	/**
@@ -104,9 +108,9 @@ class User extends Authenticatable
 	 */
 	protected static $rules = [
 		'login' => 'required|unique:users,login,:id|max:50|regex:/^[A-Za-z0-9\-\_]+$/u',
-		'email' => 'required|email|max:255',
+		'email' => 'required|unique:users,email,:id|email|max:255',
 		'password' => 'required|min:6|max:255|confirmed',
-		'role' => 'integer',
+		'role' => 'required|integer|between:1,2',
 		'firstname' => 'max:50|regex:/^[A-Za-zА-Яа-яЁёЇїІіЄє \-\']+$/u',
 		'lastname' => 'max:50|regex:/^[A-Za-zА-Яа-яЁёЇїІіЄє \-\']+$/u',
 		'phone' => 'max:50|regex:/^[0-9]+$/u',
@@ -137,19 +141,18 @@ class User extends Authenticatable
 	{
 		parent::boot();
 
-		// доделать редактирование удаленных пользователей
 		static::creating(function($user) {
 			if($user->id !== 1 && $user->role != self::ROLE_NONE) {
 				$user->is_active = 1;
 			}
 		});
-
-		// доделать вход только активных пользователей, неавтивный пользователь - удаленный пользователь
+		
 		static::deleting(function($user) {
 			$user->notifications()->delete();
 			$user->settings()->delete();
 
-			if(count($user->orders) || count($user->requestedCalls) || count($user->comments)) {
+			if(count($user->orders) || count($user->requestedCalls) || count($user->comments) || count($user->pages) || count($user->products)) {
+				$user->deleted_at = Carbon::now();
 				$user->is_active = 0;
 				$user->save();
 				return false;
@@ -165,7 +168,27 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token', 'activation_code',
     ];
-
+	
+	/**
+	 * Созданные страницы
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function pages()
+	{
+		return $this->hasMany('App\Models\Page', 'user_id');
+	}
+	
+	/**
+	 * Созданные товары
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function products()
+	{
+		return $this->hasMany('App\Models\Product', 'user_id');
+	}
+	
 	/**
 	 * Принятые заказы
 	 *

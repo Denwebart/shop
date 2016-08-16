@@ -10,7 +10,6 @@ namespace App\Modules\Admin\Controllers;
 
 use App\Models\Notification;
 use Illuminate\Http\Request;
-use App\Http\Requests;
 
 class NotificationsController extends Controller
 {

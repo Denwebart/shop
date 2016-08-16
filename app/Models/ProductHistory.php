@@ -6,7 +6,6 @@
 
 namespace App\Models;
 
-use App\Helpers\Str;
 use Illuminate\Database\Eloquent\Model;
 
 /**

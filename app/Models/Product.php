@@ -32,7 +32,8 @@ use Intervention\Image\Facades\Image;
  * @property string $content
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @property string $published_at
+ * @property \Carbon\Carbon $published_at
+ * @property \Carbon\Carbon $deleted_at
  * @property string $meta_title
  * @property string $meta_desc
  * @property string $meta_key
@@ -55,6 +56,7 @@ use Intervention\Image\Facades\Image;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Product whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Product whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Product wherePublishedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Product whereDeletedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Product whereMetaTitle($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Product whereMetaDesc($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Product whereMetaKey($value)
@@ -116,6 +118,7 @@ class Product extends Model
 		'introtext',
 		'content',
 		'published_at',
+		'deleted_at',
 		'meta_title',
 		'meta_desc',
 		'meta_key',
@@ -131,7 +134,7 @@ class Product extends Model
 		'category_id' => 'required|integer|not_in:0',
 		'user_id' => 'integer',
 		'alias' => 'unique:products,alias,:id|max:500|regex:/^[A-Za-z0-9\-]+$/u',
-		'vendor_code' => 'required|unique:products,vendor_code,:id|max:50|regex:/^[А-Яа-яA-Za-z0-9 \-]+$/u',
+		'vendor_code' => 'required|unique:products,vendor_code,:id|max:50|regex:/^[А-Яа-яA-Za-z0-9\-]+$/u',
 		'is_published' => 'boolean',
 		'title' => 'required|max:250',
 		'price' => 'required|numeric|between:0,9999999999.99',
@@ -186,7 +189,7 @@ class Product extends Model
 			\Cache::forget('leadersOfSells');
 			\Cache::forget('widgets.carousel.sale');
 			
-			\Cache::forget('sitemapItems.children-' . $page->parent_id);
+			\Cache::forget('sitemapItems.products-' . $product->category_id);
 		});
 	}
 

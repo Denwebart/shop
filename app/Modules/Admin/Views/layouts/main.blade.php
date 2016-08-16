@@ -205,7 +205,7 @@
                     <hr>
 
                     <li>
-                        <a href="{{ route('admin.products.index') }}" class="waves-effect">
+                        <a href="{{ route('admin.products.index') }}" class="waves-effect @if(Request::is('admin/products*')) active @endif">
                             <i class="fa fa-shopping-bag"></i>
                             <span>Товары</span>
                         </a>

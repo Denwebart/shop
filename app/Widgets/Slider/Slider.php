@@ -6,9 +6,7 @@
  * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
  */
 
-
 namespace App\Widgets\Slider;
-
 
 class Slider
 {

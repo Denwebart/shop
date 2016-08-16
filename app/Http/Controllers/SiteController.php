@@ -9,7 +9,6 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Settings;
-use App\Helpers\Str;
 use App\Models\Letter;
 use App\Models\Notification;
 use App\Models\Page;
@@ -17,7 +16,6 @@ use App\Models\Product;
 use App\Models\Property;
 use App\Models\RequestedCall;
 use App\Models\Setting;
-use App\Models\User;
 use App\Widgets\Articles\Articles;
 use App\Widgets\Carousel\Carousel;
 use App\Widgets\Reviews\Reviews;

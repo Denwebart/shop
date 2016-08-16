@@ -9,7 +9,6 @@
 
 namespace App\Helpers;
 
-use App\Helpers\CurrencyRate;
 use SimpleXMLElement;
 
 class CurrencyController implements CurrencyRate

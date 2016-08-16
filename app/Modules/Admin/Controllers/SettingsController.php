@@ -13,7 +13,6 @@ use App\Models\Menu;
 use App\Models\Property;
 use App\Models\Setting;
 use Illuminate\Http\Request;
-use App\Http\Requests;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 

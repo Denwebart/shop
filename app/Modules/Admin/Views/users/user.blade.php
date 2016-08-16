@@ -5,7 +5,7 @@
  */
 ?>
 
-<div class="text-center card-box">
+<div class="item-user text-center card-box @if(!$user->is_active) opacity-70 @endif" data-user-id="{{ $user->id }}">
     @if(Auth::user()->isAdmin() || Auth::user()->is($user))
         <div class="dropdown pull-right">
             <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false">
@@ -13,20 +13,44 @@
             </a>
             <ul class="dropdown-menu" role="menu">
                 <li><a href="{{ route('admin.users.edit', ['id' => $user->id]) }}">Редактировать</a></li>
-                <li>
-                    @if(!$user->isAdmin() && !$user->is(Auth::user()))
-                        <a href="javascript:void(0)" class="button-delete" title="Удалить" data-toggle="tooltip" data-item-id="{{ $user->id }}" data-item-title="{{ $user->login }}">
-                            Удалить
-                        </a>
-                    @endif
-                </li>
+                @if($user->id != 1 && !$user->is(Auth::user()))
+                    <li>
+                        @if(!$user->deleted_at)
+                            <a href="javascript:void(0)" class="button-delete" data-item-id="{{ $user->id }}" data-item-title="{{ $user->login }}" data-has-activities="{{ (count($user->orders) || count($user->requestedCalls) || count($user->comments) || count($user->pages) || count($user->products)) ? 1 : 0 }}">
+                                Удалить
+                            </a>
+                        @else
+                            <a href="javascript:void(0)" class="button-undelete" data-item-id="{{ $user->id }}" data-item-title="{{ $user->login }}">
+                                Восстановить
+                            </a>
+                        @endif
+                    </li>
+                @endif
             </ul>
         </div>
     @endif
     <div>
-        <a href="{{ route('admin.users.show', ['id' => $user->id]) }}">
+        <a href="{{ route('admin.users.show', ['id' => $user->id]) }}" class="pull-left">
             <img src="{{ $user->getAvatarUrl() }}" class="img-circle thumb-xl img-thumbnail m-b-10" alt="{{ $user->login }}">
         </a>
+
+        <div class="pull-left text-left m-l-25 m-t-15">
+            @if($user->deleted_at)
+                <div class="status label label-danger">Удален</div>
+            @elseif(!$user->is_active)
+                <div class="status label label-warning">Неактивен</div>
+            @else
+                <div class="status label label-success">Активен</div>
+            @endif
+            <br class="m-b-5">
+            <span data-toggle="tooltip" title="Количество обработанных заказов.">Звказов: {{ count($user->orders) }}</span>
+            <br>
+            <span data-toggle="tooltip" title="Количество обработанных звонков, заказанных через сайт.">Звонков: {{ count($user->requestedCalls) }}</span>
+            <br>
+            <span data-toggle="tooltip" title="Колличество оставленных комментариев к товару.">Комментариев: {{ count($user->comments) }}</span>
+        </div>
+
+        <div class="clearfix"></div>
 
         <p class="text-muted font-13 m-b-30">
             @if($user->description)

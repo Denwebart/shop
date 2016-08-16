@@ -9,10 +9,7 @@
 namespace App\Widgets\Articles;
 
 use App\Models\Page;
-use Illuminate\Http\Request;
-use Carbon\Carbon;
 use Illuminate\Routing\Controller as BaseController;
-use App\Models\Product;
 
 class Articles extends BaseController
 {

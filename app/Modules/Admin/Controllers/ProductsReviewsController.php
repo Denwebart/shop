@@ -11,7 +11,6 @@ namespace App\Modules\Admin\Controllers;
 use App\Models\ProductReview;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Http\Requests;
 use Illuminate\Support\Facades\URL;
 
 class ProductsReviewsController extends Controller

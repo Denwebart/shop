@@ -7,11 +7,15 @@
 <div class="row">
     <div class="col-lg-6 col-sm-12 col-xs-12 m-b-15">
         <div id="product-properties-container" class="form-horizontal form-editable">
-            @foreach($productProperties as $key => $property)
-                <div class="property clearfix m-b-20" data-property-id="{{ $property->id }}">
-                    @include('admin::productProperties.item')
-                </div>
-            @endforeach
+            @if($product->id)
+                @foreach($productProperties as $key => $property)
+                    <div class="property clearfix m-b-20" data-property-id="{{ $property->id }}">
+                        @include('admin::productProperties.item')
+                    </div>
+                @endforeach
+            @else
+                <p>Сохраните товар, чтобы добавлять характеристики.</p>
+            @endif
         </div>
     </div>
 </div>

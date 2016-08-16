@@ -115,7 +115,9 @@
                 {!! Form::file('image', ['id' => 'image', 'class' => 'dropify', 'data-default-file' => $product->getImageUrl(null, false), 'data-max-file-size' => '3M']) !!}
                 <span class="help-block @if($errors->has('image')) hidden @endif">
                     <small>
-                        Главное изображение товара.
+                        Рекомендуемые размеры:
+                        <br>
+                        ширина – 1200px, высота – 1510px.
                     </small>
                 </span>
                 @if ($errors->has('image'))
@@ -134,18 +136,20 @@
                     </span>
                 @endif
             </div>
-            <div class="col-md-12">
-                <div class="task-detail">
-                    <div class="attached-files">
-                        <div class="files-list product-images">
-                            @include('admin::products.images')
+            @if($product->id)
+                <div class="col-md-12">
+                    <div class="task-detail">
+                        <div class="attached-files">
+                            <div class="files-list product-images">
+                                @include('admin::products.images')
+                            </div>
+                            <span class="help-block">
+                                <small>Дополнительные изображения для товара.</small>
+                            </span>
                         </div>
-                        <span class="help-block">
-                            <small>Дополнительные изображения для товара.</small>
-                        </span>
                     </div>
                 </div>
-            </div>
+            @endif
         </div>
 
         {{--<div class="form-group product-images">--}}

@@ -8,7 +8,6 @@
 
 namespace App\Modules\Admin\Controllers;
 
-use App\Models\DeliveryType;
 use App\Models\Product;
 use App\Models\ProductPropertyValue;
 use App\Models\PropertyValue;

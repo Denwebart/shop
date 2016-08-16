@@ -84,6 +84,12 @@ a:focus {
   outline: 0;
   text-decoration: none;
 }
+.opacity-50 {
+    opacity: 0.5;
+}
+.opacity-70 {
+    opacity: 0.7;
+}
 .container {
   width: auto;
 }
@@ -1413,6 +1419,29 @@ pre {
 .waves-effect.waves-inverse .waves-ripple {
   background-color: rgba(59, 62, 71, 0.4);
 }
+
+/* Autocomplete */
+.ui-autocomplete {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    max-width: 100%;
+    box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06),
+                0 1px 0px 0 rgba(0, 0, 0, 0.02);
+}
+.ui-autocomplete .ui-menu-item {
+    background: #ffffff;
+    padding: 7px 10px;
+    font-size: 14px;
+    border-bottom: 1px solid #ebeff2;
+    border-left: 1px solid #ebeff2;
+    border-right: 1px solid #ebeff2;
+}
+.ui-autocomplete .ui-menu-item:hover {
+    background-color: #F4F6F7;
+}
+
 /* =============
    Print css
 ============= */

@@ -9,13 +9,8 @@
 namespace App\Modules\Admin\Controllers;
 
 use App\Models\Letter;
-use App\Models\Page;
 use App\Modules\Admin\Widgets\Badge;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
-use App\Http\Requests;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\URL;
 
 class LettersController extends Controller
 {

@@ -11,9 +11,7 @@ namespace App\Modules\Admin\Controllers;
 use App\Helpers\Translit;
 use App\Models\Page;
 use Illuminate\Http\Request;
-use App\Http\Requests;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Validation\Validator;
 use Illuminate\View\View;
 
 class PagesController extends Controller

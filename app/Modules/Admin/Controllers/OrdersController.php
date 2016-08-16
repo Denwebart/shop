@@ -9,11 +9,10 @@
 namespace App\Modules\Admin\Controllers;
 
 use App\Models\Order;
+use App\Modules\Admin\Widgets\Badge;
 use Illuminate\Http\Request;
-use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\URL;
 
 class OrdersController extends Controller
 {

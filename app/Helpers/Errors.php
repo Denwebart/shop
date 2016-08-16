@@ -9,7 +9,12 @@
 namespace App\Helpers;
 
 use App\Models\Page;
+use App\Models\Setting;
 use App\Modules\Admin\Widgets\Badge;
+use App\Widgets\Articles\Articles;
+use App\Widgets\Cart\Cart;
+use App\Widgets\Menu\Menu;
+use App\Widgets\Wishlist\Wishlist;
 use Illuminate\Http\Request;
 
 class Errors
@@ -58,7 +63,7 @@ class Errors
 	{
 		$page = new Page();
 		$page->code = "404";
-		$page->icon = "fa-spinner fa-spin";
+		$page->icon = "fa-exclamation-triangle";
 		$page->menu_title = "Ошибка 404";
 		$page->title = "Страница не найдена.";
 		$page->content = "Запрашиваемая страница не найдена.";

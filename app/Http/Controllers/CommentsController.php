@@ -9,7 +9,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Notification;
-use App\Models\Page;
 use App\Models\Product;
 use App\Models\ProductReview;
 use App\Models\Setting;

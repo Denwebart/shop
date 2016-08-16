@@ -10,11 +10,7 @@ namespace App\Modules\Admin\Controllers;
 
 use App\Models\Slider;
 use Illuminate\Http\Request;
-use App\Http\Requests;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Validation\Validator;
-use Illuminate\View\View;
-
 class SliderController extends Controller
 {
     /**

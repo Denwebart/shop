@@ -31,7 +31,7 @@ class FillSettingsTableMetadata extends Migration
 				'category' => \App\Models\Setting::CATEGORY_SITE,
 				'type' => \App\Models\Setting::TYPE_STRING,
 				'title' => 'Мета-тег Description',
-				'description' => "Краское описание страницы,
+				'description' => "Краткое описание страницы,
 								используется поисковыми системами для индексации, 
 								а также при создании аннотации в выдаче по запросу.\n
 								Рекомендуемая длина - 160 символов.",
@@ -45,7 +45,7 @@ class FillSettingsTableMetadata extends Migration
 				'type' => \App\Models\Setting::TYPE_STRING,
 				'title' => 'Мета-тег Keywords',
 				'description' => "Необязательный SEO-тег. Содержит список ключевых слов, 
-								через запятую, которые употреблены при написании страницы. \n
+								через запятую, которые использованы при написании страницы. \n
 								Рекомендуемая длина - 150-250 символов.",
 				'value' => null,
 				'is_active' => 0,

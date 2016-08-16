@@ -6,13 +6,7 @@
 
 namespace App\Models;
 
-use App\Helpers\Translit;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
-use Intervention\Image\Facades\Image;
 
 /**
  * App\Models\Menu

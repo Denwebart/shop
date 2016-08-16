@@ -10,9 +10,8 @@ namespace App\Modules\Admin\Controllers;
 
 use App\Models\Product;
 use App\Models\ProductImage;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Http\Requests;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\URL;
 
 class ProductsController extends Controller
@@ -140,7 +139,23 @@ class ProductsController extends Controller
     {
 	    if(\Request::ajax()) {
 
-		    if(Product::destroy($id)){
+	    	$product = Product::find($id);
+		    
+	    	if(count($product->orderProducts)) {
+			    $product->deleted_at = Carbon::now();
+	    		
+			    $products = $this->getProducts($request);
+			    
+			    return \Response::json([
+				    'success' => true,
+				    'message' => 'Товар помечен как удалёный.',
+				    'itemsCount' => view('parts.count')->with('models', $products)->render(),
+				    'itemsPagination' => view('parts.pagination')->with('models', $products)->render(),
+				    'itemsTable' => view('admin::products.table')->with('products', $products)->render(),
+			    ]);
+		    }
+		    
+		    if($product->delete()){
 			
 			    $products = $this->getProducts($request);
 

@@ -8,10 +8,8 @@
 
 namespace App\Modules\Admin\Controllers;
 
-use App\Http\Requests;
 use App\Models\Order;
 use App\Models\RequestedCall;
-use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {

@@ -37,6 +37,7 @@ Route::group(['module' => 'Admin', 'prefix' => 'admin', 'middleware' => 'web', '
 	Route::resource('letters', 'LettersController', ['except' => ['create', 'store', 'edit', 'update']]);
 	
 	Route::resource('users', 'UsersController');
+	Route::post('users/undelete/', ['as' => 'admin.users.undelete', 'uses' => 'UsersController@undelete']);
 	
 	Route::post('notifications/view/', ['as' => 'admin.notifications.view', 'uses' => 'NotificationsController@view']);
 
