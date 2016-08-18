@@ -109,7 +109,7 @@
                     <h4 class="header-title m-t-0 m-b-10"><b>Мета-теги</b></h4>
                     <p class="text-muted font-13 m-b-15">
                         Предназначены исключительно для поисковых систем.
-                        Не отображаются на странице сайта. <br>
+                        Не отображаются на страницах сайта. <br>
                     </p>
                     <div class="form-horizontal form-editable">
                         @foreach($settings[\App\Models\Setting::CATEGORY_SITE]['meta'] as $key => $setting)

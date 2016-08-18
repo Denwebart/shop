@@ -17,52 +17,53 @@
     @include('admin::workWithUs.items')
 </div>
 
-<a href="javascript:void(0)" class="show-work-with-us-form pull-right">
-    <span class="m-t-3 pull-left">Добавить</span>
-    <i class="fa fa-plus fa-2x pull-left m-l-10"></i>
-</a>
-<div class="clearfix"></div>
+<div class="bg-muted p-20 m-t-20">
+    <a href="javascript:void(0)" class="show-work-with-us-form pull-right">
+        <span class="m-t-3 pull-left">Добавить</span>
+        <i class="fa fa-plus fa-2x pull-left m-l-10"></i>
+    </a>
+    <div class="clearfix"></div>
 
-{!! Form::open(['url' => route('admin.workWithUs.add'), 'class' => 'form-horizontal m-t-30', 'id' => 'work-with-us-form', 'files' => true, 'style' => "display: none"]) !!}
-    <div class="row">
-        <div class="col-sm-6 col-md-6">
-            <div class="form-group m-0">
-                {!! Form::label('title', 'Заголовок', ['class' => 'control-label m-b-5']) !!}
-                {!! Form::text('title', null, ['id' => 'title', 'class' => 'form-control', 'rows' => 2]) !!}
+    {!! Form::open(['url' => route('admin.workWithUs.add'), 'class' => 'form-horizontal m-t-30', 'id' => 'work-with-us-form', 'files' => true, 'style' => "display: none"]) !!}
+        <div class="row">
+            <div class="col-sm-6 col-md-6">
+                <div class="form-group m-0">
+                    {!! Form::label('title', 'Заголовок', ['class' => 'control-label m-b-5']) !!}
+                    {!! Form::text('title', null, ['id' => 'title', 'class' => 'form-control', 'rows' => 2]) !!}
 
-                <span class="help-block error title_error">
-                    {{ $errors->first('title') }}
-                </span>
-            </div>
-        </div>
-        <div class="col-sm-4 col-md-4">
-            <div class="form-group m-0">
-                {!! Form::label('image', 'Изображение', ['class' => 'control-label m-b-5']) !!}
-                {!! Form::file('image', ['id' => 'image', 'class' => 'dropify', 'data-default-file' => false, 'data-height' => '100', 'data-max-file-size' => '3M']) !!}
-                <span class="help-block error image_error"></span>
-            </div>
-
-            <small class="help-block">
-                Рекомендуемая ширина изображения - <strong>350px</strong>.
-            </small>
-        </div>
-        <div class="col-sm-2 col-md-2">
-            <div class="form-group m-t-25 m-r-0 m-l-0">
-                <div class="switchery-demo m-b-5">
-                    {!! Form::hidden('is_published', 0) !!}
-                    {!! Form::checkbox('is_published', 1, null, ['id' => 'is_published', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
+                    <span class="help-block error title_error">
+                        {{ $errors->first('title') }}
+                    </span>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-12 col-md-12">
-            <button type="button" class="btn btn-success btn-bordred waves-effect waves-light m-b-10 button-save-work-with-us pull-right">
-                <i class="fa fa-check"></i>
-                <span class="hidden-sm">Сохранить</span>
-            </button>
-        </div>
-    </div>
-{!! Form::close() !!}
+            <div class="col-sm-4 col-md-4">
+                <div class="form-group m-0">
+                    {!! Form::label('image', 'Изображение', ['class' => 'control-label m-b-5']) !!}
+                    {!! Form::file('image', ['id' => 'image', 'class' => 'dropify', 'data-default-file' => false, 'data-height' => '100', 'data-max-file-size' => '3M']) !!}
+                    <span class="help-block error image_error"></span>
+                </div>
 
+                <small class="help-block">
+                    Рекомендуемая ширина изображения - <strong>350px</strong>.
+                </small>
+            </div>
+            <div class="col-sm-2 col-md-2">
+                <div class="form-group m-t-25 m-r-0 m-l-0">
+                    <div class="switchery-demo m-b-5">
+                        {!! Form::hidden('is_published', 0) !!}
+                        {!! Form::checkbox('is_published', 1, null, ['id' => 'is_published', 'data-plugin' => 'switchery', 'data-color' => '#3bafda', 'data-size' => 'small']) !!}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12">
+                <button type="button" class="btn btn-success btn-bordred waves-effect waves-light m-b-10 button-save-work-with-us pull-right">
+                    <i class="fa fa-check"></i>
+                    <span class="hidden-sm">Сохранить</span>
+                </button>
+            </div>
+        </div>
+    {!! Form::close() !!}
+</div>
 <div class="clearfix"></div>
 
 @push('styles')

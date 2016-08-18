@@ -21,7 +21,7 @@
 <section class="content p-b-0">
     <div class="container">
         @if($page->title)
-            <h1 class="text-uppercase">{{ $page->title }}</h1>
+            <h2 class="text-uppercase">{{ $page->title }}</h2>
         @endif
 
         {!! $page->content !!}

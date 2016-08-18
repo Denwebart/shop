@@ -4359,8 +4359,9 @@ label.label--top {
 h1 {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
-    font-size: 2.615em;
-    padding: 0 0 20px;
+    font-size: 1.1em;
+    line-height: 1.4em;
+    /*padding: 10px 0 20px;*/
     margin: 0;
 }
 

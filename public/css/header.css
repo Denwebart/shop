@@ -4099,7 +4099,9 @@ body.fullwidth .header__dropdowns-container {
 .logo span {
     display: block;
 }
-.stuck .logo span {
+.stuck .logo span,
+.stuck .logo h1,
+.stuck .logo .hidden-xs {
     display: none;
 }
 .logo div {

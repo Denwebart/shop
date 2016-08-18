@@ -4,7 +4,7 @@
  * @copyright  Copyright (c) 2015-2016 Website development studio It Hill (http://www.it-hill.com)
  */
 
-$title = $slider->title ? 'Редактирование слайда "' . $slider->title . '"' : 'Редактирование слайда';
+$title = $slider->title ? 'Редактирование слайда' : 'Редактирование слайда';
 View::share('title', $title);
 ?>
 
@@ -18,7 +18,7 @@ View::share('title', $title);
                 <li><a href="{{ route('admin.index') }}">Главная</a></li>
                 <li><a href="{{ route('admin.settings.index') }}">Настройки</a></li>
                 <li><a href="{{ route('admin.settings.widgets') }}">Виджеты</a></li>
-                <li><a href="{{ route('admin.slider.index') }}">Слайды на главной странице</a></li>
+                <li><a href="{{ route('admin.slider.index') }}">Слайдер</a></li>
                 <li>{{ $title }}</li>
             </ul>
         </div>
